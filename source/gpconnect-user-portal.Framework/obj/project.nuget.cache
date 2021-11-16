@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "dgSpecHash": "Gtlq2IbJ1zH3UJuvN6dYwcKWKLn6UyHrvMLZmk3wFW0lfyqFbixbAiPMft2YNNOfCkQOr2+SMPahkXmDO1dtOg==",
+  "success": true,
+  "projectFilePath": "D:\\Users\\Chris\\Source Code\\gpconnect-user-portal\\source\\gpconnect-user-portal.Framework\\gpconnect-user-portal.Framework.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Chris\\.nuget\\packages\\autofac\\6.0.0\\autofac.6.0.0.nupkg.sha512",
+    "C:\\Users\\Chris\\.nuget\\packages\\autofac.extensions.dependencyinjection\\7.2.0\\autofac.extensions.dependencyinjection.7.2.0.nupkg.sha512",
+    "C:\\Users\\Chris\\.nuget\\packages\\dapper\\2.0.123\\dapper.2.0.123.nupkg.sha512",
+    "C:\\Users\\Chris\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\5.0.0\\microsoft.extensions.dependencyinjection.abstractions.5.0.0.nupkg.sha512",
+    "C:\\Users\\Chris\\.nuget\\packages\\nlog\\4.7.12\\nlog.4.7.12.nupkg.sha512",
+    "C:\\Users\\Chris\\.nuget\\packages\\system.diagnostics.diagnosticsource\\4.7.1\\system.diagnostics.diagnosticsource.4.7.1.nupkg.sha512"
+  ],
+  "logs": []
+}

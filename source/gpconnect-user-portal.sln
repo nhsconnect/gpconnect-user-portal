@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31205.134
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "gpconnect-user-portal", "gpconnect-user-portal\gpconnect-user-portal.csproj", "{91346F32-79ED-4F4F-8D3B-CE36F81A5EBA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "gpconnect-user-portal.DTO", "gpconnect-user-portal.DTO\gpconnect-user-portal.DTO.csproj", "{D807E0D3-C4D7-457A-8343-186B4B47853D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "gpconnect-user-portal.DAL", "gpconnect-user-portal.DAL\gpconnect-user-portal.DAL.csproj", "{387145CB-A3EA-4678-8421-4B1DAB4AC514}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "gpconnect-user-portal.Framework", "gpconnect-user-portal.Framework\gpconnect-user-portal.Framework.csproj", "{12FCD003-A1EE-4547-831A-9E7CFAC9688B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{91346F32-79ED-4F4F-8D3B-CE36F81A5EBA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{91346F32-79ED-4F4F-8D3B-CE36F81A5EBA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{91346F32-79ED-4F4F-8D3B-CE36F81A5EBA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{91346F32-79ED-4F4F-8D3B-CE36F81A5EBA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D807E0D3-C4D7-457A-8343-186B4B47853D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D807E0D3-C4D7-457A-8343-186B4B47853D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D807E0D3-C4D7-457A-8343-186B4B47853D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D807E0D3-C4D7-457A-8343-186B4B47853D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{387145CB-A3EA-4678-8421-4B1DAB4AC514}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{387145CB-A3EA-4678-8421-4B1DAB4AC514}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{387145CB-A3EA-4678-8421-4B1DAB4AC514}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{387145CB-A3EA-4678-8421-4B1DAB4AC514}.Release|Any CPU.Build.0 = Release|Any CPU
+		{12FCD003-A1EE-4547-831A-9E7CFAC9688B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{12FCD003-A1EE-4547-831A-9E7CFAC9688B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{12FCD003-A1EE-4547-831A-9E7CFAC9688B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{12FCD003-A1EE-4547-831A-9E7CFAC9688B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {73199B58-410F-464B-BA31-C3B151744419}
+	EndGlobalSection
+EndGlobal

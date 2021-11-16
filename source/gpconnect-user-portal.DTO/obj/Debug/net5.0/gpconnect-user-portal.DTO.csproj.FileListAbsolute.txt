@@ -1,0 +1,12 @@
+D:\Users\Chris\Source Code\gpconnect-user-portal\source\gpconnect-user-portal.DTO\bin\Debug\net5.0\gpconnect-user-portal.DTO.deps.json
+D:\Users\Chris\Source Code\gpconnect-user-portal\source\gpconnect-user-portal.DTO\bin\Debug\net5.0\gpconnect-user-portal.DTO.dll
+D:\Users\Chris\Source Code\gpconnect-user-portal\source\gpconnect-user-portal.DTO\bin\Debug\net5.0\ref\gpconnect-user-portal.DTO.dll
+D:\Users\Chris\Source Code\gpconnect-user-portal\source\gpconnect-user-portal.DTO\bin\Debug\net5.0\gpconnect-user-portal.DTO.pdb
+D:\Users\Chris\Source Code\gpconnect-user-portal\source\gpconnect-user-portal.DTO\obj\Debug\net5.0\gpconnect-user-portal.DTO.csprojAssemblyReference.cache
+D:\Users\Chris\Source Code\gpconnect-user-portal\source\gpconnect-user-portal.DTO\obj\Debug\net5.0\gpconnect-user-portal.DTO.GeneratedMSBuildEditorConfig.editorconfig
+D:\Users\Chris\Source Code\gpconnect-user-portal\source\gpconnect-user-portal.DTO\obj\Debug\net5.0\gpconnect-user-portal.DTO.AssemblyInfoInputs.cache
+D:\Users\Chris\Source Code\gpconnect-user-portal\source\gpconnect-user-portal.DTO\obj\Debug\net5.0\gpconnect-user-portal.DTO.AssemblyInfo.cs
+D:\Users\Chris\Source Code\gpconnect-user-portal\source\gpconnect-user-portal.DTO\obj\Debug\net5.0\gpconnect-user-portal.DTO.csproj.CoreCompileInputs.cache
+D:\Users\Chris\Source Code\gpconnect-user-portal\source\gpconnect-user-portal.DTO\obj\Debug\net5.0\gpconnect-user-portal.DTO.dll
+D:\Users\Chris\Source Code\gpconnect-user-portal\source\gpconnect-user-portal.DTO\obj\Debug\net5.0\ref\gpconnect-user-portal.DTO.dll
+D:\Users\Chris\Source Code\gpconnect-user-portal\source\gpconnect-user-portal.DTO\obj\Debug\net5.0\gpconnect-user-portal.DTO.pdb
