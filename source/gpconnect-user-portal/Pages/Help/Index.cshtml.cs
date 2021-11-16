@@ -1,11 +1,11 @@
 using gpconnect_user_portal.Models;
 using gpconnect_user_portal.Models.Interfaces;
 
-namespace gpconnect_appointment_checker.Pages
+namespace gpconnect_user_portal.Pages
 {
-    public class IndexModel : BaseModel
+    public class HelpModel : BaseModel
     {
-        public IndexModel(ICommon common) : base(common)
+        public HelpModel(ICommon common) : base(common)
         {            
         }
 

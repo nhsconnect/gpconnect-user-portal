@@ -39,3 +39,9 @@ D:\Users\Chris\Source Code\gpconnect-user-portal\source\gpconnect-user-portal\ob
 D:\Users\Chris\Source Code\gpconnect-user-portal\source\gpconnect-user-portal\obj\Debug\net5.0\gpconnect-user-portal.pdb
 D:\Users\Chris\Source Code\gpconnect-user-portal\source\gpconnect-user-portal\obj\Debug\net5.0\gpconnect-user-portal.genruntimeconfig.cache
 D:\Users\Chris\Source Code\gpconnect-user-portal\source\gpconnect-user-portal\obj\Debug\net5.0\gpconnect-user-portal.csproj.CopyComplete
+D:\Users\Chris\Source Code\gpconnect-user-portal\source\gpconnect-user-portal\obj\Debug\net5.0\Razor\Pages\Help\Further.cshtml.g.cs
+D:\Users\Chris\Source Code\gpconnect-user-portal\source\gpconnect-user-portal\obj\Debug\net5.0\Razor\Pages\Help\Index.cshtml.g.cs
+D:\Users\Chris\Source Code\gpconnect-user-portal\source\gpconnect-user-portal\obj\Debug\net5.0\Razor\Pages\Help\NoResults.cshtml.g.cs
+D:\Users\Chris\Source Code\gpconnect-user-portal\source\gpconnect-user-portal\obj\Debug\net5.0\Razor\Pages\Help\Troubleshooting.cshtml.g.cs
+D:\Users\Chris\Source Code\gpconnect-user-portal\source\gpconnect-user-portal\obj\Debug\net5.0\Razor\Pages\Help\Using.cshtml.g.cs
+D:\Users\Chris\Source Code\gpconnect-user-portal\source\gpconnect-user-portal\obj\Debug\net5.0\Razor\Pages\Help\What.cshtml.g.cs
