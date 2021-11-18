@@ -14,6 +14,7 @@ namespace gpconnect_user_portal.Framework.Configuration.Infrastructure
         {
             containerBuilder.RegisterType<DataService>().As<IDataService>().InstancePerLifetimeScope();
             containerBuilder.RegisterType<LogService>().As<ILogService>().InstancePerLifetimeScope();
+            containerBuilder.RegisterType<AggregateService>().As<IAggregateService>().InstancePerLifetimeScope();
             containerBuilder.RegisterType<LoggerManager>().As<ILoggerManager>().SingleInstance();
         }
     }

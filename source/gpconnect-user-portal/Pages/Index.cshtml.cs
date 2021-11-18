@@ -1,5 +1,5 @@
 ﻿using gpconnect_user_portal.Models;
-using gpconnect_user_portal.Models.Interfaces;
+using gpconnect_user_portal.Services.Interfaces;
 using Microsoft.Extensions.Logging;
 
 namespace gpconnect_user_portal.Pages
@@ -7,15 +7,16 @@ namespace gpconnect_user_portal.Pages
     public class IndexModel : BaseModel
     {
         private readonly ILogger<IndexModel> _logger;
+        private readonly IAggregateService _aggregateService;
 
-        public IndexModel(ILogger<IndexModel> logger, ICommon common) : base(common)
+        public IndexModel(ILogger<IndexModel> logger, IAggregateService aggregateService) : base(aggregateService)
         {
-            _logger = logger;            
+            _logger = logger;
+            _aggregateService = aggregateService;
         }
 
         public void OnGet()
-        {
-
+        {            
         }
     }
 }
