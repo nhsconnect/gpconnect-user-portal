@@ -2,17 +2,17 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
-    <RootNamespace>gpconnect_user_portal.DAL</RootNamespace>
+    <RootNamespace>gpconnect_user_portal.Services</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Dapper" Version="2.0.78" />
+    <PackageReference Include="Dapper" Version="2.0.123" />
     <PackageReference Include="Dapper.FluentMap" Version="2.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="5.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="5.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\gpconnect-user-portal.DAL\gpconnect-user-portal.DAL.csproj" />
     <ProjectReference Include="..\gpconnect-user-portal.DTO\gpconnect-user-portal.DTO.csproj" />
   </ItemGroup>
 
