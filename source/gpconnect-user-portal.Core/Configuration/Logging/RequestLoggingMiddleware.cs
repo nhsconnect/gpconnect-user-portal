@@ -4,7 +4,7 @@ using gpconnect_user_portal.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
 using System.Threading.Tasks;
 
-namespace gpconnect_user_portal.Framework.Configuration.Infrastructure.Logging
+namespace gpconnect_user_portal.Core.Configuration.Infrastructure.Logging
 {
     public class RequestLoggingMiddleware
     {

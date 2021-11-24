@@ -1,7 +1,7 @@
-﻿using gpconnect_user_portal.Framework.Configuration.Infrastructure.Logging.Interfaces;
+﻿using gpconnect_user_portal.Core.Configuration.Infrastructure.Logging.Interfaces;
 using NLog;
 
-namespace gpconnect_user_portal.Framework.Configuration.Infrastructure.Logging
+namespace gpconnect_user_portal.Core.Configuration.Infrastructure.Logging
 {
     public class LoggerManager : ILoggerManager
     {

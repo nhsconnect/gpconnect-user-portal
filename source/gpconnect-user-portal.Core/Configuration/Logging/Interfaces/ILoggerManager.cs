@@ -1,4 +1,4 @@
-﻿namespace gpconnect_user_portal.Framework.Configuration.Infrastructure.Logging.Interfaces
+﻿namespace gpconnect_user_portal.Core.Configuration.Infrastructure.Logging.Interfaces
 {
     public interface ILoggerManager
     {

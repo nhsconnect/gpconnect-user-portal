@@ -2,7 +2,7 @@ using Autofac.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using NLog.Web;
-using Infrastructure = gpconnect_user_portal.Framework.Configuration.Infrastructure;
+using Infrastructure = gpconnect_user_portal.Core.Configuration.Infrastructure;
 
 namespace gpconnect_user_portal
 {

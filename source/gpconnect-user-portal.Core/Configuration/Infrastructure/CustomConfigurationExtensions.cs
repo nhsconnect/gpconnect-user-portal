@@ -1,8 +1,8 @@
-﻿using gpconnect_user_portal.Framework.Configuration.Mapping;
+﻿using gpconnect_user_portal.Core.Configuration.Mapping;
 using Microsoft.Extensions.Configuration;
 using System;
 
-namespace gpconnect_user_portal.Framework.Configuration
+namespace gpconnect_user_portal.Core.Configuration
 {
     public static class CustomConfigurationExtensions
     {

@@ -1,0 +1,40 @@
+﻿@model DTO.Response.SearchResult
+@using gpconnect_user_portal.Helpers
+
+<div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-full">
+        @foreach (var searchResult in Model.SearchResults)
+        {
+            <div class="nhsuk-table__panel-with-heading-tab">
+                <h3 class="nhsuk-table__heading-tab">@searchResult.SiteName</h3>
+                <table class="nhsuk-table">
+                    <caption class="nhsuk-table__caption nhsuk-u-visually-hidden">Result</caption>
+                    <tbody class="nhsuk-table__body">
+                        <tr role="row" class="nhsuk-table__row">
+                            <td class="nhsuk-table__cell--bold">Site ODS Code</td>
+                            <td class="nhsuk-table__cell">@searchResult.SiteODSCode</td>
+                            <td class="nhsuk-table__cell--bold">Record Access: Structured</td>
+                            <td class="nhsuk-table__cell">@searchResult.HasStructured.BooleanToHtml()</td>
+                        </tr>
+                        <tr role="row" class="nhsuk-table__row">
+                            <td class="nhsuk-table__cell--bold">CCG Name</td>
+                            <td class="nhsuk-table__cell">@searchResult.CCGName</td>
+                            <td class="nhsuk-table__cell--bold">Record Access: HTML View</td>
+                            <td class="nhsuk-table__cell ">@searchResult.HasHtmlView.BooleanToHtml()</td>
+                        </tr>
+                        <tr role="row" class="nhsuk-table__row">
+                            <td class="nhsuk-table__cell--bold">CCG ODS Code</td>
+                            <td class="nhsuk-table__cell">@searchResult.CCGODSCode</td>
+                            <td class="nhsuk-table__cell--bold">Appointment</td>
+                            <td class="nhsuk-table__cell">@searchResult.HasAppointment.BooleanToHtml()</td>
+                        </tr>
+                        <tr role="row" class="nhsuk-table__row">
+                            <td class="nhsuk-table__cell--bold">Use Case</td>
+                            <td colspan="3" class="nhsuk-table__cell">@searchResult.UseCase</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        }
+    </div>
+</div>

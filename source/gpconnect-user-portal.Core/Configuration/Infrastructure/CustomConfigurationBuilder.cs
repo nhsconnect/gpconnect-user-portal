@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 
-namespace gpconnect_user_portal.Framework.Configuration.Infrastructure
+namespace gpconnect_user_portal.Core.Configuration.Infrastructure
 {
     public static class CustomConfigurationBuilder
     {

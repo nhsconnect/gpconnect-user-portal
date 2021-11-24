@@ -1,9 +1,9 @@
 ﻿@page
-@model IndexModel
+@model HelpModel
 
 <div class="nhsuk-grid-row">
     <div class="nhsuk-grid-column-full">
-        <h1>End User Portal Help</h1>
+        <h1>@Model.ApplicationName Help</h1>
         <partial name="Help/What" />
         <partial name="Help/Using" />
         <partial name="Help/NoResults" />

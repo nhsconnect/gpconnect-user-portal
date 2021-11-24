@@ -1,4 +1,4 @@
-﻿using gpconnect_user_portal.Framework.Configuration.Infrastructure.Logging;
+﻿using gpconnect_user_portal.Core.Configuration.Infrastructure.Logging;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
@@ -8,14 +8,14 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Net.Http.Headers;
 using System;
 
-namespace gpconnect_user_portal.Framework.Configuration.Infrastructure
+namespace gpconnect_user_portal.Core.Configuration.Infrastructure
 {
     public static class ApplicationBuilderExtensions
     {
         public static void ConfigureApplicationBuilderServices(this IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseDeveloperExceptionPage();
-
+            
             app.UseForwardedHeaders(new ForwardedHeadersOptions
             {
                 ForwardedHeaders = ForwardedHeaders.XForwardedProto

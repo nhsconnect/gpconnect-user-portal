@@ -4,12 +4,12 @@ using Microsoft.Extensions.Logging;
 
 namespace gpconnect_user_portal.Pages
 {
-    public class HelpModel : BaseModel
+    public class TermsAndConditionsModel : BaseModel
     {
-        private readonly ILogger<IndexModel> _logger;
+        private readonly ILogger<TermsAndConditionsModel> _logger;
         private readonly IAggregateService _aggregateService;
 
-        public HelpModel(ILogger<IndexModel> logger, IAggregateService aggregateService) : base(aggregateService)
+        public TermsAndConditionsModel(ILogger<TermsAndConditionsModel> logger, IAggregateService aggregateService) : base(aggregateService)
         {
             _logger = logger;
             _aggregateService = aggregateService;
@@ -17,7 +17,6 @@ namespace gpconnect_user_portal.Pages
 
         public void OnGet()
         {
-            var scheme = _aggregateService.Request.Scheme;
         }
     }
 }

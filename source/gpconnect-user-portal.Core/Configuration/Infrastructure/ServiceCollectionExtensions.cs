@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Net;
 
-namespace gpconnect_user_portal.Framework.Configuration
+namespace gpconnect_user_portal.Core.Configuration
 {
     public static class ServiceCollectionExtensions
     {

@@ -1,8 +1,8 @@
 using Autofac;
 using gpconnect_user_portal.DAL;
-using gpconnect_user_portal.Framework.Configuration;
-using gpconnect_user_portal.Framework.Configuration.Infrastructure;
-using gpconnect_user_portal.Framework.Configuration.Infrastructure.Logging;
+using gpconnect_user_portal.Core.Configuration;
+using gpconnect_user_portal.Core.Configuration.Infrastructure;
+using gpconnect_user_portal.Core.Configuration.Infrastructure.Logging;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;

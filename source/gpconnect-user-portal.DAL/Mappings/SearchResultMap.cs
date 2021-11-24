@@ -7,7 +7,7 @@ namespace gpconnect_user_portal.DAL.Mappings
     {
         public SearchResultMap()
         {
-            Map(p => p.SearchResultId).ToColumn("SearchResultId");
+            //Map(p => p.SearchResults).ToColumn("SearchResultId");
         }
     }
 }

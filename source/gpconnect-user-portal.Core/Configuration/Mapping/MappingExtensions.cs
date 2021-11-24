@@ -1,7 +1,7 @@
 ﻿using Dapper.FluentMap;
 using gpconnect_user_portal.DAL.Mappings;
 
-namespace gpconnect_user_portal.Framework.Configuration.Mapping
+namespace gpconnect_user_portal.Core.Configuration.Mapping
 {
     public static class MappingExtensions
     {

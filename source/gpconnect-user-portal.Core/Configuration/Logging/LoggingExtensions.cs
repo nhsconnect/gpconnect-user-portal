@@ -5,7 +5,7 @@ using Microsoft.Extensions.Logging;
 using NLog;
 using NLog.Targets;
 
-namespace gpconnect_user_portal.Framework.Configuration.Infrastructure.Logging
+namespace gpconnect_user_portal.Core.Configuration.Infrastructure.Logging
 {
     public static class LoggingExtensions
     {

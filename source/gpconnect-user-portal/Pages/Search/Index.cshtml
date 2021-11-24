@@ -1,0 +1,13 @@
+﻿@page
+@model SearchModel
+
+<h1>Live GP Connect Sites</h1>
+
+<form method="post" id="search-input-form">
+    <partial name="SearchInput" />
+    @if (Model.SearchResults != null)
+    {
+        <partial name="SearchResultsHeader" model="@Model.SearchResults" />
+        <partial name="SearchResults" model="@Model.SearchResults" />
+    }
+</form>

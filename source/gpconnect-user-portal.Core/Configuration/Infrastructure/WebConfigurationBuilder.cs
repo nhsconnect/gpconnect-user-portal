@@ -1,12 +1,12 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 
-namespace gpconnect_user_portal.Framework.Configuration.Infrastructure
+namespace gpconnect_user_portal.Core.Configuration.Infrastructure
 {
     public static class WebConfigurationBuilder
     {
-        public static void ConfigureWebHostDefaults(IWebHostBuilder webHostBuilder)
+        public static void ConfigureWebHostDefaults(IWebHostBuilder webHostDefaultsBuilder)
         {
-            webHostBuilder.UseKestrel(options =>
+            webHostDefaultsBuilder.UseKestrel(options =>
                 {
                     options.AddServerHeader = false;
                 });
