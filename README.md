@@ -13,15 +13,17 @@ The GP Connect End User Portal is a web application.
 
 ## User screens
 
-<img src="documentation/images/home.png">
+<img src="documentation/images/1.png">
+<img src="documentation/images/2.png">
+<img src="documentation/images/3.png">
+<img src="documentation/images/4.png">
+<img src="documentation/images/5.png">
+<img src="documentation/images/6.png">
+<img src="documentation/images/7.png">
+<img src="documentation/images/8.png">
+<img src="documentation/images/9.png">
+<img src="documentation/images/10.png">
 
-<img src="documentation/images/home-alt.png">
-
-<img src="documentation/images/onboarding.png">
-
-<img src="documentation/images/search.png">
-
-<img src="documentation/images/results.png">
 
 ## Build status
 
