@@ -28,10 +28,13 @@
                             <td class="nhsuk-table__cell--bold">Appointment</td>
                             <td class="nhsuk-table__cell">@searchResult.HasAppointment.BooleanToHtml()</td>
                         </tr>
-                        <tr role="row" class="nhsuk-table__row">
-                            <td class="nhsuk-table__cell--bold">Use Case</td>
-                            <td colspan="3" class="nhsuk-table__cell">@searchResult.UseCase</td>
-                        </tr>
+                        @if (searchResult.DisplayUseCase)
+                        {
+                            <tr role="row" class="nhsuk-table__row">
+                                <td class="nhsuk-table__cell--bold">Use Case</td>
+                                <td colspan="3" class="nhsuk-table__cell">@searchResult.UseCase</td>
+                            </tr>
+                        }
                     </tbody>
                 </table>
             </div>

@@ -7,6 +7,8 @@
     <partial name="SearchInput" />
     @if (Model.SearchResults != null)
     {
+        <h1>Results</h1>
+        <partial name="SearchSortOptions" />
         <partial name="SearchResultsHeader" model="@Model.SearchResults" />
         <partial name="SearchResults" model="@Model.SearchResults" />
     }

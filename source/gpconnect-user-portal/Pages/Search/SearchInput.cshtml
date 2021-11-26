@@ -24,7 +24,7 @@
                    asp-for="@Model.ProviderName" name="providername" value="@Model.ProviderName" type="search">
         </div>
 
-        <div class="nhsuk-form-group @(ccgOdsCodeInvalid ? "nhsuk-form-group--error": string.Empty)">
+        @*<div class="nhsuk-form-group @(ccgOdsCodeInvalid ? "nhsuk-form-group--error": string.Empty)">
             <label class="nhsuk-label" for="input-ccgodscode">CCG ODS Code</label>
             @if (ccgOdsCodeInvalid)
             {
@@ -32,11 +32,16 @@
             }
             <input class="nhsuk-input @(ccgOdsCodeInvalid ? "nhsuk-input--error": string.Empty)" id="input-ccgodscode" novalidate
                    asp-for="@Model.CCGOdsCode" name="ccgodscode" value="@Model.CCGOdsCode" type="search">
+        </div>*@
+
+        <div class="nhsuk-form-group">
+            <label class="nhsuk-label" for="input-ccgname">CCG ODS Code</label>
+            <select asp-for="@Model.SelectedCCGOdsCode" asp-items="@Model.CCGOdsCodes" class="nhsuk-select" id="@Model.SelectedCCGOdsCode"></select>
         </div>
 
         <div class="nhsuk-form-group">
             <label class="nhsuk-label" for="input-ccgname">CCG Name</label>
-            <select asp-for="@Model.SelectedCCG" asp-items="@Model.CCGs" class="nhsuk-select" id="@Model.SelectedCCG"></select>
+            <select asp-for="@Model.SelectedCCGName" asp-items="@Model.CCGNames" class="nhsuk-select" id="@Model.SelectedCCGName"></select>
         </div>
 
         <button class="nhsuk-button" asp-page-handler="Search" type="submit">Search</button>

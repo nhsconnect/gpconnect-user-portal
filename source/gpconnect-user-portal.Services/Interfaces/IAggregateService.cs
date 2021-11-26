@@ -7,6 +7,7 @@ namespace gpconnect_user_portal.Services.Interfaces
     {
         public ILogService LogService { get; }
         public IApplicationService ApplicationService { get; }
+        public IOrganisationDataService OrganisationDataService { get; }
         public IHttpContextAccessor HttpContextAccessor { get; }
         public HttpRequest Request { get; }
         public HttpResponse Response { get; }

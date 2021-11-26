@@ -10,7 +10,15 @@ namespace gpconnect_user_portal.Pages
 {
     public partial class SearchModel : BaseModel
     {
-        public IEnumerable<SelectListItem> CCGs => GetCCGs();
+        [BindProperty(SupportsGet = true)]
+        public IEnumerable<SelectListItem> CCGNames => GetCCGs();
+        [BindProperty(SupportsGet = true)]
+        public IEnumerable<SelectListItem> CCGOdsCodes => GetCCGs();
+
+        public IEnumerable<SelectListItem> SearchResultSortOptions => GetSearchResultSortOptions();
+
+        [BindProperty]
+        public string SelectedSortOption { get; set; }
 
         public SearchResult SearchResults { get; set; }
 
@@ -26,6 +34,9 @@ namespace gpconnect_user_portal.Pages
         public string CCGOdsCode { get; set; }
 
         [BindProperty(SupportsGet = true)]
-        public string SelectedCCG { get; set; }
+        public string SelectedCCGName { get; set; }
+
+        [BindProperty(SupportsGet = true)]
+        public string SelectedCCGOdsCode { get; set; }
     }
 }

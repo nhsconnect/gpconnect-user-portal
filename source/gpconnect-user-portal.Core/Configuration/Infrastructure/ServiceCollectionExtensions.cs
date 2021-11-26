@@ -1,14 +1,16 @@
 ﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Net;
 
-namespace gpconnect_user_portal.Core.Configuration
+namespace gpconnect_user_portal.Core.Configuration.Infrastructure
 {
     public static class ServiceCollectionExtensions
     {
-        public static IServiceCollection ConfigureApplicationServices(this IServiceCollection services)
+        public static IServiceCollection ConfigureApplicationServices(this IServiceCollection services, IConfiguration configuration, IWebHostEnvironment env)
         {
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
 
@@ -47,6 +49,9 @@ namespace gpconnect_user_portal.Core.Configuration
                 options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
                 options.Cookie.SameSite = SameSiteMode.None;
             });
+
+            var httpClientExtensions = new HttpClientExtensions();
+            httpClientExtensions.AddHttpClientServices(services, env);            
 
             return services;
         }

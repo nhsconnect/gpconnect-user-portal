@@ -10,5 +10,6 @@
         public bool HasStructured { get; set; }
         public bool HasAppointment { get; set; }
         public string UseCase { get; set; }
+        public bool DisplayUseCase => !string.IsNullOrEmpty(UseCase);
     }
 }

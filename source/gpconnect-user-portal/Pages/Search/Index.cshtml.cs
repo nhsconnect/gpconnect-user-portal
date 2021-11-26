@@ -3,7 +3,6 @@ using gpconnect_user_portal.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -14,27 +13,32 @@ namespace gpconnect_user_portal.Pages
     {
         private readonly ILogger<SearchModel> _logger;
         private readonly IAggregateService _aggregateService;
+        private readonly DTO.Response.CCG _ccgList;
 
         public SearchModel(ILogger<SearchModel> logger, IAggregateService aggregateService) : base(aggregateService)
         {
             _logger = logger;
             _aggregateService = aggregateService;
+            _ccgList = _aggregateService.OrganisationDataService.GetCCGs().Result;
         }
 
-        public void OnGet()
+        public async Task<IActionResult> OnGetAsync()
         {
-
+            //CCGNames = await GetCCGs();
+            //CCGOdsCodes = await GetCCGs();
+            return Page();
         }
-        public async Task<IActionResult> OnPostSearchAsync()
+
+        public IActionResult OnPostSearchAsync()
         {
             if (ModelState.IsValid)
             {
-                await GetSearchResults();
+                GetSearchResults();
             }
             return Page();
         }
 
-        private async Task GetSearchResults()
+        private void GetSearchResults()
         {
             try
             {
@@ -78,7 +82,8 @@ namespace gpconnect_user_portal.Pages
         {
             ProviderOdsCode = null;
             CCGOdsCode = null;
-            SelectedCCG = CCGs.First().Value;
+            SelectedCCGName = CCGNames.First().Value;
+            SelectedCCGOdsCode = CCGOdsCodes.First().Value;
             ProviderName = null;
             ModelState.Clear();
             return Page();
@@ -86,7 +91,20 @@ namespace gpconnect_user_portal.Pages
 
         private IEnumerable<SelectListItem> GetCCGs()
         {
-            yield return new SelectListItem("Leeds", "Leeds");
+            //var ccgs = await _aggregateService.OrganisationDataService.GetCCGs();
+            var options = _ccgList.Organisations.Select(ccg => new SelectListItem()
+            {
+                Text = ccg.Name,
+                Value = ccg.OrgId
+            }).ToList();
+            options.Insert(0, new SelectListItem());
+            return options;
+        }
+
+        private IEnumerable<SelectListItem> GetSearchResultSortOptions()
+        {
+            var options = new string[] { "Sort by:", "No Record Access: HTML View", "Has Record Access: HTML View", "No Record Access: Structured", "Has Record Access: Structured", "No Appointment", "Has Appointment" };
+            return options.Select(option => new SelectListItem { Value = option, Text = option });
         }
     }
 }

@@ -1,0 +1,5 @@
+﻿@model SearchModel
+
+<div class="nhsuk-form-group nhsuk-header__content">
+    <select asp-for="@Model.SelectedSortOption" asp-items="@Model.SearchResultSortOptions" class="nhsuk-select" id="@Model.SelectedSortOption"></select>
+</div>

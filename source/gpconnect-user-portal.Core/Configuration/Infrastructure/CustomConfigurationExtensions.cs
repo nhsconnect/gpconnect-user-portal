@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using System;
 
-namespace gpconnect_user_portal.Core.Configuration
+namespace gpconnect_user_portal.Core.Configuration.Infrastructure
 {
     public static class CustomConfigurationExtensions
     {
@@ -49,6 +49,20 @@ namespace gpconnect_user_portal.Core.Configuration
         public override void Load()
         {
             MappingExtensions.ConfigureMappingServices();
+            //LoadConfiguration<CCG>("SELECT * FROM configuration.get_spine_configuration()", "CCG");
         }
+
+        //private void LoadConfiguration<T>(string query, string configurationPrefix) where T : class
+        //{
+        //    using NpgsqlConnection connection = new NpgsqlConnection(Source.ConnectionString);
+        //    var result = connection.Query<T>(query).FirstOrDefault();
+        //    var json = JsonConvert.SerializeObject(result);
+        //    var configuration = JsonConvert.DeserializeObject<Dictionary<string, string>>(json);
+
+        //    foreach (var configEntry in configuration)
+        //    {
+        //        Set($"{configurationPrefix}:{configEntry.Key}", configEntry.Value ?? string.Empty);
+        //    }
+        //}
     }
 }
