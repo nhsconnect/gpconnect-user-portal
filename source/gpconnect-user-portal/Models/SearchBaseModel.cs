@@ -14,7 +14,6 @@ namespace gpconnect_user_portal.Pages
     public abstract class SearchBaseModel : BaseModel
     {
         private readonly IAggregateService _aggregateService;
-        private readonly List<Organisation> _organisationList;
         public readonly SearchOptionsModel SearchOptions;
         private readonly IOptionsMonitor<DTO.Response.Configuration.General> _generalOptionsDelegate;
 
@@ -24,29 +23,10 @@ namespace gpconnect_user_portal.Pages
         {
             _aggregateService = aggregateService;
             _generalOptionsDelegate = generalOptionsDelegate;
-            _organisationList = _aggregateService.ReferenceService.GetOrganisations().Result;
-            SearchOptions = new SearchOptionsModel()
+            SearchOptions = new SearchOptionsModel(_aggregateService, _generalOptionsDelegate)
             {
-                CCGNames = GetCCGByNames(),
-                CCGOdsCodes = GetCCGByOdsCodes(),
                 SearchResultSortOptions = GetSearchResultSortOptions()
             };
-        }
-
-        public IEnumerable<SelectListItem> GetCCGByNames()
-        {
-            var options = _organisationList.OrderBy(x => x.Name)
-                .Select(option => new SelectListItem() { Text = option.Name, Value = option.OrgId }).ToList();
-            options.Insert(0, new SelectListItem());
-            return options;
-        }
-
-        public IEnumerable<SelectListItem> GetCCGByOdsCodes()
-        {
-            var options = _organisationList.OrderBy(x => x.OrgId)
-                .Select(option => new SelectListItem() { Text = option.OrgId, Value = option.OrgId }).ToList();
-            options.Insert(0, new SelectListItem());
-            return options;
         }
 
         public static IEnumerable<SelectListItem> GetSearchResultSortOptions()

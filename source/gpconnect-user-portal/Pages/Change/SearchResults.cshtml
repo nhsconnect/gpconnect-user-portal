@@ -19,6 +19,7 @@
         }
         else
         {
+            <button class="nhsuk-button" asp-page-handler="Create" type="submit">@Helpers.Constants.ButtonConstants.CREATESITE</button>
             <dl class="nhsuk-summary-list">
                 @foreach (var option in Model.SearchResult.SearchResults)
                 {

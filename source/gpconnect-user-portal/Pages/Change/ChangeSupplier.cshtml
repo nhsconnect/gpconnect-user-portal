@@ -1,12 +1,14 @@
-﻿@model DetailModel
+﻿@using gpconnect_user_portal.Helpers.Constants
+@model DetailModel
 
 <div class="nhsuk-grid-row">
     <div class="nhsuk-grid-column-full">
         <div class="nhsuk-card nhsuk-card--feature">
             <div class="nhsuk-card__content nhsuk-card__content--feature">
-                <h2 class="nhsuk-card__heading nhsuk-card__heading--feature nhsuk-heading-m">
-                    Supplier
-                </h2>
+                <h2 class="nhsuk-card__heading nhsuk-card__heading--feature nhsuk-heading-m">Supplier</h2>
+                <div class="nhsuk-form-group">
+                    <button class="nhsuk-button" asp-page-handler="EnableSupplierUpdate" type="submit">@ButtonConstants.ENABLESUPPLIERUPDATE</button>
+                </div>
                 <div class="nhsuk-grid-row">
                     <div class="nhsuk-grid-column-one-half">
                         <div class="nhsuk-form-group">
@@ -25,7 +27,6 @@
                         </div>
                     </div>
                 </div>
-                <button class="nhsuk-button" asp-page-handler="UpdateSupplier" type="submit">@Helpers.Constants.ButtonConstants.UPDATE</button>
             </div>
         </div>
     </div>

@@ -1,7 +1,7 @@
 ﻿@page "{odsCode?}"
 @model DetailModel
 
-<h1>Add or Update GP Connect End User</h1>
+<h1>@Model.PageTitle</h1>
 
 <form method="post" id="search-input-form">
     <partial name="ChangeInput" />
@@ -13,6 +13,6 @@
                 <button class="nhsuk-button" asp-page-handler="Continue" type="submit">@Helpers.Constants.ButtonConstants.CONTINUE</button>
             </div>
         </div>
-    </div>    
+    </div>
     <input type="hidden" id="guid" name="guid" value="@Guid.NewGuid()" />
 </form>

@@ -11,13 +11,6 @@ namespace gpconnect_user_portal.Pages
     //[AtLeastOneProperty("ProviderOdsCode", "ProviderName", "SelectedCCGName", "SelectedCCGOdsCode", ErrorMessage = "You must supply at least one value")]
     public partial class SearchModel : SearchBaseModel
     {
-        [Display(Name = DisplayConstants.CCGICBNAME)]
-        [BindProperty(SupportsGet = true)]
-        public IEnumerable<SelectListItem> CCGNames => GetCCGByNames();
-        [Display(Name = DisplayConstants.CCGICBODSCODE)]
-        [BindProperty(SupportsGet = true)]
-        public IEnumerable<SelectListItem> CCGOdsCodes => GetCCGByOdsCodes();
-
         public IEnumerable<SelectListItem> SearchResultSortOptions => GetSearchResultSortOptions();
 
         [BindProperty]
@@ -33,11 +26,5 @@ namespace gpconnect_user_portal.Pages
         [Display(Name = DisplayConstants.PROVIDERNAME)]
         [BindProperty(SupportsGet = true)]
         public string ProviderName { get; set; }
-
-        [BindProperty(SupportsGet = true)]
-        public string SelectedCCGName { get; set; }
-
-        [BindProperty(SupportsGet = true)]
-        public string SelectedCCGOdsCode { get; set; }
     }
 }

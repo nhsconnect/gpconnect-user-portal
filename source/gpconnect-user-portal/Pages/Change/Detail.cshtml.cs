@@ -30,6 +30,7 @@ namespace gpconnect_user_portal.Pages
 
         private void PopulateForm(string odsCode)
         {
+            OdsCode = odsCode;
             FormOdsCode = odsCode;
         }
 

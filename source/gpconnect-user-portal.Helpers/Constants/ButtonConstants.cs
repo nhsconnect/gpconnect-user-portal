@@ -11,7 +11,7 @@
         public const string SUBMIT = "Submit";
         public const string EXPORTASCSV = "Export as CSV";
         public const string CREATESITE = "Create new GP Connect site";
-
-
+        public const string ENABLEPRODUCTUPDATE = "Enable product update";
+        public const string ENABLESUPPLIERUPDATE = "Enable supplier update";
     }
 }

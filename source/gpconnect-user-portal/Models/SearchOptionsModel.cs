@@ -1,20 +1,23 @@
 ﻿using gpconnect_user_portal.Helpers.Constants;
+using gpconnect_user_portal.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Extensions.Options;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace gpconnect_user_portal.Pages
 {
-    public class SearchOptionsModel
+    public class SearchOptionsModel : BaseSiteModel
     {
-        [Display(Name = DisplayConstants.CCGICBNAME)]
-        [BindProperty(SupportsGet = true)]
-        public IEnumerable<SelectListItem> CCGNames { get; set; }
+        private readonly IAggregateService _aggregateService;
+        private readonly IOptionsMonitor<DTO.Response.Configuration.General> _generalOptionsDelegate;
 
-        [Display(Name = DisplayConstants.CCGICBODSCODE)]
-        [BindProperty(SupportsGet = true)]
-        public IEnumerable<SelectListItem> CCGOdsCodes { get; set; }
+        public SearchOptionsModel(IAggregateService aggregateService, IOptionsMonitor<DTO.Response.Configuration.General> generalOptionsDelegate) : base(aggregateService, generalOptionsDelegate)
+        {
+            _aggregateService = aggregateService;
+            _generalOptionsDelegate = generalOptionsDelegate;
+        }
 
         public IEnumerable<SelectListItem> SearchResultSortOptions { get; set; }
 
@@ -29,11 +32,5 @@ namespace gpconnect_user_portal.Pages
         [Display(Name = DisplayConstants.PROVIDERNAME)]
         [BindProperty(SupportsGet = true)]
         public string ProviderName { get; set; }
-
-        [BindProperty(SupportsGet = true)]
-        public string SelectedCCGName { get; set; }
-
-        [BindProperty(SupportsGet = true)]
-        public string SelectedCCGOdsCode { get; set; }
     }
 }

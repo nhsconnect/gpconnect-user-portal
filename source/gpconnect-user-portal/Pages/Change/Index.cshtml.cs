@@ -33,9 +33,9 @@ namespace gpconnect_user_portal.Pages
             return Page();
         }
 
-        public IActionResult OnGetSite(string odscode)
+        public IActionResult OnPostCreate()
         {
-            return Page();
+            return RedirectToPagePermanent("Detail");
         }
 
         private void GetSearchResults()

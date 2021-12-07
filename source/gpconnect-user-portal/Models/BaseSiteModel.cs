@@ -19,11 +19,7 @@ namespace gpconnect_user_portal.Pages
         {
             _aggregateService = aggregateService;
             _generalOptionsDelegate = generalOptionsDelegate;
-        }
-
-        [Display(Name = DisplayConstants.NAMEOFAUTHORISER)]
-        [BindProperty(SupportsGet = true)]
-        public string Authoriser { get; set; }
+        }        
 
         [Display(Name = DisplayConstants.NAMEOFSUBMITTER)]
         [BindProperty(SupportsGet = true)]
@@ -49,13 +45,9 @@ namespace gpconnect_user_portal.Pages
         [BindProperty(SupportsGet = true)]
         public string SiteName { get; set; }
 
-        [Display(Name = DisplayConstants.CCGICBODSCODE)]
+        [Display(Name = DisplayConstants.SITEPOSTCODE)]
         [BindProperty(SupportsGet = true)]
-        public string CcgOdsCode { get; set; }
-
-        [Display(Name = DisplayConstants.CCGICBNAME)]
-        [BindProperty(SupportsGet = true)]
-        public string CcgName { get; set; }
+        public string SitePostcode { get; set; }
 
         [Display(Name = DisplayConstants.ACTINGASSUPPLIER)]
         [BindProperty(SupportsGet = true)]
@@ -78,15 +70,7 @@ namespace gpconnect_user_portal.Pages
         public bool Appointment { get; set; }
 
         [BindProperty(SupportsGet = true)]
-        public string SelectedUseCase { get; set; }
-
-        [Display(Name = DisplayConstants.USECASEDESCRIPTION)]
-        [BindProperty(SupportsGet = true)]
-        public string UseCaseDescription { get; set; }
-
-        [Display(Name = DisplayConstants.USECASE)]
-        [BindProperty(SupportsGet = true)]
-        public IEnumerable<SelectListItem> UseCases => GetUseCases();
+        public string SelectedUseCase { get; set; }        
 
         [BindProperty(SupportsGet = true)]
         public string SelectedSupplier { get; set; }
@@ -128,7 +112,7 @@ namespace gpconnect_user_portal.Pages
             return options;
         }
 
-        private IEnumerable<SelectListItem> GetUseCases()
+        protected IEnumerable<SelectListItem> GetUseCases()
         {
             var options = new string[] { "NHS 111", "Hospital Access", "Social Care Access", "Emergency GP" };
             return options.Select(option => new SelectListItem() { Text = option, Value = option });

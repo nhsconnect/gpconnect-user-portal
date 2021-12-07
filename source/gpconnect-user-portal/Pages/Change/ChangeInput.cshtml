@@ -2,11 +2,22 @@
 
 <div class="nhsuk-grid-row">
     <div class="nhsuk-grid-column-full">
-        <div class="nhsuk-form-group">
-            <label class="nhsuk-label" for="input-authoriser">@Html.DisplayNameFor(model => model.Authoriser)</label>
-            <input class="nhsuk-input" id="input-authoriser" novalidate asp-for="@Model.Authoriser" name="authoriser" value="@Model.Authoriser" type="text">
+        <div class="nhsuk-card">
+            <div class="nhsuk-card__content">
+                <p class="nhsuk-card__description">
+                    <ol class="nhsuk-contents-list__list">
+                        <li class="nhsuk-contents-list__item"><span>Use this form if you wish to start to use GP Connect products, change the ones you are currently using or change your GP Connect supplier.</span></li>
+                        <li class="nhsuk-contents-list__item"><span>Information about end users who are using GP Connect products for Direct Patient Care.</span></li>
+                        <li class="nhsuk-contents-list__item"><span>Support to end users who wish to start to use GP Connect products or change the ones they are currently using.</span></li>
+                    </ol>
+                </p>
+            </div>
         </div>
+    </div>
+</div>
 
+<div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-full">
         <div class="nhsuk-form-group">
             <label class="nhsuk-label" for="input-submitter">@Html.DisplayNameFor(model => model.Submitter)</label>
             <input class="nhsuk-input" id="input-submitter" novalidate asp-for="@Model.Submitter" name="submitter" value="@Model.Submitter" type="text">
@@ -50,24 +61,31 @@
 </div>
 
 <div class="nhsuk-grid-row">
-    <div class="nhsuk-grid-column-full">
+    <div class="nhsuk-grid-column-one-half">
         <div class="nhsuk-form-group">
             <label class="nhsuk-label" for="input-sitename">@Html.DisplayNameFor(model => model.SiteName)</label>
-            <div class="nhsuk-hint" id="input-sitename-hint-text">Updated from ODS</div>
             <input class="nhsuk-input" id="input-sitename" novalidate asp-for="@Model.SiteName" name="sitename" value="@Model.SiteName" type="text">
+        </div>
+    </div>
+    <div class="nhsuk-grid-column-one-half">
+        <div class="nhsuk-form-group">
+            <label class="nhsuk-label" for="input-sitepostcode">@Html.DisplayNameFor(model => model.SitePostcode)</label>
+            <input class="nhsuk-input" id="input-sitepostcode" novalidate asp-for="@Model.SitePostcode" name="sitepostcode" value="@Model.SitePostcode" type="text">
         </div>
     </div>
 </div>
 
 <div class="nhsuk-grid-row">
-    <div class="nhsuk-grid-column-full">
+    <div class="nhsuk-grid-column-one-half">
         <div class="nhsuk-form-group">
-            <label class="nhsuk-label" for="input-ccgodscode">@Html.DisplayNameFor(model => model.CcgOdsCode)</label>
-            <input class="nhsuk-input" id="input-ccgodscode" novalidate asp-for="@Model.CcgOdsCode" name="ccgodscode" value="@Model.CcgOdsCode" type="text">
+            <label class="nhsuk-label" for="input-ccgname">@Html.DisplayNameFor(model => model.CCGOdsCodes) (if applicable)</label>
+            <select asp-for="@Model.SelectedCCGOdsCode" asp-items="@Model.CCGOdsCodes" class="nhsuk-select" id="@Model.SelectedCCGOdsCode"></select>
         </div>
+    </div>
+    <div class="nhsuk-grid-column-one-half">
         <div class="nhsuk-form-group">
-            <label class="nhsuk-label" for="input-ccgname">@Html.DisplayNameFor(model => model.CcgName)</label>
-            <input class="nhsuk-input" id="input-ccgname" novalidate asp-for="@Model.CcgName" name="ccgname" value="@Model.CcgName" type="text">
+            <label class="nhsuk-label" for="input-ccgname">@Html.DisplayNameFor(model => model.CCGNames) (if applicable)</label>
+            <select asp-for="@Model.SelectedCCGName" asp-items="@Model.CCGNames" class="nhsuk-select" id="@Model.SelectedCCGName"></select>
         </div>
     </div>
 </div>
