@@ -10,8 +10,10 @@ namespace gpconnect_user_portal.DTO.Response
         public string OrgRecordClass { get; set; }
         public string Postcode { get; set; }
         public DateTime LastChangeDate { get; set; }
+        public DateTime AddedDate { get; set; }
+        public DateTime LastSyncDate { get; set; }
         public string PrimaryRoleId { get; set; }
         public string PrimaryRoleDescription { get; set; }
-        public Uri OrgLink { get; set; }
+        public string OrgLink { get; set; }
     }
 }

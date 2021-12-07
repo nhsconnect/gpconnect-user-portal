@@ -1,0 +1,33 @@
+﻿@model ChangeModel
+
+<h2>@Model.SearchResult.SearchResultsHeading</h2>
+
+<div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-full">
+        @if (Model.SearchResult.HasNoMatches)
+        {
+            <div class="nhsuk-warning-callout">
+                <h3 class="nhsuk-warning-callout__label">
+                    <span role="text">
+                        <span class="nhsuk-u-visually-hidden">Important: </span>
+                        No sites found
+                    </span>
+                </h3>
+                <p></p>
+                <button class="nhsuk-button" asp-page-handler="Create" type="submit">@Helpers.Constants.ButtonConstants.CREATESITE</button>
+            </div>
+        }
+        else
+        {
+            <dl class="nhsuk-summary-list">
+                @foreach (var option in Model.SearchResult.SearchResults)
+                {
+                    <div class="nhsuk-summary-list__row">
+                        <dt class="nhsuk-summary-list__key">@option.SiteODSCode</dt>
+                        <dd class="nhsuk-summary-list__value">@option.SiteName</dd>
+                        <dd class="nhsuk-summary-list__actions"><a href="/Change/Detail/@option.SiteODSCode">@Helpers.Constants.ButtonConstants.CHANGE</a></dd>
+                   </div>
+                }
+            </dl>
+        }
+</div>

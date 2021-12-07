@@ -1,23 +1,24 @@
-﻿@model DTO.Response.SearchResult
+﻿@using gpconnect_user_portal.Helpers.Constants
+@model SearchModel
 
-    <button class="nhsuk-button" asp-page-handler="Export" type="submit">Export as CSV</button>
+<button class="nhsuk-button" asp-page-handler="ExportResults" type="submit">@ButtonConstants.EXPORTASCSV</button>
 
-    <table class="nhsuk-table">
-        <caption class="nhsuk-table__caption">Results</caption>
-        <thead role="rowgroup" class="nhsuk-table__head">
-            <tr role="row">
-                <th role="columnheader" class="" scope="col">Matched</th>
-                <th role="columnheader" class="" scope="col">Has Record Access: HTML View</th>
-                <th role="columnheader" class="" scope="col">Has Record Access: Structured</th>
-                <th role="columnheader" class="" scope="col">Has Appointment</th>
-            </tr>
-        </thead>
-        <tbody class="nhsuk-table__body">
-            <tr role="row" class="nhsuk-table__row">
-                <td class="nhsuk-table__cell">@Model.MatchedCount</td>
-                <td class="nhsuk-table__cell">@Model.HasHtmlViewCount</td>
-                <td class="nhsuk-table__cell">@Model.HasStructuredCount</td>
-                <td class="nhsuk-table__cell">@Model.HasAppointmentCount</td>
-            </tr>
-        </tbody>
-    </table>
+<table class="nhsuk-table">
+    <caption class="nhsuk-table__caption">Results</caption>
+    <thead role="rowgroup" class="nhsuk-table__head">
+        <tr role="row">
+            <th role="columnheader" class="" scope="col">@Html.DisplayNameFor(model => model.SearchResult.MatchedCount)</th>
+            <th role="columnheader" class="" scope="col">@Html.DisplayNameFor(model => model.SearchResult.HasHtmlViewCount)</th>
+            <th role="columnheader" class="" scope="col">@Html.DisplayNameFor(model => model.SearchResult.HasStructuredCount)</th>
+            <th role="columnheader" class="" scope="col">@Html.DisplayNameFor(model => model.SearchResult.HasAppointmentCount)</th>
+        </tr>
+    </thead>
+    <tbody class="nhsuk-table__body">
+        <tr role="row" class="nhsuk-table__row">
+            <td class="nhsuk-table__cell">@Model.SearchResult.MatchedCount</td>
+            <td class="nhsuk-table__cell">@Model.SearchResult.HasHtmlViewCount</td>
+            <td class="nhsuk-table__cell">@Model.SearchResult.HasStructuredCount</td>
+            <td class="nhsuk-table__cell">@Model.SearchResult.HasAppointmentCount</td>
+        </tr>
+    </tbody>
+</table>

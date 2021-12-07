@@ -1,0 +1,32 @@
+﻿@model DetailModel
+
+<div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-full">
+        <div class="nhsuk-card nhsuk-card--feature">
+            <div class="nhsuk-card__content nhsuk-card__content--feature">
+                <h2 class="nhsuk-card__heading nhsuk-card__heading--feature nhsuk-heading-m">
+                    Supplier
+                </h2>
+                <div class="nhsuk-grid-row">
+                    <div class="nhsuk-grid-column-one-half">
+                        <div class="nhsuk-form-group">
+                            <label class="nhsuk-label" for="input-supplier">@Html.DisplayNameFor(model => model.Suppliers)</label>
+                            <select size="10" asp-for="@Model.SelectedSupplier" asp-items="@Model.Suppliers" class="nhsuk-select" id="@Model.SelectedSupplier"></select>
+                        </div>
+                    </div>
+                    <div class="nhsuk-grid-column-one-half">
+                        <div class="nhsuk-form-group">
+                            <label class="nhsuk-label" for="input-supplier">@Html.DisplayNameFor(model => model.SupplierProducts)</label>
+                            <select size="10" asp-for="@Model.SelectedSupplierProduct" asp-items="@Model.SupplierProducts" class="nhsuk-select" id="@Model.SelectedSupplierProduct"></select>
+                        </div>
+                        <div class="nhsuk-form-group">
+                            <label class="nhsuk-label" for="input-supplier">@Html.DisplayNameFor(model => model.SelectedSupplierProductUseCase)</label>
+                            <p>@Model.SelectedSupplierProductUseCase</p>
+                        </div>
+                    </div>
+                </div>
+                <button class="nhsuk-button" asp-page-handler="UpdateSupplier" type="submit">@Helpers.Constants.ButtonConstants.UPDATE</button>
+            </div>
+        </div>
+    </div>
+</div>

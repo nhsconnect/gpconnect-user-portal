@@ -13,9 +13,11 @@ namespace gpconnect_user_portal.Core.Configuration.Infrastructure
         protected override void Load(ContainerBuilder containerBuilder)
         {
             containerBuilder.RegisterType<FhirRequestExecution>().As<IFhirRequestExecution>().InstancePerLifetimeScope();
+            containerBuilder.RegisterType<ConfigurationService>().As<IConfigurationService>().InstancePerLifetimeScope();
             containerBuilder.RegisterType<DataService>().As<IDataService>().InstancePerLifetimeScope();
-            containerBuilder.RegisterType<OrganisationDataService>().As<IOrganisationDataService>().InstancePerLifetimeScope();
+            containerBuilder.RegisterType<ReferenceService>().As<IReferenceService>().InstancePerLifetimeScope();
             containerBuilder.RegisterType<ApplicationService>().As<IApplicationService>().InstancePerLifetimeScope();
+            containerBuilder.RegisterType<ReportingService>().As<IReportingService>().InstancePerLifetimeScope();
             containerBuilder.RegisterType<LogService>().As<ILogService>().InstancePerLifetimeScope();
             containerBuilder.RegisterType<AggregateService>().As<IAggregateService>().InstancePerLifetimeScope();
             containerBuilder.RegisterType<LoggerManager>().As<ILoggerManager>().SingleInstance();

@@ -1,0 +1,47 @@
+﻿@using gpconnect_user_portal.Helpers.Constants
+@model DetailModel
+
+<div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-full">
+        <div class="nhsuk-card nhsuk-card--feature">
+            <div class="nhsuk-card__content nhsuk-card__content--feature">
+                <h2 class="nhsuk-card__heading nhsuk-card__heading--feature nhsuk-heading-m">
+                    GP Connect Products
+                </h2>
+                <div class="nhsuk-form-group">
+                    <div class="nhsuk-checkboxes">
+                        <div class="nhsuk-checkboxes__item">
+                            <input class="nhsuk-checkboxes__input" id="input-actingassupplier" name="actingassupplier" type="checkbox" value="@Model.ActingAsSupplier">
+                            <label class="nhsuk-label nhsuk-checkboxes__label" for="input-actingassupplier">@Html.DisplayNameFor(model => model.ActingAsSupplier)</label>
+                        </div>
+                        <div class="nhsuk-checkboxes__item">
+                            <input class="nhsuk-checkboxes__input" id="input-recordaccesshtmlview" name="recordaccesshtmlview" type="checkbox" value="@Model.RecordAccessHtmlView">
+                            <label class="nhsuk-label nhsuk-checkboxes__label" for="input-recordaccesshtmlview">@Html.DisplayNameFor(model => model.RecordAccessHtmlView)</label>
+                        </div>
+                        <div class="nhsuk-checkboxes__item">
+                            <input class="nhsuk-checkboxes__input" id="input-recordaccessstructured" name="recordaccessstructured" type="checkbox" value="@Model.RecordAccessStructured">
+                            <label class="nhsuk-label nhsuk-checkboxes__label" for="input-recordaccessstructured">@Html.DisplayNameFor(model => model.RecordAccessStructured)</label>
+                        </div>
+                        <div class="nhsuk-checkboxes__item">
+                            <input class="nhsuk-checkboxes__input" id="input-actingasconsumer" name="actingasconsumer" type="checkbox" value="@Model.ActingAsConsumer">
+                            <label class="nhsuk-label nhsuk-checkboxes__label" for="input-actingasconsumer">@Html.DisplayNameFor(model => model.ActingAsConsumer)</label>
+                        </div>
+                        <div class="nhsuk-checkboxes__item">
+                            <input class="nhsuk-checkboxes__input" id="input-appointment" name="appointment" type="checkbox" value="@Model.Appointment">
+                            <label class="nhsuk-label nhsuk-checkboxes__label" for="input-appointment">@Html.DisplayNameFor(model => model.Appointment)</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="nhsuk-form-group">
+                    <label class="nhsuk-label" for="input-usecases">@Html.DisplayNameFor(model => model.UseCases)</label>
+                    <select asp-for="@Model.SelectedUseCase" asp-items="@Model.UseCases" class="nhsuk-select" id="@Model.SelectedUseCase"></select>
+                </div>
+                <div class="nhsuk-form-group">
+                    <label class="nhsuk-label" for="input-usecasedescription">@Html.DisplayNameFor(model => model.UseCaseDescription)</label>
+                    <input class="nhsuk-input" id="input-usecasedescription" novalidate asp-for="@Model.UseCaseDescription" name="usecasedescription" value="@Model.UseCaseDescription" type="text">
+                </div>
+                <button class="nhsuk-button" asp-page-handler="UpdateProducts" type="submit">@ButtonConstants.UPDATE</button>
+            </div>
+        </div>
+    </div>
+</div>

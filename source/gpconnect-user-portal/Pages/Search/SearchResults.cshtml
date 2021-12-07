@@ -1,42 +1,85 @@
-﻿@model DTO.Response.SearchResult
-@using gpconnect_user_portal.Helpers
+﻿@using gpconnect_user_portal.Helpers
+@model SearchModel
 
 <div class="nhsuk-grid-row">
     <div class="nhsuk-grid-column-full">
-        @foreach (var searchResult in Model.SearchResults)
+        @foreach (var searchResult in Model.SearchResult.SearchResults)
         {
-            <div class="nhsuk-table__panel-with-heading-tab">
-                <h3 class="nhsuk-table__heading-tab">@searchResult.SiteName</h3>
-                <table class="nhsuk-table">
-                    <caption class="nhsuk-table__caption nhsuk-u-visually-hidden">Result</caption>
-                    <tbody class="nhsuk-table__body">
-                        <tr role="row" class="nhsuk-table__row">
-                            <td class="nhsuk-table__cell--bold">Site ODS Code</td>
-                            <td class="nhsuk-table__cell">@searchResult.SiteODSCode</td>
-                            <td class="nhsuk-table__cell--bold">Record Access: Structured</td>
-                            <td class="nhsuk-table__cell">@searchResult.HasStructured.BooleanToHtml()</td>
-                        </tr>
-                        <tr role="row" class="nhsuk-table__row">
-                            <td class="nhsuk-table__cell--bold">CCG Name</td>
-                            <td class="nhsuk-table__cell">@searchResult.CCGName</td>
-                            <td class="nhsuk-table__cell--bold">Record Access: HTML View</td>
-                            <td class="nhsuk-table__cell ">@searchResult.HasHtmlView.BooleanToHtml()</td>
-                        </tr>
-                        <tr role="row" class="nhsuk-table__row">
-                            <td class="nhsuk-table__cell--bold">CCG ODS Code</td>
-                            <td class="nhsuk-table__cell">@searchResult.CCGODSCode</td>
-                            <td class="nhsuk-table__cell--bold">Appointment</td>
-                            <td class="nhsuk-table__cell">@searchResult.HasAppointment.BooleanToHtml()</td>
-                        </tr>
-                        @if (searchResult.DisplayUseCase)
-                        {
-                            <tr role="row" class="nhsuk-table__row">
-                                <td class="nhsuk-table__cell--bold">Use Case</td>
-                                <td colspan="3" class="nhsuk-table__cell">@searchResult.UseCase</td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
+            <div class="nhsuk-grid-row">
+                <div class="nhsuk-grid-column-full">
+                    <div class="nhsuk-card nhsuk-card--feature">
+                        <div class="nhsuk-card__content nhsuk-card__content--feature">
+                            <h2 class="nhsuk-card__heading nhsuk-card__heading--feature nhsuk-heading-m">@searchResult.SiteName</h2>
+                            <div class="nhsuk-grid-row">
+                                <div class="nhsuk-grid-column-one-half">
+                                    <div class="nhsuk-grid-column-one-half">
+                                        <p class="nhsuk-label--s">@Html.DisplayNameFor(model => searchResult.SiteODSCode)</p>
+                                    </div>
+                                    <div class="nhsuk-grid-column-one-half">
+                                        <p>@searchResult.SiteODSCode</p>
+                                    </div>
+                                </div>
+                                <div class="nhsuk-grid-column-one-half">
+                                    <div class="nhsuk-grid-column-two-thirds">
+                                        <p class="nhsuk-label--s">@Html.DisplayNameFor(model => searchResult.HasStructured)</p>
+                                    </div>
+                                    <div class="nhsuk-grid-column-one-third">
+                                        <p>@searchResult.HasStructured.BooleanToHtml()</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="nhsuk-grid-row">
+                                <div class="nhsuk-grid-column-one-half">
+                                    <div class="nhsuk-grid-column-one-half">
+                                        <p class="nhsuk-label--s">@Html.DisplayNameFor(model => searchResult.CCGName)</p>
+                                    </div>
+                                    <div class="nhsuk-grid-column-one-half">
+                                        <p>@searchResult.CCGName</p>
+                                    </div>
+                                </div>
+                                <div class="nhsuk-grid-column-one-half">
+                                    <div class="nhsuk-grid-column-two-thirds">
+                                        <p class="nhsuk-label--s">@Html.DisplayNameFor(model => searchResult.HasHtmlView)</p>
+                                    </div>
+                                    <div class="nhsuk-grid-column-one-third">
+                                        <p>@searchResult.HasHtmlView.BooleanToHtml()</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="nhsuk-grid-row">
+                                <div class="nhsuk-grid-column-one-half">
+                                    <div class="nhsuk-grid-column-one-half">
+                                        <p class="nhsuk-label--s">@Html.DisplayNameFor(model => searchResult.CCGODSCode)</p>
+                                    </div>
+                                    <div class="nhsuk-grid-column-one-half">
+                                        <p>@searchResult.CCGODSCode</p>
+                                    </div>
+                                </div>
+                                <div class="nhsuk-grid-column-one-half">
+                                    <div class="nhsuk-grid-column-two-thirds">
+                                        <p class="nhsuk-label--s">@Html.DisplayNameFor(model => searchResult.HasAppointment)</p>
+                                    </div>
+                                    <div class="nhsuk-grid-column-one-third">
+                                        <p>@searchResult.HasAppointment.BooleanToHtml()</p>
+                                    </div>
+                                </div>
+                            </div>
+                            @if (searchResult.DisplayUseCase)
+                            {
+                                <div class="nhsuk-grid-row">
+                                    <div class="nhsuk-grid-column-full">
+                                        <div class="nhsuk-grid-column-full">
+                                            <p class="nhsuk-label--s">@Html.DisplayNameFor(model => searchResult.UseCase)</p>
+                                        </div>
+                                        <div class="nhsuk-grid-column-full">
+                                            <p>@searchResult.UseCase</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
             </div>
         }
     </div>

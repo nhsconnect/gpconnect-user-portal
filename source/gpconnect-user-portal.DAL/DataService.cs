@@ -2,7 +2,11 @@
 using gpconnect_user_portal.DAL.Interfaces;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Npgsql;
+using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Threading.Tasks;
 
 namespace gpconnect_user_portal.DAL
 {
@@ -17,14 +21,49 @@ namespace gpconnect_user_portal.DAL
             _configuration = configuration;
         }
 
-        public List<T> ExecuteQuery<T>(string query, DynamicParameters parameters) where T : class
+        public async Task<List<T>> ExecuteQuery<T>(string query, DynamicParameters parameters = null) where T : class
         {
-            return null;
+            try
+            {
+                using NpgsqlConnection connection = new NpgsqlConnection(_configuration.GetConnectionString(ConnectionStrings.DefaultConnection));
+                var results = (await connection.QueryAsync<T>(query, parameters, commandType: CommandType.StoredProcedure)).AsList();
+                return results;
+            }
+            catch (Exception exc)
+            {
+                _logger?.LogError(exc, $"An error has occurred while attempting to execute the query {query}");
+                throw;
+            }
         }
 
-        public int ExecuteQuery(string query, DynamicParameters parameters)
+        public async Task<T> ExecuteQueryFirstOrDefault<T>(string query, DynamicParameters parameters = null) where T : class
         {
-            return 0;
+            try
+            {
+                using NpgsqlConnection connection = new NpgsqlConnection(_configuration.GetConnectionString(ConnectionStrings.DefaultConnection));
+                var result = await connection.QueryFirstOrDefaultAsync<T>(query, parameters, commandType: CommandType.StoredProcedure);
+                return result;
+            }
+            catch (Exception exc)
+            {
+                _logger?.LogError(exc, $"An error has occurred while attempting to execute the query {query}");
+                throw;
+            }
+        }
+
+        public async Task<int> ExecuteQuery(string query, DynamicParameters parameters)
+        {
+            try
+            {
+                using NpgsqlConnection connection = new NpgsqlConnection(_configuration.GetConnectionString(ConnectionStrings.DefaultConnection));
+                var rowsProcessed = await connection.ExecuteAsync(query, parameters, commandType: CommandType.StoredProcedure);
+                return rowsProcessed;
+            }
+            catch (Exception exc)
+            {
+                _logger?.LogError(exc, $"An error has occurred while attempting to execute the query {query}");
+                throw;
+            }
         }
     }
 }

@@ -1,31 +1,27 @@
-﻿using gpconnect_user_portal.Models;
-using gpconnect_user_portal.Services.Interfaces;
+﻿using gpconnect_user_portal.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace gpconnect_user_portal.Pages
 {
-    public partial class SearchModel : BaseModel
+    public partial class SearchModel : SearchBaseModel
     {
         private readonly ILogger<SearchModel> _logger;
         private readonly IAggregateService _aggregateService;
-        private readonly DTO.Response.CCG _ccgList;
+        private readonly IOptionsMonitor<DTO.Response.Configuration.General> _generalOptionsDelegate;
 
-        public SearchModel(ILogger<SearchModel> logger, IAggregateService aggregateService) : base(aggregateService)
+        public SearchModel(ILogger<SearchModel> logger, IAggregateService aggregateService, IOptionsMonitor<DTO.Response.Configuration.General> generalOptionsDelegate) : base(aggregateService, generalOptionsDelegate)
         {
             _logger = logger;
             _aggregateService = aggregateService;
-            _ccgList = _aggregateService.OrganisationDataService.GetCCGs().Result;
+            _generalOptionsDelegate = generalOptionsDelegate;
         }
 
-        public async Task<IActionResult> OnGetAsync()
+        public IActionResult OnGet()
         {
-            //CCGNames = await GetCCGs();
-            //CCGOdsCodes = await GetCCGs();
             return Page();
         }
 
@@ -70,7 +66,7 @@ namespace gpconnect_user_portal.Pages
                         }
                     }
                 };
-                SearchResults = searchResults;
+                SearchResult = searchResults;
             }
             catch
             {
@@ -78,33 +74,28 @@ namespace gpconnect_user_portal.Pages
             }
         }
 
+        public FileStreamResult OnPostExportResults()
+        {
+            //var exportTable = _aggregateService;
+            //return ExportResult(exportTable);
+            return null;
+        }
+
+        public FileStreamResult OnPostExportAll()
+        {
+            //var exportTable = _aggregateService;
+            //return ExportResult(exportTable);
+            return null;
+        }
+
         public IActionResult OnPostClear()
         {
-            ProviderOdsCode = null;
-            CCGOdsCode = null;
-            SelectedCCGName = CCGNames.First().Value;
-            SelectedCCGOdsCode = CCGOdsCodes.First().Value;
-            ProviderName = null;
+            SearchOptions.ProviderOdsCode = null;
+            SearchOptions.SelectedCCGName = null;
+            SearchOptions.SelectedCCGOdsCode = null;
+            SearchOptions.ProviderName = null;
             ModelState.Clear();
             return Page();
-        }
-
-        private IEnumerable<SelectListItem> GetCCGs()
-        {
-            //var ccgs = await _aggregateService.OrganisationDataService.GetCCGs();
-            var options = _ccgList.Organisations.Select(ccg => new SelectListItem()
-            {
-                Text = ccg.Name,
-                Value = ccg.OrgId
-            }).ToList();
-            options.Insert(0, new SelectListItem());
-            return options;
-        }
-
-        private IEnumerable<SelectListItem> GetSearchResultSortOptions()
-        {
-            var options = new string[] { "Sort by:", "No Record Access: HTML View", "Has Record Access: HTML View", "No Record Access: Structured", "Has Record Access: Structured", "No Appointment", "Has Appointment" };
-            return options.Select(option => new SelectListItem { Value = option, Text = option });
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31205.134
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31919.166
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "gpconnect-user-portal", "gpconnect-user-portal\gpconnect-user-portal.csproj", "{91346F32-79ED-4F4F-8D3B-CE36F81A5EBA}"
 EndProject
@@ -11,9 +11,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "gpconnect-user-portal.Servi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "gpconnect-user-portal.Helpers", "gpconnect-user-portal.Helpers\gpconnect-user-portal.Helpers.csproj", "{03E05B49-1AC1-47EE-B9F1-07235F4A3081}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "gpconnect-user-portal.Core", "gpconnect-user-portal.Core\gpconnect-user-portal.Core.csproj", "{F792653A-37EC-4213-B66D-9CA0C976CF00}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "gpconnect-user-portal.Core", "gpconnect-user-portal.Core\gpconnect-user-portal.Core.csproj", "{F792653A-37EC-4213-B66D-9CA0C976CF00}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "gpconnect-user-portal.DAL", "gpconnect-user-portal.DAL\gpconnect-user-portal.DAL.csproj", "{61D5071D-4FD2-45BC-9BCB-9B3A8CFA722F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "gpconnect-user-portal.DAL", "gpconnect-user-portal.DAL\gpconnect-user-portal.DAL.csproj", "{61D5071D-4FD2-45BC-9BCB-9B3A8CFA722F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "gpconnect-user-portal.Functions", "gpconnect-user-portal.Functions\gpconnect-user-portal.Functions.csproj", "{571AA2CC-8AA3-4FA9-8D55-2374AF23B94E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{61D5071D-4FD2-45BC-9BCB-9B3A8CFA722F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{61D5071D-4FD2-45BC-9BCB-9B3A8CFA722F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{61D5071D-4FD2-45BC-9BCB-9B3A8CFA722F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{571AA2CC-8AA3-4FA9-8D55-2374AF23B94E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{571AA2CC-8AA3-4FA9-8D55-2374AF23B94E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{571AA2CC-8AA3-4FA9-8D55-2374AF23B94E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{571AA2CC-8AA3-4FA9-8D55-2374AF23B94E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

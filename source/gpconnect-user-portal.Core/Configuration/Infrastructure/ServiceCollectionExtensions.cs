@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using gpconnect_user_portal.DTO.Response.Configuration;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
@@ -39,7 +40,6 @@ namespace gpconnect_user_portal.Core.Configuration.Infrastructure
             services.AddHttpContextAccessor();
 
             services.AddHealthChecks();
-
             services.AddRazorPages();
 
             services.AddAntiforgery(options =>
@@ -49,6 +49,9 @@ namespace gpconnect_user_portal.Core.Configuration.Infrastructure
                 options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
                 options.Cookie.SameSite = SameSiteMode.None;
             });
+
+            services.Configure<General>(configuration.GetSection("General"));
+            services.Configure<Reference>(configuration.GetSection("Reference"));
 
             var httpClientExtensions = new HttpClientExtensions();
             httpClientExtensions.AddHttpClientServices(services, env);            

@@ -1,0 +1,162 @@
+﻿@using gpconnect_user_portal.Helpers
+@using gpconnect_user_portal.Helpers.Constants
+@model ReviewModel
+
+<div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-full">
+        <div class="nhsuk-card">
+            <div class="nhsuk-card__content">
+                <div class="nhsuk-grid-row">
+                    <div class="nhsuk-grid-column-one-half">
+                        <div class="nhsuk-grid-column-one-third">
+                            <p class="nhsuk-label--s">@Html.DisplayNameFor(model => model.SiteName)</p>
+                        </div>
+                        <div class="nhsuk-grid-column-two-thirds">
+                            <p>@Model.SiteName</p>
+                        </div>
+                    </div>
+                    <div class="nhsuk-grid-column-one-half">
+                        <div class="nhsuk-grid-column-two-thirds">
+                            <p class="nhsuk-label--s">@Html.DisplayNameFor(model => model.RecordAccessHtmlView)</p>
+                        </div>
+                        <div class="nhsuk-grid-column-one-third">
+                            <p>@Model.RecordAccessHtmlView.BooleanToHtml()</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="nhsuk-grid-row">
+                    <div class="nhsuk-grid-column-one-half">
+                        <div class="nhsuk-grid-column-one-third">
+                            <p class="nhsuk-label--s">@Html.DisplayNameFor(model => model.FormOdsCode)</p>
+                        </div>
+                        <div class="nhsuk-grid-column-two-thirds">
+                            <p>@Model.FormOdsCode</p>
+                        </div>
+                    </div>
+                    <div class="nhsuk-grid-column-one-half">
+                        <div class="nhsuk-grid-column-two-thirds">
+                            <p class="nhsuk-label--s">@Html.DisplayNameFor(model => model.RecordAccessStructured)</p>
+                        </div>
+                        <div class="nhsuk-grid-column-one-third">
+                            <p>@Model.RecordAccessStructured.BooleanToHtml()</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="nhsuk-grid-row">
+                    <div class="nhsuk-grid-column-one-half">
+                        <div class="nhsuk-grid-column-one-half">
+                            <p class="nhsuk-label--s">@Html.DisplayNameFor(model => model.CcgName)</p>
+                        </div>
+                        <div class="nhsuk-grid-column-one-half">
+                            <p>@Model.CcgName</p>
+                        </div>
+                    </div>
+                    <div class="nhsuk-grid-column-one-half">
+                        <div class="nhsuk-grid-column-two-thirds">
+                            <p class="nhsuk-label--s">@Html.DisplayNameFor(model => model.Appointment)</p>
+                        </div>
+                        <div class="nhsuk-grid-column-one-third">
+                            <p>@Model.Appointment.BooleanToHtml()</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="nhsuk-grid-row">
+                    <div class="nhsuk-grid-column-one-half">
+                        <div class="nhsuk-grid-column-one-half">
+                            <p class="nhsuk-label--s">@Html.DisplayNameFor(model => model.CcgOdsCode)</p>
+                        </div>
+                        <div class="nhsuk-grid-column-one-half">
+                            <p>@Model.CcgOdsCode</p>
+                        </div>
+                    </div>
+                    <div class="nhsuk-grid-column-one-half">
+                        <div class="nhsuk-grid-column-one-third">
+                            <p class="nhsuk-label--s">@Html.DisplayNameFor(model => model.UseCases)</p>
+                        </div>
+                        <div class="nhsuk-grid-column-two-thirds">
+                            <p>@Model.SelectedUseCase</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="nhsuk-grid-row">
+                    <div class="nhsuk-grid-column-one-half">
+                        <div class="nhsuk-grid-column-one-third">
+                            <p class="nhsuk-label--s">@Html.DisplayNameFor(model => model.Suppliers)</p>
+                        </div>
+                        <div class="nhsuk-grid-column-two-thirds">
+                            <p>@Model.SelectedSupplier</p>
+                        </div>
+                    </div>
+                    <div class="nhsuk-grid-column-one-half">
+                        <div class="nhsuk-grid-column-two-thirds">
+                            <p class="nhsuk-label--s">@Html.DisplayNameFor(model => model.UseCaseDescription)</p>
+                        </div>
+                        <div class="nhsuk-grid-column-one-third">
+                            <p>@Model.UseCaseDescription</p>
+                        </div>
+                    </div>
+                </div>              
+                
+                <div class="nhsuk-grid-row">
+                    <div class="nhsuk-grid-column-full">
+                        <div class="nhsuk-grid-column-one-third">
+                            <p class="nhsuk-label--s">@Html.DisplayNameFor(model => model.SupplierProducts)</p>
+                        </div>
+                        <div class="nhsuk-grid-column-two-thirds">
+                            <p>@Model.SelectedSupplierProduct</p>
+                        </div>
+                    </div>
+                </div>              
+                
+                <div class="nhsuk-grid-row">
+                    <div class="nhsuk-grid-column-full">
+                        <div class="nhsuk-grid-column-one-third">
+                            <p class="nhsuk-label--s">@Html.DisplayNameFor(model => model.Authoriser)</p>
+                        </div>
+                        <div class="nhsuk-grid-column-two-thirds">
+                            <p>@Model.Authoriser</p>
+                        </div>
+                    </div>
+                </div>              
+                
+                <div class="nhsuk-grid-row">
+                    <div class="nhsuk-grid-column-full">
+                        <div class="nhsuk-grid-column-one-third">
+                            <p class="nhsuk-label--s">@Html.DisplayNameFor(model => model.Submitter)</p>
+                        </div>
+                        <div class="nhsuk-grid-column-two-thirds">
+                            <p>@Model.Submitter</p>
+                        </div>
+                    </div>
+                </div>             
+                
+                <div class="nhsuk-grid-row">
+                    <div class="nhsuk-grid-column-full">
+                        <div class="nhsuk-grid-column-one-third">
+                            <p class="nhsuk-label--s">@Html.DisplayNameFor(model => model.ContactEmailAddress)</p>
+                        </div>
+                        <div class="nhsuk-grid-column-two-thirds">
+                            <p>@Model.ContactEmailAddress</p>
+                        </div>
+                    </div>
+                </div>            
+                
+                <div class="nhsuk-grid-row">
+                    <div class="nhsuk-grid-column-full">
+                        <div class="nhsuk-grid-column-one-third">
+                            <p class="nhsuk-label--s">@Html.DisplayNameFor(model => model.ContactTelephone)</p>
+                        </div>
+                        <div class="nhsuk-grid-column-two-thirds">
+                            <p>@Model.ContactTelephone</p>
+                        </div>
+                    </div>
+                </div>
+                <button class="nhsuk-button nhsuk-button--secondary" asp-page-handler="UpdateChanges" type="submit">@ButtonConstants.UPDATE</button>
+            </div>
+        </div>
+    </div>
+</div>
+<input type="hidden" id="SiteInstanceId" name="SiteInstanceId" asp-for="@Model.SiteInstanceId" />
