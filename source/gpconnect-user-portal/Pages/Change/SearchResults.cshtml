@@ -1,4 +1,5 @@
-﻿@model ChangeModel
+﻿@using gpconnect_user_portal.Helpers.Constants
+@model ChangeModel
 
 <h2>@Model.SearchResult.SearchResultsHeading</h2>
 
@@ -14,19 +15,19 @@
                     </span>
                 </h3>
                 <p></p>
-                <button class="nhsuk-button" asp-page-handler="Create" type="submit">@Helpers.Constants.ButtonConstants.CREATESITE</button>
+                <button class="nhsuk-button" asp-page-handler="Create" type="submit">@ButtonConstants.CREATESITE</button>
             </div>
         }
         else
         {
-            <button class="nhsuk-button" asp-page-handler="Create" type="submit">@Helpers.Constants.ButtonConstants.CREATESITE</button>
+            <button class="nhsuk-button" asp-page-handler="Create" type="submit">@ButtonConstants.CREATESITE</button>
             <dl class="nhsuk-summary-list">
                 @foreach (var option in Model.SearchResult.SearchResults)
                 {
                     <div class="nhsuk-summary-list__row">
                         <dt class="nhsuk-summary-list__key">@option.SiteODSCode</dt>
                         <dd class="nhsuk-summary-list__value">@option.SiteName</dd>
-                        <dd class="nhsuk-summary-list__actions"><a href="/Change/Detail/@option.SiteODSCode">@Helpers.Constants.ButtonConstants.CHANGE</a></dd>
+                        <dd class="nhsuk-summary-list__actions"><a href="/Change/Detail/@option.SiteODSCode">@ButtonConstants.UPDATE</a></dd>
                    </div>
                 }
             </dl>

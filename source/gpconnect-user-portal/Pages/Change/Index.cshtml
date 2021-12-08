@@ -6,9 +6,14 @@
 <p>Declaration: By using continuing you agree you have legal authority to act on behalf of your organisation.</p>
 <h2>Search for your organisation</h2>
 
+@if (Model.DisplaySearchInvalid && !Model.IsValidSearch)
+{
+    <partial name="SearchInvalid" />
+}
+
 <form method="post" id="search-input-form">
-    <partial name="SearchInput" model="@Model.SearchOptions" />
-    @if (Model.SearchResult != null)
+    <partial name="SearchInput" />
+    @if (Model.SearchResult != null && Model.IsValidSearch)
     {
         <partial name="SearchResults" />
     }

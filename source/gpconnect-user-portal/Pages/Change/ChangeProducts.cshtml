@@ -12,20 +12,20 @@
                         <legend class="nhsuk-fieldset__legend nhsuk-fieldset__legend--m">@Html.DisplayNameFor(model => model.RecordAccessHtmlView)</legend>
                         <div class="nhsuk-radios nhsuk-radios--inline">
                             <div class="nhsuk-radios__item">
-                                <input class="nhsuk-radios__input" id="example-1" name="example" type="radio" value="none">
-                                <label class="nhsuk-label nhsuk-radios__label" for="example-1">None</label>
+                                @Html.RadioButtonFor(m => m.RecordAccessHtmlView, "", new { @class = "nhsuk-radios__input"})
+                                <label class="nhsuk-label nhsuk-radios__label" asp-for="@Model.RecordAccessHtmlView">None</label>
                             </div>
                             <div class="nhsuk-radios__item">
-                                <input class="nhsuk-radios__input" id="example-2" name="example" type="radio" value="provider">
-                                <label class="nhsuk-label nhsuk-radios__label" for="example-2">Providing Records</label>
+                                @Html.RadioButtonFor(m => m.RecordAccessHtmlView, "provider", new { @class = "nhsuk-radios__input"})
+                                <label class="nhsuk-label nhsuk-radios__label" asp-for="@Model.RecordAccessHtmlView">Providing Records</label>
                             </div>
                             <div class="nhsuk-radios__item">
-                                <input class="nhsuk-radios__input" id="example-1" name="example" type="radio" value="consumer">
-                                <label class="nhsuk-label nhsuk-radios__label" for="example-1">Consuming Records</label>
+                                @Html.RadioButtonFor(m => m.RecordAccessHtmlView, "consumer", new { @class = "nhsuk-radios__input"})
+                                <label class="nhsuk-label nhsuk-radios__label" asp-for="@Model.RecordAccessHtmlView">Consuming Records</label>
                             </div>
                             <div class="nhsuk-radios__item">
-                                <input class="nhsuk-radios__input" id="example-2" name="example" type="radio" value="both">
-                                <label class="nhsuk-label nhsuk-radios__label" for="example-2">Both</label>
+                                @Html.RadioButtonFor(m => m.RecordAccessHtmlView, "both", new { @class = "nhsuk-radios__input"})
+                                <label class="nhsuk-label nhsuk-radios__label" asp-for="@Model.RecordAccessHtmlView">Both</label>
                             </div>
 
                         </div>
@@ -36,20 +36,20 @@
                         <legend class="nhsuk-fieldset__legend nhsuk-fieldset__legend--m">@Html.DisplayNameFor(model => model.RecordAccessStructured)</legend>
                         <div class="nhsuk-radios nhsuk-radios--inline">
                             <div class="nhsuk-radios__item">
-                                <input class="nhsuk-radios__input" id="example-1" name="example" type="radio" value="none">
-                                <label class="nhsuk-label nhsuk-radios__label" for="example-1">None</label>
+                                @Html.RadioButtonFor(m => m.RecordAccessStructured, "", new { @class = "nhsuk-radios__input"})
+                                <label class="nhsuk-label nhsuk-radios__label" asp-for="@Model.RecordAccessStructured">None</label>
                             </div>
                             <div class="nhsuk-radios__item">
-                                <input class="nhsuk-radios__input" id="example-2" name="example" type="radio" value="provider">
-                                <label class="nhsuk-label nhsuk-radios__label" for="example-2">Providing Records</label>
+                                @Html.RadioButtonFor(m => m.RecordAccessStructured, "provider", new { @class = "nhsuk-radios__input"})
+                                <label class="nhsuk-label nhsuk-radios__label" asp-for="@Model.RecordAccessStructured">Providing Records</label>
                             </div>
                             <div class="nhsuk-radios__item">
-                                <input class="nhsuk-radios__input" id="example-1" name="example" type="radio" value="consumer">
-                                <label class="nhsuk-label nhsuk-radios__label" for="example-1">Consuming Records</label>
+                                @Html.RadioButtonFor(m => m.RecordAccessStructured, "consumer", new { @class = "nhsuk-radios__input"})
+                                <label class="nhsuk-label nhsuk-radios__label" asp-for="@Model.RecordAccessStructured">Consuming Records</label>
                             </div>
                             <div class="nhsuk-radios__item">
-                                <input class="nhsuk-radios__input" id="example-2" name="example" type="radio" value="both">
-                                <label class="nhsuk-label nhsuk-radios__label" for="example-2">Both</label>
+                                @Html.RadioButtonFor(m => m.RecordAccessStructured, "both", new { @class = "nhsuk-radios__input"})
+                                <label class="nhsuk-label nhsuk-radios__label" asp-for="@Model.RecordAccessStructured">Both</label>
                             </div>
 
                         </div>
@@ -61,20 +61,20 @@
                         <legend class="nhsuk-fieldset__legend nhsuk-fieldset__legend--m">@Html.DisplayNameFor(model => model.Appointment)</legend>
                         <div class="nhsuk-radios nhsuk-radios--inline">
                             <div class="nhsuk-radios__item">
-                                <input class="nhsuk-radios__input" id="example-1" name="example" type="radio" value="none">
-                                <label class="nhsuk-label nhsuk-radios__label" for="example-1">None</label>
+                                @Html.RadioButtonFor(m => m.Appointment, "", new { @class = "nhsuk-radios__input"})
+                                <label class="nhsuk-label nhsuk-radios__label" asp-for="@Model.Appointment">None</label>
                             </div>
                             <div class="nhsuk-radios__item">
-                                <input class="nhsuk-radios__input" id="example-2" name="example" type="radio" value="provider">
-                                <label class="nhsuk-label nhsuk-radios__label" for="example-2">Providing Records</label>
+                                @Html.RadioButtonFor(m => m.RecordAccessStructured, "provider", new { @class = "nhsuk-radios__input"})
+                                <label class="nhsuk-label nhsuk-radios__label" asp-for="@Model.Appointment">Providing Records</label>
                             </div>
                             <div class="nhsuk-radios__item">
-                                <input class="nhsuk-radios__input" id="example-1" name="example" type="radio" value="consumer">
-                                <label class="nhsuk-label nhsuk-radios__label" for="example-1">Consuming Records</label>
+                                @Html.RadioButtonFor(m => m.RecordAccessStructured, "consumer", new { @class = "nhsuk-radios__input"})
+                                <label class="nhsuk-label nhsuk-radios__label" asp-for="@Model.Appointment">Consuming Records</label>
                             </div>
                             <div class="nhsuk-radios__item">
-                                <input class="nhsuk-radios__input" id="example-2" name="example" type="radio" value="both">
-                                <label class="nhsuk-label nhsuk-radios__label" for="example-2">Both</label>
+                                @Html.RadioButtonFor(m => m.RecordAccessStructured, "both", new { @class = "nhsuk-radios__input"})
+                                <label class="nhsuk-label nhsuk-radios__label" asp-for="@Model.Appointment">Both</label>
                             </div>
 
                         </div>

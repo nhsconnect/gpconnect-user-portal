@@ -1,0 +1,34 @@
+﻿namespace gpconnect_user_portal.Helpers.Constants
+{
+    public class MessageConstants
+    {
+        public const string NAMEOFSUBMITTERREQUIREDERRORMESSAGE = $"{REQUIREDERRORMESSAGE} '{DisplayConstants.NAMEOFSUBMITTER}'";
+        public const string NAMEOFSUBMITTERVALIDVALUEERRORMESSAGE = $"{VALIDVALUEERRORMESSAGE} '{DisplayConstants.NAMEOFSUBMITTER}'";
+
+        public const string CONTACTEMAILADDRESSREQUIREDERRORMESSAGE = $"{REQUIREDERRORMESSAGE} '{DisplayConstants.CONTACTEMAILADDRESS}'";
+        public const string CONTACTEMAILADDRESSVALIDVALUEERRORMESSAGE = $"{VALIDVALUEERRORMESSAGE} '{DisplayConstants.CONTACTEMAILADDRESS}'";
+
+        public const string CONTACTTELEPHONEREQUIREDERRORMESSAGE = $"{REQUIREDERRORMESSAGE} '{DisplayConstants.CONTACTTELEPHONE}'";
+        public const string CONTACTTELEPHONEVALIDVALUEERRORMESSAGE = $"{VALIDVALUEERRORMESSAGE} '{DisplayConstants.CONTACTTELEPHONE}'";
+
+        public const string ODSCODEVALIDVALUEERRORMESSAGE = $"{VALIDVALUEERRORMESSAGE} '{DisplayConstants.PROVIDERODSCODE}'";
+        public const string ODSCODEREQUIREDERRORMESSAGE = $"{REQUIREDERRORMESSAGE} '{DisplayConstants.PROVIDERODSCODE}'";        
+
+        public const string SITENAMEREQUIREDERRORMESSAGE = $"{REQUIREDERRORMESSAGE} '{DisplayConstants.SITENAME}'";
+        public const string SITENAMEVALIDVALUEERRORMESSAGE = $"{VALIDVALUEERRORMESSAGE} '{DisplayConstants.SITENAME}'";
+
+        public const string SITEPOSTCODEREQUIREDERRORMESSAGE = $"{REQUIREDERRORMESSAGE} '{DisplayConstants.SITEPOSTCODE}'";
+        public const string SITEPOSTCODEVALIDVALUEERRORMESSAGE = $"{VALIDVALUEERRORMESSAGE} '{DisplayConstants.SITEPOSTCODE}'";
+
+        public const string RECORDACCESSHTMLVIEWREQUIREDERRORMESSAGE = $"{SELECTVALUEERRORMESSAGE} '{DisplayConstants.RECORDACCESSHTMLVIEW}'";
+        public const string RECORDACCESSSTRUCTUREDREQUIREDERRORMESSAGE = $"{SELECTVALUEERRORMESSAGE} '{DisplayConstants.RECORDACCESSSTRUCTURED}'";
+        public const string APPOINTMENTREQUIREDERRORMESSAGE = $"{SELECTVALUEERRORMESSAGE} '{DisplayConstants.APPOINTMENT}'";
+
+        public const string SELECTEDUSECASEREQUIREDERRORMESSAGE = $"{SELECTVALUEERRORMESSAGE} '{DisplayConstants.USECASEINPUT}'";
+        public const string USECASEDESCRIPTIONREQUIREDERRORMESSAGE = $"{REQUIREDERRORMESSAGE} '{DisplayConstants.USECASEDESCRIPTIONINPUT}'";
+
+        private const string REQUIREDERRORMESSAGE = "You must enter a value for ";
+        private const string VALIDVALUEERRORMESSAGE = "You must enter a valid value for ";
+        private const string SELECTVALUEERRORMESSAGE = "You must select a value for ";
+    }
+}

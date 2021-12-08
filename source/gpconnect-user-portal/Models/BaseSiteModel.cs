@@ -1,4 +1,5 @@
 ﻿using gpconnect_user_portal.Helpers.Constants;
+using gpconnect_user_portal.Helpers.Validators;
 using gpconnect_user_portal.Models;
 using gpconnect_user_portal.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -19,20 +20,28 @@ namespace gpconnect_user_portal.Pages
         {
             _aggregateService = aggregateService;
             _generalOptionsDelegate = generalOptionsDelegate;
-        }        
+        }
 
+        [Required(ErrorMessage = MessageConstants.NAMEOFSUBMITTERREQUIREDERRORMESSAGE)]
+        [RegularExpression(ValidationConstants.ALPHANUMERICCHARACTERSONLY, ErrorMessage = MessageConstants.NAMEOFSUBMITTERVALIDVALUEERRORMESSAGE)]
         [Display(Name = DisplayConstants.NAMEOFSUBMITTER)]
         [BindProperty(SupportsGet = true)]
         public string Submitter { get; set; }
 
+        [Required(ErrorMessage = MessageConstants.CONTACTEMAILADDRESSREQUIREDERRORMESSAGE)]
+        [RegularExpression(ValidationConstants.EMAILADDRESS, ErrorMessage = MessageConstants.CONTACTEMAILADDRESSREQUIREDERRORMESSAGE)]
         [Display(Name = DisplayConstants.CONTACTEMAILADDRESS)]
         [BindProperty(SupportsGet = true)]
         public string ContactEmailAddress { get; set; }
 
+        [Required(ErrorMessage = MessageConstants.CONTACTTELEPHONEREQUIREDERRORMESSAGE)]
+        [RegularExpression(ValidationConstants.ALPHANUMERICCHARACTERSONLY, ErrorMessage = MessageConstants.CONTACTTELEPHONEVALIDVALUEERRORMESSAGE)]
         [Display(Name = DisplayConstants.CONTACTTELEPHONE)]
         [BindProperty(SupportsGet = true)]
         public string ContactTelephone { get; set; }
-
+        
+        [RequiredIf(nameof(OdsIssued), false, ErrorMessage = MessageConstants.ODSCODEREQUIREDERRORMESSAGE)]
+        [RegularExpression(ValidationConstants.UPPERCASELETTERSANDNUMBERSONLY, ErrorMessage = MessageConstants.ODSCODEVALIDVALUEERRORMESSAGE)]
         [Display(Name = DisplayConstants.ODSCODE)]
         [BindProperty(SupportsGet = true)]
         public string FormOdsCode { get; set; }
@@ -41,34 +50,34 @@ namespace gpconnect_user_portal.Pages
         [BindProperty(SupportsGet = true)]
         public bool OdsIssued { get; set; }
 
+        [Required(ErrorMessage = MessageConstants.SITENAMEREQUIREDERRORMESSAGE)]
+        [RegularExpression(ValidationConstants.ALPHANUMERICCHARACTERSONLY, ErrorMessage = MessageConstants.SITENAMEVALIDVALUEERRORMESSAGE)]
         [Display(Name = DisplayConstants.SITENAME)]
         [BindProperty(SupportsGet = true)]
         public string SiteName { get; set; }
 
+        [Required(ErrorMessage = MessageConstants.SITEPOSTCODEREQUIREDERRORMESSAGE)]
+        [RegularExpression(ValidationConstants.UPPERCASELETTERSANDNUMBERSANDSPACESONLY, ErrorMessage = MessageConstants.SITEPOSTCODEVALIDVALUEERRORMESSAGE)]
         [Display(Name = DisplayConstants.SITEPOSTCODE)]
         [BindProperty(SupportsGet = true)]
         public string SitePostcode { get; set; }
 
-        [Display(Name = DisplayConstants.ACTINGASSUPPLIER)]
-        [BindProperty(SupportsGet = true)]
-        public bool ActingAsSupplier { get; set; }
-
-        [Display(Name = DisplayConstants.ACTINGASCONSUMER)]
-        [BindProperty(SupportsGet = true)]
-        public bool ActingAsConsumer { get; set; }
-
+        [Required(ErrorMessage = MessageConstants.RECORDACCESSHTMLVIEWREQUIREDERRORMESSAGE)]
         [Display(Name = DisplayConstants.RECORDACCESSHTMLVIEW)]
         [BindProperty(SupportsGet = true)]
         public bool RecordAccessHtmlView { get; set; }
 
+        [Required(ErrorMessage = MessageConstants.RECORDACCESSSTRUCTUREDREQUIREDERRORMESSAGE)]
         [Display(Name = DisplayConstants.RECORDACCESSSTRUCTURED)]
         [BindProperty(SupportsGet = true)]
         public bool RecordAccessStructured { get; set; }
 
+        [Required(ErrorMessage = MessageConstants.APPOINTMENTREQUIREDERRORMESSAGE)]
         [Display(Name = DisplayConstants.APPOINTMENT)]
         [BindProperty(SupportsGet = true)]
         public bool Appointment { get; set; }
 
+        [Required(ErrorMessage = MessageConstants.SELECTEDUSECASEREQUIREDERRORMESSAGE)]
         [BindProperty(SupportsGet = true)]
         public string SelectedUseCase { get; set; }        
 

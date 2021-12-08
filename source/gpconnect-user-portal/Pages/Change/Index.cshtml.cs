@@ -1,8 +1,9 @@
-﻿using gpconnect_user_portal.Services.Interfaces;
+﻿using gpconnect_user_portal.DTO.Request;
+using gpconnect_user_portal.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace gpconnect_user_portal.Pages
 {
@@ -24,11 +25,16 @@ namespace gpconnect_user_portal.Pages
             return Page();
         }
 
-        public IActionResult OnPostSearch()
+        public async Task<IActionResult> OnPostSearchAsync()
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && IsValidSearch)
             {
-                GetSearchResults();
+                DisplaySearchInvalid = false;
+                await GetSearchResults();
+            }
+            else
+            {
+                DisplaySearchInvalid = true;
             }
             return Page();
         }
@@ -38,34 +44,22 @@ namespace gpconnect_user_portal.Pages
             return RedirectToPagePermanent("Detail");
         }
 
-        private void GetSearchResults()
+        private async Task GetSearchResults()
         {
             try
             {
-                var searchResults = new DTO.Response.SearchResult
+                var searchRequest = new SearchRequest()
                 {
-                    SearchResults = new List<DTO.Response.SearchResultEntry>()
+                    ProviderOdsCode = ProviderOdsCode,
+                    ProviderName = ProviderName,
+                    CCGOdsCode = SelectedCCGOdsCode,
+                    CCGName = SelectedCCGName
                 };
-
-                for(int i = 1; i<=100; i++)
-                {
-                    searchResults.SearchResults.Add(new DTO.Response.SearchResultEntry
-                    {
-                        CCGName = "NHS LEEDS CCG",
-                        CCGODSCode = "15F",
-                        HasAppointment = true,
-                        HasHtmlView = false,
-                        HasStructured = false,
-                        SiteName = $"LEEDS STUDENT MEDICAL PRACTICE {i}",
-                        SiteODSCode = $"B86110-{i}",
-                        UseCase = ""
-                    });
-                }
-
+                var searchResults = await _aggregateService.QueryService.GetSearchResults(searchRequest);
                 SearchResult = searchResults;
             }
             catch
-            {
+            {                
                 throw;
             }
         }

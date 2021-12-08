@@ -13,10 +13,12 @@ namespace gpconnect_user_portal.Pages
         public string OdsCode { get; set; }
         public string PageTitle => !string.IsNullOrEmpty(OdsCode) ? DisplayConstants.CHANGEUPDATETITLE : DisplayConstants.CHANGEREGISTERTITLE;
 
+        [Required(ErrorMessage = MessageConstants.USECASEDESCRIPTIONREQUIREDERRORMESSAGE)]
         [Display(Name = DisplayConstants.USECASEDESCRIPTIONINPUT)]
         [BindProperty(SupportsGet = true)]
         public string UseCaseDescription { get; set; }
 
+        [Required(ErrorMessage = MessageConstants.SELECTEDUSECASEREQUIREDERRORMESSAGE)]
         [Display(Name = DisplayConstants.USECASEINPUT)]
         [BindProperty(SupportsGet = true)]
         public IEnumerable<SelectListItem> UseCases => GetUseCases();

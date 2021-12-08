@@ -10,7 +10,7 @@ namespace gpconnect_user_portal.Core.Configuration.Mapping
         {
             FluentMapper.Initialize(config =>
             {
-                config.AddMap(new SearchResultMap());
+                config.AddMap(new SearchResultEntryMap());
                 config.AddMap(new GeneralConfigurationMap());
                 config.AddMap(new ReferenceApiQueryMap());
                 config.AddMap(new ReferenceConfigurationMap());

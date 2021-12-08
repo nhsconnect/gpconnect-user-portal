@@ -3,17 +3,21 @@
 @model SearchModel
 
 <h1>Live GP Connect Sites</h1>
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut eu sapien sed tellus consectetur consequat a et elit. Phasellus viverra felis libero, in suscipit ligula consectetur quis. Integer tempus massa sagittis nisl tempor, at blandit orci aliquet. In laoreet turpis quis quam sollicitudin, ut sollicitudin sem ultricies.</p>
 <button class="nhsuk-button" asp-page-handler="ExportAll" type="submit">@ButtonConstants.ALLSITEDOWNLOAD</button>
 <h2>Search</h2>
 
+@if (Model.DisplaySearchInvalid && !Model.IsValidSearch)
+{
+    <partial name="SearchInvalid" />
+}
+
 <form method="post" id="search-input-form">
-    <partial name="SearchInput" model="@Model.SearchOptions" />
-    @if (Model.SearchResult != null)
+    <partial name="SearchInput" />
+    @if (Model.SearchResult != null && Model.IsValidSearch)
     {
         <h1>Results</h1>
         <partial name="SearchSortOptions" />
         <partial name="SearchResultsHeader" />
         <partial name="SearchResults" />
-    }    
+    }
 </form>

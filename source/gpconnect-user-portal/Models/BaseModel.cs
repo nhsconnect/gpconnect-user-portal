@@ -23,9 +23,7 @@ namespace gpconnect_user_portal.Models
         {
             _aggregateService = aggregateService;
             _generalOptionsDelegate = generalOptionsDelegate;
-            _organisationList = _aggregateService.ReferenceService.GetOrganisations().Result;
-            CCGNames = GetCCGByNames();
-            CCGOdsCodes = GetCCGByOdsCodes();
+            _organisationList = _aggregateService.ReferenceService.GetOrganisations().Result;            
         }
 
         public string ApplicationName => _generalOptionsDelegate.CurrentValue.ProductName;
@@ -36,11 +34,11 @@ namespace gpconnect_user_portal.Models
 
         [Display(Name = DisplayConstants.CCGICBNAME)]
         [BindProperty(SupportsGet = true)]
-        public IEnumerable<SelectListItem> CCGNames { get; set; }
+        public IEnumerable<SelectListItem> CCGNames => GetCCGByNames();
 
         [Display(Name = DisplayConstants.CCGICBODSCODE)]
         [BindProperty(SupportsGet = true)]
-        public IEnumerable<SelectListItem> CCGOdsCodes { get; set; }
+        public IEnumerable<SelectListItem> CCGOdsCodes => GetCCGByOdsCodes();
 
         [BindProperty(SupportsGet = true)]
         public string SelectedCCGName { get; set; }
@@ -51,7 +49,7 @@ namespace gpconnect_user_portal.Models
         public IEnumerable<SelectListItem> GetCCGByNames()
         {
             var options = _organisationList.OrderBy(x => x.Name)
-                .Select(option => new SelectListItem() { Text = option.Name, Value = option.OrgId }).ToList();
+                .Select(option => new SelectListItem() { Text = option.Name, Value = option.Name }).ToList();
             options.Insert(0, new SelectListItem());
             return options;
         }

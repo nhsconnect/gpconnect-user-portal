@@ -1,9 +1,10 @@
-﻿using gpconnect_user_portal.Services.Interfaces;
+﻿using gpconnect_user_portal.DTO.Request;
+using gpconnect_user_portal.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace gpconnect_user_portal.Pages
 {
@@ -25,47 +26,32 @@ namespace gpconnect_user_portal.Pages
             return Page();
         }
 
-        public IActionResult OnPostSearchAsync()
-        {
-            if (ModelState.IsValid)
+        public async Task<IActionResult> OnPostSearchAsync()
+        {            
+            if (ModelState.IsValid && IsValidSearch)
             {
-                GetSearchResults();
+                DisplaySearchInvalid = false;
+                await GetSearchResults();
+            }
+            else
+            {
+                DisplaySearchInvalid = true;
             }
             return Page();
         }
 
-        private void GetSearchResults()
+        private async Task GetSearchResults()
         {
             try
             {
-                var searchResults = new DTO.Response.SearchResult
-                {
-                    SearchResults = new List<DTO.Response.SearchResultEntry>
-                    {
-                        new DTO.Response.SearchResultEntry
-                        {
-                            CCGName = "NHS LEEDS CCG",
-                            CCGODSCode = "15F",
-                            HasAppointment = true,
-                            HasHtmlView = false,
-                            HasStructured = false,
-                            SiteName = "LEEDS STUDENT MEDICAL PRACTICE",
-                            SiteODSCode = "B86110",
-                            UseCase = ""
-                        },
-                        new DTO.Response.SearchResultEntry
-                        {
-                            CCGName = "NHS LEEDS CCG",
-                            CCGODSCode = "15F",
-                            HasAppointment = true,
-                            HasHtmlView = true,
-                            HasStructured = true,
-                            SiteName = "LEEDS CITY MEDICAL PRACTICE",
-                            SiteODSCode = "B86012",
-                            UseCase = ""
-                        }
-                    }
+                var searchRequest = new SearchRequest() 
+                { 
+                    ProviderOdsCode = ProviderOdsCode,
+                    ProviderName = ProviderName,
+                    CCGOdsCode = SelectedCCGOdsCode,
+                    CCGName = SelectedCCGName
                 };
+                var searchResults = await _aggregateService.QueryService.GetSites(searchRequest);
                 SearchResult = searchResults;
             }
             catch
@@ -81,8 +67,10 @@ namespace gpconnect_user_portal.Pages
             return null;
         }
 
-        public FileStreamResult OnPostExportAll()
+        public async Task<FileStreamResult> OnPostExportAll()
         {
+            //var searchResults = await _aggregateService.ReportingService.ExportAllSites();
+
             //var exportTable = _aggregateService;
             //return ExportResult(exportTable);
             return null;
@@ -90,10 +78,10 @@ namespace gpconnect_user_portal.Pages
 
         public IActionResult OnPostClear()
         {
-            SearchOptions.ProviderOdsCode = null;
-            SearchOptions.SelectedCCGName = null;
-            SearchOptions.SelectedCCGOdsCode = null;
-            SearchOptions.ProviderName = null;
+            ProviderOdsCode = null;
+            SelectedCCGName = null;
+            SelectedCCGOdsCode = null;
+            ProviderName = null;
             ModelState.Clear();
             return Page();
         }

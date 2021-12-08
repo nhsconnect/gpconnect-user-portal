@@ -6,19 +6,21 @@ namespace gpconnect_user_portal.Services
 {
     public class AggregateService : IAggregateService
     {
-        public AggregateService(IHttpContextAccessor httpContextAccessor, ILogService logService, IApplicationService applicationService, IReferenceService referenceService, IReportingService reportingService)
+        public AggregateService(IHttpContextAccessor httpContextAccessor, ILogService logService, IApplicationService applicationService, IReferenceService referenceService, IReportingService reportingService, IQueryService queryService)
         {
             LogService = logService;
             HttpContextAccessor = httpContextAccessor;
             ApplicationService = applicationService;
             ReferenceService = referenceService;
             ReportingService = reportingService;
+            QueryService = queryService;
         }
 
         public ILogService LogService { get; }
         public IApplicationService ApplicationService { get; }
         public IReferenceService ReferenceService { get; }
         public IReportingService ReportingService { get; }
+        public IQueryService QueryService { get; }
         public IHttpContextAccessor HttpContextAccessor { get; }
 
         public HttpRequest Request => HttpContextAccessor.HttpContext.Request;

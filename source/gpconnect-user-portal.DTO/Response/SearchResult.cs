@@ -20,7 +20,5 @@ namespace gpconnect_user_portal.DTO.Response
         public bool HasNoMatches => SearchResults.Count == 0;
         public bool HasSingleMatch => SearchResults.Count == 1;
         public string SearchResultsHeading => (HasNoMatches || HasSingleMatch) ? "Results" : "Select site to modify";
-
-        public int SearchResultsSelectionHeight => SearchResults.Count > 10 ? 10 : SearchResults.Count;
     }
 }

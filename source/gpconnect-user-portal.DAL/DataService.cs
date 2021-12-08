@@ -6,6 +6,7 @@ using Npgsql;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Threading.Tasks;
 
 namespace gpconnect_user_portal.DAL
@@ -58,6 +59,25 @@ namespace gpconnect_user_portal.DAL
                 using NpgsqlConnection connection = new NpgsqlConnection(_configuration.GetConnectionString(ConnectionStrings.DefaultConnection));
                 var rowsProcessed = await connection.ExecuteAsync(query, parameters, commandType: CommandType.StoredProcedure);
                 return rowsProcessed;
+            }
+            catch (Exception exc)
+            {
+                _logger?.LogError(exc, $"An error has occurred while attempting to execute the query {query}");
+                throw;
+            }
+        }
+
+        public async Task<List<T>> ExecuteSQLQuery<T>(string query) where T : class
+        {
+            try
+            {
+                using (var connection = new SqlConnection(_configuration.GetConnectionString(ConnectionStrings.GpConnect)))
+                {
+                    var command = new SqlCommand(query, connection);
+                    connection.Open();
+                    var results = (await connection.QueryAsync<T>(query, commandType: CommandType.Text)).AsList();
+                    return results;
+                }
             }
             catch (Exception exc)
             {
