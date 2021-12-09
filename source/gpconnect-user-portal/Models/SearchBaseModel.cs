@@ -31,7 +31,7 @@ namespace gpconnect_user_portal.Pages
 
         public static IEnumerable<SelectListItem> GetSearchResultSortOptions()
         {
-            return SearchConstants.SortOptions.Select(option => new SelectListItem() { Text = option.Value, Value = option.Key });
+            return SearchConstants.SortOptions.Select(option => new SelectListItem() { Text = option.Value, Value = option.Key.ToString() });
         }
 
         protected FileStreamResult ExportResult(DataTable dataTable, string reportName = "")

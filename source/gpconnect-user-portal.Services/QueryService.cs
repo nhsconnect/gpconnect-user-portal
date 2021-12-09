@@ -3,6 +3,7 @@ using gpconnect_user_portal.DTO.Request;
 using gpconnect_user_portal.DTO.Response;
 using gpconnect_user_portal.Helpers;
 using gpconnect_user_portal.Services.Interfaces;
+using System;
 using System.Data;
 using System.Text;
 using System.Threading.Tasks;
@@ -61,9 +62,35 @@ namespace gpconnect_user_portal.Services
 
                 query.Append(searchRequest.CCGOdsCode != null ? $" AND CCGODS='{searchRequest.CCGOdsCode}'" : string.Empty);
                 query.Append(searchRequest.CCGName != null ? $" AND CCGName='{searchRequest.CCGName}'" : string.Empty);
+                query.Append($" {GetFilterByField(Convert.ToInt16(searchRequest.FilterBy))}");
+
             }
             query.Append(" ORDER BY 2");
             return query.ToString();
+        }
+
+        private static string GetFilterByField(int filterBy)
+        {
+            switch (filterBy)
+            {
+                case 0:
+                    return string.Empty;
+                case 1:
+                    return " AND CHARINDEX('gpc.getcarerecord', Interactions) = 0";
+                case 2:
+                    return " AND CHARINDEX('gpc.getcarerecord', Interactions) > 0";
+                case 3:
+                    return " AND CHARINDEX('structured:fhir:rest:read:metadata-1', Interactions) = 0";
+                case 4:
+                    return " AND CHARINDEX('structured:fhir:rest:read:metadata-1', Interactions) > 0";
+                case 5:
+                    return " AND CHARINDEX('appointments-1', Interactions) = 0";
+                case 6:
+                    return " AND CHARINDEX('appointments-1', Interactions) > 0";
+                default:
+                    break;
+            }
+            return string.Empty;
         }
     }
 }

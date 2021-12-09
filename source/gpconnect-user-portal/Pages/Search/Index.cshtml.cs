@@ -3,7 +3,6 @@ using gpconnect_user_portal.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace gpconnect_user_portal.Pages
@@ -12,13 +11,11 @@ namespace gpconnect_user_portal.Pages
     {
         private readonly ILogger<SearchModel> _logger;
         private readonly IAggregateService _aggregateService;
-        private readonly IOptionsMonitor<DTO.Response.Configuration.General> _generalOptionsDelegate;
 
         public SearchModel(ILogger<SearchModel> logger, IAggregateService aggregateService, IOptionsMonitor<DTO.Response.Configuration.General> generalOptionsDelegate) : base(aggregateService, generalOptionsDelegate)
         {
             _logger = logger;
             _aggregateService = aggregateService;
-            _generalOptionsDelegate = generalOptionsDelegate;
         }
 
         public IActionResult OnGet()
@@ -60,20 +57,21 @@ namespace gpconnect_user_portal.Pages
                 ProviderOdsCode = ProviderOdsCode,
                 ProviderName = ProviderName,
                 CCGOdsCode = SelectedCCGOdsCode,
-                CCGName = SelectedCCGName
+                CCGName = SelectedCCGName,
+                FilterBy = SelectedSortOption
             };
-        }
-
-        public async Task<FileStreamResult> OnPostExportResultsAsync()
-        {
-            var searchResults = await _aggregateService.QueryService.GetSitesForExport(CreateSearchRequest());
-            return ExportResult(searchResults, "GP Connect Site Report");
         }
 
         public async Task<FileStreamResult> OnPostExportAllAsync()
         {
             var searchResults = await _aggregateService.QueryService.GetSitesForExport();
             return ExportResult(searchResults, "All GP Connect Sites Report");
+        }
+
+        public async Task<FileStreamResult> OnPostExportResultsAsync()
+        {
+            var searchResults = await _aggregateService.QueryService.GetSitesForExport(CreateSearchRequest());
+            return ExportResult(searchResults, "GP Connect Site Report");
         }
 
         public IActionResult OnPostClear()

@@ -4,17 +4,15 @@ namespace gpconnect_user_portal.Helpers.Constants
 {
     public class SearchConstants
     {
-        public const string PROVIDERODSCODEVALIDERRORMESSAGE = "You must enter a valid provider ODS code";
-
-        public static Dictionary<string, string> SortOptions = new Dictionary<string, string>()
+        public static Dictionary<int, string> SortOptions = new Dictionary<int, string>()
         {
-            { string.Empty, DisplayConstants.SORTBY },
-            { DisplayConstants.NOHTMLVIEW, DisplayConstants.NOHTMLVIEW },
-            { DisplayConstants.HASHTMLVIEW, DisplayConstants.HASHTMLVIEW },
-            { DisplayConstants.NOSTRUCTURED, DisplayConstants.NOSTRUCTURED },
-            { DisplayConstants.HASSTRUCTURED, DisplayConstants.HASSTRUCTURED },
-            { DisplayConstants.NOAPPOINTMENT, DisplayConstants.NOAPPOINTMENT },
-            { DisplayConstants.HASAPPOINTMENT, DisplayConstants.HASAPPOINTMENT }
+            { 0, string.Empty },
+            { 1, DisplayConstants.NOHTMLVIEW },
+            { 2, DisplayConstants.HASHTMLVIEW },
+            { 3, DisplayConstants.NOSTRUCTURED },
+            { 4, DisplayConstants.HASSTRUCTURED },
+            { 5, DisplayConstants.NOAPPOINTMENT },
+            { 6, DisplayConstants.HASAPPOINTMENT }
         };
     }
 }
