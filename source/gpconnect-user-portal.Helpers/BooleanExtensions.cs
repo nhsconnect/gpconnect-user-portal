@@ -9,5 +9,11 @@ namespace gpconnect_user_portal.Helpers
             {
                 _ => input ? new HtmlString("&#x2713;") : new HtmlString("&#x2717;")
             };
+
+        public static string BooleanToYesNo(this bool input) =>
+            input switch
+            {
+                _ => input ? "Yes" : "No"
+            };
     }
 }

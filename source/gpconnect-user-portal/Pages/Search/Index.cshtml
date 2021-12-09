@@ -2,16 +2,15 @@
 @using gpconnect_user_portal.Helpers.Constants
 @model SearchModel
 
-<h1>Live GP Connect Sites</h1>
-<button class="nhsuk-button" asp-page-handler="ExportAll" type="submit">@ButtonConstants.ALLSITEDOWNLOAD</button>
-<h2>Search</h2>
-
-@if (Model.DisplaySearchInvalid && !Model.IsValidSearch)
-{
-    <partial name="SearchInvalid" />
-}
-
 <form method="post" id="search-input-form">
+    <h1>Live GP Connect Sites</h1>
+    <button class="nhsuk-button" asp-page-handler="ExportAll" type="submit">@ButtonConstants.ALLSITEDOWNLOAD</button>
+    <h2>Search</h2>
+
+    @if (Model.DisplaySearchInvalid && !Model.IsValidSearch)
+    {
+        <partial name="SearchInvalid" />
+    }
     <partial name="SearchInput" />
     @if (Model.SearchResult != null && Model.IsValidSearch)
     {

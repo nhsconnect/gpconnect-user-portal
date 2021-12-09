@@ -34,9 +34,9 @@ namespace gpconnect_user_portal.Pages
             return SearchConstants.SortOptions.Select(option => new SelectListItem() { Text = option.Value, Value = option.Key });
         }
 
-        protected FileStreamResult ExportResult(DataTable dataTable)
+        protected FileStreamResult ExportResult(DataTable dataTable, string reportName = "")
         {
-            var memoryStream = _aggregateService.ReportingService.CreateReport(dataTable);
+            var memoryStream = _aggregateService.ReportingService.CreateReport(dataTable, reportName);
             return _aggregateService.ReportingService.GetFileStream(memoryStream);
         }        
     }    

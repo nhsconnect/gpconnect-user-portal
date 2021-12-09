@@ -55,7 +55,7 @@ namespace gpconnect_user_portal.Pages
                     CCGOdsCode = SelectedCCGOdsCode,
                     CCGName = SelectedCCGName
                 };
-                var searchResults = await _aggregateService.QueryService.GetSearchResults(searchRequest);
+                var searchResults = await _aggregateService.QueryService.GetSites(searchRequest);
                 SearchResult = searchResults;
             }
             catch
@@ -66,10 +66,10 @@ namespace gpconnect_user_portal.Pages
 
         public IActionResult OnPostClear()
         {
-            SearchOptions.ProviderOdsCode = null;
-            SearchOptions.SelectedCCGName = null;
-            SearchOptions.SelectedCCGOdsCode = null;            
-            SearchOptions.ProviderName = null;
+            ProviderOdsCode = null;
+            SelectedCCGName = null;
+            SelectedCCGOdsCode = null;            
+            ProviderName = null;
             ModelState.Clear();
             return Page();
         }

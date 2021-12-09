@@ -44,14 +44,7 @@ namespace gpconnect_user_portal.Pages
         {
             try
             {
-                var searchRequest = new SearchRequest() 
-                { 
-                    ProviderOdsCode = ProviderOdsCode,
-                    ProviderName = ProviderName,
-                    CCGOdsCode = SelectedCCGOdsCode,
-                    CCGName = SelectedCCGName
-                };
-                var searchResults = await _aggregateService.QueryService.GetSites(searchRequest);
+                var searchResults = await _aggregateService.QueryService.GetSites(CreateSearchRequest());
                 SearchResult = searchResults;
             }
             catch
@@ -60,20 +53,27 @@ namespace gpconnect_user_portal.Pages
             }
         }
 
-        public FileStreamResult OnPostExportResults()
+        private SearchRequest CreateSearchRequest()
         {
-            //var exportTable = _aggregateService;
-            //return ExportResult(exportTable);
-            return null;
+            return new SearchRequest()
+            {
+                ProviderOdsCode = ProviderOdsCode,
+                ProviderName = ProviderName,
+                CCGOdsCode = SelectedCCGOdsCode,
+                CCGName = SelectedCCGName
+            };
         }
 
-        public async Task<FileStreamResult> OnPostExportAll()
+        public async Task<FileStreamResult> OnPostExportResultsAsync()
         {
-            //var searchResults = await _aggregateService.ReportingService.ExportAllSites();
+            var searchResults = await _aggregateService.QueryService.GetSitesForExport(CreateSearchRequest());
+            return ExportResult(searchResults, "GP Connect Site Report");
+        }
 
-            //var exportTable = _aggregateService;
-            //return ExportResult(exportTable);
-            return null;
+        public async Task<FileStreamResult> OnPostExportAllAsync()
+        {
+            var searchResults = await _aggregateService.QueryService.GetSitesForExport();
+            return ExportResult(searchResults, "All GP Connect Sites Report");
         }
 
         public IActionResult OnPostClear()

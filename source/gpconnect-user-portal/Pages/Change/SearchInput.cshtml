@@ -1,0 +1,39 @@
+﻿@using Microsoft.AspNetCore.Mvc.ModelBinding
+@using gpconnect_user_portal.Helpers.Constants
+@model ChangeModel
+@{
+    var providerOdsCodeInvalid = Model.ModelState["ProviderOdsCode"]?.ValidationState == ModelValidationState.Invalid;
+}
+
+<div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-full">
+        <div class="nhsuk-form-group @(providerOdsCodeInvalid ? "nhsuk-form-group--error": string.Empty)">
+            <label class="nhsuk-label" for="input-providerodscode">@Html.DisplayNameFor(model => model.ProviderOdsCode)</label>
+            @if (providerOdsCodeInvalid)
+            {
+                @Html.ValidationMessageFor(m => m.ProviderOdsCode, "", new { @class = "nhsuk-error-message" })
+            }
+            <input class="nhsuk-input @(providerOdsCodeInvalid ? "nhsuk-input--error": string.Empty)" id="input-providerodscode" novalidate
+                   asp-for="@Model.ProviderOdsCode" name="providerodscode" value="@Model.ProviderOdsCode" type="search">
+        </div>
+
+        <div class="nhsuk-form-group">
+            <label class="nhsuk-label" for="input-providername">@Html.DisplayNameFor(model => model.ProviderName)</label>
+            <div class="nhsuk-hint" id="input-providername-hint-text">Note: provider name may be different to their patient facing name</div>
+            <input class="nhsuk-input" id="input-providername" novalidate
+                   asp-for="@Model.ProviderName" name="providername" value="@Model.ProviderName" type="search">
+        </div>
+
+        <div class="nhsuk-form-group">
+            <label class="nhsuk-label" for="input-ccgname">@Html.DisplayNameFor(model => model.CCGOdsCodes)</label>
+            <select asp-for="@Model.SelectedCCGOdsCode" asp-items="@Model.CCGOdsCodes" class="nhsuk-select" id="@Model.SelectedCCGOdsCode"></select>
+        </div>
+
+        <div class="nhsuk-form-group">
+            <label class="nhsuk-label" for="input-ccgname">@Html.DisplayNameFor(model => model.CCGNames)</label>
+            <select asp-for="@Model.SelectedCCGName" asp-items="@Model.CCGNames" class="nhsuk-select" id="@Model.SelectedCCGName"></select>
+        </div>
+        <button class="nhsuk-button" asp-page-handler="Search" type="submit">@ButtonConstants.SEARCH</button>
+        <button class="nhsuk-button nhsuk-button--secondary" asp-page-handler="Clear" type="submit">@ButtonConstants.CLEAR</button>
+    </div>
+</div>
