@@ -14,5 +14,10 @@ namespace gpconnect_user_portal.Helpers.Constants
             { 5, DisplayConstants.NOAPPOINTMENT },
             { 6, DisplayConstants.HASAPPOINTMENT }
         };
+
+        public const string HtmlQueryFilterInteraction = "gpc.getcarerecord";
+        public const string StructuredQueryFilterInteraction = "structured:fhir:rest:read:metadata-1";
+        public const string AppointmentQueryFilterInteraction = "appointments-1";
+
     }
 }

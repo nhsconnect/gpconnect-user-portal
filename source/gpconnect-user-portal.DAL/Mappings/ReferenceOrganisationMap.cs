@@ -1,5 +1,5 @@
 ﻿using Dapper.FluentMap.Mapping;
-using gpconnect_user_portal.DTO.Response;
+using gpconnect_user_portal.DTO.Response.Reference;
 using System;
 
 namespace gpconnect_user_portal.DAL.Mapping

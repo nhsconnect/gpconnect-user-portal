@@ -1,7 +1,7 @@
 ﻿using Dapper;
 using gpconnect_user_portal.DAL.Enumerations;
 using gpconnect_user_portal.DAL.Interfaces;
-using gpconnect_user_portal.DTO.Response;
+using gpconnect_user_portal.DTO.Response.Reference;
 using gpconnect_user_portal.Services.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -38,6 +38,26 @@ namespace gpconnect_user_portal.Services
             parameters.Add("_ods_code", odsCode, DbType.String, ParameterDirection.Input);
             var result = await _dataService.ExecuteQueryFirstOrDefault<Organisation>(query, parameters);
             return result;
+        }
+
+        public async Task<List<SupplierProduct>> GetSuppliersProducts()
+        {
+            var query = "reference.get_suppliers_products";
+            var result = await _dataService.ExecuteQuery<SupplierProduct>(query);
+            return result;
+        }
+
+        public async Task<EnabledSupplierProduct> GetSupplierProducts(int supplierId)
+        {
+            var query = "reference.get_supplier_products";
+            var parameters = new DynamicParameters();
+            parameters.Add("_supplier_id", supplierId, DbType.Int16, ParameterDirection.Input);
+            var supplierProducts = await _dataService.ExecuteQuery<SupplierProduct>(query, parameters);
+            var enabledSupplierProducts = new EnabledSupplierProduct()
+            {
+                SupplierProduct = supplierProducts
+            };
+            return enabledSupplierProducts;
         }
 
         public async Task<Task> GetCCGs()
@@ -80,6 +100,50 @@ namespace gpconnect_user_portal.Services
                 parameters.Add("_postcode", organisation.Postcode, DbType.String, ParameterDirection.Input);
                 await _dataService.ExecuteQuery(query, parameters);
             }
+        }
+
+        public async Task<List<LookupType>> GetLookupTypes()
+        {
+            var query = "reference.get_lookup_types";
+            var result = await _dataService.ExecuteQuery<LookupType>(query);
+            return result;
+        }
+
+        public async Task<List<Lookup>> GetLookups()
+        {
+            var query = "reference.get_lookups";
+            var result = await _dataService.ExecuteQuery<Lookup>(query);
+            return result;
+        }
+
+        public async Task<List<Lookup>> GetLookup(Enumerations.LookupType lookupTypeId)
+        {
+            var query = "reference.get_lookup";
+            var parameters = new DynamicParameters();
+            parameters.Add("_lookup_type_id", (int)lookupTypeId, DbType.Int16, ParameterDirection.Input);
+            var result = await _dataService.ExecuteQuery<Lookup>(query, parameters);
+            return result;
+        }
+
+        public async Task AddLookup(Enumerations.LookupType lookupTypeId, string lookupValue)
+        {
+            var query = "reference.get_lookup";
+            var parameters = new DynamicParameters();
+            parameters.Add("_lookup_type_id", (int)lookupTypeId, DbType.Int16, ParameterDirection.Input);
+            parameters.Add("_lookup_value", lookupValue, DbType.String, ParameterDirection.Input);
+            await _dataService.ExecuteQuery(query, parameters);
+        }
+
+        public async Task DisableLookup(int lookupId, DateTime? disableDate)
+        {
+            var query = "reference.disable_lookup";
+            var parameters = new DynamicParameters();
+            parameters.Add("_lookup_id", lookupId, DbType.Int16, ParameterDirection.Input);
+            if (disableDate != null)
+            {
+                parameters.Add("_disable_date", disableDate, DbType.DateTime, ParameterDirection.Input);
+            }
+            await _dataService.ExecuteQuery(query, parameters);
         }
     }
 }

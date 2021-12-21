@@ -15,6 +15,14 @@ namespace gpconnect_user_portal.Core.Configuration.Mapping
                 config.AddMap(new ReferenceApiQueryMap());
                 config.AddMap(new ReferenceConfigurationMap());
                 config.AddMap(new ReferenceOrganisationMap());
+                config.AddMap(new SsoConfigurationMap());
+                config.AddMap(new ReferenceLookupMap());
+                config.AddMap(new ReferenceLookupTypeMap());
+                config.AddMap(new SiteDefinitionMap());
+                config.AddMap(new SiteAttributeMap());
+                config.AddMap(new EmailConfigurationMap());
+                config.AddMap(new LoggingConfigurationMap());
+                config.AddMap(new SupplierProductMap());
             });
         }
     }

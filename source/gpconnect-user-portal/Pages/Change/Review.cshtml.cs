@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System;
+using System.Threading.Tasks;
 
 namespace gpconnect_user_portal.Pages
 {
@@ -19,23 +20,25 @@ namespace gpconnect_user_portal.Pages
             _generalOptionsDelegate = generalOptionsDelegate;
         }
 
-        public IActionResult OnGet(Guid id)
+        public async Task<IActionResult> OnGetAsync(string id)
         {
-            PopulateForm(id);
-            return Page();
+            return await PopulateForm(id);
         }
 
-        private void PopulateForm(Guid siteInstanceId)
+        public async Task<IActionResult> PopulateForm(string siteDefinitionGuid)
         {
-            AgreeForDirectCareOnly = false;
-            AgreeToDsAgreement = false;
-            AgreeToUpdateDPIA = false;
-            SiteInstanceId = siteInstanceId;
+            var siteDefinition = await _aggregateService.ApplicationService.GetSiteDefinition(Guid.Parse(siteDefinitionGuid));
+            if (siteDefinition != null)
+            {
+                SiteAttributes = siteDefinition.SiteAttributes;
+                return Page();
+            }
+            return new NotFoundResult();
         }
 
         public IActionResult OnPostUpdateChanges()
         {
-            return LocalRedirect($"~/Change/Detail/{SiteInstanceId}");
+            return LocalRedirect($"~/Change/Detail/{FormOdsCode}");
         }
 
         public IActionResult OnPostSubmitChanges()

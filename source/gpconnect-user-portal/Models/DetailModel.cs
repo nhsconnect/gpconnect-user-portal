@@ -18,9 +18,22 @@ namespace gpconnect_user_portal.Pages
         [BindProperty(SupportsGet = true)]
         public string UseCaseDescription { get; set; }
 
-        [Required(ErrorMessage = MessageConstants.SELECTEDUSECASEREQUIREDERRORMESSAGE)]
-        [Display(Name = DisplayConstants.USECASEINPUT)]
+        [Required(ErrorMessage = MessageConstants.SELECTEDCARESETTINGREQUIREDERRORMESSAGE)]
+        [Display(Name = DisplayConstants.CARESETTINGINPUT)]
         [BindProperty(SupportsGet = true)]
-        public IEnumerable<SelectListItem> UseCases => GetUseCases();
+        public IEnumerable<SelectListItem> CareSettings => GetDropDown(Services.Enumerations.LookupType.CareSetting);
+
+        [Required(ErrorMessage = MessageConstants.SELECTEDSUPPLIERREQUIREDERRORMESSAGE)]
+        [Display(Name = DisplayConstants.SUPPLIERINPUT)]
+        [BindProperty(SupportsGet = true)]
+        public IEnumerable<SelectListItem> Suppliers => GetDropDown(Services.Enumerations.LookupType.Supplier);        
+
+        [Display(Name = DisplayConstants.CCGICBNAMEIFAPPLICABLE)]
+        [BindProperty(SupportsGet = true)]
+        public IEnumerable<SelectListItem> CCGNames => GetCCGByNames();
+
+        [Display(Name = DisplayConstants.CCGICBODSCODEIFAPPLICABLE)]
+        [BindProperty(SupportsGet = true)]
+        public IEnumerable<SelectListItem> CCGOdsCodes => GetCCGByOdsCodes();
     }
 }

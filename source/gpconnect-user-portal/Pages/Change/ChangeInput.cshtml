@@ -1,4 +1,14 @@
-﻿@model DetailModel
+﻿@using Microsoft.AspNetCore.Mvc.ModelBinding
+@model DetailModel
+@{
+    var submitterInvalid = Model.ModelState["Submitter"]?.ValidationState == ModelValidationState.Invalid;
+    var emailAddressInvalid = Model.ModelState["ContactEmailAddress"]?.ValidationState == ModelValidationState.Invalid;
+    var telephoneInvalid = Model.ModelState["ContactTelephone"]?.ValidationState == ModelValidationState.Invalid;
+    var odsCodeInvalid = Model.ModelState["FormOdsCode"]?.ValidationState == ModelValidationState.Invalid;
+    var odsCodeIssuedInvalid = Model.ModelState["NoOdsIssued"]?.ValidationState == ModelValidationState.Invalid;
+    var siteNameInvalid = Model.ModelState["SiteName"]?.ValidationState == ModelValidationState.Invalid;
+    var sitePostcodeInvalid = Model.ModelState["SitePostcode"]?.ValidationState == ModelValidationState.Invalid;
+}
 
 <div class="nhsuk-grid-row">
     <div class="nhsuk-grid-column-full">
@@ -9,6 +19,7 @@
                         <li class="nhsuk-contents-list__item"><span>Use this form if you wish to start to use GP Connect products, change the ones you are currently using or change your GP Connect supplier.</span></li>
                         <li class="nhsuk-contents-list__item"><span>Information about end users who are using GP Connect products for Direct Patient Care.</span></li>
                         <li class="nhsuk-contents-list__item"><span>Support to end users who wish to start to use GP Connect products or change the ones they are currently using.</span></li>
+                        <li class="nhsuk-contents-list__item"><span>Please note that mandatory fields are indicated with an asterisk (*)</span></li>
                     </ol>
                 </p>
             </div>
@@ -18,42 +29,66 @@
 
 <div class="nhsuk-grid-row">
     <div class="nhsuk-grid-column-full">
-        <div class="nhsuk-form-group">
-            <label class="nhsuk-label" for="input-submitter">@Html.DisplayNameFor(model => model.Submitter)</label>
-            <input class="nhsuk-input" id="input-submitter" novalidate asp-for="@Model.Submitter" name="submitter" value="@Model.Submitter" type="text">
+        <div class="nhsuk-form-group@(submitterInvalid ? " nhsuk-form-group--error": string.Empty)">
+            <label asp-for="@Model.Submitter" class="nhsuk-label"></label>
+            <div class="nhsuk-hint" id="input-hint-submitter">* Enter the name of the individual who is submitting these details.</div>
+            @if (submitterInvalid)
+            {
+                <span asp-validation-for="@Model.Submitter" class="nhsuk-error-message"></span>
+            }
+            <input class="nhsuk-input@(submitterInvalid ? " nhsuk-input--error": string.Empty)" aria-describedby="input-hint-submitter" novalidate asp-for="@Model.Submitter" value="@Model.Submitter" type="text">
         </div>
     </div>
 </div>
 
 <div class="nhsuk-grid-row">
     <div class="nhsuk-grid-column-one-half">
-        <div class="nhsuk-form-group">
-            <label class="nhsuk-label" for="input-contactemailaddress">@Html.DisplayNameFor(model => model.ContactEmailAddress)</label>
-            <input class="nhsuk-input" id="input-contactemailaddress" novalidate asp-for="@Model.ContactEmailAddress" name="contactemailaddress" value="@Model.ContactEmailAddress" type="text">
+        <div class="nhsuk-form-group@(emailAddressInvalid ? " nhsuk-form-group--error": string.Empty)">
+            <label asp-for="@Model.ContactEmailAddress" class="nhsuk-label"></label>
+            <div class="nhsuk-hint" id="input-hint-email">* Enter the email address of the submitter.</div>
+            @if (emailAddressInvalid)
+            {
+                <span asp-validation-for="@Model.ContactEmailAddress" class="nhsuk-error-message"></span>
+            }
+            <input class="nhsuk-input@(emailAddressInvalid ? " nhsuk-input--error": string.Empty)" aria-describedby="input-hint-email" novalidate asp-for="@Model.ContactEmailAddress" value="@Model.ContactEmailAddress" type="text">
         </div>
     </div>
     <div class="nhsuk-grid-column-one-half">
-        <div class="nhsuk-form-group">
-            <label class="nhsuk-label" for="input-contacttelephone">@Html.DisplayNameFor(model => model.ContactTelephone)</label>
-            <input class="nhsuk-input" id="input-contacttelephone" novalidate asp-for="@Model.ContactTelephone" name="contacttelephone" value="@Model.ContactTelephone" type="text">
+        <div class="nhsuk-form-group@(telephoneInvalid ? " nhsuk-form-group--error": string.Empty)">
+            <label asp-for="@Model.ContactTelephone" class="nhsuk-label"></label>
+            <div class="nhsuk-hint" id="input-hint-telephone">* Enter the telephone number of the submitter.</div>
+            @if (telephoneInvalid)
+            {
+                <span asp-validation-for="@Model.ContactTelephone" class="nhsuk-error-message"></span>
+            }
+            <input class="nhsuk-input@(telephoneInvalid ? " nhsuk-input--error": string.Empty)" aria-describedby="input-hint-telephone" novalidate asp-for="@Model.ContactTelephone" value="@Model.ContactTelephone" type="text">
         </div>
     </div>
 </div>
 
 <div class="nhsuk-grid-row">
     <div class="nhsuk-grid-column-one-half">
-        <div class="nhsuk-form-group">
-            <label class="nhsuk-label" for="input-odscode">@Html.DisplayNameFor(model => model.FormOdsCode)</label>
-            <input class="nhsuk-input" id="input-odscode" novalidate asp-for="@Model.FormOdsCode" name="odscode" value="@Model.FormOdsCode" type="text">
+        <div class="nhsuk-form-group@(odsCodeInvalid ? " nhsuk-form-group--error": string.Empty)">
+            <label asp-for="@Model.FormOdsCode" class="nhsuk-label"></label>
+            <div class="nhsuk-hint" id="input-hint-odscode">Enter the ODS code of the site OR specify that an ODS code has not been issued.</div>
+            @if (odsCodeInvalid)
+            {
+                <span asp-validation-for="@Model.FormOdsCode" class="nhsuk-error-message"></span>
+            }            
+            <input class="nhsuk-input@(odsCodeInvalid ? " nhsuk-input--error": string.Empty)" aria-describedby="input-hint-odscode" novalidate asp-for="@Model.FormOdsCode" value="@Model.FormOdsCode" type="text">
         </div>
     </div>
     <div class="nhsuk-grid-column-one-half">
-        <div class="nhsuk-form-group">
-            <label class="nhsuk-label">&nbsp;</label>
+        <div class="nhsuk-form-group">            
             <div class="nhsuk-checkboxes">
                 <div class="nhsuk-checkboxes__item">
-                    <input class="nhsuk-checkboxes__input" id="input-odsissued" name="odsissued" type="checkbox" value="@Model.OdsIssued">
-                    <label class="nhsuk-label nhsuk-checkboxes__label" for="input-odsissued">@Html.DisplayNameFor(model => model.OdsIssued)</label>
+                    <input class="nhsuk-checkboxes__input@(odsCodeIssuedInvalid ? " nhsuk-input--error": string.Empty)" type="checkbox" asp-for="@Model.NoOdsIssued">
+                    @if (odsCodeIssuedInvalid)
+                    {
+                        <span asp-validation-for="@Model.NoOdsIssued" class="nhsuk-error-message"></span>
+                    }
+                    <label asp-for="@Model.NoOdsIssued" class="nhsuk-label nhsuk-checkboxes__label"></label>
+                    <div class="nhsuk-hint nhsuk-checkboxes__hint" id="input-hint-odsissued">If you have not been issued an ODS code.</div>
                 </div>
             </div>
         </div>
@@ -62,15 +97,25 @@
 
 <div class="nhsuk-grid-row">
     <div class="nhsuk-grid-column-one-half">
-        <div class="nhsuk-form-group">
-            <label class="nhsuk-label" for="input-sitename">@Html.DisplayNameFor(model => model.SiteName)</label>
-            <input class="nhsuk-input" id="input-sitename" novalidate asp-for="@Model.SiteName" name="sitename" value="@Model.SiteName" type="text">
+        <div class="nhsuk-form-group@(siteNameInvalid ? " nhsuk-form-group--error": string.Empty)">
+            <label asp-for="@Model.SiteName" class="nhsuk-label"></label>
+            <div class="nhsuk-hint" id="input-hint-sitename">* Enter the name of the site.</div>            
+            @if (siteNameInvalid)
+            {
+                <span asp-validation-for="@Model.SiteName" class="nhsuk-error-message"></span>
+            }            
+            <input class="nhsuk-input@(siteNameInvalid ? " nhsuk-input--error": string.Empty)" aria-describedby="input-hint-sitename" novalidate asp-for="@Model.SiteName" value="@Model.SiteName" type="text">
         </div>
     </div>
     <div class="nhsuk-grid-column-one-half">
-        <div class="nhsuk-form-group">
-            <label class="nhsuk-label" for="input-sitepostcode">@Html.DisplayNameFor(model => model.SitePostcode)</label>
-            <input class="nhsuk-input" id="input-sitepostcode" novalidate asp-for="@Model.SitePostcode" name="sitepostcode" value="@Model.SitePostcode" type="text">
+        <div class="nhsuk-form-group@(sitePostcodeInvalid ? " nhsuk-form-group--error": string.Empty)">
+            <label asp-for="@Model.SitePostcode" class="nhsuk-label"></label>
+            <div class="nhsuk-hint" id="input-hint-sitepostcode">* Enter the postcode of the site.</div>    
+            @if (sitePostcodeInvalid)
+            {
+                <span asp-validation-for="@Model.SitePostcode" class="nhsuk-error-message"></span>
+            }            
+            <input class="nhsuk-input@(sitePostcodeInvalid ? " nhsuk-input--error": string.Empty)" aria-describedby="input-hint-sitepostcode" novalidate asp-for="@Model.SitePostcode" value="@Model.SitePostcode" type="text">
         </div>
     </div>
 </div>
@@ -78,14 +123,16 @@
 <div class="nhsuk-grid-row">
     <div class="nhsuk-grid-column-one-half">
         <div class="nhsuk-form-group">
-            <label class="nhsuk-label" for="input-ccgname">@Html.DisplayNameFor(model => model.CCGOdsCodes) (if applicable)</label>
-            <select asp-for="@Model.SelectedCCGOdsCode" asp-items="@Model.CCGOdsCodes" class="nhsuk-select" id="@Model.SelectedCCGOdsCode"></select>
+            <label asp-for="@Model.CCGOdsCodes" class="nhsuk-label"></label>
+            <div class="nhsuk-hint" id="input-hint-ccgodscode">If applicable, please select the CCG ODS Code for the site.</div>
+            <select asp-for="@Model.SelectedCCGOdsCode" asp-items="@Model.CCGOdsCodes" aria-describedby="input-hint-ccgodscode" novalidate class="nhsuk-select"></select>
         </div>
     </div>
     <div class="nhsuk-grid-column-one-half">
         <div class="nhsuk-form-group">
-            <label class="nhsuk-label" for="input-ccgname">@Html.DisplayNameFor(model => model.CCGNames) (if applicable)</label>
-            <select asp-for="@Model.SelectedCCGName" asp-items="@Model.CCGNames" class="nhsuk-select" id="@Model.SelectedCCGName"></select>
+            <label asp-for="@Model.CCGNames" class="nhsuk-label"></label>
+            <div class="nhsuk-hint" id="input-hint-ccgodsname">If applicable, please select the CCG ODS Name for the site.</div>            
+            <select asp-for="@Model.SelectedCCGName" asp-items="@Model.CCGNames" aria-describedby="input-hint-ccgodsname" novalidate class="nhsuk-select"></select>
         </div>
     </div>
 </div>

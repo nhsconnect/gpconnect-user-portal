@@ -24,7 +24,7 @@ namespace gpconnect_user_portal.DTO.Response
         public string Interactions { get; set; }
         [Display(Name = DisplayConstants.RECORDACCESSHTMLVIEW)]
         [IgnoreDataMember]
-        public bool HasHtmlView => Interactions.Contains("gpc.getcarerecord");
+        public bool HasHtmlView => Interactions.Contains(SearchConstants.HtmlQueryFilterInteraction);
 
         [JsonProperty(DisplayConstants.RECORDACCESSHTMLVIEW)]
         public string HasHtmlViewAsText => HasHtmlView.BooleanToYesNo();
@@ -35,10 +35,10 @@ namespace gpconnect_user_portal.DTO.Response
 
         [Display(Name = DisplayConstants.RECORDACCESSSTRUCTURED)]
         [IgnoreDataMember]
-        public bool HasStructured => Interactions.Contains("structured:fhir:rest:read:metadata-1");
+        public bool HasStructured => Interactions.Contains(SearchConstants.StructuredQueryFilterInteraction);
         [Display(Name = DisplayConstants.APPOINTMENT)]
         [IgnoreDataMember]
-        public bool HasAppointment => Interactions.Contains("appointments-1");
+        public bool HasAppointment => Interactions.Contains(SearchConstants.AppointmentQueryFilterInteraction);
         [Display(Name = DisplayConstants.USECASE)]
         [JsonProperty(DisplayConstants.USECASE)]
         public string UseCase { get; set; }

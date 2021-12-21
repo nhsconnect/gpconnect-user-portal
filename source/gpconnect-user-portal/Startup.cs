@@ -1,11 +1,12 @@
 using Autofac;
 using gpconnect_user_portal.Core.Configuration.Infrastructure;
-using gpconnect_user_portal.Core.Configuration.Infrastructure.Logging;
+using gpconnect_user_portal.Core.Configuration.Logging;
 using gpconnect_user_portal.DAL;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using System;
 
 namespace gpconnect_user_portal

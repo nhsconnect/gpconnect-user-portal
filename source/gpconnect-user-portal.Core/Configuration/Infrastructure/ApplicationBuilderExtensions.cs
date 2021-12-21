@@ -1,4 +1,4 @@
-﻿using gpconnect_user_portal.Core.Configuration.Infrastructure.Logging;
+﻿using gpconnect_user_portal.Core.Configuration.Logging;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
@@ -23,6 +23,8 @@ namespace gpconnect_user_portal.Core.Configuration.Infrastructure
 
             app.UseHsts();
 
+            app.UseStatusCodePagesWithReExecute("/Error/{0}");
+
             app.UseHttpsRedirection();
 
             app.UseStaticFiles(new StaticFileOptions
@@ -35,7 +37,7 @@ namespace gpconnect_user_portal.Core.Configuration.Infrastructure
             app.UseSession();
             app.UseCookiePolicy();
             app.UseRouting();
-            app.UseResponseCaching();
+            app.UseResponseCaching();            
 
             app.Use(async (context, next) =>
             {
@@ -44,14 +46,14 @@ namespace gpconnect_user_portal.Core.Configuration.Infrastructure
                     NoStore = true,
                     NoCache = true
                 };
-                context.Response.Headers.Add("Pragma", "no-cache");
-
+                //context.Response.Headers.Add("Pragma", "no-cache");
                 await next();
-            });
+            });           
 
             app.UseResponseCompression();
 
             app.UseMiddleware<RequestLoggingMiddleware>();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages();

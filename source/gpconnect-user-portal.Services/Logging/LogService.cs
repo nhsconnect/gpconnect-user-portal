@@ -17,7 +17,7 @@ namespace gpconnect_user_portal.Services
 
         public void AddWebRequestLog(WebRequest webRequest)
         {
-            var query = "";
+            var query = "logging.log_web_request";
             var parameters = new DynamicParameters();
 
             parameters.Add("_url", webRequest.Url);
@@ -30,7 +30,7 @@ namespace gpconnect_user_portal.Services
             parameters.Add("_session_id", webRequest.SessionId);
             parameters.Add("_user_agent", webRequest.UserAgent);
 
-            _dataService.ExecuteQuery(query, parameters);
+            //_dataService.ExecuteQuery(query, parameters);
         }
     }
 }

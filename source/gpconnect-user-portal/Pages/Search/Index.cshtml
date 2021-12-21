@@ -4,6 +4,7 @@
 
 <form method="post" id="search-input-form">
     <h1>Live GP Connect Sites</h1>
+    <div class="nhsuk-hint" id="input-hint-search">Click on '@ButtonConstants.ALLSITEDOWNLOAD' to export all sites to a spreadsheet.</div>
     <button class="nhsuk-button" asp-page-handler="ExportAll" type="submit">@ButtonConstants.ALLSITEDOWNLOAD</button>
     <h2>Search</h2>
 
@@ -15,7 +16,6 @@
     @if (Model.SearchResult != null && Model.IsValidSearch)
     {
         <h1>Results</h1>
-        <partial name="SearchSortOptions" />
         <partial name="SearchResultsHeader" />
         <partial name="SearchResults" />
     }

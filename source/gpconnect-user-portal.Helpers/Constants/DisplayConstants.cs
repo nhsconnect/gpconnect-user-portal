@@ -12,7 +12,7 @@
         public const string ODSCODE = "ODS Code";
         public const string NOODSISSUED = "No ODS issued";
         public const string SITENAME = "Site Name";
-        public const string SITEPOSTCODE = "Site Postcode";        
+        public const string SITEPOSTCODE = "Site Postcode";
         public const string CCGICBODSCODE = "CCG/ICB " + ODSCODE;
         public const string CCGICBNAME = "CCG/ICB Name";
         public const string CCGICBODSCODEIFAPPLICABLE = "CCG/ICB " + ODSCODE + IFAPPLICABLE;
@@ -22,11 +22,14 @@
         public const string RECORDACCESSHTMLVIEW = "Access Record: HTML";
         public const string RECORDACCESSSTRUCTURED = "Access Record: Structured";
         public const string APPOINTMENT = "Appointment Management";
-        public const string USECASEDESCRIPTIONINPUT = "Please describe your use case";
-        public const string USECASEINPUT = "Please select your use case";
-        
+        public const string USECASEDESCRIPTIONINPUT = "Please describe your " + USECASE;
+        public const string USECASEINPUT = "Please select your " + USECASE;
+        public const string CARESETTINGINPUT = "Please select your " + CARESETTING;
+        public const string SUPPLIERINPUT = "Please select your " + SUPPLIER;
+
         public const string USECASEDESCRIPTION = "Use Case Description";
         public const string USECASE = "Use Case";
+        public const string CARESETTING = "Care Setting";
 
         public const string SELECTEDSUPPLIERPRODUCTUSECASE = "Selected supplier product use case";
         public const string SUPPLIER = "Supplier";

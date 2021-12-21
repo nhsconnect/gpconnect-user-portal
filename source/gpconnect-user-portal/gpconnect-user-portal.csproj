@@ -30,4 +30,11 @@
     </Compile>
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="Pages\Error.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>

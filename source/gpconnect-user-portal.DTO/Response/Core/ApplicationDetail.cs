@@ -1,4 +1,4 @@
-﻿namespace gpconnect_user_portal.DTO.Response
+﻿namespace gpconnect_user_portal.DTO.Response.Core
 {
     public class ApplicationDetail
     {

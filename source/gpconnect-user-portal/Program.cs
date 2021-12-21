@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using NLog.Web;
 using Infrastructure = gpconnect_user_portal.Core.Configuration.Infrastructure;
+using Logging = gpconnect_user_portal.Core.Configuration.Logging;
 
 namespace gpconnect_user_portal
 {
@@ -21,14 +22,14 @@ namespace gpconnect_user_portal
                 })
                 .UseServiceProviderFactory(new AutofacServiceProviderFactory())
                 .ConfigureWebHostDefaults(webHostDefaultsBuilder =>
-                {
+                {                    
                     webHostDefaultsBuilder.UseStartup<Startup>();
                     Infrastructure.WebConfigurationBuilder.ConfigureWebHostDefaults(webHostDefaultsBuilder);
                 })
                 .ConfigureAppConfiguration(Infrastructure.CustomConfigurationBuilder.AddCustomConfiguration)
                 .ConfigureLogging((builderContext, logging) =>
                 {
-                    Infrastructure.LoggingConfigurationBuilder.AddLoggingConfiguration(builderContext, logging);
+                    Logging.LoggingConfigurationBuilder.AddLoggingConfiguration(builderContext, logging);
                 })
                 .UseNLog();
     }

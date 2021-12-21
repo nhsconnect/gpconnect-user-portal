@@ -1,9 +1,13 @@
-﻿using gpconnect_user_portal.DTO.Response;
+﻿using System;
+using System.Threading.Tasks;
+using Request = gpconnect_user_portal.DTO.Request;
+using Response = gpconnect_user_portal.DTO.Response.Application;
 
 namespace gpconnect_user_portal.Services.Interfaces
 {
     public interface IApplicationService
     {
-        ApplicationDetail GetApplicationDetails();
+        Task<Response.SiteDefinition> GetSiteDefinition(Guid siteUniqueIdentifier);
+        Task<Response.SiteDefinition> AddSiteDefinition(Request.SiteDefinition siteDefinition);
     }
 }

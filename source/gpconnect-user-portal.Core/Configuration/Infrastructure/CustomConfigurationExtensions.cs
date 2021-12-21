@@ -6,7 +6,6 @@ using Newtonsoft.Json;
 using Npgsql;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace gpconnect_user_portal.Core.Configuration.Infrastructure
 {
@@ -57,6 +56,9 @@ namespace gpconnect_user_portal.Core.Configuration.Infrastructure
             MappingExtensions.ConfigureMappingServices();
             LoadConfiguration<General>("SELECT * FROM configuration.get_general_configuration()", "General");
             LoadConfiguration<Reference>("SELECT * FROM configuration.get_reference_configuration()", "Reference");
+            LoadConfiguration<Sso>("SELECT * FROM configuration.get_sso_configuration()", "Sso");
+            LoadConfiguration<Email>("SELECT * FROM configuration.get_email_configuration()", "Email");
+            LoadConfiguration<DTO.Response.Configuration.Logging> ("SELECT * FROM configuration.get_logging_configuration()", "Logging");
         }
 
         private void LoadConfiguration<T>(string query, string configurationPrefix) where T : class

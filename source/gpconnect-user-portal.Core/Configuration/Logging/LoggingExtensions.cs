@@ -2,10 +2,13 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using NLog;
 using NLog.Targets;
+using NLog.Targets.Splunk;
+using System;
 
-namespace gpconnect_user_portal.Core.Configuration.Infrastructure.Logging
+namespace gpconnect_user_portal.Core.Configuration.Logging
 {
     public static class LoggingExtensions
     {
@@ -14,13 +17,13 @@ namespace gpconnect_user_portal.Core.Configuration.Infrastructure.Logging
             var nLogConfiguration = new NLog.Config.LoggingConfiguration();
 
             var consoleTarget = AddConsoleTarget();
-            var networkTarget = AddNetworkTarget(configuration);
+            var splunkTarget = AddSplunkTarget(configuration);
 
             nLogConfiguration.AddRule(NLog.LogLevel.Trace, NLog.LogLevel.Fatal, consoleTarget);
-            nLogConfiguration.AddRule(NLog.LogLevel.Trace, NLog.LogLevel.Fatal, networkTarget);
+            nLogConfiguration.AddRule(NLog.LogLevel.Debug, NLog.LogLevel.Fatal, splunkTarget);
 
             nLogConfiguration.AddTarget(consoleTarget);
-            nLogConfiguration.AddTarget(networkTarget);
+            nLogConfiguration.AddTarget(splunkTarget);
 
             nLogConfiguration.Variables.Add("applicationVersion", ApplicationHelper.ApplicationVersion.GetAssemblyVersion());
 
@@ -35,14 +38,25 @@ namespace gpconnect_user_portal.Core.Configuration.Infrastructure.Logging
             return services;
         }
 
-        private static NetworkTarget AddNetworkTarget(IConfiguration configuration)
+        private static SplunkHttpEventCollector AddSplunkTarget(IConfiguration configuration)
         {
-            var networkTarget = new NetworkTarget()
+            var loggingConfiguration = configuration.GetSection("Logging");
+
+            var splunkTarget = new SplunkHttpEventCollector()
             {
-                Name = "Splunk Cloud",
-                SslProtocols = System.Security.Authentication.SslProtocols.Tls12
-            };
-            return networkTarget;
+                Name = "Splunk",
+                ServerUrl = loggingConfiguration["ServerUrl"],
+                Token = loggingConfiguration["Token"],
+                Index = loggingConfiguration["Index"],
+                Channel = loggingConfiguration["Channel"],
+                Source = loggingConfiguration["Source"],
+                SourceType = loggingConfiguration["SourceType"],
+                UseProxy = bool.Parse(loggingConfiguration["UseProxy"]),
+                ProxyUrl = loggingConfiguration["ProxyUrl"],
+                ProxyUser = loggingConfiguration["ProxyUser"],
+                ProxyPassword = loggingConfiguration["ProxyPassword"]                
+            };            
+            return splunkTarget;
         }
 
         private static ConsoleTarget AddConsoleTarget()

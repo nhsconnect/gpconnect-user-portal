@@ -12,6 +12,7 @@ namespace gpconnect_user_portal.Pages
         public IEnumerable<SelectListItem> SearchResultSortOptions => GetSearchResultSortOptions();
 
         [BindProperty]
+        [Display(Name = DisplayConstants.FILTERBY)]
         public string SelectedSortOption { get; set; }
 
         public SearchResult SearchResults { get; set; }

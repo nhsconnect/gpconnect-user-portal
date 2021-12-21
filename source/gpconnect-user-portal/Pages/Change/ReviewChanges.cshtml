@@ -12,7 +12,7 @@
                             <p class="nhsuk-label--s">@Html.DisplayNameFor(model => model.SiteName)</p>
                         </div>
                         <div class="nhsuk-grid-column-two-thirds">
-                            <p>@Model.SiteName</p>
+                            <p>@Model.GetAttributeValue("SiteName")</p>
                         </div>
                     </div>
                     <div class="nhsuk-grid-column-one-half">
@@ -20,7 +20,7 @@
                             <p class="nhsuk-label--s">@Html.DisplayNameFor(model => model.RecordAccessHtmlView)</p>
                         </div>
                         <div class="nhsuk-grid-column-one-third">
-                            <p>@Model.RecordAccessHtmlView.BooleanToHtml()</p>
+                            <p>@Model.GetAttributeValue("RecordAccessHtmlView")</p>
                         </div>
                     </div>
                 </div>
@@ -30,7 +30,7 @@
                             <p class="nhsuk-label--s">@Html.DisplayNameFor(model => model.FormOdsCode)</p>
                         </div>
                         <div class="nhsuk-grid-column-two-thirds">
-                            <p>@Model.FormOdsCode</p>
+                            <p>@Model.GetAttributeValue("FormOdsCode")</p>
                         </div>
                     </div>
                     <div class="nhsuk-grid-column-one-half">
@@ -38,18 +38,18 @@
                             <p class="nhsuk-label--s">@Html.DisplayNameFor(model => model.RecordAccessStructured)</p>
                         </div>
                         <div class="nhsuk-grid-column-one-third">
-                            <p>@Model.RecordAccessStructured.BooleanToHtml()</p>
+                            <p>@Model.GetAttributeValue("RecordAccessStructured")</p>
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="nhsuk-grid-row">
                     <div class="nhsuk-grid-column-one-half">
                         <div class="nhsuk-grid-column-one-half">
                             <p class="nhsuk-label--s">@Html.DisplayNameFor(model => model.SelectedCCGName)</p>
                         </div>
                         <div class="nhsuk-grid-column-one-half">
-                            <p>@Model.SelectedCCGName</p>
+                            <p>@Model.GetAttributeValue("SelectedCCGName")</p>
                         </div>
                     </div>
                     <div class="nhsuk-grid-column-one-half">
@@ -57,18 +57,18 @@
                             <p class="nhsuk-label--s">@Html.DisplayNameFor(model => model.Appointment)</p>
                         </div>
                         <div class="nhsuk-grid-column-one-third">
-                            <p>@Model.Appointment.BooleanToHtml()</p>
+                            <p>@Model.GetAttributeValue("Appointment")</p>
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="nhsuk-grid-row">
                     <div class="nhsuk-grid-column-one-half">
                         <div class="nhsuk-grid-column-one-half">
                             <p class="nhsuk-label--s">@Html.DisplayNameFor(model => model.SelectedCCGOdsCode)</p>
                         </div>
                         <div class="nhsuk-grid-column-one-half">
-                            <p>@Model.SelectedCCGOdsCode</p>
+                            <p>@Model.GetAttributeValue("SelectedCCGOdsCode")</p>
                         </div>
                     </div>
                     <div class="nhsuk-grid-column-one-half">
@@ -80,14 +80,14 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="nhsuk-grid-row">
                     <div class="nhsuk-grid-column-one-half">
                         <div class="nhsuk-grid-column-one-third">
-                            <p class="nhsuk-label--s">@Html.DisplayNameFor(model => model.Suppliers)</p>
+                            <p class="nhsuk-label--s">@Html.DisplayNameFor(model => model.SelectedSupplier)</p>
                         </div>
                         <div class="nhsuk-grid-column-two-thirds">
-                            <p>@Model.SelectedSupplier</p>
+                            <p>@Model.GetAttributeValue("SelectedSupplier")</p>
                         </div>
                     </div>
                     <div class="nhsuk-grid-column-one-half">
@@ -95,51 +95,40 @@
                             <p class="nhsuk-label--s">@Html.DisplayNameFor(model => model.UseCaseDescription)</p>
                         </div>
                         <div class="nhsuk-grid-column-one-third">
-                            <p>@Model.UseCaseDescription</p>
+                            <p>@Model.GetAttributeValue("UseCaseDescription")</p>
                         </div>
                     </div>
-                </div>              
-                
-                <div class="nhsuk-grid-row">
-                    <div class="nhsuk-grid-column-full">
-                        <div class="nhsuk-grid-column-one-third">
-                            <p class="nhsuk-label--s">@Html.DisplayNameFor(model => model.SupplierProducts)</p>
-                        </div>
-                        <div class="nhsuk-grid-column-two-thirds">
-                            <p>@Model.SelectedSupplierProduct</p>
-                        </div>
-                    </div>
-                </div>           
-                
+                </div>
+
                 <div class="nhsuk-grid-row">
                     <div class="nhsuk-grid-column-full">
                         <div class="nhsuk-grid-column-one-third">
                             <p class="nhsuk-label--s">@Html.DisplayNameFor(model => model.Submitter)</p>
                         </div>
                         <div class="nhsuk-grid-column-two-thirds">
-                            <p>@Model.Submitter</p>
+                            <p>@Model.GetAttributeValue("Submitter")</p>
                         </div>
                     </div>
-                </div>             
-                
+                </div>
+
                 <div class="nhsuk-grid-row">
                     <div class="nhsuk-grid-column-full">
                         <div class="nhsuk-grid-column-one-third">
                             <p class="nhsuk-label--s">@Html.DisplayNameFor(model => model.ContactEmailAddress)</p>
                         </div>
                         <div class="nhsuk-grid-column-two-thirds">
-                            <p>@Model.ContactEmailAddress</p>
+                            <p>@Model.GetAttributeValue("ContactEmailAddress")</p>
                         </div>
                     </div>
-                </div>            
-                
+                </div>
+
                 <div class="nhsuk-grid-row">
                     <div class="nhsuk-grid-column-full">
                         <div class="nhsuk-grid-column-one-third">
                             <p class="nhsuk-label--s">@Html.DisplayNameFor(model => model.ContactTelephone)</p>
                         </div>
                         <div class="nhsuk-grid-column-two-thirds">
-                            <p>@Model.ContactTelephone</p>
+                            <p>@Model.GetAttributeValue("ContactTelephone")</p>
                         </div>
                     </div>
                 </div>

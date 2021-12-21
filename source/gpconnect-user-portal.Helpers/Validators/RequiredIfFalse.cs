@@ -1,25 +1,26 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace gpconnect_user_portal.Helpers.Validators
 {
-    public class RequiredIfAttribute : RequiredAttribute
+    [AttributeUsage(AttributeTargets.Property)]
+    public class RequiredIfFalseAttribute : RequiredAttribute
     {
         private string PropertyName { get; set; }
-        private object Value { get; set; }
 
-        public RequiredIfAttribute(string propertyName, object value, string errorMessage = "")
+        public RequiredIfFalseAttribute(string propertyName, string errorMessage = "")
         {
             PropertyName = propertyName;
             ErrorMessage = errorMessage;
-            Value = value;
         }
 
         protected override ValidationResult IsValid(object value, ValidationContext context)
         {
             var instance = context.ObjectInstance;
             var type = instance.GetType();
-            var propertyValue = type.GetProperty(PropertyName).GetValue(instance, null);
-            if (propertyValue.ToString() == Value.ToString() && value == null)
+            bool.TryParse(type.GetProperty(PropertyName).GetValue(instance)?.ToString(), out bool propertyValue);
+
+            if (!propertyValue && string.IsNullOrWhiteSpace(value?.ToString()))
             {
                 return new ValidationResult(ErrorMessage);
             }

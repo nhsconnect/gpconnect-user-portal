@@ -1,18 +1,22 @@
 ﻿@page "{odsCode?}"
+@using gpconnect_user_portal.Helpers.Constants
 @model DetailModel
 
 <h1>@Model.PageTitle</h1>
 
 <form method="post" id="search-input-form">
     <partial name="ChangeInput" />
-    <partial name="ChangeProducts" />
     <partial name="ChangeSupplier" />
-    <div class="nhsuk-grid-row">
-        <div class="nhsuk-grid-column-full">
-            <div class="nhsuk-form-group">
-                <button class="nhsuk-button" asp-page-handler="Continue" type="submit">@Helpers.Constants.ButtonConstants.CONTINUE</button>
+    @if (Model.DisplayGpConnectProducts)
+    {
+        <partial name="ChangeProducts" />
+        <div class="nhsuk-grid-row">
+            <div class="nhsuk-grid-column-full">
+                <div class="nhsuk-form-group">
+                    <div class="nhsuk-hint" id="input-hint-continue">Click on '@ButtonConstants.CONTINUE' to check and review the details you have entered.</div>
+                    <button class="nhsuk-button" aria-describedby="input-hint-continue" asp-page-handler="Continue" type="submit">@ButtonConstants.CONTINUE</button>
+                </div>
             </div>
         </div>
-    </div>
-    <input type="hidden" id="guid" name="guid" value="@Guid.NewGuid()" />
+    }
 </form>

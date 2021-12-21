@@ -20,6 +20,7 @@ namespace gpconnect_user_portal.Pages
 
         public IActionResult OnGet()
         {
+            ClearModelState();
             return Page();
         }
 
@@ -35,6 +36,11 @@ namespace gpconnect_user_portal.Pages
                 DisplaySearchInvalid = true;
             }
             return Page();
+        }
+
+        private void ClearModelState()
+        {
+            ModelState.ClearValidationState("ProviderOdsCode");
         }
 
         private async Task GetSearchResults()

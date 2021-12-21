@@ -10,17 +10,17 @@
             <div class="nhsuk-warning-callout">
                 <h3 class="nhsuk-warning-callout__label">
                     <span role="text">
-                        <span class="nhsuk-u-visually-hidden">Important: </span>
-                        No sites found
+                        <span class="nhsuk-u-visually-hidden">Important: </span>No sites found
                     </span>
                 </h3>
-                <p></p>
-                <button class="nhsuk-button" asp-page-handler="Create" type="submit">@ButtonConstants.CREATESITE</button>
+                <div class="nhsuk-hint" id="input-hint-createsite">Click on '@ButtonConstants.CREATESITE' to register a new site.</div>        
+                <button class="nhsuk-button" asp-page-handler="Create" aria-describedby="input-hint-createsite" type="submit">@ButtonConstants.CREATESITE</button>
             </div>
         }
         else
         {
-            <button class="nhsuk-button" asp-page-handler="Create" type="submit">@ButtonConstants.CREATESITE</button>
+            <div class="nhsuk-hint" id="input-hint-createsite">Click on '@ButtonConstants.CREATESITE' to register a new site.</div>                
+            <button class="nhsuk-button" asp-page-handler="Create" aria-describedby="input-hint-createsite" type="submit">@ButtonConstants.CREATESITE</button>
             <dl class="nhsuk-summary-list">
                 @foreach (var option in Model.SearchResult.SearchResults)
                 {

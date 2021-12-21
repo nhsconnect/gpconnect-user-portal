@@ -30,5 +30,12 @@ namespace gpconnect_user_portal.Pages
         [Display(Name = DisplayConstants.USECASE)]
         [BindProperty(SupportsGet = true)]
         public string UseCase { get; set; }
+
+        public List<DTO.Response.Application.SiteAttribute> SiteAttributes { get; set; }
+
+        public string GetAttributeValue(string attributeName)
+        {
+            return SiteAttributes?.Find(x => x.SiteAttributeName == attributeName)?.SiteAttributeValue;
+        }
     }
 }

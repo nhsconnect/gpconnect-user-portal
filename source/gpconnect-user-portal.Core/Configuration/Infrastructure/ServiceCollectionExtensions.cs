@@ -52,6 +52,8 @@ namespace gpconnect_user_portal.Core.Configuration.Infrastructure
 
             services.Configure<General>(configuration.GetSection("General"));
             services.Configure<Reference>(configuration.GetSection("Reference"));
+            services.Configure<Sso>(configuration.GetSection("Sso"));
+            services.Configure<DTO.Response.Configuration.Logging>(configuration.GetSection("Logging"));
 
             var httpClientExtensions = new HttpClientExtensions();
             httpClientExtensions.AddHttpClientServices(services, env);            

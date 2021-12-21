@@ -1,4 +1,4 @@
-﻿using gpconnect_user_portal.DTO.Response;
+﻿using gpconnect_user_portal.DTO.Response.Reference;
 using gpconnect_user_portal.Helpers.Constants;
 using gpconnect_user_portal.Services.Interfaces;
 using Microsoft.AspNetCore.Html;
@@ -27,10 +27,10 @@ namespace gpconnect_user_portal.Models
         }
 
         public string ApplicationName => _generalOptionsDelegate.CurrentValue.ProductName;
-        public string AssemblyName => _aggregateService.ApplicationService.GetApplicationDetails().AssemblyName;
+        public string AssemblyName => _aggregateService.CoreService.GetApplicationDetails().AssemblyName;
         public string LastUpdated => $"{DateTime.UtcNow:MMMM yyyy}";        
 
-        public HtmlString GetAccessEmailAddressLink => new HtmlString($"<a href=\"mailto:{_aggregateService.ApplicationService.GetApplicationDetails().ApplicationEmailAddress}\">{_aggregateService.ApplicationService.GetApplicationDetails().ApplicationEmailAddress}</a>");
+        public HtmlString GetAccessEmailAddressLink => new HtmlString($"<a href=\"mailto:{_aggregateService.CoreService.GetApplicationDetails().ApplicationEmailAddress}\">{_aggregateService.CoreService.GetApplicationDetails().ApplicationEmailAddress}</a>");
 
         [Display(Name = DisplayConstants.CCGICBNAME)]
         [BindProperty(SupportsGet = true)]
@@ -41,9 +41,11 @@ namespace gpconnect_user_portal.Models
         public IEnumerable<SelectListItem> CCGOdsCodes => GetCCGByOdsCodes();
 
         [BindProperty(SupportsGet = true)]
+        [Display(Name = DisplayConstants.CCGICBNAME)]
         public string SelectedCCGName { get; set; }
 
         [BindProperty(SupportsGet = true)]
+        [Display(Name = DisplayConstants.CCGICBODSCODE)]
         public string SelectedCCGOdsCode { get; set; }
 
         public IEnumerable<SelectListItem> GetCCGByNames()

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace gpconnect_user_portal.DTO.Response
+namespace gpconnect_user_portal.DTO.Response.Reference
 {
     public class Organisation
     {

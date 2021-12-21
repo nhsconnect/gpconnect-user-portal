@@ -1,4 +1,5 @@
-﻿using gpconnect_user_portal.Helpers.Constants;
+﻿using gpconnect_user_portal.DTO.Response.Reference;
+using gpconnect_user_portal.Helpers.Constants;
 using gpconnect_user_portal.Helpers.Validators;
 using gpconnect_user_portal.Models;
 using gpconnect_user_portal.Services.Interfaces;
@@ -29,26 +30,24 @@ namespace gpconnect_user_portal.Pages
         public string Submitter { get; set; }
 
         [Required(ErrorMessage = MessageConstants.CONTACTEMAILADDRESSREQUIREDERRORMESSAGE)]
-        [RegularExpression(ValidationConstants.EMAILADDRESS, ErrorMessage = MessageConstants.CONTACTEMAILADDRESSREQUIREDERRORMESSAGE)]
         [Display(Name = DisplayConstants.CONTACTEMAILADDRESS)]
         [BindProperty(SupportsGet = true)]
         public string ContactEmailAddress { get; set; }
 
         [Required(ErrorMessage = MessageConstants.CONTACTTELEPHONEREQUIREDERRORMESSAGE)]
-        [RegularExpression(ValidationConstants.ALPHANUMERICCHARACTERSONLY, ErrorMessage = MessageConstants.CONTACTTELEPHONEVALIDVALUEERRORMESSAGE)]
         [Display(Name = DisplayConstants.CONTACTTELEPHONE)]
         [BindProperty(SupportsGet = true)]
         public string ContactTelephone { get; set; }
-        
-        [RequiredIf(nameof(OdsIssued), false, ErrorMessage = MessageConstants.ODSCODEREQUIREDERRORMESSAGE)]
+
+        [Display(Name = DisplayConstants.NOODSISSUED)]
+        [BindProperty(SupportsGet = true)]
+        public bool NoOdsIssued { get; set; }
+
+        [RequiredIfFalse(nameof(NoOdsIssued), ErrorMessage = MessageConstants.ODSCODEREQUIREDERRORMESSAGE)]
         [RegularExpression(ValidationConstants.UPPERCASELETTERSANDNUMBERSONLY, ErrorMessage = MessageConstants.ODSCODEVALIDVALUEERRORMESSAGE)]
         [Display(Name = DisplayConstants.ODSCODE)]
         [BindProperty(SupportsGet = true)]
         public string FormOdsCode { get; set; }
-
-        [Display(Name = DisplayConstants.NOODSISSUED)]
-        [BindProperty(SupportsGet = true)]
-        public bool OdsIssued { get; set; }
 
         [Required(ErrorMessage = MessageConstants.SITENAMEREQUIREDERRORMESSAGE)]
         [RegularExpression(ValidationConstants.ALPHANUMERICCHARACTERSONLY, ErrorMessage = MessageConstants.SITENAMEVALIDVALUEERRORMESSAGE)]
@@ -62,69 +61,43 @@ namespace gpconnect_user_portal.Pages
         [BindProperty(SupportsGet = true)]
         public string SitePostcode { get; set; }
 
-        [Required(ErrorMessage = MessageConstants.RECORDACCESSHTMLVIEWREQUIREDERRORMESSAGE)]
+        [RequiredIfTrue(nameof(IsHtmlEnabled), ErrorMessage = MessageConstants.RECORDACCESSHTMLVIEWREQUIREDERRORMESSAGE)]
         [Display(Name = DisplayConstants.RECORDACCESSHTMLVIEW)]
         [BindProperty(SupportsGet = true)]
-        public bool RecordAccessHtmlView { get; set; }
+        public string RecordAccessHtmlView { get; set; }
 
-        [Required(ErrorMessage = MessageConstants.RECORDACCESSSTRUCTUREDREQUIREDERRORMESSAGE)]
+        [RequiredIfTrue(nameof(IsStructuredEnabled), ErrorMessage = MessageConstants.RECORDACCESSSTRUCTUREDREQUIREDERRORMESSAGE)]
         [Display(Name = DisplayConstants.RECORDACCESSSTRUCTURED)]
         [BindProperty(SupportsGet = true)]
-        public bool RecordAccessStructured { get; set; }
+        public string RecordAccessStructured { get; set; }
 
-        [Required(ErrorMessage = MessageConstants.APPOINTMENTREQUIREDERRORMESSAGE)]
+        [RequiredIfTrue(nameof(IsAppointmentEnabled), ErrorMessage = MessageConstants.APPOINTMENTREQUIREDERRORMESSAGE)]
         [Display(Name = DisplayConstants.APPOINTMENT)]
         [BindProperty(SupportsGet = true)]
-        public bool Appointment { get; set; }
+        public string Appointment { get; set; }
 
-        [Required(ErrorMessage = MessageConstants.SELECTEDUSECASEREQUIREDERRORMESSAGE)]
+        public bool IsHtmlEnabled => SupplierProducts != null ? SupplierProducts.IsHtmlEnabled : false;
+        public bool IsAppointmentEnabled => SupplierProducts != null ? SupplierProducts.IsAppointmentEnabled : false;
+        public bool IsStructuredEnabled => SupplierProducts != null ? SupplierProducts.IsStructuredEnabled : false;
+
+        public EnabledSupplierProduct SupplierProducts { get; set; }
+
+        [Required(ErrorMessage = MessageConstants.SELECTEDCARESETTINGREQUIREDERRORMESSAGE)]
         [BindProperty(SupportsGet = true)]
-        public string SelectedUseCase { get; set; }        
+        public string SelectedCareSetting { get; set; }
 
+        [Required(ErrorMessage = MessageConstants.SELECTEDSUPPLIERREQUIREDERRORMESSAGE)]
         [BindProperty(SupportsGet = true)]
         public string SelectedSupplier { get; set; }
 
-        [BindProperty(SupportsGet = true)]
-        public string SelectedSupplierProduct { get; set; }
-
-        [Display(Name = DisplayConstants.SELECTEDSUPPLIERPRODUCTUSECASE)]
-        [BindProperty(SupportsGet = true)]
-        public string SelectedSupplierProductUseCase { get; set; }
-
-        [Display(Name = DisplayConstants.SUPPLIER)]
-        [BindProperty(SupportsGet = true)]
-        public IEnumerable<SelectListItem> Suppliers => GetSuppliers();
-
-        [Display(Name = DisplayConstants.SUPPLIERPRODUCT)]
-        [BindProperty(SupportsGet = true)]
-        public IEnumerable<SelectListItem> SupplierProducts => GetSupplierProducts();
-
-        private IEnumerable<SelectListItem> GetSuppliers()
+        public bool DisplayGpConnectProducts { get; set; }
+        
+        protected IEnumerable<SelectListItem> GetDropDown(Services.Enumerations.LookupType lookupType)
         {
-            var options = new List<SelectListItem>();
-            for (int i = 0; i < 20; i++)
-            {
-                var option = $"SUPPLIER {i + 1}";
-                options.Add(new SelectListItem() { Text = option, Value = option });
-            }
+            var lookup = _aggregateService.ReferenceService.GetLookup(lookupType).Result;
+            var options = lookup.Select(option => new SelectListItem() { Text = option.LookupValue, Value = option.LookupId.ToString() }).ToList();
+            options.Insert(0, new SelectListItem());
             return options;
-        }
-
-        private IEnumerable<SelectListItem> GetSupplierProducts()
-        {
-            var options = new List<SelectListItem>();
-            for (int i = 0; i < 20; i++)
-            {
-                var option = $"SUPPLIER PRODUCT {i + 1}";
-                options.Add(new SelectListItem() { Text = option, Value = option });
-            }
-            return options;
-        }
-
-        protected IEnumerable<SelectListItem> GetUseCases()
-        {
-            var options = new string[] { "NHS 111", "Hospital Access", "Social Care Access", "Emergency GP" };
-            return options.Select(option => new SelectListItem() { Text = option, Value = option });
         }
     }
 }

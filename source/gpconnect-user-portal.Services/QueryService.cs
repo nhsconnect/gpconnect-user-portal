@@ -2,6 +2,7 @@
 using gpconnect_user_portal.DTO.Request;
 using gpconnect_user_portal.DTO.Response;
 using gpconnect_user_portal.Helpers;
+using gpconnect_user_portal.Helpers.Constants;
 using gpconnect_user_portal.Services.Interfaces;
 using System;
 using System.Data;
@@ -23,7 +24,7 @@ namespace gpconnect_user_portal.Services
 
         public async Task<SearchResult> GetSites(SearchRequest searchRequest = null)
         {
-            var query = QueryBuilder(searchRequest, "SELECT * FROM Sites WHERE 1=1");
+            var query = QueryBuilder(searchRequest, "SELECT * FROM Site WHERE 1=1");
             var result = await _dataService.ExecuteSQLQuery<SearchResultEntry>(query);
             var searchResult = new SearchResult() { SearchResults = result };
             return searchResult;
@@ -76,17 +77,17 @@ namespace gpconnect_user_portal.Services
                 case 0:
                     return string.Empty;
                 case 1:
-                    return " AND CHARINDEX('gpc.getcarerecord', Interactions) = 0";
+                    return $" AND CHARINDEX('{SearchConstants.HtmlQueryFilterInteraction}', Interactions) = 0";
                 case 2:
-                    return " AND CHARINDEX('gpc.getcarerecord', Interactions) > 0";
+                    return $" AND CHARINDEX('{SearchConstants.HtmlQueryFilterInteraction}', Interactions) > 0";
                 case 3:
-                    return " AND CHARINDEX('structured:fhir:rest:read:metadata-1', Interactions) = 0";
+                    return $" AND CHARINDEX('{SearchConstants.StructuredQueryFilterInteraction}', Interactions) = 0";
                 case 4:
-                    return " AND CHARINDEX('structured:fhir:rest:read:metadata-1', Interactions) > 0";
+                    return $" AND CHARINDEX('{SearchConstants.StructuredQueryFilterInteraction}', Interactions) > 0";
                 case 5:
-                    return " AND CHARINDEX('appointments-1', Interactions) = 0";
+                    return $" AND CHARINDEX('{SearchConstants.AppointmentQueryFilterInteraction}', Interactions) = 0";
                 case 6:
-                    return " AND CHARINDEX('appointments-1', Interactions) > 0";
+                    return $" AND CHARINDEX('{SearchConstants.AppointmentQueryFilterInteraction}', Interactions) > 0";
                 default:
                     break;
             }
