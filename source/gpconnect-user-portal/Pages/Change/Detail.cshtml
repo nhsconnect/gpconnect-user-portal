@@ -1,8 +1,13 @@
-﻿@page "{odsCode?}"
+﻿@page "{siteIdentifier?}"
 @using gpconnect_user_portal.Helpers.Constants
 @model DetailModel
 
 <h1>@Model.PageTitle</h1>
+
+@if (!Model.CanUpdateOrSubmit)
+{
+    <partial name="NoFurtherChanges" />
+}
 
 <form method="post" id="search-input-form">
     <partial name="ChangeInput" />
@@ -10,13 +15,19 @@
     @if (Model.DisplayGpConnectProducts)
     {
         <partial name="ChangeProducts" />
-        <div class="nhsuk-grid-row">
-            <div class="nhsuk-grid-column-full">
-                <div class="nhsuk-form-group">
-                    <div class="nhsuk-hint" id="input-hint-continue">Click on '@ButtonConstants.CONTINUE' to check and review the details you have entered.</div>
-                    <button class="nhsuk-button" aria-describedby="input-hint-continue" asp-page-handler="Continue" type="submit">@ButtonConstants.CONTINUE</button>
+
+        @if (Model.CanUpdateOrSubmit)
+        {
+            <div class="nhsuk-grid-row">
+                <div class="nhsuk-grid-column-full">
+                    <div class="nhsuk-form-group">
+                        <div class="nhsuk-hint" id="input-hint-continue">Click on '@ButtonConstants.CONTINUE' to check and review the details you have entered.</div>
+                        <button class="nhsuk-button" aria-describedby="input-hint-continue" asp-page-handler="Continue" type="submit">@ButtonConstants.CONTINUE</button>
+                    </div>
                 </div>
             </div>
-        </div>
+        }
     }
+    <input type="hidden" asp-for="@Model.SiteIdentifier" value="@Model.SiteIdentifier" />
+    <input type="hidden" asp-for="@Model.CanUpdateOrSubmit" value="@Model.CanUpdateOrSubmit" />
 </form>

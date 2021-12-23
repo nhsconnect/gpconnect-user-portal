@@ -10,6 +10,8 @@ namespace gpconnect_user_portal.DTO.Response.Application
         public string SiteOdsCode { get; set; }
         public int SiteDefinitionId { get; set; }
         public Guid SiteUniqueIdentifier { get; set; }
+        public int SiteDefinitionStatusId { get; set; }
+        public bool CanUpdateOrSubmit { get; set; }
 
         public List<SiteAttribute> SiteAttributes { get; set; }
     }

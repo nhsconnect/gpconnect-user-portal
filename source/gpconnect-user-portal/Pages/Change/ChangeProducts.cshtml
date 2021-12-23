@@ -1,15 +1,11 @@
 ﻿@using Microsoft.AspNetCore.Mvc.ModelBinding
 @using gpconnect_user_portal.Helpers.Constants
+@using gpconnect_user_portal.Helpers.Enumerations
 @model DetailModel
 @{
     var recordAccessHtmlEnabled = Model.SupplierProducts.IsHtmlEnabled;
     var recordAccessStructuredEnabled = Model.SupplierProducts.IsStructuredEnabled;
     var recordAccessAppointmentEnabled = Model.SupplierProducts.IsAppointmentEnabled;
-
-    var recordAccessHtmlViewInvalid = recordAccessHtmlEnabled && Model.ModelState["RecordAccessHtmlView"]?.ValidationState == ModelValidationState.Invalid;
-    var recordAccessStructuredInvalid = recordAccessStructuredEnabled && Model.ModelState["RecordAccessStructured"]?.ValidationState == ModelValidationState.Invalid;
-    var appointmentInvalid = recordAccessAppointmentEnabled && Model.ModelState["Appointment"]?.ValidationState == ModelValidationState.Invalid;
-
     var useCaseDescriptionInvalid = Model.ModelState["UseCaseDescription"]?.ValidationState == ModelValidationState.Invalid;
 }
 
@@ -22,6 +18,9 @@
 
                 @if (recordAccessHtmlEnabled)
                 {
+                    var recordAccessHtmlView = Model.GetEnumValue<RecordAccessLevel>("RecordAccessHtmlView");
+                    var recordAccessHtmlViewInvalid = Model.ModelState["RecordAccessHtmlView"]?.ValidationState == ModelValidationState.Invalid;
+
                     <div class="nhsuk-form-group@(recordAccessHtmlViewInvalid ? " nhsuk-form-group--error": string.Empty)">
                         <fieldset class="nhsuk-fieldset" aria-describedby="example-hint">
                             @if (recordAccessHtmlViewInvalid)
@@ -31,19 +30,19 @@
                             <legend class="nhsuk-fieldset__legend nhsuk-fieldset__legend--m">@Html.DisplayNameFor(model => model.RecordAccessHtmlView)</legend>
                             <div class="nhsuk-radios nhsuk-radios--inline">
                                 <div class="nhsuk-radios__item">
-                                    <input class="nhsuk-radios__input" novalidate asp-for="@Model.RecordAccessHtmlView" value="None" type="radio">
+                                    <input class="nhsuk-radios__input" novalidate asp-for="@Model.RecordAccessHtmlView" checked="@(recordAccessHtmlView == @RecordAccessLevel.None)" value="@RecordAccessLevel.None" type="radio">
                                     <label asp-for="@Model.RecordAccessHtmlView" class="nhsuk-label nhsuk-radios__label">None</label>
                                 </div>
                                 <div class="nhsuk-radios__item">
-                                    <input class="nhsuk-radios__input" novalidate asp-for="@Model.RecordAccessHtmlView" value="Provider" type="radio">
+                                    <input class="nhsuk-radios__input" novalidate asp-for="@Model.RecordAccessHtmlView" checked="@(recordAccessHtmlView == @RecordAccessLevel.Provider)" value="@RecordAccessLevel.Provider" type="radio">
                                     <label asp-for="@Model.RecordAccessHtmlView" class="nhsuk-label nhsuk-radios__label">Provider</label>
                                 </div>
                                 <div class="nhsuk-radios__item">
-                                    <input class="nhsuk-radios__input" novalidate asp-for="@Model.RecordAccessHtmlView" value="Consumer" type="radio">
+                                    <input class="nhsuk-radios__input" novalidate asp-for="@Model.RecordAccessHtmlView" checked="@(recordAccessHtmlView == @RecordAccessLevel.Consumer)" value="@RecordAccessLevel.Consumer" type="radio">
                                     <label asp-for="@Model.RecordAccessHtmlView" class="nhsuk-label nhsuk-radios__label">Consumer</label>
                                 </div>
                                 <div class="nhsuk-radios__item">
-                                    <input class="nhsuk-radios__input" novalidate asp-for="@Model.RecordAccessHtmlView" value="Both" type="radio">
+                                    <input class="nhsuk-radios__input" novalidate asp-for="@Model.RecordAccessHtmlView" checked="@(recordAccessHtmlView == @RecordAccessLevel.Both)" value="@RecordAccessLevel.Both" type="radio">
                                     <label asp-for="@Model.RecordAccessHtmlView" class="nhsuk-label nhsuk-radios__label">Both</label>
                                 </div>
                             </div>
@@ -52,6 +51,9 @@
                 }
                 @if (recordAccessStructuredEnabled)
                 {
+                    var recordAccessStructured = Model.GetEnumValue<RecordAccessLevel>("RecordAccessStructured");
+                    var recordAccessStructuredInvalid = Model.ModelState["RecordAccessStructured"]?.ValidationState == ModelValidationState.Invalid;
+
                     <div class="nhsuk-form-group@(recordAccessStructuredInvalid ? " nhsuk-form-group--error": string.Empty)">
                         <fieldset class="nhsuk-fieldset" aria-describedby="example-hint">
                             @if (recordAccessStructuredInvalid)
@@ -61,19 +63,19 @@
                             <legend class="nhsuk-fieldset__legend nhsuk-fieldset__legend--m">@Html.DisplayNameFor(model => model.RecordAccessStructured)</legend>
                             <div class="nhsuk-radios nhsuk-radios--inline">
                                 <div class="nhsuk-radios__item">
-                                    <input class="nhsuk-radios__input" novalidate asp-for="@Model.RecordAccessStructured" value="None" type="radio">
+                                    <input class="nhsuk-radios__input" novalidate asp-for="@Model.RecordAccessStructured" checked='@(recordAccessStructured == RecordAccessLevel.None)' value="@RecordAccessLevel.None" value="@RecordAccessLevel.None" type="radio">
                                     <label asp-for="@Model.RecordAccessStructured" class="nhsuk-label nhsuk-radios__label">None</label>
                                 </div>
                                 <div class="nhsuk-radios__item">
-                                    <input class="nhsuk-radios__input" novalidate asp-for="@Model.RecordAccessStructured" value="Provider" type="radio">
+                                    <input class="nhsuk-radios__input" novalidate asp-for="@Model.RecordAccessStructured" checked="@(recordAccessStructured == RecordAccessLevel.Provider)" value="@RecordAccessLevel.Provider" type="radio">
                                     <label asp-for="@Model.RecordAccessStructured" class="nhsuk-label nhsuk-radios__label">Provider</label>
                                 </div>
                                 <div class="nhsuk-radios__item">
-                                    <input class="nhsuk-radios__input" novalidate asp-for="@Model.RecordAccessStructured" value="Consumer" type="radio">
+                                    <input class="nhsuk-radios__input" novalidate asp-for="@Model.RecordAccessStructured" checked="@(recordAccessStructured == @RecordAccessLevel.Consumer)" value="@RecordAccessLevel.Consumer" type="radio">
                                     <label asp-for="@Model.RecordAccessStructured" class="nhsuk-label nhsuk-radios__label">Consumer</label>
                                 </div>
                                 <div class="nhsuk-radios__item">
-                                    <input class="nhsuk-radios__input" novalidate asp-for="@Model.RecordAccessStructured" value="Both" type="radio">
+                                    <input class="nhsuk-radios__input" novalidate asp-for="@Model.RecordAccessStructured" checked="@(recordAccessStructured == @RecordAccessLevel.Both)" value="@RecordAccessLevel.Both" type="radio">
                                     <label asp-for="@Model.RecordAccessStructured" class="nhsuk-label nhsuk-radios__label">Both</label>
                                 </div>
                             </div>
@@ -82,6 +84,9 @@
                 }
                 @if (recordAccessAppointmentEnabled)
                 {
+                    var appointment = Model.GetEnumValue<RecordAccessLevel>("Appointment");
+                    var appointmentInvalid = Model.ModelState["Appointment"]?.ValidationState == ModelValidationState.Invalid;
+
                     <div class="nhsuk-form-group@(appointmentInvalid ? " nhsuk-form-group--error": string.Empty)">
                         <fieldset class="nhsuk-fieldset" aria-describedby="example-hint">
                             @if (appointmentInvalid)
@@ -91,19 +96,19 @@
                             <legend class="nhsuk-fieldset__legend nhsuk-fieldset__legend--m">@Html.DisplayNameFor(model => model.Appointment)</legend>
                             <div class="nhsuk-radios nhsuk-radios--inline">
                                 <div class="nhsuk-radios__item">
-                                    <input class="nhsuk-radios__input" novalidate asp-for="@Model.Appointment" value="None" type="radio">
+                                    <input class="nhsuk-radios__input" novalidate asp-for="@Model.Appointment" checked="@(appointment == @RecordAccessLevel.None)" value="@RecordAccessLevel.None" type="radio">
                                     <label asp-for="@Model.Appointment" class="nhsuk-label nhsuk-radios__label">None</label>
                                 </div>
                                 <div class="nhsuk-radios__item">
-                                    <input class="nhsuk-radios__input" novalidate asp-for="@Model.Appointment" value="Provider" type="radio">
+                                    <input class="nhsuk-radios__input" novalidate asp-for="@Model.Appointment" checked="@(appointment == @RecordAccessLevel.Provider)" value="@RecordAccessLevel.Provider" type="radio">
                                     <label asp-for="@Model.Appointment" class="nhsuk-label nhsuk-radios__label">Provider</label>
                                 </div>
                                 <div class="nhsuk-radios__item">
-                                    <input class="nhsuk-radios__input" novalidate asp-for="@Model.Appointment" value="Consumer" type="radio">
+                                    <input class="nhsuk-radios__input" novalidate asp-for="@Model.Appointment" checked="@(appointment == @RecordAccessLevel.Consumer)" value="@RecordAccessLevel.Consumer" type="radio">
                                     <label asp-for="@Model.Appointment" class="nhsuk-label nhsuk-radios__label">Consumer</label>
                                 </div>
                                 <div class="nhsuk-radios__item">
-                                    <input class="nhsuk-radios__input" novalidate asp-for="@Model.Appointment" value="Both" type="radio">
+                                    <input class="nhsuk-radios__input" novalidate asp-for="@Model.Appointment" checked="@(appointment == @RecordAccessLevel.Both)" value="@RecordAccessLevel.Both" type="radio">
                                     <label asp-for="@Model.Appointment" class="nhsuk-label nhsuk-radios__label">Both</label>
                                 </div>
                             </div>

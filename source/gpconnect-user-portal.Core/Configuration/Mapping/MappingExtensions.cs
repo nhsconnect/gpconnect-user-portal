@@ -23,6 +23,7 @@ namespace gpconnect_user_portal.Core.Configuration.Mapping
                 config.AddMap(new EmailConfigurationMap());
                 config.AddMap(new LoggingConfigurationMap());
                 config.AddMap(new SupplierProductMap());
+                config.AddMap(new EmailMap());
             });
         }
     }

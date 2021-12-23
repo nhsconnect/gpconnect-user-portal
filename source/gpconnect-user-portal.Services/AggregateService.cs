@@ -6,7 +6,7 @@ namespace gpconnect_user_portal.Services
 {
     public class AggregateService : IAggregateService
     {
-        public AggregateService(IHttpContextAccessor httpContextAccessor, ILogService logService, IApplicationService applicationService, IReferenceService referenceService, IReportingService reportingService, IQueryService queryService, ICoreService coreService)
+        public AggregateService(IHttpContextAccessor httpContextAccessor, ILogService logService, IApplicationService applicationService, IReferenceService referenceService, IReportingService reportingService, IQueryService queryService, ICoreService coreService, IEmailService emailService)
         {
             LogService = logService;
             HttpContextAccessor = httpContextAccessor;
@@ -15,6 +15,7 @@ namespace gpconnect_user_portal.Services
             ReferenceService = referenceService;
             ReportingService = reportingService;
             QueryService = queryService;
+            EmailService = emailService;
         }
 
         public ILogService LogService { get; }
@@ -23,6 +24,7 @@ namespace gpconnect_user_portal.Services
         public IReferenceService ReferenceService { get; }
         public IReportingService ReportingService { get; }
         public IQueryService QueryService { get; }
+        public IEmailService EmailService { get; }
         public IHttpContextAccessor HttpContextAccessor { get; }
 
         public HttpRequest Request => HttpContextAccessor.HttpContext.Request;

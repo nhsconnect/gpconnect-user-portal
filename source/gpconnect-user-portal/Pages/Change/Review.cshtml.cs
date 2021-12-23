@@ -30,7 +30,10 @@ namespace gpconnect_user_portal.Pages
             var siteDefinition = await _aggregateService.ApplicationService.GetSiteDefinition(Guid.Parse(siteDefinitionGuid));
             if (siteDefinition != null)
             {
+                SiteIdentifier = Guid.Parse(siteDefinitionGuid);
                 SiteAttributes = siteDefinition.SiteAttributes;
+                CanUpdateOrSubmit = siteDefinition.CanUpdateOrSubmit;
+
                 return Page();
             }
             return new NotFoundResult();
@@ -38,12 +41,13 @@ namespace gpconnect_user_portal.Pages
 
         public IActionResult OnPostUpdateChanges()
         {
-            return LocalRedirect($"~/Change/Detail/{FormOdsCode}");
+            return LocalRedirect($"~/Change/Detail/{SiteIdentifier}");
         }
 
-        public IActionResult OnPostSubmitChanges()
+        public async Task<IActionResult> OnPostSubmitChangesAsync()
         {
-            return null;
+            await _aggregateService.ApplicationService.PostSiteDefinition(SiteIdentifier);
+            return LocalRedirect($"~/Change/Submitted");
         }
     }
 }

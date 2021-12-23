@@ -36,14 +36,18 @@ begin
 			site_ods_code, 
 			site_party_key,
 			site_asid, 
-			site_unique_identifier
+			site_unique_identifier,
+			added_date,
+			site_definition_status_id
 		)
 		values
 		(
 			_site_ods_code,
 			_site_party_key,
 			_site_asid,
-			_site_unique_identifier
+			_site_unique_identifier,
+			now(),
+			1
 		)
 		returning
 			application.site_definition.site_definition_id
@@ -62,14 +66,18 @@ begin
 				site_ods_code, 
 				site_party_key,
 				site_asid, 
-				site_unique_identifier
+				site_unique_identifier,
+				added_date,
+				site_definition_status_id
 			)
 			values
 			(
 				_site_ods_code,
 				_site_party_key,
 				_site_asid,
-				_site_unique_identifier
+				_site_unique_identifier,
+				now(),
+				1
 			)
 			returning
 				application.site_definition.site_definition_id

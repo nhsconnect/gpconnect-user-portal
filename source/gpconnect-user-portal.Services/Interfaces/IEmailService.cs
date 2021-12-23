@@ -1,7 +1,10 @@
-﻿namespace gpconnect_user_portal.Services.Interfaces
+﻿using gpconnect_user_portal.DTO.Request;
+using System.Threading.Tasks;
+
+namespace gpconnect_user_portal.Services.Interfaces
 {
     public interface IEmailService
     {
-        bool SendSiteUpdateEmail(string recipient, string body);
+        Task SendSiteNotificationEmail(EmailDefinition emailDefinition);
     }
 }

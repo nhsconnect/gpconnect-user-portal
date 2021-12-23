@@ -1,140 +1,93 @@
 ﻿@using gpconnect_user_portal.Helpers
 @using gpconnect_user_portal.Helpers.Constants
+@using gpconnect_user_portal.Helpers.Enumerations
 @model ReviewModel
 
 <div class="nhsuk-grid-row">
     <div class="nhsuk-grid-column-full">
-        <div class="nhsuk-card">
-            <div class="nhsuk-card__content">
-                <div class="nhsuk-grid-row">
-                    <div class="nhsuk-grid-column-one-half">
-                        <div class="nhsuk-grid-column-one-third">
-                            <p class="nhsuk-label--s">@Html.DisplayNameFor(model => model.SiteName)</p>
-                        </div>
-                        <div class="nhsuk-grid-column-two-thirds">
-                            <p>@Model.GetAttributeValue("SiteName")</p>
-                        </div>
-                    </div>
-                    <div class="nhsuk-grid-column-one-half">
-                        <div class="nhsuk-grid-column-two-thirds">
-                            <p class="nhsuk-label--s">@Html.DisplayNameFor(model => model.RecordAccessHtmlView)</p>
-                        </div>
-                        <div class="nhsuk-grid-column-one-third">
-                            <p>@Model.GetAttributeValue("RecordAccessHtmlView")</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="nhsuk-grid-row">
-                    <div class="nhsuk-grid-column-one-half">
-                        <div class="nhsuk-grid-column-one-third">
-                            <p class="nhsuk-label--s">@Html.DisplayNameFor(model => model.FormOdsCode)</p>
-                        </div>
-                        <div class="nhsuk-grid-column-two-thirds">
-                            <p>@Model.GetAttributeValue("FormOdsCode")</p>
-                        </div>
-                    </div>
-                    <div class="nhsuk-grid-column-one-half">
-                        <div class="nhsuk-grid-column-two-thirds">
-                            <p class="nhsuk-label--s">@Html.DisplayNameFor(model => model.RecordAccessStructured)</p>
-                        </div>
-                        <div class="nhsuk-grid-column-one-third">
-                            <p>@Model.GetAttributeValue("RecordAccessStructured")</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="nhsuk-grid-row">
-                    <div class="nhsuk-grid-column-one-half">
-                        <div class="nhsuk-grid-column-one-half">
-                            <p class="nhsuk-label--s">@Html.DisplayNameFor(model => model.SelectedCCGName)</p>
-                        </div>
-                        <div class="nhsuk-grid-column-one-half">
-                            <p>@Model.GetAttributeValue("SelectedCCGName")</p>
-                        </div>
-                    </div>
-                    <div class="nhsuk-grid-column-one-half">
-                        <div class="nhsuk-grid-column-two-thirds">
-                            <p class="nhsuk-label--s">@Html.DisplayNameFor(model => model.Appointment)</p>
-                        </div>
-                        <div class="nhsuk-grid-column-one-third">
-                            <p>@Model.GetAttributeValue("Appointment")</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="nhsuk-grid-row">
-                    <div class="nhsuk-grid-column-one-half">
-                        <div class="nhsuk-grid-column-one-half">
-                            <p class="nhsuk-label--s">@Html.DisplayNameFor(model => model.SelectedCCGOdsCode)</p>
-                        </div>
-                        <div class="nhsuk-grid-column-one-half">
-                            <p>@Model.GetAttributeValue("SelectedCCGOdsCode")</p>
-                        </div>
-                    </div>
-                    <div class="nhsuk-grid-column-one-half">
-                        <div class="nhsuk-grid-column-one-third">
-                            <p class="nhsuk-label--s">@Html.DisplayNameFor(model => model.UseCase)</p>
-                        </div>
-                        <div class="nhsuk-grid-column-two-thirds">
-                            <p>@Model.UseCase</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="nhsuk-grid-row">
-                    <div class="nhsuk-grid-column-one-half">
-                        <div class="nhsuk-grid-column-one-third">
-                            <p class="nhsuk-label--s">@Html.DisplayNameFor(model => model.SelectedSupplier)</p>
-                        </div>
-                        <div class="nhsuk-grid-column-two-thirds">
-                            <p>@Model.GetAttributeValue("SelectedSupplier")</p>
-                        </div>
-                    </div>
-                    <div class="nhsuk-grid-column-one-half">
-                        <div class="nhsuk-grid-column-two-thirds">
-                            <p class="nhsuk-label--s">@Html.DisplayNameFor(model => model.UseCaseDescription)</p>
-                        </div>
-                        <div class="nhsuk-grid-column-one-third">
-                            <p>@Model.GetAttributeValue("UseCaseDescription")</p>
-                        </div>
-                    </div>
-                </div>
-
+        <div class="nhsuk-card nhsuk-card--feature">
+            <div class="nhsuk-card__content nhsuk-card__content--feature">
+                <h2 class="nhsuk-card__heading nhsuk-card__heading--feature nhsuk-heading-m">@Model.GetAttributeValue("SiteName")</h2>
                 <div class="nhsuk-grid-row">
                     <div class="nhsuk-grid-column-full">
-                        <div class="nhsuk-grid-column-one-third">
-                            <p class="nhsuk-label--s">@Html.DisplayNameFor(model => model.Submitter)</p>
-                        </div>
-                        <div class="nhsuk-grid-column-two-thirds">
-                            <p>@Model.GetAttributeValue("Submitter")</p>
-                        </div>
+                        <dl class="nhsuk-summary-list">
+                            <div class="nhsuk-summary-list__row">
+                            <dt class="nhsuk-summary-list__key">@Html.DisplayNameFor(model => model.SitePostcode)</dt>
+                            <dd class="nhsuk-summary-list__value">@Model.GetAttributeValue("SitePostcode")</dd>
                     </div>
-                </div>
-
-                <div class="nhsuk-grid-row">
-                    <div class="nhsuk-grid-column-full">
-                        <div class="nhsuk-grid-column-one-third">
-                            <p class="nhsuk-label--s">@Html.DisplayNameFor(model => model.ContactEmailAddress)</p>
-                        </div>
-                        <div class="nhsuk-grid-column-two-thirds">
-                            <p>@Model.GetAttributeValue("ContactEmailAddress")</p>
-                        </div>
+                    <div class="nhsuk-summary-list__row">
+                        <dt class="nhsuk-summary-list__key">@Html.DisplayNameFor(model => model.Submitter)</dt>
+                        <dd class="nhsuk-summary-list__value">@Model.GetAttributeValue("Submitter")</dd>
                     </div>
-                </div>
-
-                <div class="nhsuk-grid-row">
-                    <div class="nhsuk-grid-column-full">
-                        <div class="nhsuk-grid-column-one-third">
-                            <p class="nhsuk-label--s">@Html.DisplayNameFor(model => model.ContactTelephone)</p>
-                        </div>
-                        <div class="nhsuk-grid-column-two-thirds">
-                            <p>@Model.GetAttributeValue("ContactTelephone")</p>
-                        </div>
+                    <div class="nhsuk-summary-list__row">
+                        <dt class="nhsuk-summary-list__key">@Html.DisplayNameFor(model => model.ContactEmailAddress)</dt>
+                        <dd class="nhsuk-summary-list__value"><a href='mailto:@Model.GetAttributeValue("ContactEmailAddress")'>@Model.GetAttributeValue("ContactEmailAddress")</a></dd>
                     </div>
+                    <div class="nhsuk-summary-list__row">
+                        <dt class="nhsuk-summary-list__key">@Html.DisplayNameFor(model => model.ContactTelephone)</dt>
+                        <dd class="nhsuk-summary-list__value"><a href='tel:@Model.GetAttributeValue("ContactTelephone")'>@Model.GetAttributeValue("ContactTelephone")</a></dd>
+                    </div>
+                    <div class="nhsuk-summary-list__row">
+                        <dt class="nhsuk-summary-list__key">@Html.DisplayNameFor(model => model.NoOdsIssued)</dt>
+                        <dd class="nhsuk-summary-list__value">@Model.GetAttributeValue("NoOdsIssued").StringToBooleanHtml()</dd>
+                    </div>
+                    <div class="nhsuk-summary-list__row">
+                        <dt class="nhsuk-summary-list__key">@Html.DisplayNameFor(model => model.FormOdsCode)</dt>
+                        <dd class="nhsuk-summary-list__value">@Model.GetAttributeValue("FormOdsCode")</dd>
+                    </div>
+                    <div class="nhsuk-summary-list__row">
+                        <dt class="nhsuk-summary-list__key">@Html.DisplayNameFor(model => model.SelectedCCGOdsCode)</dt>
+                        <dd class="nhsuk-summary-list__value">@Model.GetAttributeValue("SelectedCCGOdsCode")</dd>
+                    </div>
+                    <div class="nhsuk-summary-list__row">
+                        <dt class="nhsuk-summary-list__key">@Html.DisplayNameFor(model => model.SelectedCCGName)</dt>
+                        <dd class="nhsuk-summary-list__value">@Model.GetAttributeValue("SelectedCCGName")</dd>
+                    </div>
+                    <div class="nhsuk-summary-list__row">
+                        <dt class="nhsuk-summary-list__key">@Html.DisplayNameFor(model => model.SelectedSupplier)</dt>
+                        <dd class="nhsuk-summary-list__value">@Model.GetAttributeValue("SelectedSupplier", true)</dd>
+                    </div>
+                    <div class="nhsuk-summary-list__row">
+                        <dt class="nhsuk-summary-list__key">@Html.DisplayNameFor(model => model.SelectedCareSetting)</dt>
+                        <dd class="nhsuk-summary-list__value">@Model.GetAttributeValue("SelectedCareSetting", true)</dd>
+                    </div>
+                    @if (Model.IsHtmlEnabled)
+                            {
+                        <div class="nhsuk-summary-list__row">
+                            <dt class="nhsuk-summary-list__key">@Html.DisplayNameFor(model => model.RecordAccessHtmlView)</dt>
+                            <dd class="nhsuk-summary-list__value">@Html.Raw(Model.GetEnumValue<RecordAccessLevel>("RecordAccessHtmlView"))</dd>
+                        </div>
+                            }
+                            @if (Model.IsStructuredEnabled)
+                            {
+                        <div class="nhsuk-summary-list__row">
+                            <dt class="nhsuk-summary-list__key">@Html.DisplayNameFor(model => model.RecordAccessStructured)</dt>
+                            <dd class="nhsuk-summary-list__value">@Html.Raw(Model.GetEnumValue<RecordAccessLevel>("RecordAccessStructured"))</dd>
+                        </div>
+                            }
+                            @if (Model.IsAppointmentEnabled)
+                            {
+                        <div class="nhsuk-summary-list__row">
+                            <dt class="nhsuk-summary-list__key">@Html.DisplayNameFor(model => model.Appointment)</dt>
+                            <dd class="nhsuk-summary-list__value">@Html.Raw(Model.GetEnumValue<RecordAccessLevel>("Appointment"))</dd>
+                        </div>
+                            }
+                    <div class="nhsuk-summary-list__row">
+                        <dt class="nhsuk-summary-list__key">@Html.DisplayNameFor(model => model.UseCaseDescription)</dt>
+                        <dd class="nhsuk-summary-list__value">@Model.GetAttributeValue("UseCaseDescription")</dd>
+                    </div>
+                    </dl>
                 </div>
-                <button class="nhsuk-button nhsuk-button--secondary" asp-page-handler="UpdateChanges" type="submit">@ButtonConstants.UPDATE</button>
             </div>
+            @if (Model.CanUpdateOrSubmit)
+            {
+                <button class="nhsuk-button nhsuk-button--secondary" asp-page-handler="UpdateChanges" type="submit">@ButtonConstants.UPDATE</button>
+            }
         </div>
     </div>
+    @if (Model.CanUpdateOrSubmit)
+    {
+        <button class="nhsuk-button" asp-page-handler="SubmitChanges" type="submit">@ButtonConstants.SUBMIT</button>
+    }
 </div>
-<input type="hidden" id="SiteInstanceId" name="SiteInstanceId" asp-for="@Model.SiteInstanceId" />
+<input type="hidden" asp-for="@Model.SiteIdentifier" value="@Model.SiteIdentifier" />

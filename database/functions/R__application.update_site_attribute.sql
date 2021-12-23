@@ -1,8 +1,10 @@
-drop function if exists application.get_site_attributes;
+drop function if exists application.update_site_attribute;
 
-create function application.get_site_attributes
+create function application.update_site_attribute
 (
-	_site_unique_identifier uuid
+	_site_unique_identifier uuid,
+	_site_attribute_name varchar(100),
+	_site_attribute_value varchar(500)
 )
 returns table
 (
@@ -15,14 +17,26 @@ returns table
 )
 as $$
 begin
+	update
+		application.site_attribute sa
+	set
+		site_attribute_value = _site_attribute_value,
+		last_updated = now()
+	from
+		application.site_definition sd
+	where
+		sd.site_unique_identifier = _site_unique_identifier
+		and sa.site_definition_id = sd.site_definition_id
+		and sa.site_attribute_name = _site_attribute_name;
+		
 	return query
 	select
 		sa.site_attribute_id,
 		sa.site_definition_id,
 		sd.site_unique_identifier,
 		sa.site_attribute_name,
-		sa.site_attribute_value site_attribute_value,
-		l.lookup_value lookup_value	
+		sa.site_attribute_value,
+		l.lookup_value
 	from 
 		application.site_attribute sa
 	inner join 

@@ -36,13 +36,16 @@
                         </div>
                     </div>
                 </div>
-                @if (!Model.DisplayGpConnectProducts)
+                @if (Model.CanUpdateOrSubmit)
                 {
-                    <button class="nhsuk-button" asp-page-handler="LoadSupplierOptions" type="submit">@ButtonConstants.LOADSUPPLIEROPTIONS</button>
-                }
-                else
-                {
-                    <button class="nhsuk-button" asp-page-handler="EnableSupplierUpdate" type="submit">@ButtonConstants.ENABLESUPPLIERUPDATE</button>
+                    @if (!Model.DisplayGpConnectProducts)
+                    {
+                        <button class="nhsuk-button" asp-page-handler="LoadSupplierOptions" type="submit">@ButtonConstants.LOADSUPPLIEROPTIONS</button>
+                    }
+                    else
+                    {
+                        <button class="nhsuk-button" asp-page-handler="EnableSupplierUpdate" type="submit">@ButtonConstants.ENABLESUPPLIERUPDATE</button>
+                    }
                 }
             </div>
         </div>

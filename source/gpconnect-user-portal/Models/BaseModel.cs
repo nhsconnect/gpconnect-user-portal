@@ -48,18 +48,18 @@ namespace gpconnect_user_portal.Models
         [Display(Name = DisplayConstants.CCGICBODSCODE)]
         public string SelectedCCGOdsCode { get; set; }
 
-        public IEnumerable<SelectListItem> GetCCGByNames()
+        public IEnumerable<SelectListItem> GetCCGByNames(string selectedCCGName = "")
         {
             var options = _organisationList.OrderBy(x => x.Name)
-                .Select(option => new SelectListItem() { Text = option.Name, Value = option.Name }).ToList();
+                .Select(option => new SelectListItem() { Text = option.Name, Value = option.Name, Selected = selectedCCGName == option.Name }).ToList();
             options.Insert(0, new SelectListItem());
             return options;
         }
 
-        public IEnumerable<SelectListItem> GetCCGByOdsCodes()
+        public IEnumerable<SelectListItem> GetCCGByOdsCodes(string selectedCCGCode = "")
         {
             var options = _organisationList.OrderBy(x => x.OrgId)
-                .Select(option => new SelectListItem() { Text = option.OrgId, Value = option.OrgId }).ToList();
+                .Select(option => new SelectListItem() { Text = option.OrgId, Value = option.OrgId, Selected = selectedCCGCode == option.OrgId }).ToList();
             options.Insert(0, new SelectListItem());
             return options;
         }

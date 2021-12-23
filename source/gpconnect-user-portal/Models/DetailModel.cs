@@ -9,9 +9,8 @@ namespace gpconnect_user_portal.Pages
 {
     public partial class DetailModel : BaseSiteModel
     {
-        public Guid SiteInstanceGuid { get; set; }
         public string OdsCode { get; set; }
-        public string PageTitle => !string.IsNullOrEmpty(OdsCode) ? DisplayConstants.CHANGEUPDATETITLE : DisplayConstants.CHANGEREGISTERTITLE;
+        public string PageTitle => SiteIdentifier == Guid.Empty ? DisplayConstants.CHANGEREGISTERTITLE : DisplayConstants.CHANGEUPDATETITLE;
 
         [Required(ErrorMessage = MessageConstants.USECASEDESCRIPTIONREQUIREDERRORMESSAGE)]
         [Display(Name = DisplayConstants.USECASEDESCRIPTIONINPUT)]
@@ -21,19 +20,19 @@ namespace gpconnect_user_portal.Pages
         [Required(ErrorMessage = MessageConstants.SELECTEDCARESETTINGREQUIREDERRORMESSAGE)]
         [Display(Name = DisplayConstants.CARESETTINGINPUT)]
         [BindProperty(SupportsGet = true)]
-        public IEnumerable<SelectListItem> CareSettings => GetDropDown(Services.Enumerations.LookupType.CareSetting);
+        public IEnumerable<SelectListItem> CareSettings => GetDropDown(Services.Enumerations.LookupType.CareSetting, GetAttributeValue("SelectedCareSetting"));
 
         [Required(ErrorMessage = MessageConstants.SELECTEDSUPPLIERREQUIREDERRORMESSAGE)]
         [Display(Name = DisplayConstants.SUPPLIERINPUT)]
         [BindProperty(SupportsGet = true)]
-        public IEnumerable<SelectListItem> Suppliers => GetDropDown(Services.Enumerations.LookupType.Supplier);        
+        public IEnumerable<SelectListItem> Suppliers => GetDropDown(Services.Enumerations.LookupType.Supplier, GetAttributeValue("SelectedSupplier"));
 
         [Display(Name = DisplayConstants.CCGICBNAMEIFAPPLICABLE)]
         [BindProperty(SupportsGet = true)]
-        public IEnumerable<SelectListItem> CCGNames => GetCCGByNames();
+        public IEnumerable<SelectListItem> CCGNames => GetCCGByNames(GetAttributeValue("SelectedCCGName"));
 
         [Display(Name = DisplayConstants.CCGICBODSCODEIFAPPLICABLE)]
         [BindProperty(SupportsGet = true)]
-        public IEnumerable<SelectListItem> CCGOdsCodes => GetCCGByOdsCodes();
+        public IEnumerable<SelectListItem> CCGOdsCodes => GetCCGByOdsCodes(GetAttributeValue("SelectedCCGOdsCode"));
     }
 }

@@ -6,13 +6,9 @@ using System.Security.Authentication;
 
 namespace gpconnect_user_portal.Core.Configuration.Infrastructure
 {
-    public class HttpClientExtensions
+    public static class HttpClientExtensions
     {
-        public HttpClientExtensions()
-        {            
-        }        
-
-        public void AddHttpClientServices(IServiceCollection services, IWebHostEnvironment env)
+        public static void AddHttpClientServices(IServiceCollection services, IWebHostEnvironment env)
         {
             services.AddHttpClient("GpConnectClient", options =>
             {
@@ -21,7 +17,7 @@ namespace gpconnect_user_portal.Core.Configuration.Infrastructure
             }).ConfigurePrimaryHttpMessageHandler(() => CreateHttpMessageHandler(env));
         }
 
-        private HttpMessageHandler CreateHttpMessageHandler(IWebHostEnvironment env)
+        private static HttpMessageHandler CreateHttpMessageHandler(IWebHostEnvironment env)
         {
             var httpClientHandler = new HttpClientHandler();
             httpClientHandler.SslProtocols = SslProtocols.Tls13 | SslProtocols.Tls12 | SslProtocols.Tls11 | SslProtocols.Tls;

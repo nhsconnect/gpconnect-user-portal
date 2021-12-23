@@ -1,10 +1,18 @@
-﻿using gpconnect_user_portal.Helpers;
+﻿using Dapper;
+using gpconnect_user_portal.DAL.Interfaces;
+using gpconnect_user_portal.DTO.Request;
+using gpconnect_user_portal.DTO.Response.Application;
+using gpconnect_user_portal.Helpers;
+using gpconnect_user_portal.Services.Enumerations;
 using gpconnect_user_portal.Services.Interfaces;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System;
-using System.Net;
+using System.Data;
+using System.Linq;
 using System.Net.Mail;
+using System.Threading.Tasks;
 
 namespace gpconnect_user_portal.Services
 {
@@ -14,65 +22,68 @@ namespace gpconnect_user_portal.Services
         private readonly SmtpClient _smtpClient;
         private readonly IOptionsMonitor<DTO.Response.Configuration.Email> _emailOptionsDelegate;
         private readonly IOptionsMonitor<DTO.Response.Configuration.General> _generalOptionsDelegate;
+        private readonly IDataService _dataService;
+        private readonly IHttpContextAccessor _contextAccessor;
 
-        public EmailService(SmtpClient smtpClient, IOptionsMonitor<DTO.Response.Configuration.General> generalOptionsDelegate, IOptionsMonitor<DTO.Response.Configuration.Email> emailOptionsDelegate, ILogger<EmailService> logger)
+        public EmailService(IHttpContextAccessor contextAccessor, SmtpClient smtpClient, IOptionsMonitor<DTO.Response.Configuration.General> generalOptionsDelegate, IOptionsMonitor<DTO.Response.Configuration.Email> emailOptionsDelegate, ILogger<EmailService> logger, IDataService dataService)
         {
             _logger = logger;
             _emailOptionsDelegate = emailOptionsDelegate;
             _generalOptionsDelegate = generalOptionsDelegate;
             _smtpClient = smtpClient;
+            _dataService = dataService;
+            _contextAccessor = contextAccessor;
         }
 
-        public bool SendSiteUpdateEmail(string recipient, string body)
-        {
-            return SendEmail(recipient, "This is a site update notification email");
+        public async Task SendSiteNotificationEmail(EmailDefinition emailDefinition)
+        {            
+            var email = await GetEmailTemplate(MailTemplate.SendSiteNotificationEmail);                        
+            if (email != null)
+            {
+                email.Body = email.Body.Replace("<site_definition>", emailDefinition.SiteDefinition.ExportDataTableToHTML());
+                email.Body = email.Body.Replace("<site_attributes>", emailDefinition.SiteAttributes.ExportDataTableToHTML());
+                //SendEmail(email, true, siteDefinition.SiteDefinitionStatusId == (int)SiteDefinitionStatus.Draft);
+                SendEmail(email, true, true);
+            }
         }
 
-        private bool SendEmail(string recipient, string body, bool sendToSender = false, bool sendToRecipient = true)
-        {
-            if (string.IsNullOrEmpty(recipient)) throw new ArgumentNullException(nameof(recipient));
+        private void SendEmail(Email email, bool sendToSender = false, bool sendToRecipient = true)
+        {            
             var sender = _emailOptionsDelegate.CurrentValue.SenderAddress;
             var displayName = StringExtensions.Coalesce(_generalOptionsDelegate.CurrentValue.ProductName, _emailOptionsDelegate.CurrentValue.SenderAddress);
             try
             {
+                email.Body = PopulateDynamicFields(email.Body);
                 var mailMessage = new MailMessage
                 {
                     From = new MailAddress(sender, displayName),
-                    IsBodyHtml = false,
-                    Subject = _emailOptionsDelegate.CurrentValue.DefaultSubject,
-                    Body = body
+                    IsBodyHtml = true,
+                    Subject = StringExtensions.Coalesce(email.Subject, _emailOptionsDelegate.CurrentValue.DefaultSubject),
+                    Body = email.Body
                 };
                 if (sendToSender) mailMessage.To.Add(sender);
-                if (sendToRecipient) mailMessage.To.Add(recipient);
-                
+                if (sendToRecipient) mailMessage.To.Add(email.MailRecipient);
                 _smtpClient.Send(mailMessage);
-                return true;
-            }
-            catch (WebException webException)
-            {
-                _logger?.LogError(webException, "A connectivity error has occurred while attempting to send an email");
-                return false;
-            }
-            catch (TimeoutException timeoutException)
-            {
-                _logger?.LogError(timeoutException, "A timeout error has occurred while attempting to send an email");
-                return false;
-            }
-            catch (ArgumentNullException argumentNullException)
-            {
-                _logger?.LogError(argumentNullException, "One of the required arguments for sending an email is empty");
-                return false;
-            }
-            catch (SmtpException smtpException)
-            {
-                _logger?.LogError(smtpException, "An SMTP error has occurred while attempting to send an email");
-                return false;
             }
             catch (Exception exception)
             {
-                _logger?.LogError(exception, "A general error has occurred while attempting to send an email");
-                return false;
+                _logger?.LogError(exception, "An error has occurred while attempting to send an email");
             }
+        }
+
+        private string PopulateDynamicFields(string body)
+        {
+            body = body.Replace("<url>", _contextAccessor.HttpContext.GetBaseSiteUrl());
+            return body;
+        }
+
+        private async Task<Email> GetEmailTemplate(MailTemplate mailTemplate)
+        {            
+            var query = "application.get_email_template";
+            var parameters = new DynamicParameters();
+            parameters.Add("_mail_template_id", (int)mailTemplate, DbType.Int16, ParameterDirection.Input);
+            var result = await _dataService.ExecuteQueryFirstOrDefault<Email>(query, parameters);
+            return result;
         }
     }
 }

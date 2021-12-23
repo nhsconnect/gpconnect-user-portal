@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using System;
 using System.Net;
 
@@ -13,8 +14,8 @@ namespace gpconnect_user_portal.Core.Configuration.Infrastructure
     {
         public static IServiceCollection ConfigureApplicationServices(this IServiceCollection services, IConfiguration configuration, IWebHostEnvironment env)
         {
-            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
-
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;            
+            
             services.AddSession(s =>
             {
                 s.Cookie.Name = ".GpConnectEndUserPortal.Session";
@@ -54,9 +55,10 @@ namespace gpconnect_user_portal.Core.Configuration.Infrastructure
             services.Configure<Reference>(configuration.GetSection("Reference"));
             services.Configure<Sso>(configuration.GetSection("Sso"));
             services.Configure<DTO.Response.Configuration.Logging>(configuration.GetSection("Logging"));
-
-            var httpClientExtensions = new HttpClientExtensions();
-            httpClientExtensions.AddHttpClientServices(services, env);            
+            services.Configure<Email>(configuration.GetSection("Email"));
+            
+            HttpClientExtensions.AddHttpClientServices(services, env);
+            SmtpClientExtensions.AddSmtpClientServices(services);
 
             return services;
         }

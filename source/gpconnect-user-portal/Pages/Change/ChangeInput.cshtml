@@ -82,7 +82,7 @@
         <div class="nhsuk-form-group">            
             <div class="nhsuk-checkboxes">
                 <div class="nhsuk-checkboxes__item">
-                    <input class="nhsuk-checkboxes__input@(odsCodeIssuedInvalid ? " nhsuk-input--error": string.Empty)" type="checkbox" asp-for="@Model.NoOdsIssued">
+                    <input class="nhsuk-checkboxes__input@(odsCodeIssuedInvalid ? " nhsuk-input--error": string.Empty)" type="checkbox" checked="@Model.NoOdsIssued" asp-for="@Model.NoOdsIssued">
                     @if (odsCodeIssuedInvalid)
                     {
                         <span asp-validation-for="@Model.NoOdsIssued" class="nhsuk-error-message"></span>

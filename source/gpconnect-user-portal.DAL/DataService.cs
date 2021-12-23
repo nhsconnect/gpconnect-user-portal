@@ -3,6 +3,7 @@ using gpconnect_user_portal.DAL.Interfaces;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Npgsql;
+using NpgsqlTypes;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -64,6 +65,43 @@ namespace gpconnect_user_portal.DAL
             {
                 _logger?.LogError(exc, $"An error has occurred while attempting to execute the query {query}");
                 throw;
+            }
+        }
+
+        public DataTable ExecuteQueryAndGetDataTable(string query, Dictionary<string, Guid> parameters)
+        {
+            using NpgsqlConnection connection = new NpgsqlConnection(_configuration.GetConnectionString(ConnectionStrings.DefaultConnection));
+            connection.Open();
+            using (var cmd = new NpgsqlCommand(query, connection))
+            {
+                cmd.CommandType = CommandType.StoredProcedure;
+                foreach (var parameter in parameters)
+                {
+                    cmd.Parameters.AddWithValue(parameter.Key, NpgsqlDbType.Uuid, parameter.Value);
+                }
+
+                cmd.Prepare();
+
+                var da = new NpgsqlDataAdapter(cmd);
+                var _ds = new DataSet();
+                var _dt = new DataTable();
+
+                da.Fill(_ds);
+
+                try
+                {
+                    _dt = _ds.Tables[0];
+                }
+                catch (Exception exc)
+                {
+                    _logger?.LogError(exc, $"An error has occurred while attempting to execute the query {query}");
+                    throw;
+                }
+                finally
+                {
+                    connection.Close();
+                }
+                return _dt;
             }
         }
 

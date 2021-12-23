@@ -40,19 +40,22 @@ begin
 		(
 			site_attribute_name,
 			site_attribute_value,
-			site_definition_id
+			site_definition_id,
+			added_date
 		)
 		values
 		(
 			_site_attribute_name,
 			_site_attribute_value,
-			_site_definition_id
+			_site_definition_id,
+			now()
 		);
 	else
 		update 
 			application.site_attribute
 		set
-			site_attribute_value = _site_attribute_value
+			site_attribute_value = _site_attribute_value,
+			last_updated = now()
 		where
 			site_definition_id = _site_definition_id
 			and site_attribute_name = _site_attribute_name;

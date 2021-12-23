@@ -3,14 +3,13 @@
 @model ReviewModel
 
 <h1>Review changes and confirm agreements</h1>
+
+@if(!Model.CanUpdateOrSubmit)
+{
+    <partial name="NoFurtherChanges" />
+}
+
 <form method="post" id="search-input-form">
     <partial name="ReviewAgreements" />
     <partial name="ReviewChanges" />
-    <div class="nhsuk-grid-row">
-        <div class="nhsuk-grid-column-full">
-            <div class="nhsuk-form-group">
-                <button class="nhsuk-button" asp-page-handler="SubmitChanges" type="submit">@ButtonConstants.SUBMIT</button>
-            </div>
-        </div>
-    </div>
 </form>
