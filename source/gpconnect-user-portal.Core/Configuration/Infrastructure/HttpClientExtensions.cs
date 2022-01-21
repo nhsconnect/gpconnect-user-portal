@@ -10,7 +10,7 @@ namespace gpconnect_user_portal.Core.Configuration.Infrastructure
     {
         public static void AddHttpClientServices(IServiceCollection services, IWebHostEnvironment env)
         {
-            services.AddHttpClient("GpConnectClient", options =>
+            services.AddHttpClient("FhirApiClient", options =>
             {
                 options.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/fhir+json"));
                 options.DefaultRequestHeaders.CacheControl = new CacheControlHeaderValue { NoCache = true };

@@ -24,7 +24,6 @@ The GP Connect End User Portal is a web application.
 <img src="documentation/images/9.png">
 <img src="documentation/images/10.png">
 
-
 ## Build status
 
 [![Build Actions Status](https://github.com/nhsconnect/gpconnect-user-portal/workflows/CI/badge.svg)](https://github.com/nhsconnect/gpconnect-user-portal/actions)

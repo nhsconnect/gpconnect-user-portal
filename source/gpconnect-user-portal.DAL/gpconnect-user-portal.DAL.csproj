@@ -20,4 +20,20 @@
     <ProjectReference Include="..\gpconnect-user-portal.DTO\gpconnect-user-portal.DTO.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Update="Resources\FieldNameResources.Designer.cs">
+      <DependentUpon>FieldNameResources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Resources\FieldNameResources.resx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <LastGenOutput>FieldNameResources.Designer.cs</LastGenOutput>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+
 </Project>

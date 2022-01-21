@@ -12,6 +12,7 @@ namespace gpconnect_user_portal.Core.Configuration.Mapping
             {
                 config.AddMap(new SearchResultEntryMap());
                 config.AddMap(new GeneralConfigurationMap());
+                config.AddMap(new SpineConfigurationMap());
                 config.AddMap(new ReferenceApiQueryMap());
                 config.AddMap(new ReferenceConfigurationMap());
                 config.AddMap(new ReferenceOrganisationMap());
@@ -24,6 +25,7 @@ namespace gpconnect_user_portal.Core.Configuration.Mapping
                 config.AddMap(new LoggingConfigurationMap());
                 config.AddMap(new SupplierProductMap());
                 config.AddMap(new EmailMap());
+                config.AddMap(new FhirApiQueryMap());
             });
         }
     }

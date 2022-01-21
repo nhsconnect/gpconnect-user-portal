@@ -1,5 +1,6 @@
 ﻿using System.Data;
 using System.Text;
+using System.Linq;
 
 namespace gpconnect_user_portal.Helpers
 {
@@ -31,7 +32,6 @@ namespace gpconnect_user_portal.Helpers
                     htmlBuilder.Append("<td>");
                     htmlBuilder.Append(myRow[myColumn.ColumnName].ToString());
                     htmlBuilder.Append("</td>");
-
                 }
                 htmlBuilder.Append("</tr>");
             }

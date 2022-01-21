@@ -1,4 +1,5 @@
 ﻿using gpconnect_user_portal.DAL.Interfaces;
+using gpconnect_user_portal.Helpers;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
@@ -22,15 +23,16 @@ namespace gpconnect_user_portal.DAL
             _configuration = configuration;
         }
 
-        public async Task<T> ExecuteFhirQuery<T>(string query, CancellationToken cancellationToken) where T : class
+        public async Task<T> ExecuteFhirQuery<T>(string query, CancellationToken cancellationToken, string hostName = null, string apiKey = null) where T : class
         {
             var getRequest = new HttpRequestMessage();
             try
             {
-                var client = _httpClientFactory.CreateClient("GpConnectClient");
+                var client = _httpClientFactory.CreateClient("FhirApiClient");
+                AddAuthentication(client, apiKey);
 
                 getRequest.Method = HttpMethod.Get;
-                getRequest.RequestUri = AddHostName(query);
+                getRequest.RequestUri = AddHostName(hostName, query);
 
                 var response = client.Send(getRequest, HttpCompletionOption.ResponseHeadersRead, cancellationToken);
 
@@ -49,14 +51,17 @@ namespace gpconnect_user_portal.DAL
             }
         }
 
-        private Uri AddHostName(string query)
+        private void AddAuthentication(HttpClient client, string apiKey)
         {
-            var uriBuilder = new UriBuilder()
+            if (!string.IsNullOrEmpty(apiKey))
             {
-                Host = _configuration.CurrentValue.HostName,
-                Path = query
-            };
-            return uriBuilder.Uri;
+                client.DefaultRequestHeaders.Add("apikey", apiKey);
+            }
+        }
+
+        private Uri AddHostName(string hostName, string query)
+        {
+            return new Uri($"{StringExtensions.Coalesce(hostName, _configuration.CurrentValue.HostName)}{query}");
         }
     }
 }

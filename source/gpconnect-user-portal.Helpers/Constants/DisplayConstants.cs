@@ -16,7 +16,7 @@
         public const string CCGICBODSCODE = "CCG/ICB " + ODSCODE;
         public const string CCGICBNAME = "CCG/ICB Name";
         public const string CCGICBODSCODEIFAPPLICABLE = "CCG/ICB " + ODSCODE + IFAPPLICABLE;
-        public const string CCGICBNAMEIFAPPLICABLE = "CCG/ICB Name" + IFAPPLICABLE;
+        public const string CCGICBNAMEIFAPPLICABLE = CCGICBNAME + IFAPPLICABLE;
         public const string ACTINGASSUPPLIER = "Acting as Supplier";
         public const string ACTINGASCONSUMER = "Acting as Consumer";
         public const string RECORDACCESSHTMLVIEW = "Access Record: HTML";

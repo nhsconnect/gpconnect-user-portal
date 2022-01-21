@@ -3,14 +3,12 @@ using gpconnect_user_portal.DAL.Interfaces;
 using gpconnect_user_portal.DTO.Request;
 using gpconnect_user_portal.DTO.Response.Application;
 using gpconnect_user_portal.Helpers;
-using gpconnect_user_portal.Services.Enumerations;
 using gpconnect_user_portal.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System;
 using System.Data;
-using System.Linq;
 using System.Net.Mail;
 using System.Threading.Tasks;
 
@@ -25,7 +23,7 @@ namespace gpconnect_user_portal.Services
         private readonly IDataService _dataService;
         private readonly IHttpContextAccessor _contextAccessor;
 
-        public EmailService(IHttpContextAccessor contextAccessor, SmtpClient smtpClient, IOptionsMonitor<DTO.Response.Configuration.General> generalOptionsDelegate, IOptionsMonitor<DTO.Response.Configuration.Email> emailOptionsDelegate, ILogger<EmailService> logger, IDataService dataService)
+        public EmailService(IHttpContextAccessor contextAccessor, SmtpClient smtpClient, ILogger<EmailService> logger, IDataService dataService, IOptionsMonitor<DTO.Response.Configuration.Email> emailOptionsDelegate, IOptionsMonitor<DTO.Response.Configuration.General> generalOptionsDelegate)
         {
             _logger = logger;
             _emailOptionsDelegate = emailOptionsDelegate;
@@ -36,7 +34,7 @@ namespace gpconnect_user_portal.Services
         }
 
         public async Task SendSiteNotificationEmail(EmailDefinition emailDefinition)
-        {            
+        {
             var email = await GetEmailTemplate(MailTemplate.SendSiteNotificationEmail);                        
             if (email != null)
             {

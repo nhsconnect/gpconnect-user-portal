@@ -22,6 +22,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\gpconnect-user-portal.Core\gpconnect-user-portal.Core.csproj" />
+    <ProjectReference Include="..\gpconnect-user-portal.Services\gpconnect-user-portal.Services.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,4 +1,5 @@
-﻿using gpconnect_user_portal.DTO.Response.Reference;
+﻿using gpconnect_user_portal.DAL.Resources;
+using gpconnect_user_portal.DTO.Response.Reference;
 using gpconnect_user_portal.Helpers;
 using gpconnect_user_portal.Helpers.Constants;
 using gpconnect_user_portal.Helpers.Validators;
@@ -27,12 +28,12 @@ namespace gpconnect_user_portal.Pages
 
         [Required(ErrorMessage = MessageConstants.NAMEOFSUBMITTERREQUIREDERRORMESSAGE)]
         [RegularExpression(ValidationConstants.ALPHANUMERICCHARACTERSONLY, ErrorMessage = MessageConstants.NAMEOFSUBMITTERVALIDVALUEERRORMESSAGE)]
-        [Display(Name = DisplayConstants.NAMEOFSUBMITTER)]
+        [Display(Name = "Submitter", ResourceType = typeof(FieldNameResources))]
         [BindProperty(SupportsGet = true)]
         public string Submitter { get; set; }
 
         [Required(ErrorMessage = MessageConstants.CONTACTEMAILADDRESSREQUIREDERRORMESSAGE)]
-        [Display(Name = DisplayConstants.CONTACTEMAILADDRESS)]
+        [Display(Name = "ContactEmailAddress", ResourceType = typeof(FieldNameResources))]
         [BindProperty(SupportsGet = true)]
         public string ContactEmailAddress { get; set; }
 
