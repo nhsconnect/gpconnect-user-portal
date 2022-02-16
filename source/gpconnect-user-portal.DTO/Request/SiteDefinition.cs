@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace gpconnect_user_portal.DTO.Request
 {
@@ -6,7 +7,10 @@ namespace gpconnect_user_portal.DTO.Request
     {
         public Guid SiteUniqueIdentifier { get; set; }
         public string SiteOdsCode { get; set; }
+        public string SupplierOdsCode { get; set; }
         public string SiteAsid { get; set; }
         public string SitePartyKey { get; set; }
+        public string SiteInteractions { get; set; }        
+        public List<SiteAttribute> SiteAttribute { get; set; }
     }
 }

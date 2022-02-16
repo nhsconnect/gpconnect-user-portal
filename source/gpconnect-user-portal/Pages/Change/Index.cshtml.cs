@@ -27,7 +27,7 @@ namespace gpconnect_user_portal.Pages
 
         public async Task<IActionResult> OnPostSearchAsync()
         {
-            if (ModelState.IsValid && IsValidSearch)
+            if (ModelState.IsValid && IsValidSearch & !HasMultipleSearchParamaters)
             {
                 DisplaySearchInvalid = false;
                 await GetSearchResults();
@@ -41,7 +41,7 @@ namespace gpconnect_user_portal.Pages
 
         public IActionResult OnPostCreate()
         {
-            return RedirectToPagePermanent("Detail");
+            return RedirectToPagePermanent("Registration");
         }
 
         private async Task GetSearchResults()
@@ -50,8 +50,8 @@ namespace gpconnect_user_portal.Pages
             {
                 var searchRequest = new SearchRequest()
                 {
-                    ProviderOdsCode = ProviderOdsCode,
-                    ProviderName = ProviderName,
+                    SiteOdsCode = ProviderOdsCode,
+                    SiteName = ProviderName,
                     CCGOdsCode = SelectedCCGOdsCode,
                     CCGName = SelectedCCGName
                 };

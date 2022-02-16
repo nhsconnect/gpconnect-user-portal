@@ -9,6 +9,7 @@ namespace gpconnect_user_portal.DAL.Mapping
         {
             Map(p => p.LookupTypeId).ToColumn("lookup_type_id");
             Map(p => p.LookupTypeName).ToColumn("lookup_type_name");
+            Map(p => p.LookupTypeDescription).ToColumn("lookup_type_description");
         }
     }
 }

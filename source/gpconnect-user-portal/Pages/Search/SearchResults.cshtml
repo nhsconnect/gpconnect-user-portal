@@ -1,15 +1,16 @@
 ﻿@using gpconnect_user_portal.Helpers
+@using gpconnect_user_portal.Helpers.Constants
 @model SearchModel
 
 <div class="nhsuk-grid-row">
     <div class="nhsuk-grid-column-full">
-        @foreach (var searchResult in Model.SearchResult.SearchResults)
+        @foreach (var searchResult in Model.SearchResult.SearchResultEntries)
         {
             <div class="nhsuk-grid-row">
                 <div class="nhsuk-grid-column-full">
                     <div class="nhsuk-card nhsuk-card--feature">
                         <div class="nhsuk-card__content nhsuk-card__content--feature">
-                            <h2 class="nhsuk-card__heading nhsuk-card__heading--feature nhsuk-heading-m">@searchResult.SiteName</h2>
+                            <h2 class="nhsuk-card__heading nhsuk-card__heading--feature nhsuk-heading-m">@searchResult.GetSiteAttribute("SiteName")</h2>
                             <div class="nhsuk-grid-row">
                                 <div class="nhsuk-grid-column-one-half">
                                     <div class="nhsuk-grid-column-one-half">
@@ -31,10 +32,10 @@
                             <div class="nhsuk-grid-row">
                                 <div class="nhsuk-grid-column-one-half">
                                     <div class="nhsuk-grid-column-one-half">
-                                        <p class="nhsuk-label--s">@Html.DisplayNameFor(model => searchResult.CCGName)</p>
+                                        <p class="nhsuk-label--s">@DisplayConstants.CCGICBNAME</p>
                                     </div>
                                     <div class="nhsuk-grid-column-one-half">
-                                        <p>@searchResult.CCGName</p>
+                                        <p>@searchResult.GetSiteAttribute("SelectedCCGName")</p>
                                     </div>
                                 </div>
                                 <div class="nhsuk-grid-column-one-half">
@@ -49,10 +50,10 @@
                             <div class="nhsuk-grid-row">
                                 <div class="nhsuk-grid-column-one-half">
                                     <div class="nhsuk-grid-column-one-half">
-                                        <p class="nhsuk-label--s">@Html.DisplayNameFor(model => searchResult.CCGODSCode)</p>
+                                        <p class="nhsuk-label--s">@DisplayConstants.CCGICBODSCODE</p>
                                     </div>
                                     <div class="nhsuk-grid-column-one-half">
-                                        <p>@searchResult.CCGODSCode</p>
+                                        <p>@searchResult.GetSiteAttribute("SelectedCCGOdsCode")</p>
                                     </div>
                                 </div>
                                 <div class="nhsuk-grid-column-one-half">
@@ -69,10 +70,10 @@
                                 <div class="nhsuk-grid-row">
                                     <div class="nhsuk-grid-column-full">
                                         <div class="nhsuk-grid-column-full">
-                                            <p class="nhsuk-label--s">@Html.DisplayNameFor(model => searchResult.UseCase)</p>
+                                            <p class="nhsuk-label--s">@DisplayConstants.USECASEDESCRIPTION</p>
                                         </div>
                                         <div class="nhsuk-grid-column-full">
-                                            <p>@searchResult.UseCase</p>
+                                            <p>@searchResult.GetSiteAttribute("UseCaseDescription")</p>
                                         </div>
                                     </div>
                                 </div>

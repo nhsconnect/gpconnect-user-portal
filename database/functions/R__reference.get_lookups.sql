@@ -8,7 +8,8 @@ returns table
 	lookup_id integer,
 	lookup_type_id smallint,
 	lookup_value varchar(500),
-	lookup_type_name varchar(200)
+	lookup_type_name varchar(200),
+	lookup_type_description varchar(200)
 )
 as $$
 begin
@@ -17,7 +18,8 @@ begin
 		l.lookup_id,
 		l.lookup_type_id,
 		l.lookup_value,
-		lt.lookup_type_name
+		lt.lookup_type_name,
+		lt.lookup_type_description
 	from reference.lookup l
 	inner join reference.lookup_type lt on l.lookup_type_id = lt.lookup_type_id
 	where now() <= coalesce(l.disabled_date, now());

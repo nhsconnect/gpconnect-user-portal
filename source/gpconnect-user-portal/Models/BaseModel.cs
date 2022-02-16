@@ -58,8 +58,8 @@ namespace gpconnect_user_portal.Models
 
         public IEnumerable<SelectListItem> GetCCGByOdsCodes(string selectedCCGCode = "")
         {
-            var options = _organisationList.OrderBy(x => x.OrgId)
-                .Select(option => new SelectListItem() { Text = option.OrgId, Value = option.OrgId, Selected = selectedCCGCode == option.OrgId }).ToList();
+            var options = _organisationList.OrderBy(x => x.OdsCode)
+                .Select(option => new SelectListItem() { Text = option.OdsCode, Value = option.OdsCode, Selected = selectedCCGCode == option.OdsCode }).ToList();
             options.Insert(0, new SelectListItem());
             return options;
         }

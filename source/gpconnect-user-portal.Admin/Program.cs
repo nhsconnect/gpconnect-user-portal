@@ -1,25 +1,34 @@
-var builder = WebApplication.CreateBuilder(args);
+using Autofac.Extensions.DependencyInjection;
+using NLog.Web;
+using Infrastructure = gpconnect_user_portal.Core.Configuration.Infrastructure;
+using Logging = gpconnect_user_portal.Core.Configuration.Logging;
 
-// Add services to the container.
-builder.Services.AddRazorPages();
-
-var app = builder.Build();
-
-// Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
+namespace gpconnect_user_portal.Admin
 {
-    app.UseExceptionHandler("/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-    app.UseHsts();
+    public class Program
+    {
+        public static void Main(string[] args)
+        {
+            CreateHostBuilder(args).Build().Run();
+        }
+
+        public static IHostBuilder CreateHostBuilder(string[] args) =>
+            Host.CreateDefaultBuilder(args)
+                .ConfigureWebHost((webHostBuilder) =>
+                {
+                    Infrastructure.WebConfigurationBuilder.ConfigureWebHost(webHostBuilder);
+                })
+                .UseServiceProviderFactory(new AutofacServiceProviderFactory())
+                .ConfigureWebHostDefaults(webHostDefaultsBuilder =>
+                {
+                    webHostDefaultsBuilder.UseStartup<Startup>();
+                    Infrastructure.WebConfigurationBuilder.ConfigureWebHostDefaults(webHostDefaultsBuilder);
+                })
+                .ConfigureAppConfiguration(Infrastructure.CustomConfigurationBuilder.AddCustomConfiguration)
+                .ConfigureLogging((builderContext, logging) =>
+                {
+                    Logging.LoggingConfigurationBuilder.AddLoggingConfiguration(builderContext, logging);
+                })
+                .UseNLog();
+    }
 }
-
-app.UseHttpsRedirection();
-app.UseStaticFiles();
-
-app.UseRouting();
-
-app.UseAuthorization();
-
-app.MapRazorPages();
-
-app.Run();

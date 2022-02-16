@@ -8,7 +8,7 @@
     <button class="nhsuk-button" asp-page-handler="ExportAll" type="submit">@ButtonConstants.ALLSITEDOWNLOAD</button>
     <h2>Search</h2>
 
-    @if (Model.DisplaySearchInvalid && !Model.IsValidSearch)
+    @if (Model.DisplaySearchInvalid)
     {
         <partial name="SearchInvalid" />
     }

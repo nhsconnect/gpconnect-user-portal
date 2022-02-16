@@ -1,0 +1,54 @@
+﻿@using Microsoft.AspNetCore.Mvc.ModelBinding
+@model RegistrationModel
+@{
+    var submitterInvalid = Model.ModelState["EndpointRegistration.EndpointDataSharingAgreementContactDetails.DataSharingAgreementContactName"]?.ValidationState == ModelValidationState.Invalid;
+    var emailAddressInvalid = Model.ModelState["EndpointRegistration.EndpointDataSharingAgreementContactDetails.DataSharingAgreementContactEmailAddress"]?.ValidationState == ModelValidationState.Invalid;
+    var telephoneInvalid = Model.ModelState["EndpointRegistration.EndpointDataSharingAgreementContactDetails.DataSharingAgreementContactTelephone"]?.ValidationState == ModelValidationState.Invalid;
+}
+
+<div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-full">
+        <div class="nhsuk-card nhsuk-card--feature">
+            <div class="nhsuk-card__content nhsuk-card__content--feature">
+                <h2 class="nhsuk-card__heading nhsuk-card__heading--feature nhsuk-heading-m">Data Sharing Agreement</h2>
+
+                <div class="nhsuk-action-link">
+                    <a class="nhsuk-action-link__link" target="_blank" href="~/content/dsa.pdf">
+                        <svg class="nhsuk-icon nhsuk-icon__arrow-right-circle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" width="36" height="36">
+                            <path d="M0 0h24v24H0z" fill="none"></path>
+                            <path d="M12 2a10 10 0 0 0-9.95 9h11.64L9.74 7.05a1 1 0 0 1 1.41-1.41l5.66 5.65a1 1 0 0 1 0 1.42l-5.66 5.65a1 1 0 0 1-1.41 0 1 1 0 0 1 0-1.41L13.69 13H2.05A10 10 0 1 0 12 2z"></path>
+                        </svg>
+                        <span class="nhsuk-action-link__text">Download the Data Sharing Agreement</span>
+                    </a>
+                </div>
+                <div class="nhsuk-form-group@(submitterInvalid ? " nhsuk-form-group--error": string.Empty)">
+                    <label asp-for="EndpointRegistration.EndpointDataSharingAgreementContactDetails.DataSharingAgreementContactName" class="nhsuk-label"></label>
+                    <div class="nhsuk-hint" id="input-hint-submitter">* Enter the name of the individual who is accepting the data sharing agreement.</div>
+                    @if (submitterInvalid)
+                    {
+                        <span asp-validation-for="EndpointRegistration.EndpointDataSharingAgreementContactDetails.DataSharingAgreementContactName" class="nhsuk-error-message"></span>
+                    }
+                    <input class="nhsuk-input@(submitterInvalid ? " nhsuk-input--error": string.Empty)" aria-describedby="input-hint-submitter" novalidate asp-for="EndpointRegistration.EndpointDataSharingAgreementContactDetails.DataSharingAgreementContactName" type="search">
+                </div>
+                <div class="nhsuk-form-group@(emailAddressInvalid ? " nhsuk-form-group--error": string.Empty)">
+                    <label asp-for="EndpointRegistration.EndpointDataSharingAgreementContactDetails.DataSharingAgreementContactEmailAddress" class="nhsuk-label"></label>
+                    <div class="nhsuk-hint" id="input-hint-email">* Enter the email address of the individual who is accepting the data sharing agreement.</div>
+                    @if (emailAddressInvalid)
+                    {
+                        <span asp-validation-for="EndpointRegistration.EndpointDataSharingAgreementContactDetails.DataSharingAgreementContactEmailAddress" class="nhsuk-error-message"></span>
+                    }
+                    <input class="nhsuk-input@(emailAddressInvalid ? " nhsuk-input--error": string.Empty)" aria-describedby="input-hint-email" novalidate asp-for="EndpointRegistration.EndpointDataSharingAgreementContactDetails.DataSharingAgreementContactEmailAddress" type="email">
+                </div>
+                <div class="nhsuk-form-group@(telephoneInvalid ? " nhsuk-form-group--error": string.Empty)">
+                    <label asp-for="EndpointRegistration.EndpointDataSharingAgreementContactDetails.DataSharingAgreementContactTelephone" class="nhsuk-label"></label>
+                    <div class="nhsuk-hint" id="input-hint-telephone">* Enter the telephone number of the individual who is accepting the data sharing agreement.</div>
+                    @if (telephoneInvalid)
+                    {
+                        <span asp-validation-for="EndpointRegistration.EndpointDataSharingAgreementContactDetails.DataSharingAgreementContactTelephone" class="nhsuk-error-message"></span>
+                    }
+                    <input class="nhsuk-input@(telephoneInvalid ? " nhsuk-input--error": string.Empty)" aria-describedby="input-hint-telephone" novalidate asp-for="EndpointRegistration.EndpointDataSharingAgreementContactDetails.DataSharingAgreementContactTelephone" type="tel">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,35 @@
+﻿@page "{siteIdentifier?}"
+@using Microsoft.AspNetCore.Mvc.ModelBinding
+@using gpconnect_user_portal.Helpers.Constants
+@model RegistrationModel
+
+<h1>@Model.PageTitle</h1>
+
+<form method="post" id="search-input-form">
+
+    <partial name="RegistrationSiteDetails" />
+    <partial name="DataSharingAgreementDetails" />
+    <partial name="RegistrationSupplierDetails" />
+
+    @if (Model.EndpointRegistration.EndpointSupplierDetails.DisplayGpConnectProducts)
+    {
+        <partial name="RegistrationSupplierProductCapabilities" />
+        <partial name="RegistrationSubmitterDetails" />
+
+        <div class="nhsuk-grid-row">
+            <div class="nhsuk-grid-column-full">
+                <div class="nhsuk-form-group">
+                    <div class="nhsuk-hint" id="input-hint-continue">Click on '@ButtonConstants.CONTINUE' to check and review the details you have entered.</div>
+                    <button class="nhsuk-button" aria-describedby="input-hint-continue" asp-page-handler="Continue" type="submit">@ButtonConstants.CONTINUE</button>
+                </div>
+            </div>
+        </div>
+    }
+    <input type="hidden" asp-for="EndpointRegistration.EndpointSupplierDetails.SelectedSupplier" value="@Model.EndpointRegistration.EndpointSupplierDetails.SelectedSupplier" />
+    <input type="hidden" asp-for="EndpointRegistration.EndpointSupplierDetails.SelectedCareSetting" value="@Model.EndpointRegistration.EndpointSupplierDetails.SelectedCareSetting" />
+    <input type="hidden" asp-for="EndpointRegistration.EndpointSupplierDetails.DisplayGpConnectProducts" value="@Model.EndpointRegistration.EndpointSupplierDetails.DisplayGpConnectProducts" />
+
+    <input type="hidden" asp-for="EndpointRegistration.EndpointSupplierProductCapability.IsHtmlEnabled" value="@Model.EndpointRegistration.EndpointSupplierProductCapability.IsHtmlEnabled" />
+    <input type="hidden" asp-for="EndpointRegistration.EndpointSupplierProductCapability.IsStructuredEnabled" value="@Model.EndpointRegistration.EndpointSupplierProductCapability.IsStructuredEnabled" />
+    <input type="hidden" asp-for="EndpointRegistration.EndpointSupplierProductCapability.IsAppointmentEnabled" value="@Model.EndpointRegistration.EndpointSupplierProductCapability.IsAppointmentEnabled" />   
+</form>

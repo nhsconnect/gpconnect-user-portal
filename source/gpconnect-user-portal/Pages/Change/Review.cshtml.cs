@@ -25,12 +25,12 @@ namespace gpconnect_user_portal.Pages
             return await PopulateForm(id);
         }
 
-        public async Task<IActionResult> PopulateForm(string siteDefinitionGuid)
+        public async Task<IActionResult> PopulateForm(string siteDefinitionIdentifier)
         {
-            var siteDefinition = await _aggregateService.ApplicationService.GetSiteDefinition(Guid.Parse(siteDefinitionGuid));
+            var siteDefinition = await _aggregateService.ApplicationService.GetSiteDefinition(siteDefinitionIdentifier);
             if (siteDefinition != null)
             {
-                SiteIdentifier = Guid.Parse(siteDefinitionGuid);
+                SiteIdentifier = Guid.Parse(siteDefinitionIdentifier);
                 SiteAttributes = siteDefinition.SiteAttributes;
                 CanUpdateOrSubmit = siteDefinition.CanUpdateOrSubmit;
 

@@ -9,7 +9,9 @@ returns table
 	supplier_id smallint,
 	supplier_product_id smallint,
 	product_name varchar(500),
-	lookup_type_id smallint
+	lookup_type_id smallint,
+	provider_assured boolean,
+	consumer_assured boolean
 )
 as $$
 begin
@@ -19,13 +21,17 @@ begin
 		a.supplier_id, 
 		a.supplier_product_id, 
 		a.product_name, 
-		a.lookup_type_id 
+		a.lookup_type_id,
+		a.provider_assured,
+		a.consumer_assured
 	from (
 		select 
 			sp.supplier_id, 
 			sp.supplier_product_id, 
 			l.lookup_value as product_name, 
-			l.lookup_type_id
+			l.lookup_type_id,
+			sp.provider_assured,
+			sp.consumer_assured
 		from
 			reference.supplier_product sp
 		inner join 

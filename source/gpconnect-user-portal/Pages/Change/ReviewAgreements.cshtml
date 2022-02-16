@@ -3,61 +3,43 @@
 
 <div class="nhsuk-grid-row">
     <div class="nhsuk-grid-column-full">
-        <div class="nhsuk-card">
+        <div class="nhsuk-card nhsuk-card--care nhsuk-card--care--non-urgent">
+            <div class="nhsuk-card--care__heading-container">
+                <h3 class="nhsuk-card--care__heading">
+                    <span role="text"><span class="nhsuk-u-visually-hidden">Information: </span>Data Sharing Agreement</span>
+                </h3>
+                <span class="nhsuk-card--care__arrow" aria-hidden="true"></span>
+            </div>
             <div class="nhsuk-card__content">
+                <p>You have agreed to the Data Sharing Agreement and we have the contact details below in case of any queries.</p>
                 <div class="nhsuk-grid-row">
-                    <div class="nhsuk-grid-column-one-half">
-                        <div class="nhsuk-grid-column-two-thirds">
-                            <p class="nhsuk-label--s">@Html.DisplayNameFor(model => model.AgreeToDsAgreement)</p>
-                        </div>
-                        <div class="nhsuk-grid-column-one-third">
-                            <p>@Model.AgreeToDsAgreement.BooleanToHtml()</p>
-                        </div>
+                    <div class="nhsuk-grid-column-full">
+                        <dl class="nhsuk-summary-list">
+                            <div class="nhsuk-summary-list__row">
+                            <dt class="nhsuk-summary-list__key">
+                                @Model.GetAttributeName("DataSharingAgreementContactName")
+                            </dt>
+                            <dd class="nhsuk-summary-list__value">
+                                @Model.GetAttributeValue("DataSharingAgreementContactName")
+                            </dd>
                     </div>
-                    <div class="nhsuk-grid-column-one-half">
-                        <div class="nhsuk-grid-column-two-thirds">
-                            <p class="nhsuk-label--s">Example Agreement 1</p>
-                        </div>
-                        <div class="nhsuk-grid-column-one-third">
-                            <p>@false.BooleanToHtml()</p>
-                        </div>
+                    <div class="nhsuk-summary-list__row">
+                        <dt class="nhsuk-summary-list__key">
+                            @Model.GetAttributeName("DataSharingAgreementContactEmailAddress")
+                        </dt>
+                        <dd class="nhsuk-summary-list__value">
+                            @Model.GetAttributeValue("DataSharingAgreementContactEmailAddress")
+                        </dd>
                     </div>
-                </div>
-                <div class="nhsuk-grid-row">
-                    <div class="nhsuk-grid-column-one-half">
-                        <div class="nhsuk-grid-column-two-thirds">
-                            <p class="nhsuk-label--s">@Html.DisplayNameFor(model => model.AgreeToUpdateDPIA)</p>
-                        </div>
-                        <div class="nhsuk-grid-column-one-third">
-                            <p>@Model.AgreeToUpdateDPIA.BooleanToHtml()</p>
-                        </div>
+                    <div class="nhsuk-summary-list__row">
+                        <dt class="nhsuk-summary-list__key">
+                            @Model.GetAttributeName("DataSharingAgreementContactTelephone")
+                        </dt>
+                        <dd class="nhsuk-summary-list__value">
+                            @Model.GetAttributeValue("DataSharingAgreementContactTelephone")
+                        </dd>
                     </div>
-                    <div class="nhsuk-grid-column-one-half">
-                        <div class="nhsuk-grid-column-two-thirds">
-                            <p class="nhsuk-label--s">Example Agreement 2</p>
-                        </div>
-                        <div class="nhsuk-grid-column-one-third">
-                            <p>@true.BooleanToHtml()</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="nhsuk-grid-row">
-                    <div class="nhsuk-grid-column-one-half">
-                        <div class="nhsuk-grid-column-two-thirds">
-                            <p class="nhsuk-label--s">@Html.DisplayNameFor(model => model.AgreeForDirectCareOnly)</p>
-                        </div>
-                        <div class="nhsuk-grid-column-one-third">
-                            <p>@Model.AgreeForDirectCareOnly.BooleanToHtml()</p>
-                        </div>
-                    </div>                    
-                    <div class="nhsuk-grid-column-one-half">
-                        <div class="nhsuk-grid-column-two-thirds">
-                            <p class="nhsuk-label--s">Example Agreement 3</p>
-                        </div>
-                        <div class="nhsuk-grid-column-one-third">
-                            <p>@true.BooleanToHtml()</p>
-                        </div>
-                    </div>
+                    </dl>
                 </div>
             </div>
         </div>

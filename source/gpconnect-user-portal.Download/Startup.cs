@@ -19,6 +19,7 @@ namespace gpconnect_user_portal.Download
             builder.Services.AddScoped<IReferenceService, ReferenceService>();
             builder.Services.AddScoped<IDataService, DataService>();
             builder.Services.AddScoped<IFhirRequestExecution, FhirRequestExecution>();
+            builder.Services.AddScoped<IApplicationService, ApplicationService>();
             var configuration = builder.GetContext().Configuration;
         }        
     }

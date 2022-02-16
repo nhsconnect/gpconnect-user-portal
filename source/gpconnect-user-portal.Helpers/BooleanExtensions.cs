@@ -13,7 +13,13 @@ namespace gpconnect_user_portal.Helpers
         public static HtmlString StringToBooleanHtml(this string input) =>
             input switch
             {
-                _ => bool.TryParse(input, out _) ? new HtmlString("&#x2717;") : new HtmlString("&#x2713;")
+                _ => bool.TryParse(input, out _) ? new HtmlString("&#x2713;") : new HtmlString("&#x2717;")
+            };
+
+        public static bool StringToBoolean(this string input) =>
+            input switch
+            {
+                _ => bool.TryParse(input, out _)
             };
 
         public static string BooleanToYesNo(this bool input) =>

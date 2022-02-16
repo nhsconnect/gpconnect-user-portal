@@ -26,7 +26,7 @@ namespace gpconnect_user_portal.Pages
 
         public async Task<IActionResult> OnPostSearchAsync()
         {            
-            if (ModelState.IsValid && IsValidSearch)
+            if (ModelState.IsValid && IsValidSearch && !HasMultipleSearchParamaters)
             {
                 DisplaySearchInvalid = false;
                 await GetSearchResults();
@@ -60,8 +60,8 @@ namespace gpconnect_user_portal.Pages
         {
             return new SearchRequest()
             {
-                ProviderOdsCode = ProviderOdsCode,
-                ProviderName = ProviderName,
+                SiteOdsCode = ProviderOdsCode,
+                SiteName = ProviderName,
                 CCGOdsCode = SelectedCCGOdsCode,
                 CCGName = SelectedCCGName,
                 FilterBy = SelectedSortOption

@@ -1,12 +1,11 @@
-﻿using gpconnect_user_portal.DAL.Interfaces;
+﻿using Dapper;
+using gpconnect_user_portal.DAL.Interfaces;
 using gpconnect_user_portal.DTO.Request;
-using gpconnect_user_portal.DTO.Response;
 using gpconnect_user_portal.Helpers;
 using gpconnect_user_portal.Helpers.Constants;
 using gpconnect_user_portal.Services.Interfaces;
-using System;
+using System.Collections.Generic;
 using System.Data;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace gpconnect_user_portal.Services
@@ -22,76 +21,80 @@ namespace gpconnect_user_portal.Services
             _reportingService = reportingService;
         }
 
-        public async Task<SearchResult> GetSites(SearchRequest searchRequest = null)
+        public async Task<DTO.Response.Application.Search.SearchResult> GetSites(SearchRequest searchRequest = null)
         {
-            var query = QueryBuilder(searchRequest, "SELECT * FROM Site WHERE 1=1");
-            var result = await _dataService.ExecuteSQLQuery<SearchResultEntry>(query);
-            var searchResult = new SearchResult() { SearchResults = result };
+            var query = "application.find_sites";
+            var parameters = new DynamicParameters();
+            parameters.Add("_site_name_attribute_name", SearchConstants.SiteNameAttributeName, DbType.String, ParameterDirection.Input);
+            parameters.Add("_ccg_ods_code_attribute_name", SearchConstants.CCGOdsCodeAttributeName, DbType.String, ParameterDirection.Input);
+            parameters.Add("_ccg_name_attribute_name", SearchConstants.CCGNameAttributeName, DbType.String, ParameterDirection.Input);
+            parameters.Add("_html_query_filter_interaction", SearchConstants.HtmlQueryFilterInteraction, DbType.String, ParameterDirection.Input);
+            parameters.Add("_structured_query_filter_interaction", SearchConstants.StructuredQueryFilterInteraction, DbType.String, ParameterDirection.Input);
+            parameters.Add("_appointment_query_filter_interaction", SearchConstants.AppointmentQueryFilterInteraction, DbType.String, ParameterDirection.Input);
+
+            
+
+            if (searchRequest != null)
+            {
+                if (searchRequest.FilterBy != null)
+                {
+                    parameters.Add("_filter_by", int.Parse(searchRequest.FilterBy), DbType.Int16, ParameterDirection.Input);
+                }
+                else
+                {
+                    parameters.Add("_filter_by", 0, DbType.Int16, ParameterDirection.Input);
+                }
+
+                if (searchRequest.SiteOdsCode != null)
+                {
+                    parameters.Add("_site_ods_code", searchRequest.SiteOdsCode.SearchAndReplace(new Dictionary<string, string> { { ",", "|" }, { " ", "|" } }).Replace("||", "|"), DbType.String, ParameterDirection.Input);
+                }
+                else
+                {
+                    parameters.Add("_site_ods_code", null, DbType.String, ParameterDirection.Input);
+                }
+
+                if (searchRequest.SiteName != null)
+                {
+                    parameters.Add("_site_name", searchRequest.SiteName.SearchAndReplace(new Dictionary<string, string> { { ",", "|" } }).Replace("||", "|"), DbType.String, ParameterDirection.Input);
+                }
+                else
+                {
+                    parameters.Add("_site_name", null, DbType.String, ParameterDirection.Input);
+                }
+
+                if (searchRequest.CCGOdsCode != null)
+                {
+                    parameters.Add("_ccg_ods_code", searchRequest.CCGOdsCode, DbType.String, ParameterDirection.Input);
+                }
+                else
+                {
+                    parameters.Add("_ccg_ods_code", null, DbType.String, ParameterDirection.Input);
+                }
+
+                if (searchRequest.CCGName != null)
+                {
+                    parameters.Add("_ccg_name", searchRequest.CCGName, DbType.String, ParameterDirection.Input);
+                }
+                else
+                {
+                    parameters.Add("_ccg_name", null, DbType.String, ParameterDirection.Input);
+                }
+            }
+
+            var searchResultEntries = await _dataService.ExecuteQuery<DTO.Response.Application.Search.SearchResultEntry>(query, parameters);
+            var searchResult = new DTO.Response.Application.Search.SearchResult()
+            {
+                SearchResultEntries = searchResultEntries
+            };
             return searchResult;
         }
 
         public async Task<DataTable> GetSitesForExport(SearchRequest searchRequest = null)
         {
             var sites = await GetSites(searchRequest);
-            var json = sites.SearchResults.ConvertObjectToJsonData();
+            var json = sites.SearchResultEntries.ConvertObjectToJsonData();
             return json.ConvertJsonDataToDataTable();
-        }
-
-        private static string QueryBuilder(SearchRequest searchRequest, string baseQuery)
-        {
-            var query = new StringBuilder(baseQuery);
-            if (searchRequest != null)
-            {
-                if (searchRequest.ProviderOdsCodeAsList?.Count > 0)
-                {
-                    var providersCodes = string.Join("','", searchRequest.ProviderOdsCodeAsList);
-                    query.Append(" AND SiteODS IN (");
-                    query.Append($"'{providersCodes}')");
-                }
-
-                if (searchRequest.ProviderNameAsList?.Count > 0)
-                {
-                    query.Append(" AND (");
-
-                    for (var i = 0; i < searchRequest.ProviderNameAsList.Count; i++)
-                    {
-                        query.Append($"CHARINDEX('{searchRequest.ProviderNameAsList[i].Trim()}', SiteName) > 0 OR ");
-                    }
-                    query.Remove(query.Length - 4, 4);
-                    query.Append(")");
-                }
-
-                query.Append(searchRequest.CCGOdsCode != null ? $" AND CCGODS='{searchRequest.CCGOdsCode}'" : string.Empty);
-                query.Append(searchRequest.CCGName != null ? $" AND CCGName='{searchRequest.CCGName}'" : string.Empty);
-                query.Append($" {GetFilterByField(Convert.ToInt16(searchRequest.FilterBy))}");
-
-            }
-            query.Append(" ORDER BY 2");
-            return query.ToString();
-        }
-
-        private static string GetFilterByField(int filterBy)
-        {
-            switch (filterBy)
-            {
-                case 0:
-                    return string.Empty;
-                case 1:
-                    return $" AND CHARINDEX('{SearchConstants.HtmlQueryFilterInteraction}', Interactions) = 0";
-                case 2:
-                    return $" AND CHARINDEX('{SearchConstants.HtmlQueryFilterInteraction}', Interactions) > 0";
-                case 3:
-                    return $" AND CHARINDEX('{SearchConstants.StructuredQueryFilterInteraction}', Interactions) = 0";
-                case 4:
-                    return $" AND CHARINDEX('{SearchConstants.StructuredQueryFilterInteraction}', Interactions) > 0";
-                case 5:
-                    return $" AND CHARINDEX('{SearchConstants.AppointmentQueryFilterInteraction}', Interactions) = 0";
-                case 6:
-                    return $" AND CHARINDEX('{SearchConstants.AppointmentQueryFilterInteraction}', Interactions) > 0";
-                default:
-                    break;
-            }
-            return string.Empty;
         }
     }
 }

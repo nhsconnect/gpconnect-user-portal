@@ -1,0 +1,188 @@
+﻿@using Microsoft.AspNetCore.Mvc.ModelBinding
+@using gpconnect_user_portal.Helpers.Enumerations
+@model RegistrationModel
+@{
+    var supplierProductCapability = Model.EndpointRegistration.EndpointSupplierProductCapability;
+    var useCaseDescriptionInvalid = Model.ModelState["EndpointRegistration.EndpointSupplierProductCapability.UseCaseDescription"]?.ValidationState == ModelValidationState.Invalid;
+}
+
+<div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-full">
+        <div class="nhsuk-card nhsuk-card--feature">
+            <div class="nhsuk-card__content nhsuk-card__content--feature">
+                <h2 class="nhsuk-card__heading nhsuk-card__heading--feature nhsuk-heading-m">GP Connect Products</h2>
+                <div class="nhsuk-hint" id="input-hint-recordaccess">* Which products do you want to enable for your site?</div>
+
+                @if (supplierProductCapability.IsHtmlEnabled)
+                {
+                    var recordAccessHtmlView = Model.GetEnumValue<RecordAccessLevel>("EndpointRegistration.EndpointSupplierProductCapability.RecordAccessHtmlView");
+                    var recordAccessHtmlViewInvalid = Model.ModelState["EndpointRegistration.EndpointSupplierProductCapability.RecordAccessHtmlView"]?.ValidationState == ModelValidationState.Invalid;
+
+                    <div class="nhsuk-form-group@(recordAccessHtmlViewInvalid ? " nhsuk-form-group--error": string.Empty)">
+                        <fieldset class="nhsuk-fieldset" aria-describedby="example-hint">
+                            @if (recordAccessHtmlViewInvalid)
+                            {
+                                <span asp-validation-for="EndpointRegistration.EndpointSupplierProductCapability.RecordAccessHtmlView" class="nhsuk-error-message"></span>
+                            }
+                            <legend class="nhsuk-fieldset__legend nhsuk-fieldset__legend--m">@Html.DisplayNameFor(model => model.EndpointRegistration.EndpointSupplierProductCapability.RecordAccessHtmlView)</legend>
+                            <div class="nhsuk-radios nhsuk-radios--inline">
+                                <div class="nhsuk-radios__item">
+                                    <input class="nhsuk-radios__input" novalidate asp-for="EndpointRegistration.EndpointSupplierProductCapability.RecordAccessHtmlView" checked="@(recordAccessHtmlView == @RecordAccessLevel.None)" value="@RecordAccessLevel.None" type="radio">
+                                    <label asp-for="EndpointRegistration.EndpointSupplierProductCapability.RecordAccessHtmlView" class="nhsuk-label nhsuk-radios__label">None</label>
+                                </div>
+                                @if (supplierProductCapability.EnabledSupplierProductCapability.IsProviderAssuredForHtml)
+                                {
+                                    <div class="nhsuk-radios__item">
+                                        <input class="nhsuk-radios__input" novalidate asp-for="EndpointRegistration.EndpointSupplierProductCapability.RecordAccessHtmlView" checked="@(recordAccessHtmlView == @RecordAccessLevel.Provider)" value="@RecordAccessLevel.Provider" type="radio">
+                                        <label asp-for="EndpointRegistration.EndpointSupplierProductCapability.RecordAccessHtmlView" class="nhsuk-label nhsuk-radios__label">Provider</label>
+                                    </div>
+                                }
+                                @if (supplierProductCapability.EnabledSupplierProductCapability.IsConsumerAssuredForHtml)
+                                {
+                                    <div class="nhsuk-radios__item">
+                                        <input class="nhsuk-radios__input" novalidate asp-for="EndpointRegistration.EndpointSupplierProductCapability.RecordAccessHtmlView" checked="@(recordAccessHtmlView == @RecordAccessLevel.Consumer)" value="@RecordAccessLevel.Consumer" type="radio">
+                                        <label asp-for="EndpointRegistration.EndpointSupplierProductCapability.RecordAccessHtmlView" class="nhsuk-label nhsuk-radios__label">Consumer</label>
+                                    </div>
+                                }
+                                @if (supplierProductCapability.EnabledSupplierProductCapability.IsBothAssuredForHtml)
+                                {
+                                    <div class="nhsuk-radios__item">
+                                        <input class="nhsuk-radios__input" novalidate asp-for="EndpointRegistration.EndpointSupplierProductCapability.RecordAccessHtmlView" checked="@(recordAccessHtmlView == @RecordAccessLevel.Both)" value="@RecordAccessLevel.Both" type="radio">
+                                        <label asp-for="EndpointRegistration.EndpointSupplierProductCapability.RecordAccessHtmlView" class="nhsuk-label nhsuk-radios__label">Both</label>
+                                    </div>
+                                }
+                            </div>
+                        </fieldset>
+                    </div>
+                }
+                @if (supplierProductCapability.IsStructuredEnabled)
+                {
+                    var recordAccessStructured = Model.GetEnumValue<RecordAccessLevel>("EndpointRegistration.EndpointSupplierProductCapability.RecordAccessStructured");
+                    var recordAccessStructuredInvalid = Model.ModelState["EndpointRegistration.EndpointSupplierProductCapability.RecordAccessStructured"]?.ValidationState == ModelValidationState.Invalid;
+
+                    <div class="nhsuk-form-group@(recordAccessStructuredInvalid ? " nhsuk-form-group--error": string.Empty)">
+                        <fieldset class="nhsuk-fieldset" aria-describedby="example-hint">
+                            @if (recordAccessStructuredInvalid)
+                            {
+                                <span asp-validation-for="EndpointRegistration.EndpointSupplierProductCapability.RecordAccessStructured" class="nhsuk-error-message"></span>
+                            }
+                            <legend class="nhsuk-fieldset__legend nhsuk-fieldset__legend--m">@Html.DisplayNameFor(model => model.EndpointRegistration.EndpointSupplierProductCapability.RecordAccessStructured)</legend>
+                            <div class="nhsuk-radios nhsuk-radios--inline">
+                                <div class="nhsuk-radios__item">
+                                    <input class="nhsuk-radios__input" novalidate asp-for="EndpointRegistration.EndpointSupplierProductCapability.RecordAccessStructured" checked="@(recordAccessStructured == @RecordAccessLevel.None)" value="@RecordAccessLevel.None" type="radio">
+                                    <label asp-for="EndpointRegistration.EndpointSupplierProductCapability.RecordAccessStructured" class="nhsuk-label nhsuk-radios__label">None</label>
+                                </div>
+                                @if (supplierProductCapability.EnabledSupplierProductCapability.IsProviderAssuredForStructured)
+                                {
+                                    <div class="nhsuk-radios__item">
+                                        <input class="nhsuk-radios__input" novalidate asp-for="EndpointRegistration.EndpointSupplierProductCapability.RecordAccessStructured" checked="@(recordAccessStructured == @RecordAccessLevel.Provider)" value="@RecordAccessLevel.Provider" type="radio">
+                                        <label asp-for="EndpointRegistration.EndpointSupplierProductCapability.RecordAccessStructured" class="nhsuk-label nhsuk-radios__label">Provider</label>
+                                    </div>
+                                }                                
+                                @if (supplierProductCapability.EnabledSupplierProductCapability.IsConsumerAssuredForStructured)
+                                {
+                                    <div class="nhsuk-radios__item">
+                                        <input class="nhsuk-radios__input" novalidate asp-for="EndpointRegistration.EndpointSupplierProductCapability.RecordAccessStructured" checked="@(recordAccessStructured == @RecordAccessLevel.Consumer)" value="@RecordAccessLevel.Consumer" type="radio">
+                                        <label asp-for="EndpointRegistration.EndpointSupplierProductCapability.RecordAccessStructured" class="nhsuk-label nhsuk-radios__label">Consumer</label>
+                                    </div>
+                                }
+                                
+                                @if (supplierProductCapability.EnabledSupplierProductCapability.IsBothAssuredForStructured)
+                                {
+                                    <div class="nhsuk-radios__item">
+                                        <input class="nhsuk-radios__input" novalidate asp-for="EndpointRegistration.EndpointSupplierProductCapability.RecordAccessStructured" checked="@(recordAccessStructured == @RecordAccessLevel.Both)" value="@RecordAccessLevel.Both" type="radio">
+                                        <label asp-for="EndpointRegistration.EndpointSupplierProductCapability.RecordAccessStructured" class="nhsuk-label nhsuk-radios__label">Both</label>
+                                    </div>
+                                }
+                            </div>
+                        </fieldset>
+                    </div>
+                }
+                @if (supplierProductCapability.IsAppointmentEnabled)
+                {
+                    var recordAccessAppointment = Model.GetEnumValue<RecordAccessLevel>("EndpointRegistration.EndpointSupplierProductCapability.Appointment");
+                    var recordAccessAppointmentInvalid = Model.ModelState["EndpointRegistration.EndpointSupplierProductCapability.Appointment"]?.ValidationState == ModelValidationState.Invalid;
+
+                    <div class="nhsuk-form-group@(recordAccessAppointmentInvalid ? " nhsuk-form-group--error": string.Empty)">
+                        <fieldset class="nhsuk-fieldset" aria-describedby="example-hint">
+                            @if (recordAccessAppointmentInvalid)
+                            {
+                                <span asp-validation-for="EndpointRegistration.EndpointSupplierProductCapability.Appointment" class="nhsuk-error-message"></span>
+                            }
+                            <legend class="nhsuk-fieldset__legend nhsuk-fieldset__legend--m">@Html.DisplayNameFor(model => model.EndpointRegistration.EndpointSupplierProductCapability.Appointment)</legend>
+                            <div class="nhsuk-radios nhsuk-radios--inline">
+                                <div class="nhsuk-radios__item">
+                                    <input class="nhsuk-radios__input" novalidate asp-for="EndpointRegistration.EndpointSupplierProductCapability.Appointment" checked="@(recordAccessAppointment == @RecordAccessLevel.None)" value="@RecordAccessLevel.None" type="radio">
+                                    <label asp-for="EndpointRegistration.EndpointSupplierProductCapability.Appointment" class="nhsuk-label nhsuk-radios__label">None</label>
+                                </div>
+                                @if (supplierProductCapability.EnabledSupplierProductCapability.IsProviderAssuredForAppointment)
+                                {
+                                    <div class="nhsuk-radios__item">
+                                        <input class="nhsuk-radios__input" novalidate asp-for="EndpointRegistration.EndpointSupplierProductCapability.Appointment" checked="@(recordAccessAppointment == @RecordAccessLevel.Provider)" value="@RecordAccessLevel.Provider" type="radio">
+                                        <label asp-for="EndpointRegistration.EndpointSupplierProductCapability.Appointment" class="nhsuk-label nhsuk-radios__label">Provider</label>
+                                    </div>
+                                }
+                                @if (supplierProductCapability.EnabledSupplierProductCapability.IsConsumerAssuredForAppointment)
+                                {
+                                    <div class="nhsuk-radios__item">
+                                        <input class="nhsuk-radios__input" novalidate asp-for="EndpointRegistration.EndpointSupplierProductCapability.Appointment" checked="@(recordAccessAppointment == @RecordAccessLevel.Consumer)" value="@RecordAccessLevel.Consumer" type="radio">
+                                        <label asp-for="EndpointRegistration.EndpointSupplierProductCapability.Appointment" class="nhsuk-label nhsuk-radios__label">Consumer</label>
+                                    </div>
+                                }
+                                @if (supplierProductCapability.EnabledSupplierProductCapability.IsBothAssuredForAppointment)
+                                {
+                                    <div class="nhsuk-radios__item">
+                                        <input class="nhsuk-radios__input" novalidate asp-for="EndpointRegistration.EndpointSupplierProductCapability.Appointment" checked="@(recordAccessAppointment == @RecordAccessLevel.Both)" value="@RecordAccessLevel.Both" type="radio">
+                                        <label asp-for="EndpointRegistration.EndpointSupplierProductCapability.Appointment" class="nhsuk-label nhsuk-radios__label">Both</label>
+                                    </div>
+                                }
+                            </div>
+                        </fieldset>
+                    </div>
+                }
+                @if (supplierProductCapability.IsSendDocumentEnabled)
+                {
+                    var recordAccessSendDocument = Model.GetEnumValue<RecordAccessLevel>("EndpointRegistration.EndpointSupplierProductCapability.SendDocument");
+                    var recordAccessSendDocumentInvalid = Model.ModelState["EndpointRegistration.EndpointSupplierProductCapability.SendDocument"]?.ValidationState == ModelValidationState.Invalid;
+
+                    <div class="nhsuk-form-group@(recordAccessSendDocumentInvalid ? " nhsuk-form-group--error": string.Empty)">
+                        <fieldset class="nhsuk-fieldset" aria-describedby="example-hint">
+                            @if (recordAccessSendDocumentInvalid)
+                            {
+                                <span asp-validation-for="EndpointRegistration.EndpointSupplierProductCapability.SendDocument" class="nhsuk-error-message"></span>
+                            }
+                            <legend class="nhsuk-fieldset__legend nhsuk-fieldset__legend--m">@Html.DisplayNameFor(model => model.EndpointRegistration.EndpointSupplierProductCapability.SendDocument)</legend>
+                            <div class="nhsuk-radios nhsuk-radios--inline">
+                                <div class="nhsuk-radios__item">
+                                    <input class="nhsuk-radios__input" novalidate asp-for="EndpointRegistration.EndpointSupplierProductCapability.SendDocument" checked="@(recordAccessSendDocument == @RecordAccessLevel.None)" value="@RecordAccessLevel.None" type="radio">
+                                    <label asp-for="EndpointRegistration.EndpointSupplierProductCapability.SendDocument" class="nhsuk-label nhsuk-radios__label">None</label>
+                                </div>
+                                @if (supplierProductCapability.EnabledSupplierProductCapability.IsProviderAssuredForSendDocument)
+                                {
+                                    <div class="nhsuk-radios__item">
+                                        <input class="nhsuk-radios__input" novalidate asp-for="EndpointRegistration.EndpointSupplierProductCapability.SendDocument" checked="@(recordAccessSendDocument == @RecordAccessLevel.Provider)" value="@RecordAccessLevel.Provider" type="radio">
+                                        <label asp-for="EndpointRegistration.EndpointSupplierProductCapability.SendDocument" class="nhsuk-label nhsuk-radios__label">Provider</label>
+                                    </div>
+                                }
+                                @if (supplierProductCapability.EnabledSupplierProductCapability.IsConsumerAssuredForSendDocument)
+                                {
+                                    <div class="nhsuk-radios__item">
+                                        <input class="nhsuk-radios__input" novalidate asp-for="EndpointRegistration.EndpointSupplierProductCapability.SendDocument" checked="@(recordAccessSendDocument == @RecordAccessLevel.Consumer)" value="@RecordAccessLevel.Consumer" type="radio">
+                                        <label asp-for="EndpointRegistration.EndpointSupplierProductCapability.SendDocument" class="nhsuk-label nhsuk-radios__label">Consumer</label>
+                                    </div>
+                                }
+                                @if (supplierProductCapability.EnabledSupplierProductCapability.IsBothAssuredForSendDocument)
+                                {
+                                    <div class="nhsuk-radios__item">
+                                        <input class="nhsuk-radios__input" novalidate asp-for="EndpointRegistration.EndpointSupplierProductCapability.SendDocument" checked="@(recordAccessSendDocument == @RecordAccessLevel.Both)" value="@RecordAccessLevel.Both" type="radio">
+                                        <label asp-for="EndpointRegistration.EndpointSupplierProductCapability.SendDocument" class="nhsuk-label nhsuk-radios__label">Both</label>
+                                    </div>
+                                }
+                            </div>
+                        </fieldset>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

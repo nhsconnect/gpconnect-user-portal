@@ -1,4 +1,5 @@
-﻿@using gpconnect_user_portal.Helpers.Constants
+﻿@using gpconnect_user_portal.Helpers
+@using gpconnect_user_portal.Helpers.Constants
 @model ChangeModel
 
 <h2>@Model.SearchResult.SearchResultsHeading</h2>
@@ -22,12 +23,12 @@
             <div class="nhsuk-hint" id="input-hint-createsite">Click on '@ButtonConstants.CREATESITE' to register a new site.</div>                
             <button class="nhsuk-button" asp-page-handler="Create" aria-describedby="input-hint-createsite" type="submit">@ButtonConstants.CREATESITE</button>
             <dl class="nhsuk-summary-list">
-                @foreach (var option in Model.SearchResult.SearchResults)
+                @foreach (var searchResultEntry in Model.SearchResult.SearchResultEntries)
                 {
                     <div class="nhsuk-summary-list__row">
-                        <dt class="nhsuk-summary-list__key">@option.SiteODSCode</dt>
-                        <dd class="nhsuk-summary-list__value">@option.SiteName</dd>
-                        <dd class="nhsuk-summary-list__actions"><a href="/Change/Detail/@option">@ButtonConstants.UPDATE</a></dd>
+                        <dt class="nhsuk-summary-list__key">@searchResultEntry.SiteODSCode</dt>
+                        <dd class="nhsuk-summary-list__value">@searchResultEntry.GetSiteAttribute("SiteName")</dd>
+                        <dd class="nhsuk-summary-list__actions"><a href="/Change/Detail/@searchResultEntry.SiteUniqueIdentifier">@ButtonConstants.UPDATE</a></dd>
                    </div>
                 }
             </dl>

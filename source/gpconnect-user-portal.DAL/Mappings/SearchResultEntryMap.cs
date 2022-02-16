@@ -1,5 +1,5 @@
 ﻿using Dapper.FluentMap.Mapping;
-using gpconnect_user_portal.DTO.Response;
+using gpconnect_user_portal.DTO.Response.Application.Search;
 
 namespace gpconnect_user_portal.DAL.Mappings
 {
@@ -7,11 +7,12 @@ namespace gpconnect_user_portal.DAL.Mappings
     {
         public SearchResultEntryMap()
         {
-            Map(p => p.SiteODSCode).ToColumn("SiteODS");
-            Map(p => p.SiteName).ToColumn("SiteName");
-            Map(p => p.CCGODSCode).ToColumn("CCGODS");
-            Map(p => p.CCGName).ToColumn("CCGName");
-            Map(p => p.Interactions).ToColumn("Interactions");
+            Map(p => p.SiteDefinitionId).ToColumn("site_definition_id");
+            Map(p => p.SiteODSCode).ToColumn("site_ods_code");
+            Map(p => p.SiteUniqueIdentifier).ToColumn("site_unique_identifier");
+            Map(p => p.SiteDefinitionStatusId).ToColumn("site_definition_status_id");
+            Map(p => p.SiteInteractions).ToColumn("site_interactions");
+            Map(p => p.SiteAttributes).ToColumn("site_attributes");
         }
     }
 }

@@ -11,6 +11,7 @@
         public const string CONTACTTELEPHONE = "Contact Telephone";
         public const string ODSCODE = "ODS Code";
         public const string NOODSISSUED = "No ODS issued";
+        public const string DATASHARINGAGREEMENTAGREED = "Do you agree to the Data Sharing Agreement?";
         public const string SITENAME = "Site Name";
         public const string SITEPOSTCODE = "Site Postcode";
         public const string CCGICBODSCODE = "CCG/ICB " + ODSCODE;

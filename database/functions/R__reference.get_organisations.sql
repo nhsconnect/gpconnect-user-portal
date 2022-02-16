@@ -34,6 +34,9 @@ begin
 		o.organisation_link, 
 		o.added_date, 
 		o.last_sync_date
-	from reference.organisation o;	
+	from
+		reference.organisation o
+	order by 
+		o.organisation_name;
 end;
 $$ language plpgsql;

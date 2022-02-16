@@ -19,7 +19,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "gpconnect-user-portal.Funct
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "gpconnect-user-portal.Admin", "gpconnect-user-portal.Admin\gpconnect-user-portal.Admin.csproj", "{EBF51BEE-C3E9-48F0-87E1-5EC9EEA00786}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "gpconnect-user-portal.Download", "gpconnect-user-portal.Download\gpconnect-user-portal.Download.csproj", "{83C24E5D-FE59-4788-A135-DBBB6B4ED36A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "gpconnect-user-portal.Download", "gpconnect-user-portal.Download\gpconnect-user-portal.Download.csproj", "{83C24E5D-FE59-4788-A135-DBBB6B4ED36A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -4,5 +4,7 @@
     {
         public string ProductName { get; set; }
         public string ProductVersion { get; set; }
+        public string AdminProductName { get; set; }
+        public string GetAccessEmailAddress { get; set; }        
     }
 }

@@ -8,16 +8,19 @@ namespace gpconnect_user_portal.Download
     public partial class GetSitesData
     {
         private readonly IReferenceService _referenceService;
+        private readonly IApplicationService _applicationService;
 
-        public GetSitesData(IReferenceService referenceService)
+        public GetSitesData(IReferenceService referenceService, IApplicationService applicationService)
         {
             _referenceService = referenceService;
+            _applicationService = applicationService;
         }
 
         [FunctionName("GetSites")]
         public async Task GetSites([TimerTrigger("0 0 5 * * *", RunOnStartup = true)] TimerInfo myTimer, ILogger log)
         {
-            var sites = await _referenceService.GetSites();
+            var siteDefinitions = await _referenceService.GetSiteDefinitions();
+            await _applicationService.AddSiteDefinitionsFromFeed(siteDefinitions);
         }
     }
 }

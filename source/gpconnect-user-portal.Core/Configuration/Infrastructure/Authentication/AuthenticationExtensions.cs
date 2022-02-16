@@ -15,7 +15,7 @@ namespace gpconnect_user_portal.Core.Configuration.Infrastructure.Authentication
 
         public AuthenticationExtensions(IConfiguration config)
         {
-            _ssoConfig = config.GetSection("SingleSignOn").Get<Sso>();
+            _ssoConfig = config.GetSection("Sso").Get<Sso>();
         }
 
         public void ConfigureAuthenticationServices(IServiceCollection services)
@@ -31,7 +31,7 @@ namespace gpconnect_user_portal.Core.Configuration.Infrastructure.Authentication
                 options.LoginPath = "/Public/Index";
                 options.SlidingExpiration = true;
                 options.Events.OnValidatePrincipal = PrincipalValidator.ValidateAsync;
-                options.Cookie.Name = ".GpConnectUserPortal.AuthenticationCookie";
+                options.Cookie.Name = ".GpConnectEnablementTeamPortal.AuthenticationCookie";
                 options.Cookie.SameSite = SameSiteMode.None;
                 options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
             })

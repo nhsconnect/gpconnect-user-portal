@@ -52,6 +52,9 @@ namespace gpconnect_user_portal.Core.Configuration.Infrastructure
 
             app.UseResponseCompression();
 
+            app.UseAuthentication();
+            app.UseAuthorization();
+
             app.UseMiddleware<RequestLoggingMiddleware>();
 
             app.UseEndpoints(endpoints =>

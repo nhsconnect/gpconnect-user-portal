@@ -1,10 +1,95 @@
 ﻿@page
+@using gpconnect_user_portal.Helpers
 @model IndexModel
+
 @{
-    ViewData["Title"] = "Home page";
+    var userAuthenticated = User.Identity.IsAuthenticated;
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-full">
+        @if (!userAuthenticated)
+        {
+            <div class="nhsuk-warning-callout">
+                <h3 class="nhsuk-warning-callout__label">Access to @Model.ApplicationName</h3>
+                <p>This application is restricted to registered users of the NHS with specific access to @Model.ApplicationName. Please sign in to use it.</p>
+                <a class="nhsuk-button" href="/Auth/Login">Sign in</a>
+                <p>@Html.Raw($"To obtain access, please email {Model.GetAccessEmailAddressLink}")</p>
+            </div>
+        }
+        else
+        {
+            <div class="nhsuk-grid-column-full nhsuk-card-group__item">
+                <div class="nhsuk-card nhsuk-card--clickable">
+                    <div class="nhsuk-card__content">
+                        <h2 class="nhsuk-card__heading nhsuk-heading-m">
+                            Endpoint Changes By Status
+                        </h2>
+                        @if (Model.EndpointChangeCountByStatus.Count > 0)
+                        {
+                            <dl class="nhsuk-summary-list">
+                                @foreach(var endpointStatus in Model.EndpointChangeCountByStatus)
+                                {
+                                    <div class="nhsuk-summary-list__row">
+                                        <dt class="nhsuk-summary-list__key">@endpointStatus.SiteDefinitionStatusName</dt>
+                                        <dd class="nhsuk-summary-list__value">@endpointStatus.SiteDefinitionStatusCount</dd>
+                                    </div>
+                                }
+                            </dl>
+                            <div class="nhsuk-action-link">
+                                <a class="nhsuk-action-link__link" href="/Outstanding">
+                                <svg class="nhsuk-icon nhsuk-icon__arrow-right-circle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" width="36" height="36">
+                                    <path d="M0 0h24v24H0z" fill="none"></path>
+                                    <path d="M12 2a10 10 0 0 0-9.95 9h11.64L9.74 7.05a1 1 0 0 1 1.41-1.41l5.66 5.65a1 1 0 0 1 0 1.42l-5.66 5.65a1 1 0 0 1-1.41 0 1 1 0 0 1 0-1.41L13.69 13H2.05A10 10 0 1 0 12 2z"></path>
+                                </svg>
+                                <span class="nhsuk-action-link__text">Manage Outstanding Endpoint Changes</span>
+                                </a>
+                            </div>
+                            <div class="nhsuk-action-link">
+                                <a class="nhsuk-action-link__link" href="/Completed">
+                                    <svg class="nhsuk-icon nhsuk-icon__arrow-right-circle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" width="36" height="36">
+                                        <path d="M0 0h24v24H0z" fill="none"></path>
+                                        <path d="M12 2a10 10 0 0 0-9.95 9h11.64L9.74 7.05a1 1 0 0 1 1.41-1.41l5.66 5.65a1 1 0 0 1 0 1.42l-5.66 5.65a1 1 0 0 1-1.41 0 1 1 0 0 1 0-1.41L13.69 13H2.05A10 10 0 1 0 12 2z"></path>
+                                    </svg>
+                                    <span class="nhsuk-action-link__text">Manage Completed Endpoint Changes</span>
+                                </a>
+                            </div>
+                        }
+                        else
+                        {
+                            <p class="nhsuk-card__description">There are no endpoint changes.</p>
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="nhsuk-grid-column-full nhsuk-card-group__item">
+                <div class="nhsuk-card nhsuk-card--clickable">
+                    <div class="nhsuk-card__content">
+                        <h2 class="nhsuk-card__heading nhsuk-heading-m">
+                            Lookups By Type
+                        </h2>
+                        @if (Model.LookupDataCountByType.Count > 0)
+                        {
+                            <dl class="nhsuk-summary-list">
+                                @foreach(var lookupType in Model.LookupDataCountByType)
+                                {
+                                    <div class="nhsuk-summary-list__row">
+                                        <dt class="nhsuk-summary-list__key">@lookupType.LookupTypeDescription</dt>
+                                        <dd class="nhsuk-summary-list__value">@lookupType.LookupTypeCount</dd>
+                                        <dd class="nhsuk-summary-list__actions">
+                                            <a href="/Lookup/@lookupType.LookupTypeName">Manage</a>
+                                        </dd>
+                                    </div>
+                                }
+                            </dl>
+                        }
+                        else
+                        {
+                            <p class="nhsuk-card__description">There are no endpoint changes.</p>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
 </div>

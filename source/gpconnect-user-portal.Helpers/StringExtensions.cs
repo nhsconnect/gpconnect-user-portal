@@ -22,7 +22,14 @@ namespace gpconnect_user_portal.Helpers
             {
                 null or "" => string.Empty,
                 _ => replacementValues.Aggregate(input, (current, value) => current.Replace(value.Key, value.Value))
-            };        
+            };
+
+        public static string ConvertToDelimitedList(this string input, string[] separators, string delimited) =>
+            input switch
+            {
+                null or "" => string.Empty,
+                _ => separators.Select(x => x.Replace(input, delimited)).ToString()
+            };
 
         public static string FlattenStrings(params string[] strings)
         {

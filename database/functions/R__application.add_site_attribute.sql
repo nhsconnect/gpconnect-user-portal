@@ -57,8 +57,8 @@ begin
 			site_attribute_value = _site_attribute_value,
 			last_updated = now()
 		where
-			site_definition_id = _site_definition_id
-			and site_attribute_name = _site_attribute_name;
+			application.site_attribute.site_definition_id = _site_definition_id
+			and application.site_attribute.site_attribute_name = _site_attribute_name;
 	end if;
 	
 	return query

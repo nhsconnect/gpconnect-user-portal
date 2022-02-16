@@ -1,7 +1,10 @@
-﻿namespace gpconnect_user_portal.DTO.Response.Fhir
+﻿using System;
+
+namespace gpconnect_user_portal.DTO.Response.Fhir
 {
     public class Site
     {
+        public Guid SiteUniqueIdentifier { get; set; }
         public string OdsCode { get; set; }
         public string SpineASID { get; set; }
         public string PartyKey { get; set; }

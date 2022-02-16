@@ -8,10 +8,11 @@ namespace gpconnect_user_portal.DAL.Mapping
     {
         public ReferenceOrganisationMap()
         {
+            Map(p => p.OrganisationId).ToColumn("organisation_id");
             Map(p => p.AddedDate).ToColumn("added_date");
             Map(p => p.LastChangeDate).ToColumn("last_change_date");
             Map(p => p.LastSyncDate).ToColumn("last_sync_date");
-            Map(p => p.OrgId).ToColumn("ods_code");
+            Map(p => p.OdsCode).ToColumn("ods_code");
             Map(p => p.OrgRecordClass).ToColumn("org_record_class");
             Map(p => p.Status).ToColumn("org_status");
             Map(p => p.OrgLink).ToColumn("organisation_link");

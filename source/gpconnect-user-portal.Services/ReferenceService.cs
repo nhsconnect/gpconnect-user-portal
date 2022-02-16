@@ -1,6 +1,7 @@
 ﻿using Dapper;
 using gpconnect_user_portal.DAL.Enumerations;
 using gpconnect_user_portal.DAL.Interfaces;
+using gpconnect_user_portal.DTO.Request;
 using gpconnect_user_portal.DTO.Response.Fhir;
 using gpconnect_user_portal.DTO.Response.Reference;
 using gpconnect_user_portal.Helpers;
@@ -36,6 +37,13 @@ namespace gpconnect_user_portal.Services
             return result;
         }
 
+        public async Task<List<LookupDataCountByType>> GetLookupDataCountByType()
+        {
+            var query = "reference.get_lookup_data_count_by_type";
+            var result = await _dataService.ExecuteQuery<LookupDataCountByType>(query);
+            return result;
+        }
+
         public async Task<DTO.Response.Reference.Organisation> GetOrganisation(string odsCode)
         {
             var query = "reference.get_organisation";
@@ -45,29 +53,7 @@ namespace gpconnect_user_portal.Services
             return result;
         }
 
-        public async Task<List<SupplierProduct>> GetSuppliersProducts()
-        {
-            var query = "reference.get_suppliers_products";
-            var result = await _dataService.ExecuteQuery<SupplierProduct>(query);
-            return result;
-        }
-
-        public async Task<EnabledSupplierProduct> GetSupplierProducts(int supplierId)
-        {
-            var query = "reference.get_supplier_products";
-            var parameters = new DynamicParameters();
-            parameters.Add("_supplier_id", supplierId, DbType.Int16, ParameterDirection.Input);
-            var supplierProducts = await _dataService.ExecuteQuery<SupplierProduct>(query, parameters);
-            var enabledSupplierProducts = new EnabledSupplierProduct()
-            {
-                SupplierProduct = supplierProducts
-            };
-            return enabledSupplierProducts;
-        }
-
-
-
-        public async Task<List<Site>> GetSites()
+        public async Task<List<SiteDefinition>> GetSiteDefinitions()
         {
             try
             {
@@ -80,14 +66,11 @@ namespace gpconnect_user_portal.Services
                     var tokenSource = new CancellationTokenSource();
                     var token = tokenSource.Token;
                     var response = await _fhirRequestExecution.ExecuteFhirQuery<OrganisationsWithInteractions>(organisationsWithInteractions.QueryText, token, spineConfiguration.SpineFhirApiSystemsRegisterFqdn, spineConfiguration.SpineFhirApiKey);
-                    var sites = response.Site;
+                    var tasks = new ConcurrentBag<Task<SiteDefinition>>();
 
-                    var tasks = new ConcurrentBag<Task<Site>>();
-
-                    Parallel.ForEach(response.Site, site =>
+                    Parallel.ForEach(response.SiteDefinitions, siteDefinition =>
                     {
-                        tasks.Add(UpdateSiteWithOrganisationDetails(spineConfiguration, token, organisationsDetails, site));
-                        //tasks.Add(UpdateSiteWithSupplierDetails(spineConfiguration, token, organisationsDetails.QueryText.SearchAndReplace(new Dictionary<string, string> { { "{odsCode}", Regex.Escape(site.SupplierOdsCode) } }), site));
+                        tasks.Add(UpdateSiteWithOrganisationDetails(spineConfiguration, token, organisationsDetails, siteDefinition));
                     });
                     var results = await Task.WhenAll(tasks);
                     return results.ToList();
@@ -100,29 +83,24 @@ namespace gpconnect_user_portal.Services
             return null;
         }
 
-        private async Task<Site> UpdateSiteWithSupplierDetails(DTO.Response.Configuration.Spine spineConfiguration, CancellationToken cancellationToken, string query, Site site)
+        private async Task<SiteDefinition> UpdateSiteWithOrganisationDetails(DTO.Response.Configuration.Spine spineConfiguration, CancellationToken cancellationToken, DTO.Response.Configuration.FhirApiQuery fhirApiQuery, SiteDefinition siteDefinition)
         {
-            var supplierDetail = await _fhirRequestExecution.ExecuteFhirQuery<OrganisationDetail>(query, cancellationToken, spineConfiguration.SpineFhirApiDirectoryServicesFqdn, spineConfiguration.SpineFhirApiKey);
-            site.SupplierName = supplierDetail?.Organisation?.Name;
-            return site;
-        }
+            var organisationQuery = fhirApiQuery.QueryText.SearchAndReplace(new Dictionary<string, string> { { "{odsCode}", Regex.Escape(siteDefinition.SiteOdsCode) } });
+            var supplierQuery = fhirApiQuery.QueryText.SearchAndReplace(new Dictionary<string, string> { { "{odsCode}", Regex.Escape(siteDefinition.SupplierOdsCode) } });
+            var organisationDetail = await _fhirRequestExecution.ExecuteFhirQuery<OrganisationDetail>(organisationQuery, cancellationToken, spineConfiguration.SpineFhirApiDirectoryServicesFqdn, spineConfiguration.SpineFhirApiKey);
+            var supplierDetail = await _fhirRequestExecution.ExecuteFhirQuery<OrganisationDetail>(supplierQuery, cancellationToken, spineConfiguration.SpineFhirApiDirectoryServicesFqdn, spineConfiguration.SpineFhirApiKey);
 
-        private async Task<Site> UpdateSiteWithOrganisationDetails(DTO.Response.Configuration.Spine spineConfiguration, CancellationToken cancellationToken, DTO.Response.Configuration.FhirApiQuery fhirApiQuery, Site site)
-        {
-            var query = fhirApiQuery.QueryText;
-            var organisationDetail = await _fhirRequestExecution.ExecuteFhirQuery<OrganisationDetail>(query, cancellationToken, spineConfiguration.SpineFhirApiDirectoryServicesFqdn, spineConfiguration.SpineFhirApiKey);
-            site.SiteName = organisationDetail?.SiteName;
-            site.PostCode = organisationDetail?.PostCode;
-            site.TelephoneNumber = organisationDetail?.TelephoneNumber;
-            site.CCGOdsCode = organisationDetail?.CCGOdsCode;
-            site.CCGOdsName = (await GetOrganisation(organisationDetail?.CCGOdsCode))?.Name;
-
-            query = "";
-
-            var supplierDetail = await _fhirRequestExecution.ExecuteFhirQuery<OrganisationDetail>(query, cancellationToken, spineConfiguration.SpineFhirApiDirectoryServicesFqdn, spineConfiguration.SpineFhirApiKey);
-            site.SupplierName = supplierDetail?.Organisation?.Name;
-
-            return site;
+            siteDefinition.SiteAttribute = new List<SiteAttribute>
+            {
+                new SiteAttribute() { SiteAttributeName = "SiteName", SiteAttributeValue = organisationDetail?.SiteName },
+                new SiteAttribute() { SiteAttributeName = "ContactTelephone", SiteAttributeValue = organisationDetail?.TelephoneNumber },
+                new SiteAttribute() { SiteAttributeName = "SitePostcode", SiteAttributeValue = organisationDetail?.PostCode },
+                new SiteAttribute() { SiteAttributeName = "SelectedCCGOdsCode", SiteAttributeValue = organisationDetail?.CCGOdsCode },
+                new SiteAttribute() { SiteAttributeName = "SelectedCCGName", SiteAttributeValue = (await GetOrganisation(organisationDetail?.CCGOdsCode))?.Name },
+                new SiteAttribute() { SiteAttributeName = "FormOdsCode", SiteAttributeValue = siteDefinition.SiteOdsCode },
+                new SiteAttribute() { SiteAttributeName = "SelectedSupplier", SiteAttributeValue = supplierDetail?.Organisation?.Name }
+            };
+            return siteDefinition;
         }
 
         public async Task<Task> GetCCGs()
@@ -154,7 +132,7 @@ namespace gpconnect_user_portal.Services
             var parameters = new DynamicParameters();
             foreach (var organisation in organisations)
             {
-                parameters.Add("_ods_code", organisation.OrgId, DbType.String, ParameterDirection.Input);
+                parameters.Add("_ods_code", organisation.OdsCode, DbType.String, ParameterDirection.Input);
                 parameters.Add("_organisation_name", organisation.Name, DbType.String, ParameterDirection.Input);
                 parameters.Add("_org_status", organisation.Status, DbType.String, ParameterDirection.Input);
                 parameters.Add("_org_record_class", organisation.OrgRecordClass, DbType.String, ParameterDirection.Input);
@@ -209,6 +187,26 @@ namespace gpconnect_user_portal.Services
                 parameters.Add("_disable_date", disableDate, DbType.DateTime, ParameterDirection.Input);
             }
             await _dataService.ExecuteQuery(query, parameters);
+        }
+
+        public async Task<List<Lookup>> GetProductListWithSupplier()
+        {
+            var query = "reference.get_product_list_with_supplier";
+            var result = await _dataService.ExecuteQuery<Lookup>(query);
+            return result;
+        }
+
+        public async Task<EnabledSupplierProductCapability> GetSupplierProductCapabilities(int supplierProductId)
+        {
+            var query = "reference.get_supplier_product_capabilities";
+            var parameters = new DynamicParameters();
+            parameters.Add("_supplier_product_id", supplierProductId, DbType.Int16, ParameterDirection.Input);
+            var supplierProductCapabilities = await _dataService.ExecuteQuery<SupplierProductCapability>(query, parameters);
+            var enabledSupplierProductCapability = new EnabledSupplierProductCapability()
+            {
+                SupplierProductCapability = supplierProductCapabilities
+            };
+            return enabledSupplierProductCapability;
         }
     }
 }

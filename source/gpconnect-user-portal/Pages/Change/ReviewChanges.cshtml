@@ -8,86 +8,107 @@
         <div class="nhsuk-card nhsuk-card--feature">
             <div class="nhsuk-card__content nhsuk-card__content--feature">
                 <h2 class="nhsuk-card__heading nhsuk-card__heading--feature nhsuk-heading-m">@Model.GetAttributeValue("SiteName")</h2>
-                <div class="nhsuk-grid-row">
-                    <div class="nhsuk-grid-column-full">
-                        <dl class="nhsuk-summary-list">
-                            <div class="nhsuk-summary-list__row">
-                            <dt class="nhsuk-summary-list__key">@Html.DisplayNameFor(model => model.SitePostcode)</dt>
-                            <dd class="nhsuk-summary-list__value">@Model.GetAttributeValue("SitePostcode")</dd>
-                    </div>
+                <dl class="nhsuk-summary-list">
                     <div class="nhsuk-summary-list__row">
-                        <dt class="nhsuk-summary-list__key">@Html.DisplayNameFor(model => model.Submitter)</dt>
-                        <dd class="nhsuk-summary-list__value">@Model.GetAttributeValue("Submitter")</dd>
-                    </div>
-                    <div class="nhsuk-summary-list__row">
-                        <dt class="nhsuk-summary-list__key">@Html.DisplayNameFor(model => model.ContactEmailAddress)</dt>
-                        <dd class="nhsuk-summary-list__value"><a href='mailto:@Model.GetAttributeValue("ContactEmailAddress")'>@Model.GetAttributeValue("ContactEmailAddress")</a></dd>
-                    </div>
-                    <div class="nhsuk-summary-list__row">
-                        <dt class="nhsuk-summary-list__key">@Html.DisplayNameFor(model => model.ContactTelephone)</dt>
-                        <dd class="nhsuk-summary-list__value"><a href='tel:@Model.GetAttributeValue("ContactTelephone")'>@Model.GetAttributeValue("ContactTelephone")</a></dd>
-                    </div>
-                    <div class="nhsuk-summary-list__row">
-                        <dt class="nhsuk-summary-list__key">@Html.DisplayNameFor(model => model.NoOdsIssued)</dt>
-                        <dd class="nhsuk-summary-list__value">@Model.GetAttributeValue("NoOdsIssued").StringToBooleanHtml()</dd>
-                    </div>
-                    <div class="nhsuk-summary-list__row">
-                        <dt class="nhsuk-summary-list__key">@Html.DisplayNameFor(model => model.FormOdsCode)</dt>
-                        <dd class="nhsuk-summary-list__value">@Model.GetAttributeValue("FormOdsCode")</dd>
-                    </div>
-                    <div class="nhsuk-summary-list__row">
-                        <dt class="nhsuk-summary-list__key">@Html.DisplayNameFor(model => model.SelectedCCGOdsCode)</dt>
-                        <dd class="nhsuk-summary-list__value">@Model.GetAttributeValue("SelectedCCGOdsCode")</dd>
-                    </div>
-                    <div class="nhsuk-summary-list__row">
-                        <dt class="nhsuk-summary-list__key">@Html.DisplayNameFor(model => model.SelectedCCGName)</dt>
-                        <dd class="nhsuk-summary-list__value">@Model.GetAttributeValue("SelectedCCGName")</dd>
-                    </div>
-                    <div class="nhsuk-summary-list__row">
-                        <dt class="nhsuk-summary-list__key">@Html.DisplayNameFor(model => model.SelectedSupplier)</dt>
-                        <dd class="nhsuk-summary-list__value">@Model.GetAttributeValue("SelectedSupplier", true)</dd>
-                    </div>
-                    <div class="nhsuk-summary-list__row">
-                        <dt class="nhsuk-summary-list__key">@Html.DisplayNameFor(model => model.SelectedCareSetting)</dt>
-                        <dd class="nhsuk-summary-list__value">@Model.GetAttributeValue("SelectedCareSetting", true)</dd>
-                    </div>
-                    @if (Model.IsHtmlEnabled)
-                            {
-                        <div class="nhsuk-summary-list__row">
-                            <dt class="nhsuk-summary-list__key">@Html.DisplayNameFor(model => model.RecordAccessHtmlView)</dt>
-                            <dd class="nhsuk-summary-list__value">@Html.Raw(Model.GetEnumValue<RecordAccessLevel>("RecordAccessHtmlView"))</dd>
-                        </div>
-                            }
-                            @if (Model.IsStructuredEnabled)
-                            {
-                        <div class="nhsuk-summary-list__row">
-                            <dt class="nhsuk-summary-list__key">@Html.DisplayNameFor(model => model.RecordAccessStructured)</dt>
-                            <dd class="nhsuk-summary-list__value">@Html.Raw(Model.GetEnumValue<RecordAccessLevel>("RecordAccessStructured"))</dd>
-                        </div>
-                            }
-                            @if (Model.IsAppointmentEnabled)
-                            {
-                        <div class="nhsuk-summary-list__row">
-                            <dt class="nhsuk-summary-list__key">@Html.DisplayNameFor(model => model.Appointment)</dt>
-                            <dd class="nhsuk-summary-list__value">@Html.Raw(Model.GetEnumValue<RecordAccessLevel>("Appointment"))</dd>
-                        </div>
-                            }
-                    <div class="nhsuk-summary-list__row">
-                        <dt class="nhsuk-summary-list__key">@Html.DisplayNameFor(model => model.UseCaseDescription)</dt>
-                        <dd class="nhsuk-summary-list__value">@Model.GetAttributeValue("UseCaseDescription")</dd>
-                    </div>
-                    </dl>
-                </div>
+                    <dt class="nhsuk-summary-list__key">@Model.GetAttributeName("SitePostcode")</dt>
+                    <dd class="nhsuk-summary-list__value">@Model.GetAttributeValue("SitePostcode")</dd>
             </div>
-            @if (Model.CanUpdateOrSubmit)
-            {
-                <button class="nhsuk-button nhsuk-button--secondary" asp-page-handler="UpdateChanges" type="submit">@ButtonConstants.UPDATE</button>
-            }
+            @if (Model.GetAttributeValue("NoOdsIssued").StringToBoolean())
+                    {
+                <div class="nhsuk-summary-list__row">
+                    <dt class="nhsuk-summary-list__key">@Model.GetAttributeName("NoOdsIssued")</dt>
+                    <dd class="nhsuk-summary-list__value">@Model.GetAttributeValue("NoOdsIssued").StringToBooleanHtml()</dd>
+                </div>
+                    }
+                    else
+                    {
+                <div class="nhsuk-summary-list__row">
+                    <dt class="nhsuk-summary-list__key">@Model.GetAttributeName("OdsCode")</dt>
+                    <dd class="nhsuk-summary-list__value">@Model.GetAttributeValue("OdsCode")</dd>
+                </div>
+                    }
+            <div class="nhsuk-summary-list__row">
+                <dt class="nhsuk-summary-list__key">@Model.GetAttributeName("SelectedCCGOdsCode")</dt>
+                <dd class="nhsuk-summary-list__value">@Model.GetAttributeValue("SelectedCCGOdsCode", true)</dd>
+            </div>
+            <div class="nhsuk-summary-list__row">
+                <dt class="nhsuk-summary-list__key">@Model.GetAttributeName("SelectedCCGName")</dt>
+                <dd class="nhsuk-summary-list__value">@Model.GetAttributeValue("SelectedCCGName", true)</dd>
+            </div>
+            <div class="nhsuk-summary-list__row">
+                <dt class="nhsuk-summary-list__key">@Model.GetAttributeName("SelectedSupplier")</dt>
+                <dd class="nhsuk-summary-list__value">@Model.GetAttributeValue("SelectedSupplier", true)</dd>
+            </div>
+            <div class="nhsuk-summary-list__row">
+                <dt class="nhsuk-summary-list__key">@Model.GetAttributeName("SelectedCareSetting")</dt>
+                <dd class="nhsuk-summary-list__value">@Model.GetAttributeValue("SelectedCareSetting", true)</dd>
+            </div>
+                    @if (Model.GetAttributeValue("IsHtmlEnabled").StringToBoolean())
+                    {
+                <div class="nhsuk-summary-list__row">
+                    <dt class="nhsuk-summary-list__key">@Model.GetAttributeName("RecordAccessHtmlView")</dt>
+                    <dd class="nhsuk-summary-list__value">@Model.GetAttributeValue("RecordAccessHtmlView")</dd>
+                </div>
+                    }
+                    @if (Model.GetAttributeValue("IsStructuredEnabled").StringToBoolean())
+                    {
+                <div class="nhsuk-summary-list__row">
+                    <dt class="nhsuk-summary-list__key">@Model.GetAttributeName("RecordAccessStructured")</dt>
+                    <dd class="nhsuk-summary-list__value">@Model.GetAttributeValue("RecordAccessStructured")</dd>
+                </div>
+                    }
+                    @if (Model.GetAttributeValue("IsAppointmentEnabled").StringToBoolean())
+                    {
+                <div class="nhsuk-summary-list__row">
+                    <dt class="nhsuk-summary-list__key">@Model.GetAttributeName("Appointment")</dt>
+                    <dd class="nhsuk-summary-list__value">@Model.GetAttributeValue("Appointment")</dd>
+                </div>
+                    }
+            <div class="nhsuk-summary-list__row">
+                <dt class="nhsuk-summary-list__key">@Model.GetAttributeName("UseCaseDescription")</dt>
+                <dd class="nhsuk-summary-list__value">@Model.GetAttributeValue("UseCaseDescription")</dd>
+            </div>
+            </dl>
         </div>
     </div>
-    @if (Model.CanUpdateOrSubmit)
-    {
-        <button class="nhsuk-button" asp-page-handler="SubmitChanges" type="submit">@ButtonConstants.SUBMIT</button>
-    }
 </div>
+
+<div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-full">
+        <div class="nhsuk-card nhsuk-card--feature">
+            <div class="nhsuk-card__content nhsuk-card__content--feature">
+                <h2 class="nhsuk-card__heading nhsuk-card__heading--feature nhsuk-heading-m">Submitter Details</h2>
+                <dl class="nhsuk-summary-list">
+                    <div class="nhsuk-summary-list__row">
+                    <dt class="nhsuk-summary-list__key">@Model.GetAttributeName("SubmitterContactName")</dt>
+                    <dd class="nhsuk-summary-list__value">@Model.GetAttributeValue("SubmitterContactName")</dd>
+            </div>
+            <div class="nhsuk-summary-list__row">
+                <dt class="nhsuk-summary-list__key">@Model.GetAttributeName("SubmitterContactEmailAddress")</dt>
+                <dd class="nhsuk-summary-list__value"><a href='mailto:@Model.GetAttributeValue("SubmitterContactEmailAddress")'>@Model.GetAttributeValue("SubmitterContactEmailAddress")</a></dd>
+            </div>
+            <div class="nhsuk-summary-list__row">
+                <dt class="nhsuk-summary-list__key">@Model.GetAttributeName("SubmitterContactTelephone")</dt>
+                <dd class="nhsuk-summary-list__value"><a href='tel:@Model.GetAttributeValue("SubmitterContactTelephone")'>@Model.GetAttributeValue("SubmitterContactTelephone")</a></dd>
+            </div>
+            </dl>
+        </div>
+    </div>
+</div>
+</div>
+
+<div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-full">
+            @if (Model.CanUpdateOrSubmit)
+            {
+            <button class="nhsuk-button nhsuk-button--secondary" asp-page-handler="UpdateChanges" type="submit">@ButtonConstants.UPDATE</button>
+            }
+
+            @if (Model.CanUpdateOrSubmit)
+            {
+            <button class="nhsuk-button" asp-page-handler="SubmitChanges" type="submit">@ButtonConstants.SUBMIT</button>
+            }
+    </div>
+</div>
+
 <input type="hidden" asp-for="@Model.SiteIdentifier" value="@Model.SiteIdentifier" />

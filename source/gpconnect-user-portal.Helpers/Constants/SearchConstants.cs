@@ -19,5 +19,9 @@ namespace gpconnect_user_portal.Helpers.Constants
         public const string StructuredQueryFilterInteraction = "structured:fhir:rest:read:metadata-1";
         public const string AppointmentQueryFilterInteraction = "appointments-1";
 
+        public const string SiteNameAttributeName = "SiteName";
+        public const string CCGOdsCodeAttributeName = "SelectedCCGOdsCode";
+        public const string CCGNameAttributeName = "SelectedCCGName";
+
     }
 }

@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using gpconnect_user_portal.DTO.Request;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -9,27 +10,28 @@ namespace gpconnect_user_portal.DTO.Response.Fhir
         [JsonProperty("entry")]
         public List<Entry> Entry { get; set; }
 
-        public List<Site> Site => GetListOfSites();
+        public List<SiteDefinition> SiteDefinitions => GenerateSiteDefinitions();
 
-        private List<Site> GetListOfSites()
+        private List<SiteDefinition> GenerateSiteDefinitions()
         {
-            var siteList = new List<Site>();
+            var siteDefinitions = new List<SiteDefinition>();
 
-            foreach (var site in Entry)
+            foreach (var siteDefinition in Entry)
             {
-                siteList.Add(new Site
+                siteDefinitions.Add(new SiteDefinition
                 {
-                    OdsCode = site.Resource.Owner.Identifier.Value,
-                    SpineASID = site.Resource.Identifier.FirstOrDefault(x => x.System.Contains("nhsSpineASID")).Value,
-                    PartyKey = site.Resource.Identifier.FirstOrDefault(x => x.System.Contains("nhsMhsPartyKey")).Value,
-                    SupplierOdsCode = site.Resource.Extension.FirstOrDefault(x => x.Url.Contains("ManufacturingOrganisation")).ValueReference.Identifier.Value,
-                    ServiceInteractions = GetServiceInteractionsForSite(site.Resource.Extension)
+                    SiteOdsCode = siteDefinition?.Resource?.Owner?.Identifier?.Value,
+                    SiteAsid = siteDefinition?.Resource?.Identifier?.FirstOrDefault(x => x.System.Contains("nhsSpineASID"))?.Value,
+                    SitePartyKey = siteDefinition?.Resource?.Identifier?.FirstOrDefault(x => x.System.Contains("nhsMhsPartyKey"))?.Value,
+                    SupplierOdsCode = siteDefinition?.Resource?.Extension?.FirstOrDefault(x => x.Url.Contains("ManufacturingOrganisation"))?.ValueReference?.Identifier?.Value,
+                    SiteInteractions = GetInteractions(siteDefinition?.Resource?.Extension),
+                    SiteUniqueIdentifier = System.Guid.NewGuid()
                 });
             }
-            return siteList;
+            return siteDefinitions;
         }
 
-        private string GetServiceInteractionsForSite(List<Extension> extension)
+        private string GetInteractions(List<Extension> extension)
         {
             var serviceInteractions = new List<string>();
 

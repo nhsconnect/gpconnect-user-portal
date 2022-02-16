@@ -1,4 +1,4 @@
-﻿using gpconnect_user_portal.DTO.Response;
+﻿using gpconnect_user_portal.DTO.Response.Application.Search;
 using gpconnect_user_portal.Helpers.Constants;
 using gpconnect_user_portal.Models;
 using gpconnect_user_portal.Services.Interfaces;

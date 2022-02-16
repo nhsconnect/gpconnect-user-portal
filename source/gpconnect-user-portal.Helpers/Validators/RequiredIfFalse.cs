@@ -8,10 +8,11 @@ namespace gpconnect_user_portal.Helpers.Validators
     {
         private string PropertyName { get; set; }
 
-        public RequiredIfFalseAttribute(string propertyName, string errorMessage = "")
+        public RequiredIfFalseAttribute(string propertyName, string errorMessageResourceName, Type errorMessageResourceType)
         {
             PropertyName = propertyName;
-            ErrorMessage = errorMessage;
+            ErrorMessageResourceName = errorMessageResourceName;
+            ErrorMessageResourceType = errorMessageResourceType;
         }
 
         protected override ValidationResult IsValid(object value, ValidationContext context)

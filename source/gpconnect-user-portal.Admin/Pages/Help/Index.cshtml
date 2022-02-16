@@ -1,0 +1,14 @@
+﻿@page
+@model HelpModel
+
+<div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-full">
+        <h1>@Model.ApplicationName Help</h1>
+        <partial name="Help/What" />
+        <partial name="Help/Using" />
+        <partial name="Help/NoResults" />
+        <partial name="Help/Troubleshooting" />
+        <partial name="Help/Further" />
+    </div>
+</div>
+

@@ -1,10 +1,11 @@
-﻿using gpconnect_user_portal.DTO.Response.Configuration;
+﻿using gpconnect_user_portal.Core.Configuration.Infrastructure.Authentication;
+using gpconnect_user_portal.DTO.Response.Configuration;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
 using System;
 using System.Net;
 
@@ -18,7 +19,7 @@ namespace gpconnect_user_portal.Core.Configuration.Infrastructure
             
             services.AddSession(s =>
             {
-                s.Cookie.Name = ".GpConnectEndUserPortal.Session";
+                s.Cookie.Name = ".GpConnectEnablementTeamPortal.Session";
                 s.IdleTimeout = new TimeSpan(0, 30, 0);
                 s.Cookie.HttpOnly = false;
                 s.Cookie.IsEssential = true;
@@ -41,7 +42,20 @@ namespace gpconnect_user_portal.Core.Configuration.Infrastructure
             services.AddHttpContextAccessor();
 
             services.AddHealthChecks();
-            services.AddRazorPages();
+            services.AddRazorPages(options =>
+            {
+                options.Conventions.AuthorizeFolder("/Private", "MustHaveAuthorisedUserStatus");
+                options.Conventions.AllowAnonymousToFolder("/Public");
+                options.Conventions.AddPageRoute("/Private/Outstanding", "/Outstanding");
+                options.Conventions.AddPageRoute("/Private/Completed", "/Completed");
+            });
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("MustHaveAuthorisedUserStatus", policy => policy.Requirements.Add(new AuthorisedUserRequirement()));
+            });
+
+            services.AddSingleton<IAuthorizationHandler, AuthorisedUserHandler>();
 
             services.AddAntiforgery(options =>
             {
@@ -53,7 +67,7 @@ namespace gpconnect_user_portal.Core.Configuration.Infrastructure
 
             services.Configure<General>(configuration.GetSection("General"));
             services.Configure<Reference>(configuration.GetSection("Reference"));
-            services.Configure<Sso>(configuration.GetSection("Sso"));
+            services.Configure<Sso>(configuration.GetSection("SingleSignOn"));
             services.Configure<DTO.Response.Configuration.Logging>(configuration.GetSection("Logging"));
             services.Configure<Email>(configuration.GetSection("Email"));
             

@@ -7,7 +7,7 @@
     <p>Declaration: By using continuing you agree you have legal authority to act on behalf of your organisation.</p>
     <h2>Search for your organisation</h2>
 
-    @if (Model.DisplaySearchInvalid && !Model.IsValidSearch)
+    @if (Model.DisplaySearchInvalid)
     {
         <partial name="SearchInvalid" />
     }
