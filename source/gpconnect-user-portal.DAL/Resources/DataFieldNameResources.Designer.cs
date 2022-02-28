@@ -63,9 +63,9 @@ namespace gpconnect_user_portal.DAL.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Appointment Management.
         /// </summary>
-        public static string Appointment {
+        public static string Appointments {
             get {
-                return ResourceManager.GetString("Appointment", resourceCulture);
+                return ResourceManager.GetString("Appointments", resourceCulture);
             }
         }
         
@@ -79,29 +79,11 @@ namespace gpconnect_user_portal.DAL.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Contact Email Address.
+        ///   Looks up a localized string similar to We agreed to be bound by the Data Sharing Agreement.
         /// </summary>
-        public static string ContactEmailAddress {
+        public static string DataSharingAgreementConfirmation {
             get {
-                return ResourceManager.GetString("ContactEmailAddress", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Name of Contact.
-        /// </summary>
-        public static string ContactName {
-            get {
-                return ResourceManager.GetString("ContactName", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Contact Telephone.
-        /// </summary>
-        public static string ContactTelephone {
-            get {
-                return ResourceManager.GetString("ContactTelephone", resourceCulture);
+                return ResourceManager.GetString("DataSharingAgreementConfirmation", resourceCulture);
             }
         }
         
@@ -129,6 +111,24 @@ namespace gpconnect_user_portal.DAL.Resources {
         public static string DataSharingAgreementContactTelephone {
             get {
                 return ResourceManager.GetString("DataSharingAgreementContactTelephone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Status.
+        /// </summary>
+        public static string EndpointChangeStatus {
+            get {
+                return ResourceManager.GetString("EndpointChangeStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Submitted.
+        /// </summary>
+        public static string EndpointChangeSubmitted {
+            get {
+                return ResourceManager.GetString("EndpointChangeSubmitted", resourceCulture);
             }
         }
         
@@ -187,7 +187,7 @@ namespace gpconnect_user_portal.DAL.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to CCG/ICB Name (if applicable).
+        ///   Looks up a localized string similar to CCG/ICB (if applicable).
         /// </summary>
         public static string SelectedCCGNameIfApplicable {
             get {
@@ -201,15 +201,6 @@ namespace gpconnect_user_portal.DAL.Resources {
         public static string SelectedCCGOdsCode {
             get {
                 return ResourceManager.GetString("SelectedCCGOdsCode", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to CCG/ICB ODS Code (if applicable).
-        /// </summary>
-        public static string SelectedCCGOdsCodeIfApplicable {
-            get {
-                return ResourceManager.GetString("SelectedCCGOdsCodeIfApplicable", resourceCulture);
             }
         }
         
@@ -232,11 +223,29 @@ namespace gpconnect_user_portal.DAL.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Site ASID.
+        /// </summary>
+        public static string SiteAsid {
+            get {
+                return ResourceManager.GetString("SiteAsid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Site Name.
         /// </summary>
         public static string SiteName {
             get {
                 return ResourceManager.GetString("SiteName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Site Party Key.
+        /// </summary>
+        public static string SitePartyKey {
+            get {
+                return ResourceManager.GetString("SitePartyKey", resourceCulture);
             }
         }
         
@@ -259,11 +268,56 @@ namespace gpconnect_user_portal.DAL.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Contact Email Address.
+        /// </summary>
+        public static string SubmitterContactEmailAddress {
+            get {
+                return ResourceManager.GetString("SubmitterContactEmailAddress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name of Contact.
+        /// </summary>
+        public static string SubmitterContactName {
+            get {
+                return ResourceManager.GetString("SubmitterContactName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Contact Telephone.
+        /// </summary>
+        public static string SubmitterContactTelephone {
+            get {
+                return ResourceManager.GetString("SubmitterContactTelephone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to * Enter the name of the individual who is submitting these details.
+        /// </summary>
+        public static string SubmitterHintText {
+            get {
+                return ResourceManager.GetString("SubmitterHintText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Use Case Description.
         /// </summary>
         public static string UseCaseDescription {
             get {
                 return ResourceManager.GetString("UseCaseDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to * Enter the use case description of the chosen product.
+        /// </summary>
+        public static string UseCaseDescriptionHintText {
+            get {
+                return ResourceManager.GetString("UseCaseDescriptionHintText", resourceCulture);
             }
         }
     }

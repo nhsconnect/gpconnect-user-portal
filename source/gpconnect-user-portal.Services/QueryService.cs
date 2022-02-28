@@ -13,12 +13,10 @@ namespace gpconnect_user_portal.Services
     public class QueryService : IQueryService
     {
         private readonly IDataService _dataService;
-        private readonly IReportingService _reportingService;
 
-        public QueryService(IDataService dataService, IReportingService reportingService)
+        public QueryService(IDataService dataService)
         {
             _dataService = dataService;
-            _reportingService = reportingService;
         }
 
         public async Task<DTO.Response.Application.Search.SearchResult> GetSites(SearchRequest searchRequest = null)
@@ -31,8 +29,7 @@ namespace gpconnect_user_portal.Services
             parameters.Add("_html_query_filter_interaction", SearchConstants.HtmlQueryFilterInteraction, DbType.String, ParameterDirection.Input);
             parameters.Add("_structured_query_filter_interaction", SearchConstants.StructuredQueryFilterInteraction, DbType.String, ParameterDirection.Input);
             parameters.Add("_appointment_query_filter_interaction", SearchConstants.AppointmentQueryFilterInteraction, DbType.String, ParameterDirection.Input);
-
-            
+            parameters.Add("_send_document_query_filter_interaction", SearchConstants.SendDocumentQueryFilterInteraction, DbType.String, ParameterDirection.Input);            
 
             if (searchRequest != null)
             {
@@ -88,13 +85,6 @@ namespace gpconnect_user_portal.Services
                 SearchResultEntries = searchResultEntries
             };
             return searchResult;
-        }
-
-        public async Task<DataTable> GetSitesForExport(SearchRequest searchRequest = null)
-        {
-            var sites = await GetSites(searchRequest);
-            var json = sites.SearchResultEntries.ConvertObjectToJsonData();
-            return json.ConvertJsonDataToDataTable();
         }
     }
 }

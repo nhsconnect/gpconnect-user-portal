@@ -1,4 +1,7 @@
-﻿using gpconnect_user_portal.Helpers.Constants;
+﻿using gpconnect_user_portal.DAL.Resources;
+using gpconnect_user_portal.Helpers;
+using gpconnect_user_portal.Helpers.Constants;
+using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 
@@ -6,16 +9,66 @@ namespace gpconnect_user_portal.Pages
 {
     public partial class ReviewModel : BaseSiteModel
     {
-        [Display(Name = DisplayConstants.USECASEDESCRIPTION)]
-        [BindProperty(SupportsGet = true)]
-        public string UseCaseDescription { get; set; }
-
         [Display(Name = DisplayConstants.USECASE)]
         [BindProperty(SupportsGet = true)]
-        public string UseCase { get; set; }        
+        public string UseCase { get; set; }
 
-        //public new bool IsHtmlEnabled => GetAttributeValue("RecordAccessHtmlView") != null;
-        //public new bool IsAppointmentEnabled => GetAttributeValue("Appointment") != null;
-        //public new bool IsStructuredEnabled => GetAttributeValue("RecordAccessStructured") != null;        
+        [Display(Name = "DataSharingAgreementContactName", ResourceType = typeof(DataFieldNameResources))]
+        public string DataSharingAgreementContactName => GetAttributeValue("DataSharingAgreementContactName");
+
+        [Display(Name = "DataSharingAgreementContactEmailAddress", ResourceType = typeof(DataFieldNameResources))]
+        public string DataSharingAgreementContactEmailAddress => GetAttributeValue("DataSharingAgreementContactEmailAddress");
+
+        [Display(Name = "DataSharingAgreementContactTelephone", ResourceType = typeof(DataFieldNameResources))]
+        public string DataSharingAgreementContactTelephone => GetAttributeValue("DataSharingAgreementContactTelephone");
+
+        [Display(Name = "DataSharingAgreementConfirmation", ResourceType = typeof(DataFieldNameResources))]
+        public HtmlString DataSharingAgreementConfirmation => GetAttributeValue("DataSharingAgreementConfirmation").StringToBooleanHtml();
+
+        [Display(Name = "SiteName", ResourceType = typeof(DataFieldNameResources))]
+        public string SiteName => GetAttributeValue("SiteName");
+
+        [Display(Name = "OdsCode", ResourceType = typeof(DataFieldNameResources))]
+        public string OdsCode => GetAttributeValue("OdsCode");
+
+        [Display(Name = "NoOdsIssued", ResourceType = typeof(DataFieldNameResources))]
+        public HtmlString NoOdsIssued => GetAttributeValue("NoOdsIssued").StringToBooleanHtml();
+
+        [Display(Name = "SitePostcode", ResourceType = typeof(DataFieldNameResources))]
+        public string SitePostcode => GetAttributeValue("SitePostcode");
+
+        [Display(Name = "SelectedCCGNameIfApplicable", ResourceType = typeof(DataFieldNameResources))]
+        public string SelectedCCGName => GetAttributeValue("SelectedCCGName", true);
+
+        [Display(Name = "SelectedSupplierProduct", ResourceType = typeof(DataFieldNameResources))]
+        public string SelectedSupplier => GetAttributeValue("SelectedSupplier", true);
+
+        [Display(Name = "SelectedCareSetting", ResourceType = typeof(DataFieldNameResources))]
+        public string SelectedCareSetting => GetAttributeValue("SelectedCareSetting", true);
+
+        [Display(Name = "RecordAccessHtmlView", ResourceType = typeof(DataFieldNameResources))]
+        public string RecordAccessHtmlView => GetAttributeValue("RecordAccessHtmlView");
+
+        [Display(Name = "RecordAccessStructured", ResourceType = typeof(DataFieldNameResources))]
+        public string RecordAccessStructured => GetAttributeValue("RecordAccessStructured");
+
+        [Display(Name = "Appointments", ResourceType = typeof(DataFieldNameResources))]
+        public string Appointments => GetAttributeValue("Appointments");
+
+        [Display(Name = "SendDocument", ResourceType = typeof(DataFieldNameResources))]
+        public string SendDocument => GetAttributeValue("SendDocument");
+
+        [Display(Name = "UseCaseDescription", ResourceType = typeof(DataFieldNameResources))]
+        public string UseCaseDescription => GetAttributeValue("UseCaseDescription");
+
+        [Display(Name = "SubmitterContactName", ResourceType = typeof(DataFieldNameResources))]
+        public string SubmitterContactName => GetAttributeValue("SubmitterContactName");
+
+        [Display(Name = "SubmitterContactEmailAddress", ResourceType = typeof(DataFieldNameResources))]
+        public string SubmitterContactEmailAddress => GetAttributeValue("SubmitterContactEmailAddress");
+
+        [Display(Name = "SubmitterContactTelephone", ResourceType = typeof(DataFieldNameResources))]
+        public string SubmitterContactTelephone => GetAttributeValue("SubmitterContactTelephone");
+
     }
 }

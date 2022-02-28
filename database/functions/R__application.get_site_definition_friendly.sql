@@ -6,9 +6,9 @@ create function application.get_site_definition_friendly
 )
 returns table
 (
-	"Site ASID" varchar(50),
-	"Site Party Key" varchar(50),
-	"Site ODS Code" varchar(50)
+	SiteAsid varchar(50),
+	SitePartyKey varchar(50),
+	OdsCode varchar(50)
 )
 as $$
 begin

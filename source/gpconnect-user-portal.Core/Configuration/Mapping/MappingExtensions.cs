@@ -29,6 +29,7 @@ namespace gpconnect_user_portal.Core.Configuration.Mapping
                 config.AddMap(new EndpointChangeMap());
                 config.AddMap(new EndpointChangeCountByStatusMap());
                 config.AddMap(new LookupDataCountByTypeMap());
+                config.AddMap(new UserMap());
             });
         }
     }

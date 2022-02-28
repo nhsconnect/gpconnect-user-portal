@@ -2,11 +2,11 @@ drop function if exists application.get_endpoint_changes;
 
 create function application.get_endpoint_changes
 (
-	_site_definition_status_id_lower_band bigint,
-	_site_definition_status_id_upper_band bigint,
-	_search_date_from timestamp without time zone,
-	_search_date_to timestamp without time zone,
-	_search_value varchar(100) default null	
+	_site_definition_status_id_lower_band smallint,
+	_site_definition_status_id_upper_band smallint,
+	_search_date_from timestamp with time zone,
+	_search_date_to timestamp with time zone,
+	_search_value text default null	
 )
 returns table
 (
@@ -29,7 +29,7 @@ begin
 		a.site_name
 	from (
 		select			
-			sd.added_date,
+			coalesce(sd.last_updated, sd.added_date) added_date,
 			sds.site_definition_status_name,
 			sd.site_definition_id,
 			sd.site_unique_identifier,

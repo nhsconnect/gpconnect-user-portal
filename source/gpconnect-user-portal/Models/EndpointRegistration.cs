@@ -18,5 +18,8 @@
         public EndpointDataSharingAgreementContactDetails EndpointDataSharingAgreementContactDetails { get; set; }
 
         public bool CanUpdateOrSubmit { get; set; }
+
+        public string SiteUniqueIdentifier { get; set; }
+
     }
 }

@@ -1,8 +1,7 @@
-using gpconnect_user_portal.Admin.Models;
 using gpconnect_user_portal.Services.Interfaces;
 using Microsoft.Extensions.Options;
 
-namespace gpconnect_user_portal.Pages
+namespace gpconnect_user_portal.Admin.Pages
 {
     public class HeaderModel : BaseModel
     {

@@ -11,7 +11,9 @@ returns table
 	site_ods_code varchar(50),
 	site_definition_id integer,
 	site_unique_identifier uuid,
-	site_definition_status_id smallint
+	site_definition_status_id smallint,
+	site_definition_status_name varchar(100),
+	submitted_date timestamp without time zone
 )
 as $$
 begin
@@ -22,9 +24,12 @@ begin
 		sd.site_ods_code,
 		sd.site_definition_id,
 		sd.site_unique_identifier,
-		sd.site_definition_status_id
+		sd.site_definition_status_id,
+		sds.site_definition_status_name,
+		coalesce(sd.last_updated, sd.added_date) submitted_date
 	from 
 		application.site_definition sd
+		inner join application.site_definition_status sds on sd.site_definition_status_id = sds.site_definition_status_id
 	where
 		sd.site_unique_identifier = _site_unique_identifier;
 end;

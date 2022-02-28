@@ -20,7 +20,10 @@ namespace gpconnect_user_portal.DTO.Response.Application.Search
         
         [Display(Name = DisplayConstants.HASAPPOINTMENT)]
         public int HasAppointmentCount => SearchResultEntries.Count(x => x.HasAppointment);
-        
+
+        [Display(Name = DisplayConstants.HASSENDDOCUMENT)]
+        public int HasSendDocumentCount => SearchResultEntries.Count(x => x.HasSendDocument);
+
         public bool HasNoMatches => SearchResultEntries.Count == 0;
         
         public bool HasSingleMatch => SearchResultEntries.Count == 1;

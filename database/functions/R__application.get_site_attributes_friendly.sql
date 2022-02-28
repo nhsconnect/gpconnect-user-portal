@@ -6,8 +6,8 @@ create function application.get_site_attributes_friendly
 )
 returns table
 (
-	"Field Name" varchar(100),
-	"Field Value" varchar(500)
+	"FieldName" varchar(100),
+	"FieldValue" varchar(500)
 )
 as $$
 begin
@@ -23,6 +23,7 @@ begin
 		reference.lookup l on sa.site_attribute_value = l.lookup_id::varchar
 	where
 		sd.site_unique_identifier = _site_unique_identifier
+		and sa.site_attribute_value is not null
 	order by
 		sa.site_attribute_name;
 end;

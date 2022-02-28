@@ -1,5 +1,4 @@
-﻿using gpconnect_user_portal.Admin.Models;
-using gpconnect_user_portal.DTO.Response.Application;
+﻿using gpconnect_user_portal.DTO.Response.Application;
 using gpconnect_user_portal.DTO.Response.Reference;
 
 namespace gpconnect_user_portal.Admin.Pages

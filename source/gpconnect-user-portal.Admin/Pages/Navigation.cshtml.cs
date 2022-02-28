@@ -1,4 +1,3 @@
-using gpconnect_user_portal.Admin.Models;
 using gpconnect_user_portal.Services.Interfaces;
 using Microsoft.Extensions.Options;
 

@@ -1,6 +1,4 @@
-﻿using gpconnect_user_portal.Helpers;
-using gpconnect_user_portal.Helpers.Constants;
-using Newtonsoft.Json;
+﻿using gpconnect_user_portal.Helpers.Constants;
 using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
@@ -17,6 +15,8 @@ namespace gpconnect_user_portal.DTO.Response.Application
         public int SiteDefinitionStatusId { get; set; }
         public bool CanUpdateOrSubmit { get; set; }
         public string SiteInteractions { get; set; }
+        public DateTime SubmittedDate { get; set; }
+        public string SiteDefinitionStatusName { get; set; }
 
         public bool NoOdsIssued => string.IsNullOrEmpty(SiteOdsCode);
 
@@ -28,13 +28,6 @@ namespace gpconnect_user_portal.DTO.Response.Application
 
         [IgnoreDataMember]
         public bool HasAppointment => SiteInteractions.Contains(SearchConstants.AppointmentQueryFilterInteraction);
-
-        [JsonProperty(DisplayConstants.RECORDACCESSHTMLVIEW)]
-        public string HasHtmlViewAsText => HasHtmlView.BooleanToYesNo();
-        [JsonProperty(DisplayConstants.RECORDACCESSSTRUCTURED)]
-        public string HasStructuredAsText => HasStructured.BooleanToYesNo();
-        [JsonProperty(DisplayConstants.APPOINTMENT)]
-        public string HasAppointmentAsText => HasAppointment.BooleanToYesNo();
 
         public List<SiteAttribute> SiteAttributes { get; set; }
     }

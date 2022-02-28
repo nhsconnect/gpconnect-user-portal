@@ -1,10 +1,7 @@
-﻿using gpconnect_user_portal.Helpers;
-using gpconnect_user_portal.Helpers.Constants;
+﻿using gpconnect_user_portal.Helpers.Constants;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
 
 namespace gpconnect_user_portal.DTO.Response.Application.Search
 {
@@ -15,32 +12,30 @@ namespace gpconnect_user_portal.DTO.Response.Application.Search
         [Display(Name = DisplayConstants.SITEODSCODE)]
         public string SiteODSCode { get; set; }
 
+        [JsonIgnore]
         public Guid SiteUniqueIdentifier { get; set; }
 
+        [JsonIgnore]
         public int SiteDefinitionStatusId { get; set; }
 
+        [JsonIgnore]
         public string SiteInteractions { get; set; }
-        public string SiteAttributes { get; set; }
 
-        public Dictionary<string, string> SiteAttributesDictionary => ExtractSiteAttributesDictionary();
+        [JsonIgnore]
+        public string SiteAttributesArray { get; set; }
 
-        private Dictionary<string, string> ExtractSiteAttributesDictionary()
-        {
-            return JsonConvert.DeserializeObject<Dictionary<string, string>>(SiteAttributes);
-        }
-
-        public bool DisplayUseCase => SiteAttributesDictionary.Count(x => x.Key == "UseCaseDescription" && !string.IsNullOrEmpty(x.Value)) == 1;
+        public string[] SiteAttributes => SiteAttributesArray.Split(",");
 
         [Display(Name = DisplayConstants.HASHTMLVIEW)]
         public bool HasHtmlView => SiteInteractions != null && SiteInteractions.Contains(SearchConstants.HtmlQueryFilterInteraction);
-        public string HasHtmlViewAsText => HasHtmlView.BooleanToYesNo();
 
         [Display(Name = DisplayConstants.HASSTRUCTURED)] 
         public bool HasStructured => SiteInteractions != null && SiteInteractions.Contains(SearchConstants.StructuredQueryFilterInteraction);
-        public string HasStructuredAsText => HasStructured.BooleanToYesNo();
 
         [Display(Name = DisplayConstants.HASAPPOINTMENT)]
-        public bool HasAppointment => SiteInteractions != null && SiteInteractions.Contains(SearchConstants.AppointmentQueryFilterInteraction); 
-        public string HasAppointmentAsText => HasAppointment.BooleanToYesNo();        
+        public bool HasAppointment => SiteInteractions != null && SiteInteractions.Contains(SearchConstants.AppointmentQueryFilterInteraction);
+
+        [Display(Name = DisplayConstants.HASSENDDOCUMENT)]
+        public bool HasSendDocument => SiteInteractions != null && SiteInteractions.Contains(SearchConstants.SendDocumentQueryFilterInteraction);
     }
 }

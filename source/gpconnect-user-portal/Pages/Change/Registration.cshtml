@@ -25,6 +25,8 @@
             </div>
         </div>
     }
+    <input type="hidden" asp-for="EndpointRegistration.SiteUniqueIdentifier" value="@Model.EndpointRegistration.SiteUniqueIdentifier" />
+    
     <input type="hidden" asp-for="EndpointRegistration.EndpointSupplierDetails.SelectedSupplier" value="@Model.EndpointRegistration.EndpointSupplierDetails.SelectedSupplier" />
     <input type="hidden" asp-for="EndpointRegistration.EndpointSupplierDetails.SelectedCareSetting" value="@Model.EndpointRegistration.EndpointSupplierDetails.SelectedCareSetting" />
     <input type="hidden" asp-for="EndpointRegistration.EndpointSupplierDetails.DisplayGpConnectProducts" value="@Model.EndpointRegistration.EndpointSupplierDetails.DisplayGpConnectProducts" />
@@ -32,4 +34,5 @@
     <input type="hidden" asp-for="EndpointRegistration.EndpointSupplierProductCapability.IsHtmlEnabled" value="@Model.EndpointRegistration.EndpointSupplierProductCapability.IsHtmlEnabled" />
     <input type="hidden" asp-for="EndpointRegistration.EndpointSupplierProductCapability.IsStructuredEnabled" value="@Model.EndpointRegistration.EndpointSupplierProductCapability.IsStructuredEnabled" />
     <input type="hidden" asp-for="EndpointRegistration.EndpointSupplierProductCapability.IsAppointmentEnabled" value="@Model.EndpointRegistration.EndpointSupplierProductCapability.IsAppointmentEnabled" />   
+    <input type="hidden" asp-for="EndpointRegistration.EndpointSupplierProductCapability.IsSendDocumentEnabled" value="@Model.EndpointRegistration.EndpointSupplierProductCapability.IsSendDocumentEnabled" />   
 </form>

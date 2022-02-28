@@ -1,10 +1,33 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace gpconnect_user_portal.Helpers
 {
     public static class StringExtensions
     {
+        public static string Flatten(IEnumerable elems, string separator)
+        {
+            if (elems == null)
+            {
+                return null;
+            }
+
+            StringBuilder sb = new StringBuilder();
+            foreach (object elem in elems)
+            {
+                if (sb.Length > 0)
+                {
+                    sb.Append(separator);
+                }
+
+                sb.Append(elem);
+            }
+
+            return sb.ToString();
+        }
+
         public static string FirstCharToUpper(this string input, bool restToLower = false) =>
             input switch
             {

@@ -12,6 +12,8 @@ namespace gpconnect_user_portal.DAL.Mapping
             Map(p => p.LookupValue).ToColumn("lookup_value");
             Map(p => p.LookupTypeName).ToColumn("lookup_type_name");
             Map(p => p.LookupTypeDescription).ToColumn("lookup_type_description");
+            Map(p => p.LinkedLookupId).ToColumn("linked_lookup_id");
+            Map(p => p.LinkedLookupValue).ToColumn("linked_lookup_value");
         }
     }
 }

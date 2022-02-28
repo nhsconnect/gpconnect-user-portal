@@ -1,5 +1,5 @@
 ﻿@page
-@model OutstandingModel
+@model OutstandingEndpointChangesModel
 
 <div class="nhsuk-grid-row">
     <div class="nhsuk-grid-column-full">
@@ -12,7 +12,7 @@
                         @foreach (var endpointChange in Model.EndpointChanges)
                         {
                             <tr role="row" class="nhsuk-table__row">
-                                <td class="nhsuk-table__cell"><a href="~/Outstanding/@endpointChange.SiteUniqueIdentifier">@endpointChange.SiteName</a></td>
+                                <td class="nhsuk-table__cell"><a href="~/Outstanding/Detail/@endpointChange.SiteUniqueIdentifier">@endpointChange.SiteName</a></td>
                                 <td class="nhsuk-table__cell">@endpointChange.SubmittedDateText</td>
                                 <td class="nhsuk-table__cell">@endpointChange.SiteDefinitionStatusName</td>
                             </tr>

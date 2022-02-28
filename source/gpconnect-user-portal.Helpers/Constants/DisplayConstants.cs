@@ -23,6 +23,7 @@
         public const string RECORDACCESSHTMLVIEW = "Access Record: HTML";
         public const string RECORDACCESSSTRUCTURED = "Access Record: Structured";
         public const string APPOINTMENT = "Appointment Management";
+        public const string SENDDOCUMENT = "Send Document";
         public const string USECASEDESCRIPTIONINPUT = "Please describe your " + USECASE;
         public const string USECASEINPUT = "Please select your " + USECASE;
         public const string CARESETTINGINPUT = "Please select your " + CARESETTING;
@@ -45,6 +46,9 @@
         public const string NOHTMLVIEW = NO + RECORDACCESSHTMLVIEW;
         public const string NOSTRUCTURED = NO + RECORDACCESSSTRUCTURED;
         public const string NOAPPOINTMENT = NO + APPOINTMENT;
+        public const string HASSENDDOCUMENT = HAS + SENDDOCUMENT;
+        public const string NOSENDDOCUMENT = NO + SENDDOCUMENT;
+
         public const string FILTERBY = "Filter by:";        
         public const string CHANGETITLE = "Add new or change" + ENDUSER;
         public const string CHANGEREGISTERTITLE = "Register" + ENDUSER;

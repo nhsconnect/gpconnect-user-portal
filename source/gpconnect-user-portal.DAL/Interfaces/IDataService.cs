@@ -12,6 +12,6 @@ namespace gpconnect_user_portal.DAL.Interfaces
         Task<List<T>> ExecuteSQLQuery<T>(string query) where T : class;
         Task<T> ExecuteQueryFirstOrDefault<T>(string query, DynamicParameters parameters = null) where T : class;
         Task<int> ExecuteQuery(string query, DynamicParameters parameters);
-        DataTable ExecuteQueryAndGetDataTable(string query, Dictionary<string, Guid> parameters);
+        DataTable ExecuteQueryAndGetDataTable(string query, Dictionary<string, Guid> parameters, bool transposeDataFieldNames = true);
     }
 }

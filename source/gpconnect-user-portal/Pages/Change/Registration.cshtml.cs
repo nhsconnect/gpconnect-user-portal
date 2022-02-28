@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -16,26 +17,24 @@ namespace gpconnect_user_portal.Pages.Change
         private readonly ILogger<RegistrationModel> _logger;
         private readonly IAggregateService _aggregateService;
         private readonly IOptionsMonitor<DTO.Response.Configuration.General> _generalOptionsDelegate;
-        private readonly List<Organisation> _organisationList;
 
         public RegistrationModel(ILogger<RegistrationModel> logger, IAggregateService aggregateService, IOptionsMonitor<DTO.Response.Configuration.General> generalOptionsDelegate) : base(aggregateService, generalOptionsDelegate)
         {
             _logger = logger;
             _aggregateService = aggregateService;
             _generalOptionsDelegate = generalOptionsDelegate;
-            _organisationList = _aggregateService.ReferenceService.GetOrganisations().Result;
         }
 
-        public IActionResult OnGet()
+        public async Task<IActionResult> OnGetAsync(string siteIdentifier)
         {
-            EndpointRegistration = new Models.EndpointRegistration();
-            PopulateForm();
+            EndpointRegistration = new Models.EndpointRegistration();            
+            await PopulateForm(siteIdentifier);
             return Page();
         }
 
         public async Task<IActionResult> OnPostLoadSupplierOptionsAsync()
         {
-            PopulateForm();
+            await PopulateForm();
             CanUpdateOrSubmit = true;
             SkipModelStateForSupplierOptions(true);
             SkipModelStateForSubmitterDetails(true);
@@ -47,23 +46,26 @@ namespace gpconnect_user_portal.Pages.Change
             return Page();
         }
 
-        public IActionResult OnPostEnableSupplierUpdate()
+        public async Task<IActionResult> OnPostEnableSupplierUpdate()
         {
-            PopulateForm();
+            await PopulateForm();
             CanUpdateOrSubmit = true;
             EndpointRegistration.EndpointSupplierDetails.DisplayGpConnectProducts = false;
             return Page();
         }
 
         public async Task<IActionResult> OnPostContinueAsync()
-        {
-            PopulateForm();
+        {            
             EndpointRegistration.EndpointSupplierProductCapability.EnabledSupplierProductCapability = await _aggregateService.ReferenceService.GetSupplierProductCapabilities(EndpointRegistration.EndpointSupplierDetails.SelectedSupplier);
             ValidateProductCapabilities();
             if (ModelState.IsValid)
             {
                 var siteDefinition = await _aggregateService.ApplicationService.AddSiteDefinition(EndpointRegistration.ConvertObjectToJsonData());
                 return LocalRedirect($"~/Change/Review/{siteDefinition.SiteUniqueIdentifier}");
+            }
+            else
+            {
+                await PopulateForm(EndpointRegistration.SiteUniqueIdentifier);
             }
             return Page();
         }
@@ -82,8 +84,8 @@ namespace gpconnect_user_portal.Pages.Change
             }
             if (!EndpointRegistration.EndpointSupplierProductCapability.IsAppointmentEnabled)
             {
-                ModelState.ClearValidationState("EndpointRegistration.EndpointSupplierProductCapability.Appointment");
-                ModelState.MarkFieldValid("EndpointRegistration.EndpointSupplierProductCapability.Appointment");
+                ModelState.ClearValidationState("EndpointRegistration.EndpointSupplierProductCapability.Appointments");
+                ModelState.MarkFieldValid("EndpointRegistration.EndpointSupplierProductCapability.Appointments");
             }
             if (!EndpointRegistration.EndpointSupplierProductCapability.IsSendDocumentEnabled)
             {
@@ -92,12 +94,54 @@ namespace gpconnect_user_portal.Pages.Change
             }
         }
 
-        private void PopulateForm()
+        private async Task<IActionResult> PopulateForm(string siteIdentifier = "")
         {
-            EndpointRegistration.EndpointSiteDetails.CCGNames = GetCCGByNames();
-            EndpointRegistration.EndpointSiteDetails.CCGOdsCodes = GetCCGByOdsCodes();
+            EndpointRegistration.EndpointSiteDetails.CCGNames = GetDropDown(Services.Enumerations.LookupType.CCGICBName);
             EndpointRegistration.EndpointSupplierDetails.CareSettings = GetDropDown(Services.Enumerations.LookupType.CareSetting);
             EndpointRegistration.EndpointSupplierDetails.SupplierProducts = GetProductListWithSupplier(EndpointRegistration.EndpointSupplierDetails.SelectedSupplier);
+
+            if (!string.IsNullOrEmpty(siteIdentifier))
+            {
+                EndpointRegistration.SiteUniqueIdentifier = siteIdentifier;
+
+                var siteDefinition = await _aggregateService.ApplicationService.GetSiteDefinition(siteIdentifier);
+                if (siteDefinition != null)
+                {
+                    SiteAttributes = siteDefinition.SiteAttributes;
+
+                    EndpointRegistration.EndpointSubmitterDetails.SubmitterContactName = GetAttributeValue("SubmitterContactName");
+                    EndpointRegistration.EndpointSubmitterDetails.SubmitterContactEmailAddress = GetAttributeValue("SubmitterContactEmailAddress");
+                    EndpointRegistration.EndpointSubmitterDetails.SubmitterContactTelephone = GetAttributeValue("SubmitterContactTelephone");
+
+                    EndpointRegistration.EndpointSiteDetails.SiteName = GetAttributeValue("SiteName");
+                    EndpointRegistration.EndpointSiteDetails.SitePostcode = GetAttributeValue("SitePostcode");
+                    EndpointRegistration.EndpointSiteDetails.OdsCode = GetAttributeValue("OdsCode");
+                    EndpointRegistration.EndpointSiteDetails.NoOdsIssued = GetAttributeValue("NoOdsIssued").StringToBoolean();
+                    EndpointRegistration.EndpointSiteDetails.SelectedCCGName = GetAttributeValue("SelectedCCGName");
+
+                    EndpointRegistration.EndpointSupplierDetails.DisplayGpConnectProducts = false;
+                    EndpointRegistration.EndpointSupplierDetails.SelectedCareSetting = Convert.ToInt16(GetAttributeValue("SelectedCareSetting"));
+                    EndpointRegistration.EndpointSupplierDetails.SelectedSupplier = Convert.ToInt16(GetAttributeValue("SelectedSupplier"));
+
+                    EndpointRegistration.EndpointSupplierProductCapability.EnabledSupplierProductCapability = await _aggregateService.ReferenceService.GetSupplierProductCapabilities(EndpointRegistration.EndpointSupplierDetails.SelectedSupplier);
+
+                    EndpointRegistration.EndpointSupplierProductCapability.RecordAccessHtmlView = GetAttributeValue("RecordAccessHtmlView");
+                    EndpointRegistration.EndpointSupplierProductCapability.RecordAccessStructured = GetAttributeValue("RecordAccessStructured");
+                    EndpointRegistration.EndpointSupplierProductCapability.Appointments = GetAttributeValue("Appointments");
+                    EndpointRegistration.EndpointSupplierProductCapability.SendDocument = GetAttributeValue("SendDocument");
+                    EndpointRegistration.EndpointSupplierProductCapability.UseCaseDescription = GetAttributeValue("UseCaseDescription");
+
+                    EndpointRegistration.EndpointDataSharingAgreementContactDetails.DataSharingAgreementConfirmation = GetAttributeValue("DataSharingAgreementConfirmation").StringToBoolean();
+                    EndpointRegistration.EndpointDataSharingAgreementContactDetails.DataSharingAgreementContactName = GetAttributeValue("DataSharingAgreementContactName");
+                    EndpointRegistration.EndpointDataSharingAgreementContactDetails.DataSharingAgreementContactEmailAddress = GetAttributeValue("DataSharingAgreementContactEmailAddress");
+                    EndpointRegistration.EndpointDataSharingAgreementContactDetails.DataSharingAgreementContactTelephone = GetAttributeValue("DataSharingAgreementContactTelephone");
+                }
+                else
+                {
+                    return new NotFoundResult();
+                }
+            }
+            return Page();
         }
 
         private void ClearModelState()
@@ -105,19 +149,11 @@ namespace gpconnect_user_portal.Pages.Change
             ModelState.ClearValidationState("EndpointRegistration.EndpointSubmitterDetails.SubmitterContactName");
             ModelState.ClearValidationState("EndpointRegistration.EndpointSubmitterDetails.SubmitterContactEmailAddress");
             ModelState.ClearValidationState("EndpointRegistration.EndpointSubmitterDetails.SubmitterContactTelephone");
-            ModelState.ClearValidationState("FormOdsCode");
-            ModelState.ClearValidationState("OdsIssued");
-            ModelState.ClearValidationState("SiteName");
-            ModelState.ClearValidationState("SitePostcode");
             ModelState.ClearValidationState("EndpointRegistration.EndpointSupplierProductCapability.RecordAccessHtmlView");
             ModelState.ClearValidationState("EndpointRegistration.EndpointSupplierProductCapability.RecordAccessStructured");
-            ModelState.ClearValidationState("EndpointRegistration.EndpointSupplierProductCapability.Appointment");
+            ModelState.ClearValidationState("EndpointRegistration.EndpointSupplierProductCapability.Appointments");
             ModelState.ClearValidationState("EndpointRegistration.EndpointSupplierProductCapability.SendDocument");
-            ModelState.ClearValidationState("UseCaseDescription");
-            ModelState.ClearValidationState("SelectedUseCase");
-            ModelState.ClearValidationState("SelectedCareSetting");
-            ModelState.ClearValidationState("SelectedSupplier");
-            ModelState.ClearValidationState("SelectedSupplierProductUseCase");
+            ModelState.ClearValidationState("EndpointRegistration.EndpointSupplierProductCapability.UseCaseDescription");
         }
 
         private void SkipModelStateForSubmitterDetails(bool markFieldAsValid = false)
@@ -136,39 +172,21 @@ namespace gpconnect_user_portal.Pages.Change
 
         private void SkipModelStateForSupplierOptions(bool markFieldAsValid = false)
         {
-            //ModelState.ClearValidationState("SelectedUseCase");
-            //ModelState.ClearValidationState("UseCaseDescription");
             ModelState.ClearValidationState("EndpointRegistration.EndpointSupplierProductCapability.RecordAccessHtmlView");
             ModelState.ClearValidationState("EndpointRegistration.EndpointSupplierProductCapability.RecordAccessStructured");
-            ModelState.ClearValidationState("EndpointRegistration.EndpointSupplierProductCapability.Appointment");
+            ModelState.ClearValidationState("EndpointRegistration.EndpointSupplierProductCapability.Appointments");
             ModelState.ClearValidationState("EndpointRegistration.EndpointSupplierProductCapability.SendDocument");
-            //ModelState.ClearValidationState("SelectedSupplierProductUseCase");
+            ModelState.ClearValidationState("EndpointRegistration.EndpointSupplierProductCapability.UseCaseDescription");
 
             if (markFieldAsValid)
             {
-                //ModelState.MarkFieldValid("SelectedUseCase");
-                //ModelState.MarkFieldValid("UseCaseDescription");
                 ModelState.MarkFieldValid("EndpointRegistration.EndpointSupplierProductCapability.RecordAccessHtmlView");
                 ModelState.MarkFieldValid("EndpointRegistration.EndpointSupplierProductCapability.RecordAccessStructured");
-                ModelState.MarkFieldValid("EndpointRegistration.EndpointSupplierProductCapability.Appointment");
+                ModelState.MarkFieldValid("EndpointRegistration.EndpointSupplierProductCapability.Appointments");
                 ModelState.MarkFieldValid("EndpointRegistration.EndpointSupplierProductCapability.SendDocument");
-                //ModelState.MarkFieldValid("SelectedSupplierProductUseCase");
+                ModelState.MarkFieldValid("EndpointRegistration.EndpointSupplierProductCapability.UseCaseDescription");
             }
-        }
-
-        private IEnumerable<SelectListItem> GetCCGByNames(int selectedCCGName = 0)
-        {
-            var options = _organisationList.OrderBy(x => x.Name).Select(option => new SelectListItem() { Text = option.Name, Value = option.OrganisationId.ToString(), Selected = selectedCCGName == option.OrganisationId }).ToList();
-            options.Insert(0, new SelectListItem());
-            return options;
-        }
-
-        private IEnumerable<SelectListItem> GetCCGByOdsCodes(int selectedCCGCode = 0)
-        {
-            var options = _organisationList.OrderBy(x => x.OdsCode).Select(option => new SelectListItem() { Text = option.OdsCode, Value = option.OrganisationId.ToString(), Selected = selectedCCGCode == option.OrganisationId }).ToList();
-            options.Insert(0, new SelectListItem());
-            return options;
-        }        
+        }       
 
         private IEnumerable<SelectListItem> GetDropDown(Services.Enumerations.LookupType lookupType, int selectedOption = 0)
         {

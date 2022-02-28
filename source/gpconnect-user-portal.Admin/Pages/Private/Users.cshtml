@@ -1,0 +1,48 @@
+﻿@page
+@using gpconnect_user_portal.Helpers
+@model UsersModel
+
+<form method="post" id="search-input-form">
+    <div class="nhsuk-grid-row">
+        <div class="nhsuk-grid-column-full">
+            <div class="nhsuk-table__panel-with-heading-tab">
+                <h3 class="nhsuk-table__heading-tab">Users (@Model.Users.Count)</h3>
+                @if (Model.Users.Count > 0)
+                {
+                    <table class="nhsuk-table">
+                        <thead role="rowgroup" class="nhsuk-table__head">
+                            <tr role="row">
+                                <th role="columnheader" class="" scope="col">Email Address</th>
+                                <th role="columnheader" class="" scope="col">Added Date</th>
+                                <th role="columnheader" class="" scope="col">Last Logon Date</th>
+                                <th role="columnheader" class="" scope="col">Is Admin?</th>
+                                <th role="columnheader" class="" scope="col">Authorised Date</th>
+                            </tr>
+                        </thead>
+                        <tbody class="nhsuk-table__body">
+                            @foreach (var user in Model.Users)
+                            {
+                                <tr role="row" class="nhsuk-table__row">
+                                    <td class="nhsuk-table__cell"><a href="mailto:@user.EmailAddress">@user.EmailAddress</a></td>
+                                    <td class="nhsuk-table__cell">@user.AddedDate.DateFormatter("ddd dd MMM yyyy HH:mm:ss")</td>
+                                    <td class="nhsuk-table__cell">@user.LastLogonDate.DateFormatter("ddd dd MMM yyyy HH:mm:ss")</td>
+                                    <td class="nhsuk-table__cell">
+                                        @if (user.IsAdmin)
+                                        {
+                                            <button type="submit" class="nhsuk-tag nhsuk-tag--blue" asp-route-userid="@user.UserId" asp-route-makeadmin="false" asp-page-handler="SetIsAdmin">@user.IsAdmin.BooleanToYesNo()</button>
+                                        }
+                                        else
+                                        {
+                                            <button type="submit" class="nhsuk-tag nhsuk-tag--pink" asp-route-userid="@user.UserId" asp-route-makeadmin="true" asp-page-handler="SetIsAdmin">@user.IsAdmin.BooleanToYesNo()</button>
+                                        }
+                                    </td>
+                                    <td class="nhsuk-table__cell">@user.AuthorisedDate.DateFormatter("ddd dd MMM yyyy HH:mm:ss")</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+            </div>
+        </div>
+    </div>
+</form>

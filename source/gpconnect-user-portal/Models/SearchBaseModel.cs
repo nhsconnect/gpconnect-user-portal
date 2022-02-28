@@ -36,8 +36,8 @@ namespace gpconnect_user_portal.Pages
 
         protected FileStreamResult ExportResult(DataTable dataTable, string reportName = "")
         {
-            var memoryStream = _aggregateService.ReportingService.CreateReport(dataTable, reportName);
-            return _aggregateService.ReportingService.GetFileStream(memoryStream);
+            var memoryStream = _aggregateService.ExportService.CreateReport(dataTable, reportName);
+            return _aggregateService.ExportService.GetFileStream(memoryStream);
         }        
     }    
 }

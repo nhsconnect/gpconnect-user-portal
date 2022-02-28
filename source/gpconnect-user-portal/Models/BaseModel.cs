@@ -16,14 +16,16 @@ namespace gpconnect_user_portal.Models
     public abstract class BaseModel : PageModel
     {
         private readonly IAggregateService _aggregateService;
-        private readonly List<Organisation> _organisationList;
+        private readonly List<Lookup> _ccgOdsCodeList;
+        private readonly List<Lookup> _ccgNameList;
         private readonly IOptionsMonitor<DTO.Response.Configuration.General> _generalOptionsDelegate;
 
         protected BaseModel(IAggregateService aggregateService, IOptionsMonitor<DTO.Response.Configuration.General> generalOptionsDelegate)
         {
             _aggregateService = aggregateService;
             _generalOptionsDelegate = generalOptionsDelegate;
-            _organisationList = _aggregateService.ReferenceService.GetOrganisations().Result;            
+            _ccgOdsCodeList = _aggregateService.ReferenceService.GetLookup(Services.Enumerations.LookupType.CCGICBODSCode).Result;
+            _ccgNameList = _aggregateService.ReferenceService.GetLookup(Services.Enumerations.LookupType.CCGICBName).Result;
         }
 
         public string ApplicationName => _generalOptionsDelegate.CurrentValue.ProductName;
@@ -48,18 +50,18 @@ namespace gpconnect_user_portal.Models
         [Display(Name = DisplayConstants.CCGICBODSCODE)]
         public string SelectedCCGOdsCode { get; set; }
 
-        public IEnumerable<SelectListItem> GetCCGByNames(string selectedCCGName = "")
+        public IEnumerable<SelectListItem> GetCCGByNames(int? selectedCCGName = 0)
         {
-            var options = _organisationList.OrderBy(x => x.Name)
-                .Select(option => new SelectListItem() { Text = option.Name, Value = option.Name, Selected = selectedCCGName == option.Name }).ToList();
+            var options = _ccgNameList.OrderBy(x => x.LookupValue)
+                .Select(option => new SelectListItem() { Text = option.LookupValue, Value = option.LookupId.ToString(), Selected = selectedCCGName == option.LookupId }).ToList();
             options.Insert(0, new SelectListItem());
             return options;
         }
 
-        public IEnumerable<SelectListItem> GetCCGByOdsCodes(string selectedCCGCode = "")
+        public IEnumerable<SelectListItem> GetCCGByOdsCodes(int? selectedCCGCode = 0)
         {
-            var options = _organisationList.OrderBy(x => x.OdsCode)
-                .Select(option => new SelectListItem() { Text = option.OdsCode, Value = option.OdsCode, Selected = selectedCCGCode == option.OdsCode }).ToList();
+            var options = _ccgOdsCodeList.OrderBy(x => x.LookupValue)
+                .Select(option => new SelectListItem() { Text = option.LookupValue, Value = option.LookupId.ToString(), Selected = selectedCCGCode == option.LookupId }).ToList();
             options.Insert(0, new SelectListItem());
             return options;
         }

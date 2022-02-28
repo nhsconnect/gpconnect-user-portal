@@ -19,7 +19,7 @@ namespace gpconnect_user_portal.Pages
             _generalOptionsDelegate = generalOptionsDelegate;
         }
         
-        public Guid SiteIdentifier { get; set; }
+        public string SiteIdentifier { get; set; }
 
         public List<DTO.Response.Application.SiteAttribute> SiteAttributes { get; set; }
 

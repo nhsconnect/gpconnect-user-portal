@@ -3,6 +3,7 @@ using gpconnect_user_portal.DAL.Interfaces;
 using gpconnect_user_portal.DTO.Request;
 using gpconnect_user_portal.DTO.Response.Application;
 using gpconnect_user_portal.Helpers;
+using gpconnect_user_portal.Services.Enumerations;
 using gpconnect_user_portal.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
@@ -33,15 +34,14 @@ namespace gpconnect_user_portal.Services
             _contextAccessor = contextAccessor;
         }
 
-        public async Task SendSiteNotificationEmail(EmailDefinition emailDefinition)
+        public async Task SendSiteNotificationEmail(int siteDefinitionStatus, EmailDefinition emailDefinition)
         {
             var email = await GetEmailTemplate(MailTemplate.SendSiteNotificationEmail);                        
             if (email != null)
             {
-                email.Body = email.Body.Replace("<site_definition>", emailDefinition.SiteDefinition.ExportDataTableToHTML());
-                email.Body = email.Body.Replace("<site_attributes>", emailDefinition.SiteAttributes.ExportDataTableToHTML());
-                //SendEmail(email, true, siteDefinition.SiteDefinitionStatusId == (int)SiteDefinitionStatus.Draft);
-                SendEmail(email, true, true);
+                email.Body = email.Body.Replace("<site_definition>", emailDefinition.SiteDefinition.ExportDataTableToHTML(true));                
+                email.Body = email.Body.Replace("<site_attributes>", emailDefinition.SiteAttributes.ExportDataTableToHTML(false));
+                SendEmail(email, true, siteDefinitionStatus == (int)SiteDefinitionStatus.Draft);
             }
         }
 
@@ -72,6 +72,8 @@ namespace gpconnect_user_portal.Services
         private string PopulateDynamicFields(string body)
         {
             body = body.Replace("<url>", _contextAccessor.HttpContext.GetBaseSiteUrl());
+            body = body.Replace("<generated_date_time>", _generalOptionsDelegate.CurrentValue.FormattedApplicationCurrentDateTime);
+            body = body.Replace("<application_name>", _generalOptionsDelegate.CurrentValue.ProductName);
             return body;
         }
 

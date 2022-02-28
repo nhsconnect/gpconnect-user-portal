@@ -1,5 +1,6 @@
 ﻿using gpconnect_user_portal.DAL.Interfaces;
 using gpconnect_user_portal.Helpers;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
@@ -14,9 +15,9 @@ namespace gpconnect_user_portal.DAL
     {
         private static ILogger<FhirRequestExecution> _logger;
         private readonly IHttpClientFactory _httpClientFactory;
-        private readonly IOptionsMonitor<DTO.Response.Configuration.Reference> _configuration;
+        private readonly IConfiguration _configuration;
 
-        public FhirRequestExecution(IOptionsMonitor<DTO.Response.Configuration.Reference> configuration, ILogger<FhirRequestExecution> logger, IHttpClientFactory httpClientFactory)
+        public FhirRequestExecution(IConfiguration configuration, ILogger<FhirRequestExecution> logger, IHttpClientFactory httpClientFactory)
         {
             _logger = logger;
             _httpClientFactory = httpClientFactory;
@@ -61,7 +62,13 @@ namespace gpconnect_user_portal.DAL
 
         private Uri AddHostName(string hostName, string query)
         {
-            return new Uri($"{StringExtensions.Coalesce(hostName, _configuration.CurrentValue.HostName)}{query}");
+            var baseAddress = StringExtensions.Coalesce(hostName, _configuration.GetSection("Reference:HostName").Value);
+            return new Uri($"{AddScheme(baseAddress)}{query}");
+        }
+
+        private string AddScheme(string baseAddress)
+        {
+            return !baseAddress.StartsWith("https://") ? "https://" + baseAddress : baseAddress;
         }
     }
 }

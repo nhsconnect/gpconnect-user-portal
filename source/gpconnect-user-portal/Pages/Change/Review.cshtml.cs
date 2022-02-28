@@ -20,17 +20,17 @@ namespace gpconnect_user_portal.Pages
             _generalOptionsDelegate = generalOptionsDelegate;
         }
 
-        public async Task<IActionResult> OnGetAsync(string id)
+        public async Task<IActionResult> OnGetAsync(string siteIdentifier)
         {
-            return await PopulateForm(id);
+            return await PopulateForm(siteIdentifier);
         }
 
-        public async Task<IActionResult> PopulateForm(string siteDefinitionIdentifier)
+        public async Task<IActionResult> PopulateForm(string siteIdentifier)
         {
-            var siteDefinition = await _aggregateService.ApplicationService.GetSiteDefinition(siteDefinitionIdentifier);
+            var siteDefinition = await _aggregateService.ApplicationService.GetSiteDefinition(siteIdentifier);
             if (siteDefinition != null)
             {
-                SiteIdentifier = Guid.Parse(siteDefinitionIdentifier);
+                SiteIdentifier = siteIdentifier;
                 SiteAttributes = siteDefinition.SiteAttributes;
                 CanUpdateOrSubmit = siteDefinition.CanUpdateOrSubmit;
 
@@ -39,14 +39,9 @@ namespace gpconnect_user_portal.Pages
             return new NotFoundResult();
         }
 
-        public IActionResult OnPostUpdateChanges()
+        public async Task<IActionResult> OnPostSubmitChangesAsync(string siteIdentifier)
         {
-            return LocalRedirect($"~/Change/Detail/{SiteIdentifier}");
-        }
-
-        public async Task<IActionResult> OnPostSubmitChangesAsync()
-        {
-            await _aggregateService.ApplicationService.PostSiteDefinition(SiteIdentifier);
+            await _aggregateService.ApplicationService.PostSiteDefinition(siteIdentifier);
             return LocalRedirect($"~/Change/Submitted");
         }
     }

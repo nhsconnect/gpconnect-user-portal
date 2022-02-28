@@ -13,6 +13,8 @@ namespace gpconnect_user_portal.DAL.Mappings
             Map(p => p.SiteUniqueIdentifier).ToColumn("site_unique_identifier");
             Map(p => p.SiteDefinitionId).ToColumn("site_definition_id");
             Map(p => p.SiteDefinitionStatusId).ToColumn("site_definition_status_id");            
+            Map(p => p.SubmittedDate).ToColumn("submitted_date");
+            Map(p => p.SiteDefinitionStatusName).ToColumn("site_definition_status_name");
         }
     }
 }

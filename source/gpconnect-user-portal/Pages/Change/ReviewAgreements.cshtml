@@ -16,30 +16,23 @@
                     <div class="nhsuk-grid-column-full">
                         <dl class="nhsuk-summary-list">
                             <div class="nhsuk-summary-list__row">
-                            <dt class="nhsuk-summary-list__key">
-                                @Model.GetAttributeName("DataSharingAgreementContactName")
-                            </dt>
-                            <dd class="nhsuk-summary-list__value">
-                                @Model.GetAttributeValue("DataSharingAgreementContactName")
-                            </dd>
+                                <dt class="nhsuk-summary-list__key">@Html.DisplayNameFor(x => x.DataSharingAgreementContactName)</dt>
+                                <dd class="nhsuk-summary-list__value">@Html.DisplayFor(x => x.DataSharingAgreementContactName)</dd>
+                            </div>
+                            <div class="nhsuk-summary-list__row">
+                                <dt class="nhsuk-summary-list__key">@Html.DisplayNameFor(x => x.DataSharingAgreementContactEmailAddress)</dt>
+                                <dd class="nhsuk-summary-list__value"><a href='mailto:@Html.DisplayFor(x => x.DataSharingAgreementContactEmailAddress)'>@Html.DisplayFor(x => x.DataSharingAgreementContactEmailAddress)</a></dd>
+                            </div>
+                            <div class="nhsuk-summary-list__row">
+                                <dt class="nhsuk-summary-list__key">@Html.DisplayNameFor(x => x.DataSharingAgreementContactTelephone)</dt>
+                                <dd class="nhsuk-summary-list__value"><a href='tel:@Html.DisplayFor(x => x.DataSharingAgreementContactTelephone)'>@Html.DisplayFor(x => x.DataSharingAgreementContactTelephone)</a></dd>
+                            </div>
+                            <div class="nhsuk-summary-list__row">
+                                <dt class="nhsuk-summary-list__key">@Html.DisplayNameFor(x => x.DataSharingAgreementConfirmation)</dt>
+                                <dd class="nhsuk-summary-list__value">@Html.Raw(Model.DataSharingAgreementConfirmation)</dd>
+                            </div>
+                        </dl>
                     </div>
-                    <div class="nhsuk-summary-list__row">
-                        <dt class="nhsuk-summary-list__key">
-                            @Model.GetAttributeName("DataSharingAgreementContactEmailAddress")
-                        </dt>
-                        <dd class="nhsuk-summary-list__value">
-                            @Model.GetAttributeValue("DataSharingAgreementContactEmailAddress")
-                        </dd>
-                    </div>
-                    <div class="nhsuk-summary-list__row">
-                        <dt class="nhsuk-summary-list__key">
-                            @Model.GetAttributeName("DataSharingAgreementContactTelephone")
-                        </dt>
-                        <dd class="nhsuk-summary-list__value">
-                            @Model.GetAttributeValue("DataSharingAgreementContactTelephone")
-                        </dd>
-                    </div>
-                    </dl>
                 </div>
             </div>
         </div>

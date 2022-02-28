@@ -10,5 +10,6 @@ namespace gpconnect_user_portal.DTO.Response.Application
         public string SiteAttributeName { get; set; }
         public string SiteAttributeValue { get; set; }
         public string LookupValue { get; set; }
+        public bool HasChanged { get; set; }
     }
 }

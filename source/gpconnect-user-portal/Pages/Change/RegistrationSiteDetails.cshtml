@@ -82,17 +82,10 @@
                     </div>
                 </div>
                 <div class="nhsuk-grid-row">
-                    <div class="nhsuk-grid-column-one-half">
-                        <div class="nhsuk-form-group">
-                            <label asp-for="EndpointRegistration.EndpointSiteDetails.CCGOdsCodes" class="nhsuk-label"></label>
-                            <div class="nhsuk-hint" id="input-hint-ccgodscode">If applicable, please select the CCG ODS Code for the site.</div>
-                            <select asp-for="EndpointRegistration.EndpointSiteDetails.SelectedCCGOdsCode" asp-items="@Model.EndpointRegistration.EndpointSiteDetails.CCGOdsCodes" aria-describedby="input-hint-ccgodscode" novalidate class="nhsuk-select"></select>
-                        </div>
-                    </div>
-                    <div class="nhsuk-grid-column-one-half">
+                    <div class="nhsuk-grid-column-full">
                         <div class="nhsuk-form-group">
                             <label asp-for="EndpointRegistration.EndpointSiteDetails.CCGNames" class="nhsuk-label"></label>
-                            <div class="nhsuk-hint" id="input-hint-ccgodsname">If applicable, please select the CCG ODS Name for the site.</div>
+                            <div class="nhsuk-hint" id="input-hint-ccgodsname">If applicable, please select the CCG for the site.</div>
                             <select asp-for="EndpointRegistration.EndpointSiteDetails.SelectedCCGName" asp-items="@Model.EndpointRegistration.EndpointSiteDetails.CCGNames" aria-describedby="input-hint-ccgodsname" novalidate class="nhsuk-select"></select>
                         </div>
                     </div>

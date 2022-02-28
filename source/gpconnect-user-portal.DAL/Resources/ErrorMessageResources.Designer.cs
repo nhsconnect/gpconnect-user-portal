@@ -63,9 +63,9 @@ namespace gpconnect_user_portal.DAL.Resources {
         /// <summary>
         ///   Looks up a localized string similar to You must select a value for Appointment Management.
         /// </summary>
-        public static string Appointment {
+        public static string Appointments {
             get {
-                return ResourceManager.GetString("Appointment", resourceCulture);
+                return ResourceManager.GetString("Appointments", resourceCulture);
             }
         }
         
@@ -93,6 +93,15 @@ namespace gpconnect_user_portal.DAL.Resources {
         public static string ContactTelephone {
             get {
                 return ResourceManager.GetString("ContactTelephone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You must agree to the Data Sharing Agreement.
+        /// </summary>
+        public static string DataSharingAgreementConfirmation {
+            get {
+                return ResourceManager.GetString("DataSharingAgreementConfirmation", resourceCulture);
             }
         }
         
@@ -165,6 +174,15 @@ namespace gpconnect_user_portal.DAL.Resources {
         public static string SitePostcode {
             get {
                 return ResourceManager.GetString("SitePostcode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You must enter a value for Use Case Description.
+        /// </summary>
+        public static string UseCaseDescription {
+            get {
+                return ResourceManager.GetString("UseCaseDescription", resourceCulture);
             }
         }
     }

@@ -1,6 +1,8 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System.Data;
 using System.IO;
+using System.Linq;
 
 namespace gpconnect_user_portal.Helpers
 {
@@ -37,10 +39,10 @@ namespace gpconnect_user_portal.Helpers
             var json = JsonConvert.SerializeObject(inputObject);
             return json;
         }
-        
+
         public static DataTable ConvertJsonDataToDataTable(this string inputObject)
         {
-            var dataTable = (DataTable)JsonConvert.DeserializeObject(inputObject, typeof(DataTable));
+            var dataTable = (DataTable)JsonConvert.DeserializeObject(inputObject, typeof(DataTable));            
             return dataTable;
         }
     }

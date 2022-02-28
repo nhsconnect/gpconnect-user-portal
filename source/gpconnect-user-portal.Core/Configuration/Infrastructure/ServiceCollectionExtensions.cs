@@ -46,8 +46,11 @@ namespace gpconnect_user_portal.Core.Configuration.Infrastructure
             {
                 options.Conventions.AuthorizeFolder("/Private", "MustHaveAuthorisedUserStatus");
                 options.Conventions.AllowAnonymousToFolder("/Public");
-                options.Conventions.AddPageRoute("/Private/Outstanding", "/Outstanding");
-                options.Conventions.AddPageRoute("/Private/Completed", "/Completed");
+                options.Conventions.AddPageRoute("/Private/Outstanding/Index", "/Outstanding");
+                options.Conventions.AddPageRoute("/Private/Outstanding/Detail", "/Outstanding/Detail/{siteIdentifier}");
+                options.Conventions.AddPageRoute("/Private/Completed/Index", "/Completed");
+                options.Conventions.AddPageRoute("/Private/Completed/Detail", "/Completed/Detail/{siteIdentifier}");
+                options.Conventions.AddPageRoute("/Private/Users", "/Users");
             });
 
             services.AddAuthorization(options =>

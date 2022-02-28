@@ -1,15 +1,16 @@
-﻿@page "{id}"
+﻿@page "{siteIdentifier?}"
 @using gpconnect_user_portal.Helpers.Constants
 @model ReviewModel
 
 <h1>Review changes and confirm agreements</h1>
 
-@if(!Model.CanUpdateOrSubmit)
+@if (!Model.CanUpdateOrSubmit)
 {
     <partial name="NoFurtherChanges" />
 }
 
 <form method="post" id="search-input-form">
     <partial name="ReviewAgreements" />
-    <partial name="ReviewChanges" />
+    <partial name="ReviewChanges" />    
+    <input type="hidden" asp-for="SiteIdentifier" value="@Model.SiteIdentifier" />
 </form>

@@ -2,7 +2,7 @@
 @model RegistrationModel
 @{
     var submitterInvalid = Model.ModelState["EndpointRegistration.EndpointSubmitterDetails.SubmitterContactName"]?.ValidationState == ModelValidationState.Invalid;
-    var emailAddressInvalid = Model.ModelState["EndpointRegistration.EndpointSubmitterDetails.SupplierContactEmailAddress"]?.ValidationState == ModelValidationState.Invalid;
+    var emailAddressInvalid = Model.ModelState["EndpointRegistration.EndpointSubmitterDetails.SubmitterContactEmailAddress"]?.ValidationState == ModelValidationState.Invalid;
     var telephoneInvalid = Model.ModelState["EndpointRegistration.EndpointSubmitterDetails.SubmitterContactTelephone"]?.ValidationState == ModelValidationState.Invalid;
 }
 
@@ -11,7 +11,6 @@
         <div class="nhsuk-card nhsuk-card--feature">
             <div class="nhsuk-card__content nhsuk-card__content--feature">
                 <h2 class="nhsuk-card__heading nhsuk-card__heading--feature nhsuk-heading-m">Submitter Details</h2>
-
                 <div class="nhsuk-form-group@(submitterInvalid ? " nhsuk-form-group--error": string.Empty)">
                     <label asp-for="EndpointRegistration.EndpointSubmitterDetails.SubmitterContactName" class="nhsuk-label"></label>
                     <div class="nhsuk-hint" id="input-hint-submitter">* Enter the name of the individual who is submitting these details</div>

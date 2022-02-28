@@ -70,13 +70,13 @@ namespace gpconnect_user_portal.Pages
 
         public async Task<FileStreamResult> OnPostExportAllAsync()
         {
-            var searchResults = await _aggregateService.QueryService.GetSitesForExport();
+            var searchResults = await _aggregateService.ExportService.GetSitesForExport();
             return ExportResult(searchResults, "All GP Connect Sites Report");
         }
 
         public async Task<FileStreamResult> OnPostExportResultsAsync()
         {
-            var searchResults = await _aggregateService.QueryService.GetSitesForExport(CreateSearchRequest());
+            var searchResults = await _aggregateService.ExportService.GetSitesForExport(CreateSearchRequest());
             return ExportResult(searchResults, "GP Connect Site Report");
         }
 

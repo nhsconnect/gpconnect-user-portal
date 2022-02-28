@@ -22,34 +22,23 @@ namespace gpconnect_user_portal.Services
         private readonly IFhirRequestExecution _fhirRequestExecution;
         private readonly IDataService _dataService;
         private readonly IConfigurationService _configurationService;
+        private readonly List<Lookup> _ccgNameList;
+        private readonly List<Lookup> _ccgOdsCodeList;
+        private readonly List<Lookup> _supplierList;
 
         public ReferenceService(IFhirRequestExecution fhirRequestExecution, IConfigurationService configurationService, IDataService dataService)
         {
             _fhirRequestExecution = fhirRequestExecution;
             _configurationService = configurationService;
             _dataService = dataService;
-        }
-
-        public async Task<List<DTO.Response.Reference.Organisation>> GetOrganisations()
-        {
-            var query = "reference.get_organisations";
-            var result = await _dataService.ExecuteQuery<DTO.Response.Reference.Organisation>(query);
-            return result;
+            _ccgOdsCodeList = GetLookup(Enumerations.LookupType.CCGICBODSCode).Result;
+            _supplierList = GetLookup(Enumerations.LookupType.Supplier).Result;
         }
 
         public async Task<List<LookupDataCountByType>> GetLookupDataCountByType()
         {
             var query = "reference.get_lookup_data_count_by_type";
             var result = await _dataService.ExecuteQuery<LookupDataCountByType>(query);
-            return result;
-        }
-
-        public async Task<DTO.Response.Reference.Organisation> GetOrganisation(string odsCode)
-        {
-            var query = "reference.get_organisation";
-            var parameters = new DynamicParameters();
-            parameters.Add("_ods_code", odsCode, DbType.String, ParameterDirection.Input);
-            var result = await _dataService.ExecuteQueryFirstOrDefault<DTO.Response.Reference.Organisation>(query, parameters);
             return result;
         }
 
@@ -89,16 +78,19 @@ namespace gpconnect_user_portal.Services
             var supplierQuery = fhirApiQuery.QueryText.SearchAndReplace(new Dictionary<string, string> { { "{odsCode}", Regex.Escape(siteDefinition.SupplierOdsCode) } });
             var organisationDetail = await _fhirRequestExecution.ExecuteFhirQuery<OrganisationDetail>(organisationQuery, cancellationToken, spineConfiguration.SpineFhirApiDirectoryServicesFqdn, spineConfiguration.SpineFhirApiKey);
             var supplierDetail = await _fhirRequestExecution.ExecuteFhirQuery<OrganisationDetail>(supplierQuery, cancellationToken, spineConfiguration.SpineFhirApiDirectoryServicesFqdn, spineConfiguration.SpineFhirApiKey);
-
+                        
             siteDefinition.SiteAttribute = new List<SiteAttribute>
             {
                 new SiteAttribute() { SiteAttributeName = "SiteName", SiteAttributeValue = organisationDetail?.SiteName },
-                new SiteAttribute() { SiteAttributeName = "ContactTelephone", SiteAttributeValue = organisationDetail?.TelephoneNumber },
                 new SiteAttribute() { SiteAttributeName = "SitePostcode", SiteAttributeValue = organisationDetail?.PostCode },
-                new SiteAttribute() { SiteAttributeName = "SelectedCCGOdsCode", SiteAttributeValue = organisationDetail?.CCGOdsCode },
-                new SiteAttribute() { SiteAttributeName = "SelectedCCGName", SiteAttributeValue = (await GetOrganisation(organisationDetail?.CCGOdsCode))?.Name },
-                new SiteAttribute() { SiteAttributeName = "FormOdsCode", SiteAttributeValue = siteDefinition.SiteOdsCode },
-                new SiteAttribute() { SiteAttributeName = "SelectedSupplier", SiteAttributeValue = supplierDetail?.Organisation?.Name }
+                new SiteAttribute() { SiteAttributeName = "SelectedCCGOdsCode", SiteAttributeValue = _ccgOdsCodeList.FirstOrDefault(x => x.LookupValue == organisationDetail?.CCGOdsCode)?.LookupId.ToString() },
+                new SiteAttribute() { SiteAttributeName = "SelectedCCGName", SiteAttributeValue = _ccgOdsCodeList.FirstOrDefault(x => x.LookupValue == organisationDetail?.CCGOdsCode)?.LinkedLookupId.ToString() },
+                new SiteAttribute() { SiteAttributeName = "OdsCode", SiteAttributeValue = siteDefinition.SiteOdsCode },
+                new SiteAttribute() { SiteAttributeName = "SelectedSupplier", SiteAttributeValue = _supplierList.FirstOrDefault(x => x.LookupValue == supplierDetail?.Organisation?.Name)?.LookupId.ToString() },                
+                new SiteAttribute() { SiteAttributeName = "IsStructuredEnabled", SiteAttributeValue = siteDefinition.IsStructuredEnabled.ToString() },
+                new SiteAttribute() { SiteAttributeName = "IsAppointmentEnabled", SiteAttributeValue = siteDefinition.IsAppointmentEnabled.ToString() },
+                new SiteAttribute() { SiteAttributeName = "IsHtmlEnabled", SiteAttributeValue = siteDefinition.IsHtmlEnabled.ToString() },
+                new SiteAttribute() { SiteAttributeName = "IsSendDocumentEnabled", SiteAttributeValue = siteDefinition.IsSendDocumentEnabled.ToString() }
             };
             return siteDefinition;
         }
@@ -112,10 +104,10 @@ namespace gpconnect_user_portal.Services
                 {
                     var tokenSource = new CancellationTokenSource();
                     var token = tokenSource.Token;
-                    var response = await _fhirRequestExecution.ExecuteFhirQuery<CCG>(query.QueryText, token);
+                    var response = await _fhirRequestExecution.ExecuteFhirQuery<CCGs>(query.QueryText, token);
                     if (response != null)
                     {
-                        await SynchroniseOrganisations(response.Organisations);
+                        await SynchroniseCCGs(response.CCG);
                     }
                 }
                 return Task.CompletedTask;
@@ -126,21 +118,14 @@ namespace gpconnect_user_portal.Services
             }
         }
 
-        private async Task SynchroniseOrganisations(List<DTO.Response.Reference.Organisation> organisations)
+        private async Task SynchroniseCCGs(List<CCGDetail> CCGs)
         {
-            var query = "reference.synchronise_organisation";
+            var query = "reference.synchronise_ccgs";
             var parameters = new DynamicParameters();
-            foreach (var organisation in organisations)
+            foreach (var ccg in CCGs)
             {
-                parameters.Add("_ods_code", organisation.OdsCode, DbType.String, ParameterDirection.Input);
-                parameters.Add("_organisation_name", organisation.Name, DbType.String, ParameterDirection.Input);
-                parameters.Add("_org_status", organisation.Status, DbType.String, ParameterDirection.Input);
-                parameters.Add("_org_record_class", organisation.OrgRecordClass, DbType.String, ParameterDirection.Input);
-                parameters.Add("_last_change_date", organisation.LastChangeDate, DbType.DateTime, ParameterDirection.Input);
-                parameters.Add("_primary_role_description", organisation.PrimaryRoleDescription, DbType.String, ParameterDirection.Input);
-                parameters.Add("_primary_role_id", organisation.PrimaryRoleId, DbType.String, ParameterDirection.Input);
-                parameters.Add("_organisation_link", organisation.OrgLink, DbType.String, ParameterDirection.Input);
-                parameters.Add("_postcode", organisation.Postcode, DbType.String, ParameterDirection.Input);
+                parameters.Add("_ods_code", ccg.OdsCode, DbType.String, ParameterDirection.Input);
+                parameters.Add("_organisation_name", ccg.OrganisationName, DbType.String, ParameterDirection.Input);
                 await _dataService.ExecuteQuery(query, parameters);
             }
         }

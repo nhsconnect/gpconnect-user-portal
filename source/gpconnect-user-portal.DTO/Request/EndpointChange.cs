@@ -8,6 +8,6 @@ namespace gpconnect_user_portal.DTO.Request
         public DateTime? SearchDateFrom { get; set; }
         public DateTime? SearchDateTo { get; set; }
         public int SiteDefinitionStatusIdLowerBand { get; set; }
-        public int SiteDefinitionStatusIdUpperBand { get; set; }
+        public int? SiteDefinitionStatusIdUpperBand { get; set; }
     }
 }

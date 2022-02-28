@@ -6,15 +6,19 @@ namespace gpconnect_user_portal.Models
     public class EndpointDataSharingAgreementContactDetails
     {
         [Required(ErrorMessageResourceName = "ContactName", ErrorMessageResourceType = typeof(ErrorMessageResources))]
-        [Display(Name = "ContactName", ResourceType = typeof(DataFieldNameResources))]
+        [Display(Name = "DataSharingAgreementContactName", ResourceType = typeof(DataFieldNameResources))]
         public string DataSharingAgreementContactName { get; set; }
 
         [Required(ErrorMessageResourceName = "ContactEmailAddress", ErrorMessageResourceType = typeof(ErrorMessageResources))]
-        [Display(Name = "ContactEmailAddress", ResourceType = typeof(DataFieldNameResources))]
+        [Display(Name = "DataSharingAgreementContactEmailAddress", ResourceType = typeof(DataFieldNameResources))]
         public string DataSharingAgreementContactEmailAddress { get; set; }
 
         [Required(ErrorMessageResourceName = "ContactTelephone", ErrorMessageResourceType = typeof(ErrorMessageResources))]
-        [Display(Name = "ContactTelephone", ResourceType = typeof(DataFieldNameResources))]
+        [Display(Name = "DataSharingAgreementContactTelephone", ResourceType = typeof(DataFieldNameResources))]
         public string DataSharingAgreementContactTelephone { get; set; }
+
+        [Range(typeof(bool), "true", "true", ErrorMessageResourceName = "DataSharingAgreementConfirmation", ErrorMessageResourceType = typeof(ErrorMessageResources))]
+        [Display(Name = "DataSharingAgreementConfirmation", ResourceType = typeof(DataFieldNameResources))]
+        public bool DataSharingAgreementConfirmation { get; set; }
     }
 }

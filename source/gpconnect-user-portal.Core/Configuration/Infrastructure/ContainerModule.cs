@@ -1,4 +1,6 @@
 ﻿using Autofac;
+using gpconnect_user_portal.Core.Configuration.Infrastructure.Authentication;
+using gpconnect_user_portal.Core.Configuration.Infrastructure.Authentication.Interfaces;
 using gpconnect_user_portal.Core.Configuration.Infrastructure.Logging.Interfaces;
 using gpconnect_user_portal.Core.Configuration.Logging;
 using gpconnect_user_portal.DAL;
@@ -12,6 +14,7 @@ namespace gpconnect_user_portal.Core.Configuration.Infrastructure
     {
         protected override void Load(ContainerBuilder containerBuilder)
         {
+            containerBuilder.RegisterType<UserAuthentication>().As<IUserAuthentication>().InstancePerLifetimeScope();
             containerBuilder.RegisterType<FhirRequestExecution>().As<IFhirRequestExecution>().InstancePerLifetimeScope();
             containerBuilder.RegisterType<ConfigurationService>().As<IConfigurationService>().InstancePerLifetimeScope();
             containerBuilder.RegisterType<DataService>().As<IDataService>().InstancePerLifetimeScope();
@@ -20,7 +23,7 @@ namespace gpconnect_user_portal.Core.Configuration.Infrastructure
             containerBuilder.RegisterType<CoreService>().As<ICoreService>().InstancePerLifetimeScope();
             containerBuilder.RegisterType<EmailService>().As<IEmailService>().InstancePerLifetimeScope();
             containerBuilder.RegisterType<QueryService>().As<IQueryService>().InstancePerLifetimeScope();
-            containerBuilder.RegisterType<ReportingService>().As<IReportingService>().InstancePerLifetimeScope();
+            containerBuilder.RegisterType<ExportService>().As<IExportService>().InstancePerLifetimeScope();
             containerBuilder.RegisterType<LogService>().As<ILogService>().InstancePerLifetimeScope();
             containerBuilder.RegisterType<AggregateService>().As<IAggregateService>().InstancePerLifetimeScope();
             containerBuilder.RegisterType<LoggerManager>().As<ILoggerManager>().SingleInstance();

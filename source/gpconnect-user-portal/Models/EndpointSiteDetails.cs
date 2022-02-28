@@ -32,16 +32,7 @@ namespace gpconnect_user_portal.Models
         [Display(Name = "SelectedCCGNameIfApplicable", ResourceType = typeof(DataFieldNameResources))]
         public IEnumerable<SelectListItem> CCGNames { get; set; }
 
-        [Display(Name = "SelectedCCGOdsCodeIfApplicable", ResourceType = typeof(DataFieldNameResources))]
-        public IEnumerable<SelectListItem> CCGOdsCodes { get; set; }
-
         [Display(Name = "SelectedCCGName", ResourceType = typeof(DataFieldNameResources))]
         public string SelectedCCGName { get; set; }
-
-        [Display(Name = "SelectedCCGOdsCode", ResourceType = typeof(DataFieldNameResources))]
-        public string SelectedCCGOdsCode { get; set; }
-
-        
-
     }
 }

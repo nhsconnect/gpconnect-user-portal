@@ -1,0 +1,6 @@
+﻿<div class="nhsuk-warning-callout">
+    <h3 class="nhsuk-warning-callout__label">Access to @Model.ApplicationName</h3>
+    <p>This application is restricted to registered users of the NHS with specific access to @Model.ApplicationName.</p>
+    <p>You must be granted Admin priviledges to be able to use it.</p>
+    <p>@Html.Raw($"To obtain admin access, please email {Model.GetAccessEmailAddressLink}")</p>
+</div>

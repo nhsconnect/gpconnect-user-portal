@@ -1,4 +1,6 @@
-﻿using gpconnect_user_portal.DTO.Response.Configuration;
+﻿using gpconnect_user_portal.Core.Configuration.Infrastructure.Authentication.Interfaces;
+using gpconnect_user_portal.DTO.Response.Configuration;
+using gpconnect_user_portal.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
@@ -27,6 +29,7 @@ namespace gpconnect_user_portal.Core.Configuration.Infrastructure.Authentication
                 options.DefaultChallengeScheme = _ssoConfig.ChallengeScheme;
             }).AddCookie(options =>
             {
+                options.Events.OnRedirectToAccessDenied = PrincipalValidator.RedirectAsync;
                 options.Cookie.HttpOnly = false;
                 options.LoginPath = "/Public/Index";
                 options.SlidingExpiration = true;
@@ -64,11 +67,18 @@ namespace gpconnect_user_portal.Core.Configuration.Infrastructure.Authentication
                             context.HandleResponse();
                             return Task.CompletedTask;
                         },
+                        OnTokenValidated = context =>
+                        {
+                            //var applicationService = context.HttpContext.RequestServices.GetRequiredService<IApplicationService>();
+                            var userAuthentication = context.HttpContext.RequestServices.GetRequiredService<IUserAuthentication>();
+                            var tokenValidation = userAuthentication.ExecutionTokenValidation(context);
+                            return tokenValidation;
+                        },
                         OnAuthenticationFailed = context =>
                         {
                             if (context.Exception == null)
                             {
-                                context.Response.Redirect("/AccessDenied");
+                                context.Response.Redirect("/");
                             }
                             context.Response.Redirect("/Error");
                             context.HandleResponse();

@@ -14,6 +14,7 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="Npgsql" Version="6.0.1" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.3" />
+    <PackageReference Include="System.Resources.ResourceManager" Version="4.3.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -21,6 +22,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Resources\ReportFieldNameResources.Designer.cs">
+      <DependentUpon>ReportFieldNameResources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
     <Compile Update="Resources\DataFieldNameResources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -39,6 +45,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Update="Resources\ReportFieldNameResources.resx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <LastGenOutput>ReportFieldNameResources.Designer.cs</LastGenOutput>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Resources\DataFieldNameResources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>DataFieldNameResources.Designer.cs</LastGenOutput>

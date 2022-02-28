@@ -12,7 +12,6 @@
             <div class="nhsuk-card__content nhsuk-card__content--feature">
                 <h2 class="nhsuk-card__heading nhsuk-card__heading--feature nhsuk-heading-m">GP Connect Products</h2>
                 <div class="nhsuk-hint" id="input-hint-recordaccess">* Which products do you want to enable for your site?</div>
-
                 @if (supplierProductCapability.IsHtmlEnabled)
                 {
                     var recordAccessHtmlView = Model.GetEnumValue<RecordAccessLevel>("EndpointRegistration.EndpointSupplierProductCapability.RecordAccessHtmlView");
@@ -100,40 +99,40 @@
                 }
                 @if (supplierProductCapability.IsAppointmentEnabled)
                 {
-                    var recordAccessAppointment = Model.GetEnumValue<RecordAccessLevel>("EndpointRegistration.EndpointSupplierProductCapability.Appointment");
-                    var recordAccessAppointmentInvalid = Model.ModelState["EndpointRegistration.EndpointSupplierProductCapability.Appointment"]?.ValidationState == ModelValidationState.Invalid;
+                    var recordAccessAppointment = Model.GetEnumValue<RecordAccessLevel>("EndpointRegistration.EndpointSupplierProductCapability.Appointments");
+                    var recordAccessAppointmentInvalid = Model.ModelState["EndpointRegistration.EndpointSupplierProductCapability.Appointments"]?.ValidationState == ModelValidationState.Invalid;
 
                     <div class="nhsuk-form-group@(recordAccessAppointmentInvalid ? " nhsuk-form-group--error": string.Empty)">
                         <fieldset class="nhsuk-fieldset" aria-describedby="example-hint">
                             @if (recordAccessAppointmentInvalid)
                             {
-                                <span asp-validation-for="EndpointRegistration.EndpointSupplierProductCapability.Appointment" class="nhsuk-error-message"></span>
+                                <span asp-validation-for="EndpointRegistration.EndpointSupplierProductCapability.Appointments" class="nhsuk-error-message"></span>
                             }
-                            <legend class="nhsuk-fieldset__legend nhsuk-fieldset__legend--m">@Html.DisplayNameFor(model => model.EndpointRegistration.EndpointSupplierProductCapability.Appointment)</legend>
+                            <legend class="nhsuk-fieldset__legend nhsuk-fieldset__legend--m">@Html.DisplayNameFor(model => model.EndpointRegistration.EndpointSupplierProductCapability.Appointments)</legend>
                             <div class="nhsuk-radios nhsuk-radios--inline">
                                 <div class="nhsuk-radios__item">
-                                    <input class="nhsuk-radios__input" novalidate asp-for="EndpointRegistration.EndpointSupplierProductCapability.Appointment" checked="@(recordAccessAppointment == @RecordAccessLevel.None)" value="@RecordAccessLevel.None" type="radio">
-                                    <label asp-for="EndpointRegistration.EndpointSupplierProductCapability.Appointment" class="nhsuk-label nhsuk-radios__label">None</label>
+                                    <input class="nhsuk-radios__input" novalidate asp-for="EndpointRegistration.EndpointSupplierProductCapability.Appointments" checked="@(recordAccessAppointment == @RecordAccessLevel.None)" value="@RecordAccessLevel.None" type="radio">
+                                    <label asp-for="EndpointRegistration.EndpointSupplierProductCapability.Appointments" class="nhsuk-label nhsuk-radios__label">None</label>
                                 </div>
                                 @if (supplierProductCapability.EnabledSupplierProductCapability.IsProviderAssuredForAppointment)
                                 {
                                     <div class="nhsuk-radios__item">
-                                        <input class="nhsuk-radios__input" novalidate asp-for="EndpointRegistration.EndpointSupplierProductCapability.Appointment" checked="@(recordAccessAppointment == @RecordAccessLevel.Provider)" value="@RecordAccessLevel.Provider" type="radio">
-                                        <label asp-for="EndpointRegistration.EndpointSupplierProductCapability.Appointment" class="nhsuk-label nhsuk-radios__label">Provider</label>
+                                        <input class="nhsuk-radios__input" novalidate asp-for="EndpointRegistration.EndpointSupplierProductCapability.Appointments" checked="@(recordAccessAppointment == @RecordAccessLevel.Provider)" value="@RecordAccessLevel.Provider" type="radio">
+                                        <label asp-for="EndpointRegistration.EndpointSupplierProductCapability.Appointments" class="nhsuk-label nhsuk-radios__label">Provider</label>
                                     </div>
                                 }
                                 @if (supplierProductCapability.EnabledSupplierProductCapability.IsConsumerAssuredForAppointment)
                                 {
                                     <div class="nhsuk-radios__item">
-                                        <input class="nhsuk-radios__input" novalidate asp-for="EndpointRegistration.EndpointSupplierProductCapability.Appointment" checked="@(recordAccessAppointment == @RecordAccessLevel.Consumer)" value="@RecordAccessLevel.Consumer" type="radio">
-                                        <label asp-for="EndpointRegistration.EndpointSupplierProductCapability.Appointment" class="nhsuk-label nhsuk-radios__label">Consumer</label>
+                                        <input class="nhsuk-radios__input" novalidate asp-for="EndpointRegistration.EndpointSupplierProductCapability.Appointments" checked="@(recordAccessAppointment == @RecordAccessLevel.Consumer)" value="@RecordAccessLevel.Consumer" type="radio">
+                                        <label asp-for="EndpointRegistration.EndpointSupplierProductCapability.Appointments" class="nhsuk-label nhsuk-radios__label">Consumer</label>
                                     </div>
                                 }
                                 @if (supplierProductCapability.EnabledSupplierProductCapability.IsBothAssuredForAppointment)
                                 {
                                     <div class="nhsuk-radios__item">
-                                        <input class="nhsuk-radios__input" novalidate asp-for="EndpointRegistration.EndpointSupplierProductCapability.Appointment" checked="@(recordAccessAppointment == @RecordAccessLevel.Both)" value="@RecordAccessLevel.Both" type="radio">
-                                        <label asp-for="EndpointRegistration.EndpointSupplierProductCapability.Appointment" class="nhsuk-label nhsuk-radios__label">Both</label>
+                                        <input class="nhsuk-radios__input" novalidate asp-for="EndpointRegistration.EndpointSupplierProductCapability.Appointments" checked="@(recordAccessAppointment == @RecordAccessLevel.Both)" value="@RecordAccessLevel.Both" type="radio">
+                                        <label asp-for="EndpointRegistration.EndpointSupplierProductCapability.Appointments" class="nhsuk-label nhsuk-radios__label">Both</label>
                                     </div>
                                 }
                             </div>
@@ -182,6 +181,15 @@
                         </fieldset>
                     </div>
                 }
+                <div class="nhsuk-form-group@(useCaseDescriptionInvalid ? " nhsuk-form-group--error": string.Empty)">
+                    <label asp-for="EndpointRegistration.EndpointSupplierProductCapability.UseCaseDescription" class="nhsuk-label"></label>
+                    <div class="nhsuk-hint" id="input-hint-usecasedescription">* Enter the use case description of the chosen product</div>
+                    @if (useCaseDescriptionInvalid)
+                    {
+                        <span asp-validation-for="EndpointRegistration.EndpointSupplierProductCapability.UseCaseDescription" class="nhsuk-error-message"></span>
+                    }
+                    <input class="nhsuk-input@(useCaseDescriptionInvalid ? " nhsuk-input--error": string.Empty)" aria-describedby="input-hint-usecasedescription" novalidate asp-for="EndpointRegistration.EndpointSupplierProductCapability.UseCaseDescription" type="search">
+                </div>
             </div>
         </div>
     </div>

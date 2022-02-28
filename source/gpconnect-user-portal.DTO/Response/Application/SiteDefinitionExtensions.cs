@@ -1,5 +1,5 @@
 ﻿using gpconnect_user_portal.DTO.Response.Application.Search;
-using System.Linq;
+using System;
 
 namespace gpconnect_user_portal.Helpers
 {
@@ -9,7 +9,7 @@ namespace gpconnect_user_portal.Helpers
             searchResultEntry switch
             {
                 null => string.Empty,
-                _ => searchResultEntry.SiteAttributesDictionary.FirstOrDefault(x => x.Key == siteAttributeName).Value
+                _ => Array.Find(searchResultEntry.SiteAttributes, element => element.Contains(siteAttributeName))?.Split(":")[1]
             };
     }
 }

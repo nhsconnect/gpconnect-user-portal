@@ -5,6 +5,6 @@ namespace gpconnect_user_portal.Services.Interfaces
 {
     public interface IEmailService
     {
-        Task SendSiteNotificationEmail(EmailDefinition emailDefinition);
+        Task SendSiteNotificationEmail(int siteDefinitionStatus, EmailDefinition emailDefinition);
     }
 }

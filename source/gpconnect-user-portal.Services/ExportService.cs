@@ -1,30 +1,40 @@
 ﻿using DocumentFormat.OpenXml;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Spreadsheet;
-using gpconnect_user_portal.DAL.Interfaces;
+using gpconnect_user_portal.DAL.Resources;
+using gpconnect_user_portal.DTO.Request;
 using gpconnect_user_portal.Helpers;
 using gpconnect_user_portal.Services.Interfaces;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using Microsoft.Net.Http.Headers;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Linq;
+using System.Resources;
+using System.Threading.Tasks;
 
 namespace gpconnect_user_portal.Services
 {
-    public class ReportingService : IReportingService
+    public class ExportService : IExportService
     {
-        private readonly IDataService _dataService;
-        private readonly IHttpContextAccessor _context;
         private string _reportName;
+        private readonly ResourceManager _resourceManager; 
+        private readonly IQueryService _queryService;
 
-        public ReportingService(ILogger<ReportingService> logger, IDataService dataService, IHttpContextAccessor context)
+        public ExportService(IQueryService queryService)
         {
-            _context = context;
-            _dataService = dataService;
+            _queryService = queryService; 
+            _resourceManager = new ResourceManager("gpconnect_user_portal.DAL.Resources.ReportFieldNameResources", typeof(ReportFieldNameResources).Assembly);
+        }
+
+        public async Task<DataTable> GetSitesForExport(SearchRequest searchRequest = null)
+        {
+            var sites = await _queryService.GetSites(searchRequest);
+            var json = sites.SearchResultEntries.ConvertObjectToJsonData();
+            var dataTable = json.ConvertJsonDataToDataTable();
+            return ManipulateExportedColumns(dataTable);
         }
 
         public MemoryStream CreateReport(DataTable result, string reportName = "")
@@ -83,6 +93,7 @@ namespace gpconnect_user_portal.Services
         private Columns BuildColumns(DataTable result)
         {
             var columns = new Columns();
+            var dataRow = result.Rows[0];
             for (var i = 0; i < result.Columns.Count; i++)
             {
                 var maxColumnLength = result.AsEnumerable().Max(row => row.Field<object>(result.Columns[i].ColumnName)?.ToString()?.Length);
@@ -108,7 +119,7 @@ namespace gpconnect_user_portal.Services
 
                 for (var j = 0; j < dataRow.ItemArray.Length; j++)
                 {
-                    var cellValue = dataRow.ItemArray[j]?.ToString();
+                    var cellValue = dataRow.ItemArray[j]?.ToString().Trim().StringToYesNo();
                     var cell = new Cell
                     {
                         DataType = cellValue.GetCellDataType(),
@@ -128,12 +139,18 @@ namespace gpconnect_user_portal.Services
                 var column = new Cell
                 {
                     DataType = CellValues.String,
-                    CellValue = new CellValue(dataColumnCollection[j].ColumnName),
+                    CellValue = new CellValue(GetColumnName(dataColumnCollection[j].ColumnName)),
                     StyleIndex = 2
                 };
                 headerRow.AppendChild(column);
             }
             sheetData.AppendChild(headerRow);
+        }
+
+        private string GetColumnName(string columnName)
+        {
+            _resourceManager.IgnoreCase = true;
+            return StringExtensions.Coalesce(_resourceManager.GetString(columnName), columnName);
         }
 
         private void BuildWorksheetHeader(SheetData sheetData)
@@ -161,6 +178,53 @@ namespace gpconnect_user_portal.Services
 
             var row3 = new Row { Height = 30 };
             sheetData.AppendChild(row3);
+        }
+
+        private DataTable ManipulateExportedColumns(DataTable dataTable)
+        {
+            var lastColumnIndex = dataTable.Columns.Count - 1;
+            AddDataRows(dataTable, lastColumnIndex, AddColumns(dataTable));
+            return dataTable;
+        }
+
+        private void AddDataRows(DataTable dataTable, int lastColumnAddedIndex, Dictionary<string, string> appendedDataColumns)
+        {
+            for (var k = 0; k < dataTable.Rows.Count; k++)
+            {   
+                foreach(KeyValuePair<string, string> appendedDataColumn in appendedDataColumns)
+                {
+                    dataTable.Rows[k].SetField(appendedDataColumn.Key, appendedDataColumn.Value);
+                }
+            }
+            dataTable.AcceptChanges();
+        }
+
+        private Dictionary<string, string> AddColumns(DataTable dataTable)
+        {
+            var firstDataRow = dataTable.Rows[0];
+            var dataRowCount = dataTable.Rows.Count;
+            var appendedDataColumns = new Dictionary<string, string>();
+            var deletedDataColumns = new List<int>();
+
+            for (var i = 0; i < dataTable.Columns.Count; i++)
+            {               
+                if (firstDataRow[i].GetType() == typeof(string[]))
+                {
+                    for (var j = 0; j < ((string[])firstDataRow[i]).Length; j++)
+                    {
+                        var columnName = ((string[])firstDataRow[i])[j].Split(":")?[0];
+                        appendedDataColumns.Add(columnName, ((string[])firstDataRow[i])[j].Split(":")?[1]);
+                        dataTable.Columns.Add(new DataColumn(columnName));
+                    }
+                    deletedDataColumns.Add(i);
+                }                
+            }
+            foreach (var columnIndex in deletedDataColumns)
+            {
+                dataTable.Columns.RemoveAt(columnIndex);
+            }
+            dataTable.AcceptChanges();
+            return appendedDataColumns;
         }
     }
 }

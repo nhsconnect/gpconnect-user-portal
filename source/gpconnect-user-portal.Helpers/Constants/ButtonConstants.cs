@@ -9,6 +9,9 @@
         public const string UPDATE = "Update";
         public const string CONTINUE = "Continue";
         public const string SUBMIT = "Submit";
+        public const string UPDATESPINE = "Update Spine";
+        public const string EDIT = "Edit";
+        public const string REJECT = "Reject";
         public const string FILTER = "Filter";
         public const string EXPORTASCSV = "Export as CSV";
         public const string CREATESITE = "Register new GP Connect site";

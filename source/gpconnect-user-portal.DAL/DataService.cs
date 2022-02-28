@@ -1,5 +1,6 @@
 ﻿using Dapper;
 using gpconnect_user_portal.DAL.Interfaces;
+using gpconnect_user_portal.DAL.Resources;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Npgsql;
@@ -8,6 +9,8 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Reflection;
+using System.Resources;
 using System.Threading.Tasks;
 
 namespace gpconnect_user_portal.DAL
@@ -16,11 +19,13 @@ namespace gpconnect_user_portal.DAL
     {
         private readonly ILogger<DataService> _logger;
         private readonly IConfiguration _configuration;
+        private readonly ResourceManager _resourceManager;
 
         public DataService(IConfiguration configuration, ILogger<DataService> logger)
         {
             _logger = logger;
             _configuration = configuration;
+            _resourceManager = new ResourceManager("gpconnect_user_portal.DAL.Resources.DataFieldNameResources", typeof(DataFieldNameResources).Assembly);
         }
 
         public async Task<List<T>> ExecuteSQLQuery<T>(string query) where T : class
@@ -83,7 +88,7 @@ namespace gpconnect_user_portal.DAL
             }
         }
 
-        public DataTable ExecuteQueryAndGetDataTable(string query, Dictionary<string, Guid> parameters)
+        public DataTable ExecuteQueryAndGetDataTable(string query, Dictionary<string, Guid> parameters, bool transposeDataFieldNames = true)
         {
             using NpgsqlConnection connection = new NpgsqlConnection(_configuration.GetConnectionString(ConnectionStrings.DefaultConnection));
             connection.Open();
@@ -116,8 +121,37 @@ namespace gpconnect_user_portal.DAL
                 {
                     connection.Close();
                 }
-                return _dt;
+                return transposeDataFieldNames ? TransposeFieldsWithDataFieldNames(_dt) : _dt;
             }
+        }
+
+        private DataTable TransposeFieldsWithDataFieldNames(DataTable sourceDataTable)
+        {
+            if (sourceDataTable.Columns.Contains("FieldName"))
+            {
+                var dataTable = sourceDataTable.AsEnumerable().Where(x => GetFieldColumnName(x.Field<string>("FieldName")) != null).CopyToDataTable();
+                foreach (var row in dataTable.AsEnumerable())
+                {
+                    row.SetField("FieldName", GetFieldColumnName(row.Field<string>("FieldName")));
+                }
+                return TransposeColumnNames(dataTable);
+            }
+            return TransposeColumnNames(sourceDataTable);
+        }
+
+        private DataTable TransposeColumnNames(DataTable dataTable)
+        {
+            for (var i = 0; i < dataTable.Columns.Count; i++)
+            {
+                dataTable.Columns[i].ColumnName = GetFieldColumnName(dataTable.Columns[i].ColumnName) ?? dataTable.Columns[i].ColumnName;
+            }
+            return dataTable;
+        }
+
+        private string GetFieldColumnName(string fieldColumnName)
+        {
+            _resourceManager.IgnoreCase = true;
+            return _resourceManager.GetString(fieldColumnName);
         }
     }
 }

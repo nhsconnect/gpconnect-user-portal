@@ -1,5 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
+﻿using gpconnect_user_portal.Helpers;
+using Microsoft.AspNetCore.Authorization;
 using System.Threading.Tasks;
 
 namespace gpconnect_user_portal.Core.Configuration.Infrastructure.Authentication
@@ -8,15 +8,13 @@ namespace gpconnect_user_portal.Core.Configuration.Infrastructure.Authentication
     {
         protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, AuthorisedUserRequirement requirement)
         {
-            var authFilterContext = context.Resource as DefaultHttpContext;
-            if (!context.User.Identity.IsAuthenticated)
+            if (context.User.Identity.IsAuthenticated && context.User.GetClaimValue("IsAdmin").StringToBoolean())
             {
-                authFilterContext.Response.Redirect("/Index");
-                context.Fail();
+                context.Succeed(requirement);
             }
             else
             {
-                context.Succeed(requirement);
+                context.Fail();
             }
             return Task.CompletedTask;
         }
