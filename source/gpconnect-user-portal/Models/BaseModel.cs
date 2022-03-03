@@ -24,8 +24,8 @@ namespace gpconnect_user_portal.Models
         {
             _aggregateService = aggregateService;
             _generalOptionsDelegate = generalOptionsDelegate;
-            _ccgOdsCodeList = _aggregateService.ReferenceService.GetLookup(Services.Enumerations.LookupType.CCGICBODSCode).Result;
-            _ccgNameList = _aggregateService.ReferenceService.GetLookup(Services.Enumerations.LookupType.CCGICBName).Result;
+            _ccgOdsCodeList = _aggregateService.ReferenceService.GetLookup((int)Services.Enumerations.LookupType.CCGICBODSCode).Result;
+            _ccgNameList = _aggregateService.ReferenceService.GetLookup((int)Services.Enumerations.LookupType.CCGICBName).Result;
         }
 
         public string ApplicationName => _generalOptionsDelegate.CurrentValue.ProductName;

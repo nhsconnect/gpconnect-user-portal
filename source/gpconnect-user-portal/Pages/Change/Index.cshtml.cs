@@ -1,9 +1,11 @@
 ﻿using gpconnect_user_portal.DTO.Request;
+using gpconnect_user_portal.Services.Enumerations;
 using gpconnect_user_portal.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace gpconnect_user_portal.Pages
 {
@@ -20,14 +22,28 @@ namespace gpconnect_user_portal.Pages
             _generalOptionsDelegate = generalOptionsDelegate;
         }
 
-        public IActionResult OnGet()
+        public async Task OnGetAsync()
         {
+            await PrepopulatePassedSearchValues();
+        }
+
+        private async Task<IActionResult> PrepopulatePassedSearchValues()
+        {
+            var queryString = HttpUtility.ParseQueryString(HttpContext.Request.QueryString.ToString());
+            ProviderOdsCode = queryString.Get("ProviderOdsCode");
+            ProviderName = queryString.Get("ProviderName");
+            SelectedCCGOdsCode = queryString.Get("SelectedCCGOdsCode");
+            SelectedCCGName = queryString.Get("SelectedCCGName");
+            if(IsValidSearch & !HasMultipleSearchParameters)
+            {
+                await GetSearchResults();
+            }
             return Page();
         }
 
         public async Task<IActionResult> OnPostSearchAsync()
         {
-            if (ModelState.IsValid && IsValidSearch & !HasMultipleSearchParamaters)
+            if (ModelState.IsValid && IsValidSearch & !HasMultipleSearchParameters)
             {
                 DisplaySearchInvalid = false;
                 await GetSearchResults();
@@ -55,7 +71,7 @@ namespace gpconnect_user_portal.Pages
                     CCGOdsCode = SelectedCCGOdsCode,
                     CCGName = SelectedCCGName
                 };
-                var searchResults = await _aggregateService.QueryService.GetSites(searchRequest);
+                var searchResults = await _aggregateService.QueryService.GetSites(SiteDefinitionStatus.Completed, searchRequest);
                 SearchResult = searchResults;
             }
             catch

@@ -9,5 +9,6 @@
         public string LookupTypeName { get; set; }
         public string LookupTypeDescription { get; set; }        
         public string LinkedLookupValue { get; set; }
+        public bool IsDisabled { get; set; }
     }
 }

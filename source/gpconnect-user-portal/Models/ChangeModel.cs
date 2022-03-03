@@ -21,9 +21,21 @@ namespace gpconnect_user_portal.Pages
         public string ProviderName { get; set; }
 
         public bool IsValidSearch => CheckForValidSearch();
-        public bool HasMultipleSearchParamaters => HasMultipleSearchParameters();
+        public bool HasMultipleSearchParameters => HasMultipleSearchValues();
 
-        private bool HasMultipleSearchParameters()
+        public string ReferrerUrl => GetReferrerQueryString();
+
+        private string GetReferrerQueryString()
+        {
+            var queryString = System.Web.HttpUtility.ParseQueryString(string.Empty);
+            if(ProviderOdsCode != null) queryString.Add("ProviderOdsCode", ProviderOdsCode);
+            if(ProviderName != null) queryString.Add("ProviderName", ProviderName);
+            if(SelectedCCGName != null) queryString.Add("SelectedCCGName", SelectedCCGName);
+            if(SelectedCCGOdsCode != null) queryString.Add("SelectedCCGOdsCode", SelectedCCGOdsCode);
+            return queryString.ToString();
+        }
+
+        private bool HasMultipleSearchValues()
         {
             var multipleSearchParametersEntered = new string[] { ProviderOdsCode, ProviderName, SelectedCCGName, SelectedCCGOdsCode };
             return multipleSearchParametersEntered.Count(s => !string.IsNullOrEmpty(s)) > 1;

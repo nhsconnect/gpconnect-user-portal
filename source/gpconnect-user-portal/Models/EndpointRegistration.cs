@@ -15,7 +15,7 @@
         public EndpointSiteDetails EndpointSiteDetails { get; set; }
         public EndpointSupplierDetails EndpointSupplierDetails { get; set; }
         public EndpointSupplierProductCapability EndpointSupplierProductCapability { get; set; }
-        public EndpointDataSharingAgreementContactDetails EndpointDataSharingAgreementContactDetails { get; set; }
+        public EndpointDataSharingAgreementContactDetails EndpointDataSharingAgreementContactDetails { get; set; }        
 
         public bool CanUpdateOrSubmit { get; set; }
 

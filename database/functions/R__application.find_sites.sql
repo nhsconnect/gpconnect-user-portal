@@ -2,9 +2,7 @@ drop function if exists application.find_sites;
 
 create function application.find_sites
 (
-	_site_name_attribute_name varchar(100),
-	_ccg_ods_code_attribute_name varchar(100),
-	_ccg_name_attribute_name varchar(100),
+	_site_definition_status smallint,
 	_html_query_filter_interaction varchar(100),
 	_structured_query_filter_interaction varchar(100),
 	_appointment_query_filter_interaction varchar(100),
@@ -22,7 +20,17 @@ returns table
 	site_unique_identifier uuid,
 	site_definition_status_id smallint,
 	site_interactions varchar(4000),
-	site_attributes_array text	
+	site_name varchar(4000),
+	selected_ccg_ods_code varchar(4000),
+	selected_ccg_name varchar(4000),
+	is_appointment_enabled boolean,
+	is_html_enabled boolean,
+	is_structured_enabled boolean,
+	is_send_document_enabled boolean,
+	site_postcode varchar(4000),
+	ods_code varchar(4000),
+	selected_supplier varchar(4000),
+	use_case_description varchar(4000)
 )
 as $$
 begin
@@ -30,12 +38,23 @@ begin
 	select
 		*
 	from (
-		select a.site_definition_id,
+		select 
+			a.site_definition_id,
 			a.site_ods_code,
 			a.site_unique_identifier,
 			a.site_definition_status_id,
 			a.site_interactions,
-			a.site_attributes 
+			a.sitename,
+			a.selectedccgodscode,
+			a.selectedccgname,
+			a.isappointmentenabled,
+			a.ishtmlenabled,
+			a.isstructuredenabled,
+			a.issenddocumentenabled,
+			a.sitepostcode,
+			a.odscode,
+			a.selectedsupplier,
+			a.usecasedescription
 		from (
 			select
 				sd.site_definition_id, 
@@ -43,13 +62,14 @@ begin
 				sd.site_unique_identifier,
 				sd.site_definition_status_id,
 				sd.site_interactions,
-				string_agg(sa.site_attribute_name || ':' || sa.site_attribute_value, ',' order by sa.site_attribute_name)::text site_attributes,
-				json_object_agg(sa.site_attribute_name, sa.site_attribute_value) site_attributes_json				
+				json_object_agg(sa.site_attribute_name, sa.site_attribute_value) site_attributes_json,
+				(json_populate_record(null::"application".site_attributes_type, json_object_agg(lower(sa.site_attribute_name), coalesce(l.lookup_value, sa.site_attribute_value)))).*
 			from
 				application.site_attribute sa
 				inner join application.site_definition sd on sa.site_definition_id = sd.site_definition_id
+				left outer join reference.lookup l on sa.site_attribute_value = l.lookup_id::varchar
 			where
-				sd.site_definition_status_id = 4
+				sd.site_definition_status_id = _site_definition_status
 			group by
 				sd.site_definition_id
 			order by
@@ -57,9 +77,9 @@ begin
 		) a
 		where
 			(_site_ods_code is null or a.site_ods_code ~* _site_ods_code) and
-			(_site_name is null or a.site_attributes_json->>_site_name_attribute_name ~* _site_name) and
-			(_ccg_ods_code is null or position(_ccg_ods_code in a.site_attributes_json->>_ccg_ods_code_attribute_name) > 0) and
-			(_ccg_name is null or position(_ccg_name in a.site_attributes_json->>_ccg_name_attribute_name) > 0)
+			(_site_name is null or a.sitename ~* _site_name) and
+			(_ccg_ods_code is null or position(_ccg_ods_code in a.selectedccgodscode) > 0) and
+			(_ccg_name is null or position(_ccg_name in a.selectedccgname) > 0)
 			) b
 		where case 
 			when _filter_by is null then 1=1

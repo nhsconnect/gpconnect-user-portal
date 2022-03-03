@@ -1,4 +1,4 @@
-﻿using gpconnect_user_portal.DAL.Resources;
+﻿using gpconnect_user_portal.Resources;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;

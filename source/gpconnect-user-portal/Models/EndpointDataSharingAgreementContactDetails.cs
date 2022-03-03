@@ -1,4 +1,4 @@
-﻿using gpconnect_user_portal.DAL.Resources;
+﻿using gpconnect_user_portal.Resources;
 using System.ComponentModel.DataAnnotations;
 
 namespace gpconnect_user_portal.Models

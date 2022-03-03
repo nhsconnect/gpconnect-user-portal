@@ -21,6 +21,8 @@ begin
 		from 
 			reference.lookup l
 			inner join reference.lookup_type lt on l.lookup_type_id = lt.lookup_type_id
+		where
+			lt.is_system = false
 		group by
 			l.lookup_type_id,
 			lt.lookup_type_name,

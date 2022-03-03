@@ -1,4 +1,5 @@
 ﻿using gpconnect_user_portal.Helpers.Constants;
+using gpconnect_user_portal.Resources;
 using Newtonsoft.Json;
 using System;
 using System.ComponentModel.DataAnnotations;
@@ -7,9 +8,10 @@ namespace gpconnect_user_portal.DTO.Response.Application.Search
 {
     public class SearchResultEntry
     {
+        [JsonIgnore]
         public int SiteDefinitionId { get; set; }
 
-        [Display(Name = DisplayConstants.SITEODSCODE)]
+        [Display(Name = "OdsCode", ResourceType = typeof(DataFieldNameResources))]
         public string SiteODSCode { get; set; }
 
         [JsonIgnore]
@@ -21,10 +23,24 @@ namespace gpconnect_user_portal.DTO.Response.Application.Search
         [JsonIgnore]
         public string SiteInteractions { get; set; }
 
+        public string SiteName { get; set; }
+        public string SelectedCCGOdsCode { get; set; }
+        public string SelectedCCGName { get; set; }
+        [JsonIgnore] 
+        public bool IsAppointmentEnabled { get; set; }
         [JsonIgnore]
-        public string SiteAttributesArray { get; set; }
-
-        public string[] SiteAttributes => SiteAttributesArray.Split(",");
+        public bool IsHtmlEnabled { get; set; }
+        [JsonIgnore]
+        public bool IsStructuredEnabled { get; set; }
+        [JsonIgnore]
+        public bool IsSendDocumentEnabled { get; set; }
+        [JsonIgnore]
+        public string SitePostcode { get; set; }
+        [JsonIgnore]
+        public string OdsCode { get; set; }
+        [JsonIgnore]
+        public string SelectedSupplier { get; set; }
+        public string UseCaseDescription { get; set; }
 
         [Display(Name = DisplayConstants.HASHTMLVIEW)]
         public bool HasHtmlView => SiteInteractions != null && SiteInteractions.Contains(SearchConstants.HtmlQueryFilterInteraction);

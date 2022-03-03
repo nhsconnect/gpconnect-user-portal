@@ -1,6 +1,6 @@
 ﻿using Dapper;
 using gpconnect_user_portal.DAL.Interfaces;
-using gpconnect_user_portal.DAL.Resources;
+using gpconnect_user_portal.Resources;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Npgsql;
@@ -25,7 +25,7 @@ namespace gpconnect_user_portal.DAL
         {
             _logger = logger;
             _configuration = configuration;
-            _resourceManager = new ResourceManager("gpconnect_user_portal.DAL.Resources.DataFieldNameResources", typeof(DataFieldNameResources).Assembly);
+            _resourceManager = new ResourceManager("gpconnect_user_portal.Resources.DataFieldNameResources", typeof(DataFieldNameResources).Assembly);
         }
 
         public async Task<List<T>> ExecuteSQLQuery<T>(string query) where T : class

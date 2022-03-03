@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\gpconnect-user-portal.Helpers\gpconnect-user-portal.Helpers.csproj" />
+    <ProjectReference Include="..\gpconnect-user-portal.Resources\gpconnect-user-portal.Resources.csproj" />
   </ItemGroup>
 
 </Project>

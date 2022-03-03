@@ -3,9 +3,9 @@ drop function if exists application.update_site_definition;
 create function application.update_site_definition
 (
 	_site_unique_identifier uuid,
-	_site_ods_code varchar(50),
-	_site_party_key varchar(50),
-	_site_asid varchar(50)
+	_site_ods_code varchar(50) default null,
+	_site_party_key varchar(50) default null,
+	_site_asid varchar(50) default null
 )
 returns table
 (
@@ -20,9 +20,9 @@ begin
 	update
 		application.site_definition sd
 	set
-		site_ods_code = _site_ods_code,
-		site_party_key = _site_party_key,
-		site_asid = _site_asid,
+		site_ods_code = coalesce(_site_ods_code, sd.site_ods_code),
+		site_party_key = coalesce(_site_party_key, sd.site_party_key),
+		site_asid = coalesce(_site_asid, sd.site_asid),
 		last_updated = now()
 	where
 		sd.site_unique_identifier = _site_unique_identifier;

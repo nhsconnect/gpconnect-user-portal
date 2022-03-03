@@ -7,7 +7,8 @@ create function application.add_site_definition
 	_site_party_key varchar(50),
 	_site_asid varchar(50),
 	_site_definition_status smallint,
-	_site_interactions varchar(4000) default null
+	_site_interactions varchar(4000) default null,
+	_master_site_unique_identifier uuid default null
 )
 returns table
 (
@@ -32,6 +33,7 @@ begin
 			sd.site_ods_code = _site_ods_code
 			and sd.site_party_key = _site_party_key
 			and sd.site_asid = _site_asid
+			and	sd.site_definition_status_id = _site_definition_status
 	)
 	then
 		insert into application.site_definition
@@ -42,7 +44,8 @@ begin
 			site_unique_identifier,
 			added_date,
 			site_definition_status_id,
-			site_interactions
+			site_interactions,
+			master_site_unique_identifier
 		)
 		values
 		(
@@ -52,7 +55,8 @@ begin
 			_site_unique_identifier,
 			now(),
 			_site_definition_status,
-			_site_interactions
+			_site_interactions,
+			_master_site_unique_identifier
 		)
 		returning
 			application.site_definition.site_definition_id
@@ -73,7 +77,8 @@ begin
 				site_asid, 
 				site_unique_identifier,
 				added_date,
-				site_definition_status_id
+				site_definition_status_id,
+				master_site_unique_identifier
 			)
 			values
 			(
@@ -82,7 +87,8 @@ begin
 				_site_asid,
 				_site_unique_identifier,
 				now(),
-				_site_definition_status
+				_site_definition_status,
+				_master_site_unique_identifier
 			)
 			returning
 				application.site_definition.site_definition_id
@@ -96,7 +102,8 @@ begin
 			where
 				sd.site_ods_code = _site_ods_code
 				and sd.site_party_key = _site_party_key
-				and sd.site_asid = _site_asid;
+				and sd.site_asid = _site_asid
+				and sd.site_definition_status_id = _site_definition_status;
 		end if;
 	end if;
 		

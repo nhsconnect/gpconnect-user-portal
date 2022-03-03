@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace gpconnect_user_portal.DAL.Resources {
+namespace gpconnect_user_portal.Resources {
     using System;
     
     
@@ -22,14 +22,14 @@ namespace gpconnect_user_portal.DAL.Resources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class DataFieldNameResources {
+    public class ReportFieldNameResources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal DataFieldNameResources() {
+        internal ReportFieldNameResources() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace gpconnect_user_portal.DAL.Resources {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("gpconnect_user_portal.DAL.Resources.DataFieldNameResources", typeof(DataFieldNameResources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("gpconnect_user_portal.Resources.ReportFieldNameResources", typeof(ReportFieldNameResources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -115,20 +115,74 @@ namespace gpconnect_user_portal.DAL.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Status.
+        ///   Looks up a localized string similar to Appointment Management?.
         /// </summary>
-        public static string EndpointChangeStatus {
+        public static string HasAppointment {
             get {
-                return ResourceManager.GetString("EndpointChangeStatus", resourceCulture);
+                return ResourceManager.GetString("HasAppointment", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Submitted.
+        ///   Looks up a localized string similar to Access Record: HTML?.
         /// </summary>
-        public static string EndpointChangeSubmitted {
+        public static string HasHtmlView {
             get {
-                return ResourceManager.GetString("EndpointChangeSubmitted", resourceCulture);
+                return ResourceManager.GetString("HasHtmlView", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Send Document?.
+        /// </summary>
+        public static string HasSendDocument {
+            get {
+                return ResourceManager.GetString("HasSendDocument", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Access Record: Structured?.
+        /// </summary>
+        public static string HasStructured {
+            get {
+                return ResourceManager.GetString("HasStructured", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Is Appointment Management Enabled?.
+        /// </summary>
+        public static string IsAppointmentEnabled {
+            get {
+                return ResourceManager.GetString("IsAppointmentEnabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Is Access Record: HTML Enabled?.
+        /// </summary>
+        public static string IsHtmlEnabled {
+            get {
+                return ResourceManager.GetString("IsHtmlEnabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Is Send Document Enabled?.
+        /// </summary>
+        public static string IsSendDocumentEnabled {
+            get {
+                return ResourceManager.GetString("IsSendDocumentEnabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Is Access Record: Structured Enabled?.
+        /// </summary>
+        public static string IsStructuredEnabled {
+            get {
+                return ResourceManager.GetString("IsStructuredEnabled", resourceCulture);
             }
         }
         
@@ -207,9 +261,9 @@ namespace gpconnect_user_portal.DAL.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Product Name.
         /// </summary>
-        public static string SelectedSupplierProduct {
+        public static string SelectedSupplier {
             get {
-                return ResourceManager.GetString("SelectedSupplierProduct", resourceCulture);
+                return ResourceManager.GetString("SelectedSupplier", resourceCulture);
             }
         }
         
@@ -232,11 +286,47 @@ namespace gpconnect_user_portal.DAL.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Site Definition ID.
+        /// </summary>
+        public static string SiteDefinitionId {
+            get {
+                return ResourceManager.GetString("SiteDefinitionId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Site Definition Status Id.
+        /// </summary>
+        public static string SiteDefinitionStatusId {
+            get {
+                return ResourceManager.GetString("SiteDefinitionStatusId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Site Interactions.
+        /// </summary>
+        public static string SiteInteractions {
+            get {
+                return ResourceManager.GetString("SiteInteractions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Site Name.
         /// </summary>
         public static string SiteName {
             get {
                 return ResourceManager.GetString("SiteName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Site ODS Code.
+        /// </summary>
+        public static string SiteOdsCode {
+            get {
+                return ResourceManager.GetString("SiteOdsCode", resourceCulture);
             }
         }
         
@@ -255,6 +345,15 @@ namespace gpconnect_user_portal.DAL.Resources {
         public static string SitePostcode {
             get {
                 return ResourceManager.GetString("SitePostcode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Site Unique Identifier.
+        /// </summary>
+        public static string SiteUniqueIdentifier {
+            get {
+                return ResourceManager.GetString("SiteUniqueIdentifier", resourceCulture);
             }
         }
         

@@ -13,6 +13,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="CsvHelper" Version="27.2.1" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="5.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.ViewFeatures" Version="2.2.0" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.13" />
@@ -23,6 +24,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\gpconnect-user-portal.Core\gpconnect-user-portal.Core.csproj" />
+    <ProjectReference Include="..\gpconnect-user-portal.DAL\gpconnect-user-portal.DAL.csproj" />
     <ProjectReference Include="..\gpconnect-user-portal.Services\gpconnect-user-portal.Services.csproj" />
   </ItemGroup>
 

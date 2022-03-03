@@ -1,4 +1,4 @@
-﻿using gpconnect_user_portal.DAL.Resources;
+﻿using gpconnect_user_portal.Resources;
 using gpconnect_user_portal.DTO.Response.Reference;
 using gpconnect_user_portal.Helpers.Constants;
 using gpconnect_user_portal.Helpers.Validators;
@@ -15,6 +15,8 @@ namespace gpconnect_user_portal.Models
         [Required(ErrorMessageResourceName = "SiteName", ErrorMessageResourceType = typeof(ErrorMessageResources))]
         [Display(Name = "SiteName", ResourceType = typeof(DataFieldNameResources))]
         public string SiteName { get; set; }
+
+        public bool CanEditEndpointSiteDetails { get; set; }
 
         [Required(ErrorMessageResourceName = "SitePostcode", ErrorMessageResourceType = typeof(ErrorMessageResources))]
         [RegularExpression(ValidationConstants.UPPERCASELETTERSANDNUMBERSANDSPACESONLY, ErrorMessageResourceName = "SitePostcode", ErrorMessageResourceType = typeof(ValidationMessageResources))]

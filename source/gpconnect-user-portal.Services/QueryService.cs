@@ -3,6 +3,7 @@ using gpconnect_user_portal.DAL.Interfaces;
 using gpconnect_user_portal.DTO.Request;
 using gpconnect_user_portal.Helpers;
 using gpconnect_user_portal.Helpers.Constants;
+using gpconnect_user_portal.Services.Enumerations;
 using gpconnect_user_portal.Services.Interfaces;
 using System.Collections.Generic;
 using System.Data;
@@ -19,13 +20,12 @@ namespace gpconnect_user_portal.Services
             _dataService = dataService;
         }
 
-        public async Task<DTO.Response.Application.Search.SearchResult> GetSites(SearchRequest searchRequest = null)
+        public async Task<DTO.Response.Application.Search.SearchResult> GetSites(SiteDefinitionStatus siteDefinitionStatus, SearchRequest searchRequest = null)
         {
             var query = "application.find_sites";
             var parameters = new DynamicParameters();
-            parameters.Add("_site_name_attribute_name", SearchConstants.SiteNameAttributeName, DbType.String, ParameterDirection.Input);
-            parameters.Add("_ccg_ods_code_attribute_name", SearchConstants.CCGOdsCodeAttributeName, DbType.String, ParameterDirection.Input);
-            parameters.Add("_ccg_name_attribute_name", SearchConstants.CCGNameAttributeName, DbType.String, ParameterDirection.Input);
+            
+            parameters.Add("_site_definition_status", (int)siteDefinitionStatus, DbType.Int16, ParameterDirection.Input);
             parameters.Add("_html_query_filter_interaction", SearchConstants.HtmlQueryFilterInteraction, DbType.String, ParameterDirection.Input);
             parameters.Add("_structured_query_filter_interaction", SearchConstants.StructuredQueryFilterInteraction, DbType.String, ParameterDirection.Input);
             parameters.Add("_appointment_query_filter_interaction", SearchConstants.AppointmentQueryFilterInteraction, DbType.String, ParameterDirection.Input);

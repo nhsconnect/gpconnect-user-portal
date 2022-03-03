@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace gpconnect_user_portal.DAL.Resources {
+namespace gpconnect_user_portal.Resources {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace gpconnect_user_portal.DAL.Resources {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("gpconnect_user_portal.DAL.Resources.ErrorMessageResources", typeof(ErrorMessageResources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("gpconnect_user_portal.Resources.ErrorMessageResources", typeof(ErrorMessageResources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -174,6 +174,15 @@ namespace gpconnect_user_portal.DAL.Resources {
         public static string SitePostcode {
             get {
                 return ResourceManager.GetString("SitePostcode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You must enter a value for the Lookup Value.
+        /// </summary>
+        public static string UpdateLookupValue {
+            get {
+                return ResourceManager.GetString("UpdateLookupValue", resourceCulture);
             }
         }
         

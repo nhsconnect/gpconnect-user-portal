@@ -65,7 +65,7 @@ namespace gpconnect_user_portal.Pages.Change
             }
             else
             {
-                await PopulateForm(EndpointRegistration.SiteUniqueIdentifier);
+                await PopulateForm();
             }
             return Page();
         }
@@ -96,8 +96,8 @@ namespace gpconnect_user_portal.Pages.Change
 
         private async Task<IActionResult> PopulateForm(string siteIdentifier = "")
         {
-            EndpointRegistration.EndpointSiteDetails.CCGNames = GetDropDown(Services.Enumerations.LookupType.CCGICBName);
-            EndpointRegistration.EndpointSupplierDetails.CareSettings = GetDropDown(Services.Enumerations.LookupType.CareSetting);
+            EndpointRegistration.EndpointSiteDetails.CCGNames = GetDropDown((int)Services.Enumerations.LookupType.CCGICBName);
+            EndpointRegistration.EndpointSupplierDetails.CareSettings = GetDropDown((int)Services.Enumerations.LookupType.CareSetting);
             EndpointRegistration.EndpointSupplierDetails.SupplierProducts = GetProductListWithSupplier(EndpointRegistration.EndpointSupplierDetails.SelectedSupplier);
 
             if (!string.IsNullOrEmpty(siteIdentifier))
@@ -113,11 +113,13 @@ namespace gpconnect_user_portal.Pages.Change
                     EndpointRegistration.EndpointSubmitterDetails.SubmitterContactEmailAddress = GetAttributeValue("SubmitterContactEmailAddress");
                     EndpointRegistration.EndpointSubmitterDetails.SubmitterContactTelephone = GetAttributeValue("SubmitterContactTelephone");
 
+                    EndpointRegistration.EndpointSiteDetails.CanEditEndpointSiteDetails = false;
+
                     EndpointRegistration.EndpointSiteDetails.SiteName = GetAttributeValue("SiteName");
                     EndpointRegistration.EndpointSiteDetails.SitePostcode = GetAttributeValue("SitePostcode");
                     EndpointRegistration.EndpointSiteDetails.OdsCode = GetAttributeValue("OdsCode");
                     EndpointRegistration.EndpointSiteDetails.NoOdsIssued = GetAttributeValue("NoOdsIssued").StringToBoolean();
-                    EndpointRegistration.EndpointSiteDetails.SelectedCCGName = GetAttributeValue("SelectedCCGName");
+                    EndpointRegistration.EndpointSiteDetails.SelectedCCGName = GetAttributeValue("SelectedCCGName", true);
 
                     EndpointRegistration.EndpointSupplierDetails.DisplayGpConnectProducts = false;
                     EndpointRegistration.EndpointSupplierDetails.SelectedCareSetting = Convert.ToInt16(GetAttributeValue("SelectedCareSetting"));
@@ -140,6 +142,10 @@ namespace gpconnect_user_portal.Pages.Change
                 {
                     return new NotFoundResult();
                 }
+            }
+            else
+            {
+                EndpointRegistration.EndpointSiteDetails.CanEditEndpointSiteDetails = true;
             }
             return Page();
         }
@@ -188,9 +194,9 @@ namespace gpconnect_user_portal.Pages.Change
             }
         }       
 
-        private IEnumerable<SelectListItem> GetDropDown(Services.Enumerations.LookupType lookupType, int selectedOption = 0)
+        private IEnumerable<SelectListItem> GetDropDown(int lookupTypeId, int selectedOption = 0)
         {
-            var lookup = _aggregateService.ReferenceService.GetLookup(lookupType).Result;
+            var lookup = _aggregateService.ReferenceService.GetLookup(lookupTypeId).Result;
             var options = lookup.Select(option => new SelectListItem() { Text = option.LookupValue, Value = option.LookupId.ToString(), Selected = selectedOption == option.LookupId }).ToList();
             options.Insert(0, new SelectListItem());
             return options;

@@ -8,6 +8,6 @@ namespace gpconnect_user_portal.Pages.Change
     {
         [BindProperty]
         public Models.EndpointRegistration EndpointRegistration { get; set; }
-        public string PageTitle => string.IsNullOrEmpty(SiteIdentifier) ? DisplayConstants.CHANGEREGISTERTITLE : DisplayConstants.CHANGEUPDATETITLE;
+        public string PageTitle => string.IsNullOrEmpty(EndpointRegistration.SiteUniqueIdentifier) ? DisplayConstants.CHANGEREGISTERTITLE : DisplayConstants.CHANGEUPDATETITLE;
     }
 }

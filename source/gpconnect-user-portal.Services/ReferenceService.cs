@@ -31,8 +31,8 @@ namespace gpconnect_user_portal.Services
             _fhirRequestExecution = fhirRequestExecution;
             _configurationService = configurationService;
             _dataService = dataService;
-            _ccgOdsCodeList = GetLookup(Enumerations.LookupType.CCGICBODSCode).Result;
-            _supplierList = GetLookup(Enumerations.LookupType.Supplier).Result;
+            _ccgOdsCodeList = GetLookup((int)Enumerations.LookupType.CCGICBODSCode).Result;
+            _supplierList = GetLookup((int)Enumerations.LookupType.Supplier).Result;
         }
 
         public async Task<List<LookupDataCountByType>> GetLookupDataCountByType()
@@ -144,33 +144,37 @@ namespace gpconnect_user_portal.Services
             return result;
         }
 
-        public async Task<List<Lookup>> GetLookup(Enumerations.LookupType lookupTypeId)
+        public async Task<List<Lookup>> GetLookup(int lookupTypeId)
         {
-            var query = "reference.get_lookup";
-            var parameters = new DynamicParameters();
-            parameters.Add("_lookup_type_id", (int)lookupTypeId, DbType.Int16, ParameterDirection.Input);
-            var result = await _dataService.ExecuteQuery<Lookup>(query, parameters);
-            return result;
+            if (lookupTypeId > 0)
+            {
+                var query = "reference.get_lookup";
+                var parameters = new DynamicParameters();
+                parameters.Add("_lookup_type_id", lookupTypeId, DbType.Int16, ParameterDirection.Input);
+                var result = await _dataService.ExecuteQuery<Lookup>(query, parameters);
+                return result;
+            }
+            return null;
         }
 
-        public async Task AddLookup(Enumerations.LookupType lookupTypeId, string lookupValue)
+        public async Task AddLookup(int lookupTypeId, string lookupValue)
         {
-            var query = "reference.get_lookup";
-            var parameters = new DynamicParameters();
-            parameters.Add("_lookup_type_id", (int)lookupTypeId, DbType.Int16, ParameterDirection.Input);
-            parameters.Add("_lookup_value", lookupValue, DbType.String, ParameterDirection.Input);
-            await _dataService.ExecuteQuery(query, parameters);
+            if (lookupTypeId > 0)
+            {
+                var query = "reference.get_lookup";
+                var parameters = new DynamicParameters();
+                parameters.Add("_lookup_type_id", lookupTypeId, DbType.Int16, ParameterDirection.Input);
+                parameters.Add("_lookup_value", lookupValue, DbType.String, ParameterDirection.Input);
+                await _dataService.ExecuteQuery(query, parameters);
+            }
         }
 
-        public async Task DisableLookup(int lookupId, DateTime? disableDate)
+        public async Task EnableDisableLookup(int lookupId, bool isDisabled = false)
         {
-            var query = "reference.disable_lookup";
+            var query = "reference.enable_disable_lookup";
             var parameters = new DynamicParameters();
             parameters.Add("_lookup_id", lookupId, DbType.Int16, ParameterDirection.Input);
-            if (disableDate != null)
-            {
-                parameters.Add("_disable_date", disableDate, DbType.DateTime, ParameterDirection.Input);
-            }
+            parameters.Add("_is_disabled", isDisabled, DbType.Boolean, ParameterDirection.Input);
             await _dataService.ExecuteQuery(query, parameters);
         }
 
@@ -192,6 +196,15 @@ namespace gpconnect_user_portal.Services
                 SupplierProductCapability = supplierProductCapabilities
             };
             return enabledSupplierProductCapability;
+        }
+
+        public async Task UpdateLookup(int lookupId, string lookupValue)
+        {
+            var query = "reference.update_lookup";
+            var parameters = new DynamicParameters();
+            parameters.Add("_lookup_id", lookupId, DbType.Int16, ParameterDirection.Input);
+            parameters.Add("_lookup_value", lookupValue, DbType.String, ParameterDirection.Input);
+            await _dataService.ExecuteQuery(query, parameters);
         }
     }
 }

@@ -1,8 +1,12 @@
-﻿using gpconnect_user_portal.DTO.Request;
+﻿using CsvHelper;
+using gpconnect_user_portal.DTO.Request;
+using gpconnect_user_portal.Services.Enumerations;
 using gpconnect_user_portal.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using System.IO;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace gpconnect_user_portal.Pages
@@ -47,7 +51,7 @@ namespace gpconnect_user_portal.Pages
         {
             try
             {
-                var searchResults = await _aggregateService.QueryService.GetSites(CreateSearchRequest());
+                var searchResults = await _aggregateService.QueryService.GetSites(SiteDefinitionStatus.Live, CreateSearchRequest());
                 SearchResult = searchResults;
             }
             catch

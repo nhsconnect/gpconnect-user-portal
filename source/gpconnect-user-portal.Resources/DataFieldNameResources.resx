@@ -118,45 +118,93 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Appointments" xml:space="preserve">
-    <value>You must select a value for Appointment Management</value>
+    <value>Appointment Management</value>
   </data>
-  <data name="ContactEmailAddress" xml:space="preserve">
-    <value>You must enter a value for Contact Email Address</value>
-  </data>
-  <data name="ContactName" xml:space="preserve">
-    <value>You must enter a value for Contact Name</value>
-  </data>
-  <data name="ContactTelephone" xml:space="preserve">
-    <value>You must enter a value for Contact Telephone</value>
+  <data name="Both" xml:space="preserve">
+    <value>Both</value>
   </data>
   <data name="DataSharingAgreementConfirmation" xml:space="preserve">
-    <value>You must agree to the Data Sharing Agreement</value>
+    <value>We agreed to be bound by the Data Sharing Agreement</value>
+  </data>
+  <data name="DataSharingAgreementContactEmailAddress" xml:space="preserve">
+    <value>Email Address of Information Governance Contact</value>
+  </data>
+  <data name="DataSharingAgreementContactName" xml:space="preserve">
+    <value>Name of Information Governance Contact</value>
+  </data>
+  <data name="DataSharingAgreementContactTelephone" xml:space="preserve">
+    <value>Telephone Number of Information Governance Contact</value>
+  </data>
+  <data name="EndpointChangeStatus" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="EndpointChangeSubmitted" xml:space="preserve">
+    <value>Submitted</value>
+  </data>
+  <data name="NoOdsIssued" xml:space="preserve">
+    <value>No ODS Issued</value>
   </data>
   <data name="OdsCode" xml:space="preserve">
-    <value>You must enter a value for ODS Code</value>
+    <value>ODS Code</value>
   </data>
   <data name="RecordAccessHtmlView" xml:space="preserve">
-    <value>You must select a value for Access Record: HTML</value>
+    <value>Access Record: HTML</value>
   </data>
   <data name="RecordAccessStructured" xml:space="preserve">
-    <value>You must select a value for Access Record: Structured</value>
+    <value>Access Record: Structured</value>
   </data>
   <data name="SelectedCareSetting" xml:space="preserve">
-    <value>You must select a value for Care Setting</value>
+    <value>Care Setting</value>
+  </data>
+  <data name="SelectedCCGName" xml:space="preserve">
+    <value>CCG/ICB Name</value>
+  </data>
+  <data name="SelectedCCGNameIfApplicable" xml:space="preserve">
+    <value>CCG/ICB (if applicable)</value>
+  </data>
+  <data name="SelectedCCGOdsCode" xml:space="preserve">
+    <value>CCG/ICB ODS Code</value>
+  </data>
+  <data name="SelectedSupplier" xml:space="preserve">
+    <value>Product Name</value>
   </data>
   <data name="SelectedSupplierProduct" xml:space="preserve">
-    <value>You must select a value for Product Name</value>
+    <value>Product Name</value>
   </data>
   <data name="SendDocument" xml:space="preserve">
-    <value>You must select a value for Send Document</value>
+    <value>Send Document</value>
+  </data>
+  <data name="SiteAsid" xml:space="preserve">
+    <value>Site ASID</value>
   </data>
   <data name="SiteName" xml:space="preserve">
-    <value>You must enter a value for Site Name</value>
+    <value>Site Name</value>
+  </data>
+  <data name="SitePartyKey" xml:space="preserve">
+    <value>Site Party Key</value>
   </data>
   <data name="SitePostcode" xml:space="preserve">
-    <value>You must enter a value for Site Postcode</value>
+    <value>Site Postcode</value>
+  </data>
+  <data name="Submitter" xml:space="preserve">
+    <value>Name of Submitter</value>
+  </data>
+  <data name="SubmitterContactEmailAddress" xml:space="preserve">
+    <value>Contact Email Address</value>
+  </data>
+  <data name="SubmitterContactName" xml:space="preserve">
+    <value>Name of Contact</value>
+  </data>
+  <data name="SubmitterContactTelephone" xml:space="preserve">
+    <value>Contact Telephone</value>
+  </data>
+  <data name="SubmitterHintText" xml:space="preserve">
+    <value>* Enter the name of the individual who is submitting these details</value>
   </data>
   <data name="UseCaseDescription" xml:space="preserve">
-    <value>You must enter a value for Use Case Description</value>
+    <value>Use Case Description</value>
+  </data>
+  <data name="UseCaseDescriptionHintText" xml:space="preserve">
+    <value>* Enter the use case description of the chosen product</value>
   </data>
 </root>

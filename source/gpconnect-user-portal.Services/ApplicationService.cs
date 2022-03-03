@@ -30,10 +30,15 @@ namespace gpconnect_user_portal.Services
 
         public Task<Task> AddSiteDefinitionsFromFeed(List<SiteDefinition> siteDefinitions)
         {
-            siteDefinitions.ForEach(async item =>
+            siteDefinitions.ForEach(async siteDefinition =>
             {
-                await AddSiteDefinitionAndAttributesFromFeed(item);
+                var masterSiteDefinition = await AddSiteDefinitionAndAttributesFromFeed(siteDefinition, SiteDefinitionStatus.Live);
+                
+                siteDefinition.SiteUniqueIdentifier = Guid.NewGuid();
+                siteDefinition.MasterSiteUniqueIdentifier = masterSiteDefinition.SiteUniqueIdentifier;
+                await AddSiteDefinitionAndAttributesFromFeed(siteDefinition, SiteDefinitionStatus.Completed);
             });
+
             return Task.FromResult(Task.CompletedTask);
         }
 
@@ -90,15 +95,25 @@ namespace gpconnect_user_portal.Services
             return result;
         }
 
-        private async Task<SiteDefinition> AddSiteDefinitionAndAttributesFromFeed(SiteDefinition siteDefinition)
+        private async Task<DTO.Response.Application.SiteDefinition> AddSiteDefinitionAndAttributesFromFeed(SiteDefinition siteDefinition, SiteDefinitionStatus siteDefinitionStatus)
         {
             var parameters = new DynamicParameters();
             parameters.Add("_site_unique_identifier", siteDefinition.SiteUniqueIdentifier, DbType.Guid, ParameterDirection.Input);
             parameters.Add("_site_ods_code", siteDefinition.SiteOdsCode, DbType.String, ParameterDirection.Input);
             parameters.Add("_site_party_key", siteDefinition.SitePartyKey, DbType.String, ParameterDirection.Input);
             parameters.Add("_site_asid", siteDefinition.SiteAsid, DbType.String, ParameterDirection.Input);            
-            parameters.Add("_site_definition_status", (int)SiteDefinitionStatus.Completed, DbType.Int16, ParameterDirection.Input);
+            parameters.Add("_site_definition_status", (int)siteDefinitionStatus, DbType.Int16, ParameterDirection.Input);
             parameters.Add("_site_interactions", siteDefinition.SiteInteractions, DbType.String, ParameterDirection.Input);
+
+            if(siteDefinition.MasterSiteUniqueIdentifier.HasValue)
+            {
+                parameters.Add("_master_site_unique_identifier", siteDefinition.MasterSiteUniqueIdentifier, DbType.Guid, ParameterDirection.Input);
+            }
+            else
+            {
+                parameters.Add("_master_site_unique_identifier", null, DbType.Guid, ParameterDirection.Input);
+            }
+
             var insertedSiteDefinition = await _dataService.ExecuteQueryFirstOrDefault<DTO.Response.Application.SiteDefinition>("application.add_site_definition", parameters);
 
             foreach (var siteAttribute in siteDefinition.SiteAttribute)
@@ -109,7 +124,7 @@ namespace gpconnect_user_portal.Services
                 parameters.Add("_site_attribute_value", siteAttribute.SiteAttributeValue, DbType.String, ParameterDirection.Input);
                 await _dataService.ExecuteQueryFirstOrDefault<DTO.Response.Application.SiteAttribute>("application.add_site_attribute", parameters);
             }
-            return siteDefinition;
+            return insertedSiteDefinition;
         }
 
         private async Task AddOrUpdateSiteAttributes(string query, Guid siteUniqueIdentifer, List<SiteAttribute> siteAttributes)
@@ -167,10 +182,7 @@ namespace gpconnect_user_portal.Services
         {
             var siteDefinition = new SiteDefinition()
             {
-                SiteOdsCode = siteDefinitionRegistration.EndpointSiteDetails.OdsCode,
-                SitePartyKey = null,
-                SiteAsid = null,
-                SiteInteractions = null
+                SiteOdsCode = siteDefinitionRegistration.EndpointSiteDetails.OdsCode
             };
 
             if (!string.IsNullOrEmpty(siteDefinitionRegistration.SiteUniqueIdentifier))
@@ -244,9 +256,10 @@ namespace gpconnect_user_portal.Services
             await UpdateSiteDefinitionStatus(siteDefinition.SiteUniqueIdentifier, SiteDefinitionStatus.Draft);
             var parameters = new DynamicParameters();
             parameters.Add("_site_unique_identifier", siteDefinition.SiteUniqueIdentifier, DbType.Guid, ParameterDirection.Input);
-            parameters.Add("_site_ods_code", siteDefinition.SiteOdsCode, DbType.String, ParameterDirection.Input);
-            parameters.Add("_site_party_key", siteDefinition.SitePartyKey, DbType.String, ParameterDirection.Input);
-            parameters.Add("_site_asid", siteDefinition.SiteAsid, DbType.String, ParameterDirection.Input);
+            parameters.Add("_site_ods_code", siteDefinition.SiteOdsCode ?? null, DbType.String, ParameterDirection.Input);
+            parameters.Add("_site_party_key", siteDefinition.SitePartyKey ?? null, DbType.String, ParameterDirection.Input);
+            parameters.Add("_site_asid", siteDefinition.SiteAsid ?? null, DbType.String, ParameterDirection.Input);
+
             return await AddOrUpdateSiteDefinition("application.update_site_definition", parameters, "application.add_site_attribute", siteDefinition);
         }
 

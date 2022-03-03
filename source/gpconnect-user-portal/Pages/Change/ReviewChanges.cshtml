@@ -118,9 +118,7 @@
     <div class="nhsuk-grid-column-full">
             @if (Model.CanUpdateOrSubmit)
             {
-                <a class="nhsuk-button nhsuk-button--secondary" href="/Change/Registration/@Model.SiteIdentifier" draggable="false">
-                        @ButtonConstants.UPDATE
-                </a>
+                <a class="nhsuk-button nhsuk-button--secondary" href="/Change/Registration/@Model.SiteIdentifier" draggable="false">@ButtonConstants.CHANGE</a>
                 <button class="nhsuk-button" asp-page-handler="SubmitChanges" asp-route-siteidentifier="@Model.SiteIdentifier" type="submit">@ButtonConstants.SUBMIT</button>
             }
     </div>

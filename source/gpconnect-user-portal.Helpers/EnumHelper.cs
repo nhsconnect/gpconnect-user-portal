@@ -24,9 +24,12 @@ namespace gpconnect_user_portal.Helpers
             return value;
         }
 
-        public static T ToEnum<T>(this string enumString)
+        public static T ToEnum<T>(this string enumString) where T : struct
         {
-            return (T)Enum.Parse(typeof(T), enumString);
+            T resultInputType = default(T);
+            if (!typeof(T).IsEnum) return default(T);
+            var isEnumParsed = Enum.TryParse(enumString, true, out resultInputType);
+            return resultInputType;
         }
     }
 }

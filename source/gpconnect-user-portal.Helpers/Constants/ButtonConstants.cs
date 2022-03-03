@@ -6,7 +6,9 @@
         public const string SEARCH = "Search";
         public const string CLEAR = "Clear";
         public const string CHANGE = "Change";
-        public const string UPDATE = "Update";
+        public const string SAVE = "Save";
+        public const string DISABLE = "Disable";
+        public const string ENABLE = "Enable";
         public const string CONTINUE = "Continue";
         public const string SUBMIT = "Submit";
         public const string UPDATESPINE = "Update Spine";

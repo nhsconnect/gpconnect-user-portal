@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace gpconnect_user_portal.DAL.Resources {
+namespace gpconnect_user_portal.Resources {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace gpconnect_user_portal.DAL.Resources {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("gpconnect_user_portal.DAL.Resources.ValidationMessageResources", typeof(ValidationMessageResources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("gpconnect_user_portal.Resources.ValidationMessageResources", typeof(ValidationMessageResources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
