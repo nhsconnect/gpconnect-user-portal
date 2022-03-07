@@ -11,6 +11,10 @@ The GP Connect End User Portal is a web application.
 - Docker
 - NHS UK frontend
 
+## High level architecture
+
+<img src="documentation/images/gpc-nationaldatasharingportal-high-level-architecture.png">
+
 ## User screens
 
 <img src="documentation/images/1.png">
@@ -23,10 +27,6 @@ The GP Connect End User Portal is a web application.
 <img src="documentation/images/8.png">
 <img src="documentation/images/9.png">
 <img src="documentation/images/10.png">
-
-## High level architecture
-
-<img src="documentation/images/gpc-nationaldatasharingportal-high-level-architecture.png">
 
 ## Build status
 
