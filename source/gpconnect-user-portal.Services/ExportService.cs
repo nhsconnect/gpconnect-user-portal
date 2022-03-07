@@ -31,7 +31,7 @@ namespace gpconnect_user_portal.Services
 
         public async Task<DataTable> GetSitesForExport(SearchRequest searchRequest = null)
         {            
-            var sites = await _queryService.GetSites(SiteDefinitionStatus.Live, searchRequest);
+            var sites = await _queryService.GetSites(SiteDefinitionStatus.Live, SiteDefinitionStatus.Live, searchRequest);
             var json = sites.SearchResultEntries.ConvertObjectToJsonData();
             var dataTable = json.ConvertJsonDataToDataTable();
             return dataTable;

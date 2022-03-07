@@ -20,12 +20,13 @@ namespace gpconnect_user_portal.Services
             _dataService = dataService;
         }
 
-        public async Task<DTO.Response.Application.Search.SearchResult> GetSites(SiteDefinitionStatus siteDefinitionStatus, SearchRequest searchRequest = null)
+        public async Task<DTO.Response.Application.Search.SearchResult> GetSites(SiteDefinitionStatus siteDefinitionStatusMin, SiteDefinitionStatus siteDefinitionStatusMax, SearchRequest searchRequest = null)
         {
             var query = "application.find_sites";
             var parameters = new DynamicParameters();
             
-            parameters.Add("_site_definition_status", (int)siteDefinitionStatus, DbType.Int16, ParameterDirection.Input);
+            parameters.Add("_site_definition_status_min", (int)siteDefinitionStatusMin, DbType.Int16, ParameterDirection.Input);
+            parameters.Add("_site_definition_status_max", (int)siteDefinitionStatusMax, DbType.Int16, ParameterDirection.Input);
             parameters.Add("_html_query_filter_interaction", SearchConstants.HtmlQueryFilterInteraction, DbType.String, ParameterDirection.Input);
             parameters.Add("_structured_query_filter_interaction", SearchConstants.StructuredQueryFilterInteraction, DbType.String, ParameterDirection.Input);
             parameters.Add("_appointment_query_filter_interaction", SearchConstants.AppointmentQueryFilterInteraction, DbType.String, ParameterDirection.Input);

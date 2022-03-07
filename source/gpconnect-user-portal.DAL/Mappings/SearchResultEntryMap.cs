@@ -23,6 +23,7 @@ namespace gpconnect_user_portal.DAL.Mappings
             Map(p => p.OdsCode).ToColumn("ods_code");
             Map(p => p.SelectedSupplier).ToColumn("selected_supplier");
             Map(p => p.UseCaseDescription).ToColumn("use_case_description");
+            Map(p => p.SiteDefinitionStatusName).ToColumn("site_definition_status_name");            
         }
     }
 }

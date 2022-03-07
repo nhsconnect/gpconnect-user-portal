@@ -51,7 +51,7 @@ namespace gpconnect_user_portal.Pages
         {
             try
             {
-                var searchResults = await _aggregateService.QueryService.GetSites(SiteDefinitionStatus.Live, CreateSearchRequest());
+                var searchResults = await _aggregateService.QueryService.GetSites(SiteDefinitionStatus.Live, SiteDefinitionStatus.Live, CreateSearchRequest());
                 SearchResult = searchResults;
             }
             catch

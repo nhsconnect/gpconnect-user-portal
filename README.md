@@ -6,7 +6,7 @@ The GP Connect End User Portal is a web application.
 
 ## Tech stack
 
-- C# / .NET 5.0
+- C# / .NET 6.0
 - ASP.NET
 - Docker
 - NHS UK frontend
@@ -23,6 +23,10 @@ The GP Connect End User Portal is a web application.
 <img src="documentation/images/8.png">
 <img src="documentation/images/9.png">
 <img src="documentation/images/10.png">
+
+## High level architecture
+
+<img src="documentation/images/gpc-nationaldatasharingportal-high-level-architecture.png">
 
 ## Build status
 

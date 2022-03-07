@@ -21,6 +21,9 @@ namespace gpconnect_user_portal.DTO.Response.Application.Search
         public int SiteDefinitionStatusId { get; set; }
 
         [JsonIgnore]
+        public string SiteDefinitionStatusName { get; set; }
+
+        [JsonIgnore]
         public string SiteInteractions { get; set; }
 
         public string SiteName { get; set; }

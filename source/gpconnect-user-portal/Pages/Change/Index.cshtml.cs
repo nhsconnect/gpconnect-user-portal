@@ -71,7 +71,7 @@ namespace gpconnect_user_portal.Pages
                     CCGOdsCode = SelectedCCGOdsCode,
                     CCGName = SelectedCCGName
                 };
-                var searchResults = await _aggregateService.QueryService.GetSites(SiteDefinitionStatus.Completed, searchRequest);
+                var searchResults = await _aggregateService.QueryService.GetSites(SiteDefinitionStatus.Draft, SiteDefinitionStatus.Completed, searchRequest);
                 SearchResult = searchResults;
             }
             catch
