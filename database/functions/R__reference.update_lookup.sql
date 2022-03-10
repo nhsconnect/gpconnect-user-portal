@@ -1,9 +1,9 @@
-drop function if exists reference.enable_disable_lookup;
+drop function if exists reference.update_lookup;
 
-create function reference.enable_disable_lookup
+create function reference.update_lookup
 (
 	_lookup_id smallint,
-	_is_disabled boolean
+	_lookup_value varchar(500)
 )
 returns void
 as $$
@@ -11,9 +11,8 @@ begin
 	update 
 		reference.lookup
 	set
-		disabled_date = case when _is_disabled then now() else null end
+		lookup_value = _lookup_value
 	where
 		lookup_id = _lookup_id;
 end;
 $$ language plpgsql;
-

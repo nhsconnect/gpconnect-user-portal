@@ -70,11 +70,47 @@ namespace gpconnect_user_portal.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Appointment Management Assurance.
+        /// </summary>
+        public static string AppointmentsAssurance {
+            get {
+                return ResourceManager.GetString("AppointmentsAssurance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Assurance Date.
+        /// </summary>
+        public static string AssuranceDate {
+            get {
+                return ResourceManager.GetString("AssuranceDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Awaiting Assurance.
+        /// </summary>
+        public static string AwaitingAssurance {
+            get {
+                return ResourceManager.GetString("AwaitingAssurance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Both.
         /// </summary>
         public static string Both {
             get {
                 return ResourceManager.GetString("Both", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Consumer.
+        /// </summary>
+        public static string Consumer {
+            get {
+                return ResourceManager.GetString("Consumer", resourceCulture);
             }
         }
         
@@ -133,6 +169,15 @@ namespace gpconnect_user_portal.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Access Record: HTML Assurance.
+        /// </summary>
+        public static string HTMLAssurance {
+            get {
+                return ResourceManager.GetString("HTMLAssurance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No ODS Issued.
         /// </summary>
         public static string NoOdsIssued {
@@ -147,6 +192,24 @@ namespace gpconnect_user_portal.Resources {
         public static string OdsCode {
             get {
                 return ResourceManager.GetString("OdsCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to * Enter the name of the product.
+        /// </summary>
+        public static string ProductName {
+            get {
+                return ResourceManager.GetString("ProductName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Provider.
+        /// </summary>
+        public static string Provider {
+            get {
+                return ResourceManager.GetString("Provider", resourceCulture);
             }
         }
         
@@ -205,7 +268,7 @@ namespace gpconnect_user_portal.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Product Name.
+        ///   Looks up a localized string similar to Supplier Name.
         /// </summary>
         public static string SelectedSupplier {
             get {
@@ -228,6 +291,15 @@ namespace gpconnect_user_portal.Resources {
         public static string SendDocument {
             get {
                 return ResourceManager.GetString("SendDocument", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Send Document Assurance.
+        /// </summary>
+        public static string SendDocumentAssurance {
+            get {
+                return ResourceManager.GetString("SendDocumentAssurance", resourceCulture);
             }
         }
         
@@ -264,6 +336,15 @@ namespace gpconnect_user_portal.Resources {
         public static string SitePostcode {
             get {
                 return ResourceManager.GetString("SitePostcode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Access Record: Structured Assurance.
+        /// </summary>
+        public static string StructuredAssurance {
+            get {
+                return ResourceManager.GetString("StructuredAssurance", resourceCulture);
             }
         }
         
@@ -327,6 +408,15 @@ namespace gpconnect_user_portal.Resources {
         public static string UseCaseDescriptionHintText {
             get {
                 return ResourceManager.GetString("UseCaseDescriptionHintText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Version.
+        /// </summary>
+        public static string Version {
+            get {
+                return ResourceManager.GetString("Version", resourceCulture);
             }
         }
     }

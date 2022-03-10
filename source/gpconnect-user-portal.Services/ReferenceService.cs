@@ -6,6 +6,7 @@ using gpconnect_user_portal.DTO.Response.Fhir;
 using gpconnect_user_portal.DTO.Response.Reference;
 using gpconnect_user_portal.Helpers;
 using gpconnect_user_portal.Services.Interfaces;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -185,11 +186,21 @@ namespace gpconnect_user_portal.Services
             return result;
         }
 
-        public async Task<EnabledSupplierProductCapability> GetSupplierProductCapabilities(int supplierProductId)
+        public async Task<List<SupplierProducts>> GetSupplierProducts(int supplierId)
+        {
+            var query = "reference.get_supplier_products";
+            var parameters = new DynamicParameters();
+            parameters.Add("_supplier_id", supplierId, DbType.Int16, ParameterDirection.Input);
+            var result = await _dataService.ExecuteQuery<SupplierProducts>(query, parameters);
+            return result;
+        }
+        
+        public async Task<EnabledSupplierProductCapability> GetSupplierProductCapabilities(int supplierProductId, bool includeNotEnabled = false)
         {
             var query = "reference.get_supplier_product_capabilities";
             var parameters = new DynamicParameters();
             parameters.Add("_supplier_product_id", supplierProductId, DbType.Int16, ParameterDirection.Input);
+            parameters.Add("_include_supplier_product_capabilities_not_enabled", includeNotEnabled, DbType.Boolean, ParameterDirection.Input);            
             var supplierProductCapabilities = await _dataService.ExecuteQuery<SupplierProductCapability>(query, parameters);
             var enabledSupplierProductCapability = new EnabledSupplierProductCapability()
             {
@@ -205,6 +216,27 @@ namespace gpconnect_user_portal.Services
             parameters.Add("_lookup_id", lookupId, DbType.Int16, ParameterDirection.Input);
             parameters.Add("_lookup_value", lookupValue, DbType.String, ParameterDirection.Input);
             await _dataService.ExecuteQuery(query, parameters);
+        }
+
+        public async Task UpdateSupplierProductCapabilities(string supplierProductCapabilitiesMatrix)
+        {
+            var supplierProductCapabilities = JsonConvert.DeserializeObject<DTO.Request.Reference.SupplierProductCapabilityMatrix>(supplierProductCapabilitiesMatrix);
+            var query = "reference.update_supplier_product_capabilities";
+            var parameters = new DynamicParameters();
+
+            foreach (var supplierProductCapability in supplierProductCapabilities.SupplierProductCapabilityDetailsModel)
+            {   
+                parameters.Add("_supplier_product_capability_id", supplierProductCapability.SupplierProductCapabilityId, DbType.Int16, ParameterDirection.Input);
+                parameters.Add("_supplier_id", supplierProductCapability.SupplierId, DbType.Int16, ParameterDirection.Input);
+                parameters.Add("_supplier_product_id", supplierProductCapability.SupplierProductId, DbType.Int16, ParameterDirection.Input);
+                parameters.Add("_product_capability_id", supplierProductCapability.ProductCapabilityId, DbType.Int16, ParameterDirection.Input);
+                parameters.Add("_assurance_date", supplierProductCapability.AssuranceDate, DbType.DateTime2, ParameterDirection.Input);
+                parameters.Add("_awaiting_assurance", supplierProductCapability.AwaitingAssurance, DbType.Boolean, ParameterDirection.Input);
+                parameters.Add("_provider_assured", supplierProductCapability.ProviderAssured, DbType.Boolean, ParameterDirection.Input);
+                parameters.Add("_consumer_assured", supplierProductCapability.ConsumerAssured, DbType.Boolean, ParameterDirection.Input);
+                parameters.Add("_capability_version", supplierProductCapability.CapabilityVersion, DbType.String, ParameterDirection.Input);
+                await _dataService.ExecuteQuery<SupplierProductCapability>(query, parameters);
+            }
         }
     }
 }

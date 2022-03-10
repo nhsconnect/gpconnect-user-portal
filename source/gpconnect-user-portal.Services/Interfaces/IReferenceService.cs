@@ -13,7 +13,9 @@ namespace gpconnect_user_portal.Services.Interfaces
         Task<List<Lookup>> GetLookups();
         Task<List<Lookup>> GetLookup(int lookupTypeId);
         Task<List<Lookup>> GetProductListWithSupplier();
-        Task<EnabledSupplierProductCapability> GetSupplierProductCapabilities(int supplierProductId);
+        Task<List<SupplierProducts>> GetSupplierProducts(int supplierId);
+        Task UpdateSupplierProductCapabilities(string supplierProductCapabilitiesData);
+        Task<EnabledSupplierProductCapability> GetSupplierProductCapabilities(int supplierProductId, bool includeNotEnabled = false);
         Task AddLookup(int lookupTypeId, string lookupValue);
         Task UpdateLookup(int lookupId, string lookupValue);
         Task EnableDisableLookup(int lookupTypeId, bool isDisabled = false);

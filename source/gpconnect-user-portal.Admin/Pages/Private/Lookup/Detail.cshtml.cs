@@ -25,7 +25,7 @@ namespace gpconnect_user_portal.Admin.Pages
         }
 
         private async Task<IActionResult> PopulatePage(int lookupTypeId)
-        {            
+        {
             var lookups = await _aggregateService.ReferenceService.GetLookup(lookupTypeId);
             if (lookups != null)
             {
@@ -50,15 +50,19 @@ namespace gpconnect_user_portal.Admin.Pages
 
         public async Task<IActionResult> OnPostUpdateLookupAsync(int lookupTypeId, int lookupId)
         {
+            ModelState.ClearValidationState("UpdateLookupValue");
+            ModelState.MarkFieldValid("UpdateLookupValue");
             UpdateLookupId = lookupId;
-            //await _aggregateService.ReferenceService.UpdateLookup(lookupId);
             return await PopulatePage(lookupTypeId);
         }
 
         public async Task<IActionResult> OnPostSaveLookupAsync(int lookupTypeId, int lookupId)
         {
-            UpdateLookupId = null;
-            await _aggregateService.ReferenceService.UpdateLookup(lookupId, UpdateLookupValue);
+            if (ModelState.IsValid)
+            {
+                UpdateLookupId = null;
+                await _aggregateService.ReferenceService.UpdateLookup(lookupId, UpdateLookupValue);                
+            }
             return await PopulatePage(lookupTypeId);
         }
     }

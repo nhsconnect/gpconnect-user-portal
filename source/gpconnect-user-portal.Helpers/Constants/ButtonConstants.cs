@@ -18,6 +18,8 @@
         public const string EXPORTASCSV = "Export as CSV";
         public const string CREATESITE = "Register new GP Connect site";
         public const string LOADSUPPLIEROPTIONS = "Load Supplier Options";
+        public const string LOADSUPPLIERPRODUCTS = "Load Supplier Products";
+        public const string ADDSUPPLIERPRODUCT = "Add Supplier Product";
         public const string ENABLESUPPLIERUPDATE = "Enable Supplier Update";
     }
 }

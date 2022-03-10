@@ -19,7 +19,8 @@ namespace gpconnect_user_portal.Pages
         }
 
         public void OnGet()
-        {            
+        {
+            _logger.LogInformation("Hello world");
         }
     }
 }

@@ -23,6 +23,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "gpconnect-user-portal.Downl
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "gpconnect-user-portal.Resources", "gpconnect-user-portal.Resources\gpconnect-user-portal.Resources.csproj", "{ED89A2B5-7CE3-4150-8117-7D1267687B8B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "gpconnect-user-portal.Console", "gpconnect-user-portal.Console\gpconnect-user-portal.Console.csproj", "{9619D16B-4C3A-4682-B290-980367C7389C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,6 +71,10 @@ Global
 		{ED89A2B5-7CE3-4150-8117-7D1267687B8B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ED89A2B5-7CE3-4150-8117-7D1267687B8B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ED89A2B5-7CE3-4150-8117-7D1267687B8B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9619D16B-4C3A-4682-B290-980367C7389C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9619D16B-4C3A-4682-B290-980367C7389C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9619D16B-4C3A-4682-B290-980367C7389C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9619D16B-4C3A-4682-B290-980367C7389C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

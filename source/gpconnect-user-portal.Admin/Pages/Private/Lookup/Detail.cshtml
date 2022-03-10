@@ -47,7 +47,7 @@
                                             {
                                                 <span asp-validation-for="UpdateLookupValue" class="nhsuk-error-message"></span>
                                             }
-                                            <input class="nhsuk-input@(lookupValueInvalid ? " nhsuk-input--error": string.Empty)" aria-describedby="input-hint-submitter" novalidate asp-for="UpdateLookupValue" value="@lookup.LookupValue" type="search">
+                                            <input class="nhsuk-input@(lookupValueInvalid ? " nhsuk-input--error": string.Empty)" id="input-updatelookupvalue" aria-describedby="input-updatelookupvalue-hint-text" novalidate asp-for="@Model.UpdateLookupValue" name="updatelookupvalue" value="@lookup.LookupValue" type="search">
                                         </div>
                                     }
                                     else
@@ -63,7 +63,7 @@
                                     }
                                     else
                                     {
-                                        <button class="nhsuk-button" asp-page-handler="EnableLookup" asp-route-lookuptypeid="@lookup.LookupTypeId" asp-route-lookupid="@lookup.LookupId" type="submit">@ButtonConstants.ENABLE</button>
+                                        <button class="nhsuk-button nhsuk-button" asp-page-handler="EnableLookup" asp-route-lookuptypeid="@lookup.LookupTypeId" asp-route-lookupid="@lookup.LookupId" type="submit">@ButtonConstants.ENABLE</button>
                                     }
                                     @if (Model.UpdateLookupId == lookup.LookupId)
                                     {
@@ -71,7 +71,7 @@
                                     }
                                     else
                                     {
-                                        <button class="nhsuk-button" asp-page-handler="UpdateLookup" asp-route-lookuptypeid="@lookup.LookupTypeId" asp-route-lookupid="@lookup.LookupId" type="submit">@ButtonConstants.CHANGE</button>
+                                        <button class="nhsuk-button nhsuk-button--secondary" asp-page-handler="UpdateLookup" asp-route-lookuptypeid="@lookup.LookupTypeId" asp-route-lookupid="@lookup.LookupId" type="submit">@ButtonConstants.CHANGE</button>
                                     }
                                 </td>
                             </tr>

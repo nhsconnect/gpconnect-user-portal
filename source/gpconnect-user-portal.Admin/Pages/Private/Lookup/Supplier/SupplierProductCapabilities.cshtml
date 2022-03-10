@@ -1,0 +1,73 @@
+﻿@using Microsoft.AspNetCore.Mvc.ModelBinding
+@using gpconnect_user_portal.Helpers.Constants
+@using gpconnect_user_portal.Helpers.Enumerations
+@model SupplierDetailModel
+@{
+    //var useCaseDescriptionInvalid = Model.ModelState["EndpointRegistration.EndpointSupplierProductCapability.UseCaseDescription"]?.ValidationState == ModelValidationState.Invalid;
+}
+
+<div class="nhsuk-grid-row">
+
+    @for (var i = 0; i < Model.SupplierProductCapabilityModel.SupplierProductCapabilityDetailsModel.Count; i++)
+    {
+        <div class="nhsuk-grid-column-full">
+            <div class="nhsuk-card nhsuk-card--feature">
+                <div class="nhsuk-card__content nhsuk-card__content--feature">
+                    <h2 class="nhsuk-card__heading nhsuk-card__heading--feature nhsuk-heading-m">
+                        @Html.DisplayFor(m => Model.SupplierProductCapabilityModel.SupplierProductCapabilityDetailsModel[i].Name)
+                    </h2>
+                    <div class="nhsuk-grid-row">
+                        <div class="nhsuk-grid-column-one-half">
+                            <div class="nhsuk-form-group">
+                                <label asp-for="SupplierProductCapabilityModel.SupplierProductCapabilityDetailsModel[i].AssuranceDate" class="nhsuk-label nhsuk-checkboxes__label"></label>
+                                <input class="nhsuk-input" novalidate asp-for="SupplierProductCapabilityModel.SupplierProductCapabilityDetailsModel[i].AssuranceDate" type="date">
+                            </div>
+                        </div>
+                        <div class="nhsuk-grid-column-one-half">
+                            <div class="nhsuk-form-group">
+                                <div class="nhsuk-checkboxes">
+                                    <div class="nhsuk-checkboxes__item">
+                                        <input class="nhsuk-checkboxes__input" asp-for="SupplierProductCapabilityModel.SupplierProductCapabilityDetailsModel[i].AwaitingAssurance" type="checkbox">
+                                        <label asp-for="SupplierProductCapabilityModel.SupplierProductCapabilityDetailsModel[i].AwaitingAssurance" class="nhsuk-label nhsuk-checkboxes__label"></label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="nhsuk-grid-row">
+                        <div class="nhsuk-grid-column-one-half">
+                            <div class="nhsuk-form-group">
+                                <div class="nhsuk-checkboxes">
+                                    <div class="nhsuk-checkboxes__item">
+                                        <input class="nhsuk-checkboxes__input" asp-for="SupplierProductCapabilityModel.SupplierProductCapabilityDetailsModel[i].ProviderAssured" type="checkbox">
+                                        <label asp-for="SupplierProductCapabilityModel.SupplierProductCapabilityDetailsModel[i].ProviderAssured" class="nhsuk-label nhsuk-checkboxes__label"></label>
+                                    </div>
+                                    <div class="nhsuk-checkboxes__item">
+                                        <input class="nhsuk-checkboxes__input" asp-for="SupplierProductCapabilityModel.SupplierProductCapabilityDetailsModel[i].ConsumerAssured" type="checkbox">
+                                        <label asp-for="SupplierProductCapabilityModel.SupplierProductCapabilityDetailsModel[i].ConsumerAssured" class="nhsuk-label nhsuk-checkboxes__label"></label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="nhsuk-grid-column-one-half">
+                            <div class="nhsuk-form-group">
+                                <label asp-for="SupplierProductCapabilityModel.SupplierProductCapabilityDetailsModel[i].CapabilityVersion" class="nhsuk-label"></label>
+                                <input class="nhsuk-input" novalidate asp-for="SupplierProductCapabilityModel.SupplierProductCapabilityDetailsModel[i].CapabilityVersion" type="search">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <input type="hidden" asp-for="SupplierProductCapabilityModel.SupplierProductCapabilityDetailsModel[i].SupplierProductCapabilityId" value="@Model.SupplierProductCapabilityModel.SupplierProductCapabilityDetailsModel[i].SupplierProductCapabilityId" />
+        <input type="hidden" asp-for="SupplierProductCapabilityModel.SupplierProductCapabilityDetailsModel[i].SupplierId" value="@Model.SupplierProductCapabilityModel.SupplierProductCapabilityDetailsModel[i].SupplierId" />
+        <input type="hidden" asp-for="SupplierProductCapabilityModel.SupplierProductCapabilityDetailsModel[i].ProductCapabilityId" value="@Model.SupplierProductCapabilityModel.SupplierProductCapabilityDetailsModel[i].ProductCapabilityId" />
+        <input type="hidden" asp-for="SupplierProductCapabilityModel.SupplierProductCapabilityDetailsModel[i].SupplierProductId" value="@Model.SupplierProductCapabilityModel.SupplierProductCapabilityDetailsModel[i].SupplierProductId" />
+        <input type="hidden" asp-for="SupplierProductCapabilityModel.SupplierProductCapabilityDetailsModel[i].Name" value="@Model.SupplierProductCapabilityModel.SupplierProductCapabilityDetailsModel[i].Name" />        
+    }
+</div>
+<div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-one-half">
+        <button class="nhsuk-button" asp-page-handler="SaveChanges" type="submit">@ButtonConstants.SAVE</button>
+    </div>
+</div>

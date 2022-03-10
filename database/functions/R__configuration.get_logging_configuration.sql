@@ -5,7 +5,7 @@ create function configuration.get_logging_configuration
 )
 returns table
 (
-	token uuid,
+	token character varying(1000),
 	channel uuid,
 	index character varying(100),
 	server_url character varying(500),

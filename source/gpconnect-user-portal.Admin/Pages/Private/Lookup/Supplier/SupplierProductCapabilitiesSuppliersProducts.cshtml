@@ -1,0 +1,27 @@
+﻿@using Microsoft.AspNetCore.Mvc.ModelBinding
+@using gpconnect_user_portal.Helpers.Constants
+@using gpconnect_user_portal.Helpers.Enumerations
+@model SupplierDetailModel
+
+<div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-full">
+        <div class="nhsuk-form-group">
+            <label asp-for="SupplierProductCapabilityModel.SupplierProductCapabilitySupplierModel.SupplierProducts" class="nhsuk-label"></label>
+            <select asp-for="SupplierProductCapabilityModel.SupplierProductCapabilitySupplierModel.SelectedSupplierProduct" aria-describedby="input-hint-supplier" novalidate asp-items="@Model.SupplierProductCapabilityModel.SupplierProductCapabilitySupplierModel.SupplierProducts" class="nhsuk-select"></select>
+        </div>
+        <div class="nhsuk-action-link">
+            <a class="nhsuk-action-link__link" href="~/Lookup/Supplier/AddProduct/@Model.SupplierProductCapabilityModel.SupplierProductCapabilitySupplierModel.SelectedSupplier">
+                <svg class="nhsuk-icon nhsuk-icon__arrow-right-circle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" width="36" height="36">
+                    <path d="M0 0h24v24H0z" fill="none"></path>
+                    <path d="M12 2a10 10 0 0 0-9.95 9h11.64L9.74 7.05a1 1 0 0 1 1.41-1.41l5.66 5.65a1 1 0 0 1 0 1.42l-5.66 5.65a1 1 0 0 1-1.41 0 1 1 0 0 1 0-1.41L13.69 13H2.05A10 10 0 1 0 12 2z"></path>
+                </svg>
+                <span class="nhsuk-action-link__text">Product not showing?</span>
+            </a>
+        </div>
+        <button class="nhsuk-button" asp-page-handler="LoadSupplierCapabilities" type="submit">@ButtonConstants.LOADSUPPLIEROPTIONS</button>
+    </div>
+</div>
+@*<input type="hidden" asp-for="SupplierProductCapabilityModel.SupplierProductCapabilitySupplierModel.SelectedSupplier" value="@Model.SupplierProductCapabilityModel.SupplierProductCapabilitySupplierModel.SelectedSupplier" />
+<input type="hidden" asp-for="SupplierProductCapabilityModel.SupplierProductCapabilitySupplierModel.SelectedSupplierProduct" value="@Model.SupplierProductCapabilityModel.SupplierProductCapabilitySupplierModel.SelectedSupplierProduct" />
+<input type="hidden" asp-for="SupplierProductCapabilityModel.SupplierProductCapabilitySupplierModel.DisplayGpConnectProducts" value="@Model.SupplierProductCapabilityModel.SupplierProductCapabilitySupplierModel.DisplayGpConnectProducts" />
+<input type="hidden" asp-for="SupplierProductCapabilityModel.DisplayCapabilities" value="@Model.SupplierProductCapabilityModel.DisplayCapabilities" />*@

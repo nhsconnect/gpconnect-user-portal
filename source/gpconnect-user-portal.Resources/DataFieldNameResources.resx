@@ -120,8 +120,20 @@
   <data name="Appointments" xml:space="preserve">
     <value>Appointment Management</value>
   </data>
+  <data name="AppointmentsAssurance" xml:space="preserve">
+    <value>Appointment Management Assurance</value>
+  </data>
+  <data name="AssuranceDate" xml:space="preserve">
+    <value>Assurance Date</value>
+  </data>
+  <data name="AwaitingAssurance" xml:space="preserve">
+    <value>Awaiting Assurance</value>
+  </data>
   <data name="Both" xml:space="preserve">
     <value>Both</value>
+  </data>
+  <data name="Consumer" xml:space="preserve">
+    <value>Consumer</value>
   </data>
   <data name="DataSharingAgreementConfirmation" xml:space="preserve">
     <value>We agreed to be bound by the Data Sharing Agreement</value>
@@ -141,11 +153,20 @@
   <data name="EndpointChangeSubmitted" xml:space="preserve">
     <value>Submitted</value>
   </data>
+  <data name="HTMLAssurance" xml:space="preserve">
+    <value>Access Record: HTML Assurance</value>
+  </data>
   <data name="NoOdsIssued" xml:space="preserve">
     <value>No ODS Issued</value>
   </data>
   <data name="OdsCode" xml:space="preserve">
     <value>ODS Code</value>
+  </data>
+  <data name="ProductName" xml:space="preserve">
+    <value>* Enter the name of the product</value>
+  </data>
+  <data name="Provider" xml:space="preserve">
+    <value>Provider</value>
   </data>
   <data name="RecordAccessHtmlView" xml:space="preserve">
     <value>Access Record: HTML</value>
@@ -166,13 +187,16 @@
     <value>CCG/ICB ODS Code</value>
   </data>
   <data name="SelectedSupplier" xml:space="preserve">
-    <value>Product Name</value>
+    <value>Supplier Name</value>
   </data>
   <data name="SelectedSupplierProduct" xml:space="preserve">
     <value>Product Name</value>
   </data>
   <data name="SendDocument" xml:space="preserve">
     <value>Send Document</value>
+  </data>
+  <data name="SendDocumentAssurance" xml:space="preserve">
+    <value>Send Document Assurance</value>
   </data>
   <data name="SiteAsid" xml:space="preserve">
     <value>Site ASID</value>
@@ -185,6 +209,9 @@
   </data>
   <data name="SitePostcode" xml:space="preserve">
     <value>Site Postcode</value>
+  </data>
+  <data name="StructuredAssurance" xml:space="preserve">
+    <value>Access Record: Structured Assurance</value>
   </data>
   <data name="Submitter" xml:space="preserve">
     <value>Name of Submitter</value>
@@ -206,5 +233,8 @@
   </data>
   <data name="UseCaseDescriptionHintText" xml:space="preserve">
     <value>* Enter the use case description of the chosen product</value>
+  </data>
+  <data name="Version" xml:space="preserve">
+    <value>Version</value>
   </data>
 </root>

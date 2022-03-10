@@ -135,6 +135,9 @@
   <data name="OdsCode" xml:space="preserve">
     <value>You must enter a value for ODS Code</value>
   </data>
+  <data name="ProductName" xml:space="preserve">
+    <value>You must enter a value for Product Name</value>
+  </data>
   <data name="RecordAccessHtmlView" xml:space="preserve">
     <value>You must select a value for Access Record: HTML</value>
   </data>
@@ -143,6 +146,9 @@
   </data>
   <data name="SelectedCareSetting" xml:space="preserve">
     <value>You must select a value for Care Setting</value>
+  </data>
+  <data name="SelectedSupplier" xml:space="preserve">
+    <value>You must select a value for Supplier</value>
   </data>
   <data name="SelectedSupplierProduct" xml:space="preserve">
     <value>You must select a value for Product Name</value>

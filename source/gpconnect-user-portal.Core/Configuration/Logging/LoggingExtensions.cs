@@ -22,8 +22,8 @@ namespace gpconnect_user_portal.Core.Configuration.Logging
             nLogConfiguration.AddRule(NLog.LogLevel.Trace, NLog.LogLevel.Fatal, consoleTarget);
             nLogConfiguration.AddRule(NLog.LogLevel.Debug, NLog.LogLevel.Fatal, splunkTarget);
 
-            nLogConfiguration.AddTarget(consoleTarget);
-            nLogConfiguration.AddTarget(splunkTarget);
+            nLogConfiguration.AddTarget("Console", consoleTarget);
+            nLogConfiguration.AddTarget("Splunk", splunkTarget);
 
             nLogConfiguration.Variables.Add("applicationVersion", ApplicationHelper.ApplicationVersion.GetAssemblyVersion());
 
@@ -55,7 +55,17 @@ namespace gpconnect_user_portal.Core.Configuration.Logging
                 ProxyUrl = loggingConfiguration["ProxyUrl"],
                 ProxyUser = loggingConfiguration["ProxyUser"],
                 ProxyPassword = loggingConfiguration["ProxyPassword"]                
-            };            
+            };
+
+            splunkTarget.Source = "${message}|${logger}";
+            splunkTarget.SourceType = "_json";
+            splunkTarget.IncludeEventProperties = true;
+            splunkTarget.IncludePositionalParameters = false;
+            splunkTarget.IgnoreSslErrors = true;
+            splunkTarget.BatchSizeBytes = 0;
+            splunkTarget.BatchSizeCount = 0;
+            splunkTarget.Index = "logs_ndsp_local";
+
             return splunkTarget;
         }
 

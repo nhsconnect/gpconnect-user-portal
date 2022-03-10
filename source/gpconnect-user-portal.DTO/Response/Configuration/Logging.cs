@@ -5,7 +5,7 @@ namespace gpconnect_user_portal.DTO.Response.Configuration
     public class Logging
     {
         public string ServerUrl { get; set; }
-        public Guid Token { get; set; }
+        public string Token { get; set; }
         public Guid Channel { get; set; }
         public string Index { get; set; }
         public string Source { get; set; }

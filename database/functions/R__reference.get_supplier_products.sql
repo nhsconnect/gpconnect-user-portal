@@ -1,7 +1,8 @@
-drop function if exists reference.get_suppliers_products;
+drop function if exists reference.get_supplier_products;
 
-create function reference.get_suppliers_products
+create function reference.get_supplier_products
 (
+	_supplier_id integer
 )
 returns table
 (
@@ -36,7 +37,9 @@ begin
 	) a 
 	inner join 
 		reference.lookup l on a.supplier_id = l.lookup_id
+	where
+		a.supplier_id = _supplier_id
 	order by 
-		supplier_name, product_name;
+		product_name;
 end;
 $$ language plpgsql;

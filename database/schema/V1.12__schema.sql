@@ -10,6 +10,9 @@ INSERT INTO application.site_definition_status(site_definition_status_id, site_d
 
 alter table application.site_definition add column master_site_unique_identifier uuid default null;
 
+alter table configuration.logging alter column index set data type varchar(500);
+alter table configuration.logging alter column token set data type varchar(1000);
+
 alter table application.site_definition add c
 grant usage on type application.site_attributes_type to app_user;
 
