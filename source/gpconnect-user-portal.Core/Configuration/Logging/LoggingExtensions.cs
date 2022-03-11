@@ -17,13 +17,16 @@ namespace gpconnect_user_portal.Core.Configuration.Logging
             var nLogConfiguration = new NLog.Config.LoggingConfiguration();
 
             var consoleTarget = AddConsoleTarget();
-            var splunkTarget = AddSplunkTarget(configuration);
+            var splunkTargetLogs = AddSplunkTarget(configuration, "LogsIndex");
+            var splunkTargetWeb = AddSplunkTarget(configuration, "WebIndex");
+            var splunkTargetError = AddSplunkTarget(configuration, "ErrorIndex");
 
             nLogConfiguration.AddRule(NLog.LogLevel.Trace, NLog.LogLevel.Fatal, consoleTarget);
-            nLogConfiguration.AddRule(NLog.LogLevel.Debug, NLog.LogLevel.Fatal, splunkTarget);
+            nLogConfiguration.AddRule(NLog.LogLevel.Debug, NLog.LogLevel.Fatal, splunkTargetLogs);
+            nLogConfiguration.AddRule(NLog.LogLevel.Debug, NLog.LogLevel.Fatal, splunkTargetWeb);
+            nLogConfiguration.AddRule(NLog.LogLevel.Debug, NLog.LogLevel.Fatal, splunkTargetError);
 
             nLogConfiguration.AddTarget("Console", consoleTarget);
-            nLogConfiguration.AddTarget("Splunk", splunkTarget);
 
             nLogConfiguration.Variables.Add("applicationVersion", ApplicationHelper.ApplicationVersion.GetAssemblyVersion());
 
@@ -38,16 +41,16 @@ namespace gpconnect_user_portal.Core.Configuration.Logging
             return services;
         }
 
-        private static SplunkHttpEventCollector AddSplunkTarget(IConfiguration configuration)
+        private static SplunkHttpEventCollector AddSplunkTarget(IConfiguration configuration, string indexName)
         {
             var loggingConfiguration = configuration.GetSection("Logging");
 
             var splunkTarget = new SplunkHttpEventCollector()
             {
-                Name = "Splunk",
+                Name = $"Splunk_{indexName}",
                 ServerUrl = loggingConfiguration["ServerUrl"],
                 Token = loggingConfiguration["Token"],
-                Index = loggingConfiguration["Index"],
+                Index = loggingConfiguration[indexName],
                 Channel = loggingConfiguration["Channel"],
                 Source = loggingConfiguration["Source"],
                 SourceType = loggingConfiguration["SourceType"],
@@ -59,12 +62,11 @@ namespace gpconnect_user_portal.Core.Configuration.Logging
 
             splunkTarget.Source = "${message}|${logger}";
             splunkTarget.SourceType = "_json";
-            splunkTarget.IncludeEventProperties = true;
+            splunkTarget.IncludeEventProperties = false;
             splunkTarget.IncludePositionalParameters = false;
-            splunkTarget.IgnoreSslErrors = true;
+            splunkTarget.IgnoreSslErrors = false;
             splunkTarget.BatchSizeBytes = 0;
             splunkTarget.BatchSizeCount = 0;
-            splunkTarget.Index = "logs_ndsp_local";
 
             return splunkTarget;
         }

@@ -5,9 +5,11 @@ create function configuration.get_logging_configuration
 )
 returns table
 (
-	token character varying(1000),
+	token uuid,
 	channel uuid,
-	index character varying(100),
+	logs_index character varying(100),
+	web_index character varying(100),
+	error_index character varying(100),
 	server_url character varying(500),
 	source character varying(100),
 	source_type character varying(100),
@@ -21,7 +23,9 @@ begin
 	select
 		l.token, 
 		l.channel, 
-		l.index, 
+		l.logs_index, 
+		l.web_index,
+		l.error_index, 
 		l.server_url, 
 		l.source, 
 		l.source_type, 

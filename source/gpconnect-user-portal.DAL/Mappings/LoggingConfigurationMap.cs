@@ -9,7 +9,9 @@ namespace gpconnect_user_portal.DAL.Mapping
         {
             Map(p => p.Token).ToColumn("token");
             Map(p => p.Channel).ToColumn("channel");
-            Map(p => p.Index).ToColumn("index");
+            Map(p => p.LogsIndex).ToColumn("logs_index");
+            Map(p => p.WebIndex).ToColumn("web_index");
+            Map(p => p.ErrorIndex).ToColumn("error_index");
             Map(p => p.ServerUrl).ToColumn("server_url");
             Map(p => p.Source).ToColumn("source");
             Map(p => p.SourceType).ToColumn("source_type");
