@@ -1,8 +1,8 @@
-﻿using gpconnect_user_portal.DTO.Request;
+﻿using gpconnect_user_portal.Core.Configuration.Infrastructure.Logging.Interfaces;
+using gpconnect_user_portal.DTO.Request;
 using gpconnect_user_portal.Services.Enumerations;
 using gpconnect_user_portal.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System.Threading.Tasks;
 using System.Web;
@@ -11,11 +11,11 @@ namespace gpconnect_user_portal.Pages
 {
     public partial class ChangeModel : SearchBaseModel
     {
-        private readonly ILogger<ChangeModel> _logger;
+        private readonly ILoggerManager _logger;
         private readonly IAggregateService _aggregateService;
         private readonly IOptionsMonitor<DTO.Response.Configuration.General> _generalOptionsDelegate;
 
-        public ChangeModel(ILogger<ChangeModel> logger, IAggregateService aggregateService, IOptionsMonitor<DTO.Response.Configuration.General> generalOptionsDelegate) : base(aggregateService, generalOptionsDelegate)
+        public ChangeModel(ILoggerManager logger, IAggregateService aggregateService, IOptionsMonitor<DTO.Response.Configuration.General> generalOptionsDelegate) : base(aggregateService, generalOptionsDelegate)
         {
             _logger = logger;
             _aggregateService = aggregateService;

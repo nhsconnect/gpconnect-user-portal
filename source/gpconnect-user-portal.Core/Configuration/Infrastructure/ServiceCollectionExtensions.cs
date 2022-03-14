@@ -1,4 +1,6 @@
 ﻿using gpconnect_user_portal.Core.Configuration.Infrastructure.Authentication;
+using gpconnect_user_portal.Core.Configuration.Infrastructure.Logging.Interfaces;
+using gpconnect_user_portal.Core.Configuration.Logging;
 using gpconnect_user_portal.DTO.Response.Configuration;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -76,11 +78,19 @@ namespace gpconnect_user_portal.Core.Configuration.Infrastructure
             services.Configure<Sso>(configuration.GetSection("SingleSignOn"));
             services.Configure<DTO.Response.Configuration.Logging>(configuration.GetSection("Logging"));
             services.Configure<Email>(configuration.GetSection("Email"));
+
+            services.ConfigureNLogService();
             
             HttpClientExtensions.AddHttpClientServices(services, env);
             SmtpClientExtensions.AddSmtpClientServices(services);
 
             return services;
+        }
+
+        public static void ConfigureNLogService(this IServiceCollection services)
+        {
+            services.AddSingleton<ILoggerManager, LoggerManager>();
+            services.AddSingleton<IWebLoggerManager, WebLoggerManager>();
         }
     }
 

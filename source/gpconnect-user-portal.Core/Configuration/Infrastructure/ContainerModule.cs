@@ -1,8 +1,6 @@
 ﻿using Autofac;
 using gpconnect_user_portal.Core.Configuration.Infrastructure.Authentication;
 using gpconnect_user_portal.Core.Configuration.Infrastructure.Authentication.Interfaces;
-using gpconnect_user_portal.Core.Configuration.Infrastructure.Logging.Interfaces;
-using gpconnect_user_portal.Core.Configuration.Logging;
 using gpconnect_user_portal.DAL;
 using gpconnect_user_portal.DAL.Interfaces;
 using gpconnect_user_portal.Services;
@@ -24,9 +22,7 @@ namespace gpconnect_user_portal.Core.Configuration.Infrastructure
             containerBuilder.RegisterType<EmailService>().As<IEmailService>().InstancePerLifetimeScope();
             containerBuilder.RegisterType<QueryService>().As<IQueryService>().InstancePerLifetimeScope();
             containerBuilder.RegisterType<ExportService>().As<IExportService>().InstancePerLifetimeScope();
-            containerBuilder.RegisterType<LogService>().As<ILogService>().InstancePerLifetimeScope();
             containerBuilder.RegisterType<AggregateService>().As<IAggregateService>().InstancePerLifetimeScope();
-            containerBuilder.RegisterType<LoggerManager>().As<ILoggerManager>().SingleInstance();
         }
     }
 }

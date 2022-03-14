@@ -1,4 +1,5 @@
 using Autofac.Extensions.DependencyInjection;
+using gpconnect_user_portal.Core.Configuration.Logging;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using NLog.Web;
@@ -18,7 +19,7 @@ namespace gpconnect_user_portal
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHost((webHostBuilder) =>
                 {
-                    Infrastructure.WebConfigurationBuilder.ConfigureWebHost(webHostBuilder);                    
+                    Infrastructure.WebConfigurationBuilder.ConfigureWebHost(webHostBuilder);
                 })
                 .UseServiceProviderFactory(new AutofacServiceProviderFactory())
                 .ConfigureWebHostDefaults(webHostDefaultsBuilder =>
@@ -29,8 +30,7 @@ namespace gpconnect_user_portal
                 .ConfigureAppConfiguration(Infrastructure.CustomConfigurationBuilder.AddCustomConfiguration)
                 .ConfigureLogging((builderContext, logging) =>
                 {
-                    Logging.LoggingConfigurationBuilder.AddLoggingConfiguration(builderContext, logging);
-                })
-                .UseNLog();
+                    LoggingConfigurationBuilder.AddLoggingConfiguration(builderContext, logging);
+                }).UseNLog();
     }
 }

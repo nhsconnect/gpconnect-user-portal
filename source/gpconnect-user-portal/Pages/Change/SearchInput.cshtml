@@ -14,8 +14,8 @@
             {
                 @Html.ValidationMessageFor(m => m.ProviderOdsCode, "", new { @class = "nhsuk-error-message" })
             }
-            <input class="nhsuk-input @(providerOdsCodeInvalid ? "nhsuk-input--error": string.Empty)" id="input-providerodscode" novalidate
-                   asp-for="@Model.ProviderOdsCode" aria-describedby="input-hint-providerodscode" name="providerodscode" value="@Model.ProviderOdsCode" type="search">
+            <input id="@Model.ProviderOdsCode" class="nhsuk-input @(providerOdsCodeInvalid ? "nhsuk-input--error": string.Empty)" novalidate
+                   asp-for="@Model.ProviderOdsCode" aria-describedby="input-hint-providerodscode" value="@Model.ProviderOdsCode" type="search">
         </div>
 
         <h3>OR</h3>
@@ -24,8 +24,8 @@
             <label asp-for="@Model.ProviderName" class="nhsuk-label"></label>
             <div class="nhsuk-hint" id="input-hint-providername">You can enter multiple provider names separated by a comma.</div>
             <div class="nhsuk-hint" id="input-providername-hint-text">Note: provider name may be different to their patient facing name</div>
-            <input class="nhsuk-input" id="input-providername" novalidate
-                   asp-for="@Model.ProviderName" name="providername" aria-describedby="input-hint-providername" value="@Model.ProviderName" type="search">
+            <input class="nhsuk-input" id="@Model.ProviderName" novalidate
+                   asp-for="@Model.ProviderName" aria-describedby="input-hint-providername" value="@Model.ProviderName" type="search">
         </div>
 
         <h3>OR</h3>

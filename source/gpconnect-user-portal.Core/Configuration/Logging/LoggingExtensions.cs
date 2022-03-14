@@ -2,11 +2,10 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using NLog;
+using NLog.Extensions.Logging;
 using NLog.Targets;
 using NLog.Targets.Splunk;
-using System;
 
 namespace gpconnect_user_portal.Core.Configuration.Logging
 {
@@ -21,12 +20,16 @@ namespace gpconnect_user_portal.Core.Configuration.Logging
             var splunkTargetWeb = AddSplunkTarget(configuration, "WebIndex");
             var splunkTargetError = AddSplunkTarget(configuration, "ErrorIndex");
 
-            nLogConfiguration.AddRule(NLog.LogLevel.Trace, NLog.LogLevel.Fatal, consoleTarget);
-            nLogConfiguration.AddRule(NLog.LogLevel.Debug, NLog.LogLevel.Fatal, splunkTargetLogs);
-            nLogConfiguration.AddRule(NLog.LogLevel.Debug, NLog.LogLevel.Fatal, splunkTargetWeb);
-            nLogConfiguration.AddRule(NLog.LogLevel.Debug, NLog.LogLevel.Fatal, splunkTargetError);
+            nLogConfiguration.AddTarget(consoleTarget);
+            nLogConfiguration.AddTarget(splunkTargetLogs);
+            nLogConfiguration.AddTarget(splunkTargetWeb);
+            nLogConfiguration.AddTarget(splunkTargetError);
 
-            nLogConfiguration.AddTarget("Console", consoleTarget);
+            nLogConfiguration.AddRule(NLog.LogLevel.Trace, NLog.LogLevel.Fatal, consoleTarget);
+            nLogConfiguration.AddRuleForOneLevel(NLog.LogLevel.Info, splunkTargetLogs);
+            nLogConfiguration.AddRuleForOneLevel(NLog.LogLevel.Debug, splunkTargetLogs);
+            nLogConfiguration.AddRuleForOneLevel(NLog.LogLevel.Trace, splunkTargetWeb);
+            nLogConfiguration.AddRule(NLog.LogLevel.Debug, NLog.LogLevel.Fatal, splunkTargetError);
 
             nLogConfiguration.Variables.Add("applicationVersion", ApplicationHelper.ApplicationVersion.GetAssemblyVersion());
 
@@ -35,7 +38,7 @@ namespace gpconnect_user_portal.Core.Configuration.Logging
             services.AddLogging(builder =>
             {
                 builder.ClearProviders();
-                builder.AddConfiguration(configuration.GetSection("Logging"));
+                builder.AddNLog(configuration.GetSection("Logging"));
             });
 
             return services;
@@ -60,7 +63,8 @@ namespace gpconnect_user_portal.Core.Configuration.Logging
                 ProxyPassword = loggingConfiguration["ProxyPassword"]                
             };
 
-            splunkTarget.Source = "${message}|${logger}";
+            //splunkTarget.Source = "${message}|${logger}";
+            splunkTarget.Source = "${logger}";
             splunkTarget.SourceType = "_json";
             splunkTarget.IncludeEventProperties = false;
             splunkTarget.IncludePositionalParameters = false;

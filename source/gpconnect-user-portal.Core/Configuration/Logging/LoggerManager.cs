@@ -5,27 +5,28 @@ namespace gpconnect_user_portal.Core.Configuration.Logging
 {
     public class LoggerManager : ILoggerManager
     {
-        private static readonly ILogger logger = LogManager.GetCurrentClassLogger();
-
+        private static ILogger _errorLogger = LogManager.GetLogger("Splunk_ErrorIndex");
+        private static ILogger _logLogger = LogManager.GetLogger("Splunk_LogsIndex");
+                
         public void LogFatal(string message)
         {
-            logger.Fatal(message);
+            _errorLogger.Fatal(message);
         }
         public void LogDebug(string message)
         {
-            logger.Debug(message);
+            _logLogger.Debug(message);
         }
         public void LogError(string message)
         {
-            logger.Error(message);
+            _errorLogger.Error(message);
         }
         public void LogInformation(string message)
         {
-            logger.Info(message);
+            _logLogger.Info(message);
         }
         public void LogWarning(string message)
         {
-            logger.Warn(message);
+            _errorLogger.Warn(message);
         }
     }
 }

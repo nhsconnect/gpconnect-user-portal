@@ -1,7 +1,8 @@
-﻿using gpconnect_user_portal.DTO.Request.Logging;
+﻿using gpconnect_user_portal.Core.Configuration.Infrastructure.Logging.Interfaces;
+using gpconnect_user_portal.DTO.Request.Logging;
 using gpconnect_user_portal.Helpers;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Logging;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace gpconnect_user_portal.Core.Configuration.Logging
@@ -9,12 +10,12 @@ namespace gpconnect_user_portal.Core.Configuration.Logging
     public class RequestLoggingMiddleware
     {
         private readonly RequestDelegate _next;
-        private readonly ILogger _logger;
+        private readonly IWebLoggerManager _logger;
 
-        public RequestLoggingMiddleware(RequestDelegate next, ILoggerFactory loggerFactory)
+        public RequestLoggingMiddleware(RequestDelegate next, IWebLoggerManager logger)
         {
             _next = next;
-            _logger = loggerFactory.CreateLogger<RequestLoggingMiddleware>();
+            _logger = logger;
         }
 
         public async Task Invoke(HttpContext context)
@@ -31,16 +32,26 @@ namespace gpconnect_user_portal.Core.Configuration.Logging
                     var webRequest = new WebRequest
                     {
                         Url = url,
-                        Description = "",
+                        Method = context.Request?.Method,
                         Ip = context.Connection?.LocalIpAddress.ToString(),
-                        Server = context.Request?.Host.Host,
+                        Host = context.Request?.Host,
                         SessionId = context.GetSessionId(),
-                        ReferrerUrl = context.Request?.Headers["Referer"].ToString(),
-                        ResponseCode = context.Response.StatusCode,
-                        UserAgent = context.Request?.Headers["User-Agent"].ToString()
+                        ReferrerUrl = context.Request?.Headers["Referer"],
+                        StatusCode = context.Response.StatusCode,
+                        UserAgent = context.Request?.Headers["User-Agent"]
                     };
-                    _logger.LogInformation(webRequest.ConvertObjectToJsonData());
-                }
+                    _logger.LogWebRequest(webRequest.ConvertObjectToJsonData());
+
+                    if (context.Request.HasFormContentType && context.Request.Form != null && context.Request.Form.Count() > 0)
+                    {
+                        _logger.LogWebRequest(context.Request.Form.ConvertObjectToJsonData());
+                    }
+
+                    if (context.Response.Headers != null && context.Response.Headers.Count() > 0)
+                    {
+                        _logger.LogWebRequest(context.Response.Headers.ConvertObjectToJsonData());
+                    }
+                };                
             }
         }
     }

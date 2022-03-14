@@ -5,7 +5,6 @@ namespace gpconnect_user_portal.Services.Interfaces
 {
     public interface IAggregateService
     {
-        public ILogService LogService { get; }
         public IApplicationService ApplicationService { get; }
         public ICoreService CoreService { get; }
         public IReferenceService ReferenceService { get; }
