@@ -1,6 +1,5 @@
 ﻿using gpconnect_user_portal.Resources;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using System.ComponentModel.DataAnnotations;
 
 namespace gpconnect_user_portal.Admin.Pages
@@ -8,7 +7,7 @@ namespace gpconnect_user_portal.Admin.Pages
     public partial class SupplierProductModel : BaseSiteModel
     {
         [Display(Name = "SelectedSupplier", ResourceType = typeof(DataFieldNameResources))]
-        public IEnumerable<SelectListItem> Suppliers { get; set; }
+        public string SupplierName { get; set; }
 
         [BindProperty(SupportsGet = true)]
         [Display(Name = "SelectedSupplier", ResourceType = typeof(DataFieldNameResources))]
@@ -18,5 +17,10 @@ namespace gpconnect_user_portal.Admin.Pages
         [BindProperty(SupportsGet = true)]
         [Display(Name = "ProductName", ResourceType = typeof(DataFieldNameResources))]
         public string ProductName { get; set; }
+
+        [Required(ErrorMessageResourceName = "ProductUseCase", ErrorMessageResourceType = typeof(ErrorMessageResources))]
+        [BindProperty(SupportsGet = true)]
+        [Display(Name = "ProductUseCase", ResourceType = typeof(DataFieldNameResources))]
+        public string ProductUseCase { get; set; }
     }
 }

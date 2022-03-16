@@ -68,7 +68,7 @@ namespace gpconnect_user_portal.Services
             }
             catch
             {
-                throw;             
+                throw;
             }
             return null;
         }
@@ -79,7 +79,7 @@ namespace gpconnect_user_portal.Services
             var supplierQuery = fhirApiQuery.QueryText.SearchAndReplace(new Dictionary<string, string> { { "{odsCode}", Regex.Escape(siteDefinition.SupplierOdsCode) } });
             var organisationDetail = await _fhirRequestExecution.ExecuteFhirQuery<OrganisationDetail>(organisationQuery, cancellationToken, spineConfiguration.SpineFhirApiDirectoryServicesFqdn, spineConfiguration.SpineFhirApiKey);
             var supplierDetail = await _fhirRequestExecution.ExecuteFhirQuery<OrganisationDetail>(supplierQuery, cancellationToken, spineConfiguration.SpineFhirApiDirectoryServicesFqdn, spineConfiguration.SpineFhirApiKey);
-                        
+
             siteDefinition.SiteAttribute = new List<SiteAttribute>
             {
                 new SiteAttribute() { SiteAttributeName = "SiteName", SiteAttributeValue = organisationDetail?.SiteName },
@@ -87,7 +87,7 @@ namespace gpconnect_user_portal.Services
                 new SiteAttribute() { SiteAttributeName = "SelectedCCGOdsCode", SiteAttributeValue = _ccgOdsCodeList.FirstOrDefault(x => x.LookupValue == organisationDetail?.CCGOdsCode)?.LookupId.ToString() },
                 new SiteAttribute() { SiteAttributeName = "SelectedCCGName", SiteAttributeValue = _ccgOdsCodeList.FirstOrDefault(x => x.LookupValue == organisationDetail?.CCGOdsCode)?.LinkedLookupId.ToString() },
                 new SiteAttribute() { SiteAttributeName = "OdsCode", SiteAttributeValue = siteDefinition.SiteOdsCode },
-                new SiteAttribute() { SiteAttributeName = "SelectedSupplier", SiteAttributeValue = _supplierList.FirstOrDefault(x => x.LookupValue == supplierDetail?.Organisation?.Name)?.LookupId.ToString() },                
+                new SiteAttribute() { SiteAttributeName = "SelectedSupplier", SiteAttributeValue = _supplierList.FirstOrDefault(x => x.LookupValue == supplierDetail?.Organisation?.Name)?.LookupId.ToString() },
                 new SiteAttribute() { SiteAttributeName = "IsStructuredEnabled", SiteAttributeValue = siteDefinition.IsStructuredEnabled.ToString() },
                 new SiteAttribute() { SiteAttributeName = "IsAppointmentEnabled", SiteAttributeValue = siteDefinition.IsAppointmentEnabled.ToString() },
                 new SiteAttribute() { SiteAttributeName = "IsHtmlEnabled", SiteAttributeValue = siteDefinition.IsHtmlEnabled.ToString() },
@@ -113,7 +113,7 @@ namespace gpconnect_user_portal.Services
                 }
                 return Task.CompletedTask;
             }
-            catch(Exception exc)
+            catch (Exception exc)
             {
                 return Task.FromException(exc);
             }
@@ -158,16 +158,44 @@ namespace gpconnect_user_portal.Services
             return null;
         }
 
-        public async Task AddLookup(int lookupTypeId, string lookupValue)
+        public async Task AddCareSetting(string lookupValue)
         {
-            if (lookupTypeId > 0)
+            await AddLookup(Enumerations.LookupType.CareSetting, lookupValue);
+        }
+
+        public async Task AddSupplier(string lookupValue)
+        {
+            await AddLookup(Enumerations.LookupType.Supplier, lookupValue);
+        }
+
+        public async Task AddProduct(DTO.Request.Reference.SupplierProduct supplierProduct)
+        {
+            var productAdded = await AddLookup(Enumerations.LookupType.SupplierProduct, supplierProduct.ProductName);
+            if (productAdded != null)
             {
-                var query = "reference.get_lookup";
-                var parameters = new DynamicParameters();
-                parameters.Add("_lookup_type_id", lookupTypeId, DbType.Int16, ParameterDirection.Input);
-                parameters.Add("_lookup_value", lookupValue, DbType.String, ParameterDirection.Input);
-                await _dataService.ExecuteQuery(query, parameters);
+                await AddSupplierProduct(supplierProduct.SupplierId, productAdded.LookupId, supplierProduct.ProductUseCase);
             }
+        }
+
+        private async Task AddSupplierProduct(int supplierId, int supplierProductId, string productUseCase)
+        {
+            var query = "reference.add_supplier_product";
+            var parameters = new DynamicParameters();
+            parameters.Add("_supplier_id", supplierId, DbType.Int16, ParameterDirection.Input);
+            parameters.Add("_supplier_product_id", supplierProductId, DbType.Int16, ParameterDirection.Input);
+            parameters.Add("_product_use_case", productUseCase, DbType.String, ParameterDirection.Input);
+            await _dataService.ExecuteQuery(query, parameters);
+        }
+
+        private async Task<Lookup> AddLookup(Enumerations.LookupType lookupType, string lookupValue)
+        {
+            var query = "reference.add_lookup";
+            var parameters = new DynamicParameters();
+            parameters.Add("_lookup_type_id", (int)lookupType, DbType.Int16, ParameterDirection.Input);
+            parameters.Add("_lookup_value", lookupValue, DbType.String, ParameterDirection.Input);
+            parameters.Add("_linked_lookup_id", null, DbType.Int16, ParameterDirection.Input);
+            var result = await _dataService.ExecuteQueryFirstOrDefault<Lookup>(query, parameters);
+            return result;
         }
 
         public async Task EnableDisableLookup(int lookupId, bool isDisabled = false)
@@ -194,13 +222,13 @@ namespace gpconnect_user_portal.Services
             var result = await _dataService.ExecuteQuery<SupplierProducts>(query, parameters);
             return result;
         }
-        
+
         public async Task<EnabledSupplierProductCapability> GetSupplierProductCapabilities(int supplierProductId, bool includeNotEnabled = false)
         {
             var query = "reference.get_supplier_product_capabilities";
             var parameters = new DynamicParameters();
             parameters.Add("_supplier_product_id", supplierProductId, DbType.Int16, ParameterDirection.Input);
-            parameters.Add("_include_supplier_product_capabilities_not_enabled", includeNotEnabled, DbType.Boolean, ParameterDirection.Input);            
+            parameters.Add("_include_supplier_product_capabilities_not_enabled", includeNotEnabled, DbType.Boolean, ParameterDirection.Input);
             var supplierProductCapabilities = await _dataService.ExecuteQuery<SupplierProductCapability>(query, parameters);
             var enabledSupplierProductCapability = new EnabledSupplierProductCapability()
             {
@@ -225,7 +253,7 @@ namespace gpconnect_user_portal.Services
             var parameters = new DynamicParameters();
 
             foreach (var supplierProductCapability in supplierProductCapabilities.SupplierProductCapabilityDetailsModel)
-            {   
+            {
                 parameters.Add("_supplier_product_capability_id", supplierProductCapability.SupplierProductCapabilityId, DbType.Int16, ParameterDirection.Input);
                 parameters.Add("_supplier_id", supplierProductCapability.SupplierId, DbType.Int16, ParameterDirection.Input);
                 parameters.Add("_supplier_product_id", supplierProductCapability.SupplierProductId, DbType.Int16, ParameterDirection.Input);
@@ -237,6 +265,15 @@ namespace gpconnect_user_portal.Services
                 parameters.Add("_capability_version", supplierProductCapability.CapabilityVersion, DbType.String, ParameterDirection.Input);
                 await _dataService.ExecuteQuery<SupplierProductCapability>(query, parameters);
             }
+        }
+
+        public async Task<Lookup> GetLookupById(int lookupId)
+        {
+            var query = "reference.get_lookup_by_id";
+            var parameters = new DynamicParameters();
+            parameters.Add("_lookup_id", lookupId, DbType.Int16, ParameterDirection.Input);
+            var result = await _dataService.ExecuteQueryFirstOrDefault<Lookup>(query, parameters);
+            return result;
         }
     }
 }

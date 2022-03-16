@@ -1,41 +1,45 @@
 ﻿using gpconnect_user_portal.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Options;
 
 namespace gpconnect_user_portal.Admin.Pages
 {
     public partial class SupplierProductModel : BaseSiteModel
     {
-        private readonly ILogger<SupplierProductModel> _logger;
         private readonly IAggregateService _aggregateService;
         private readonly IOptionsMonitor<DTO.Response.Configuration.General> _generalOptionsDelegate;
 
-        public SupplierProductModel(ILogger<SupplierProductModel> logger, IAggregateService aggregateService, IOptionsMonitor<DTO.Response.Configuration.General> generalOptionsDelegate) : base(aggregateService, generalOptionsDelegate)
+        public SupplierProductModel(IAggregateService aggregateService, IOptionsMonitor<DTO.Response.Configuration.General> generalOptionsDelegate) : base(aggregateService, generalOptionsDelegate)
         {
-            _logger = logger;
             _aggregateService = aggregateService;
             _generalOptionsDelegate = generalOptionsDelegate;
         }
 
-        public async Task<IActionResult> OnGetAsync(int supplierId)
+        public async Task<IActionResult> OnGetAsync(int supplierId = 0)
         {
-            await PopulateForm(supplierId);
-            return Page();
-        }
-
-        private async Task<IActionResult> PopulateForm(int supplierId)
-        {
+            ModelState.Clear();
             SelectedSupplier = supplierId;
-            Suppliers = await GetDropDown((int)Services.Enumerations.LookupType.Supplier, supplierId);
+            var supplier = await _aggregateService.ReferenceService.GetLookupById(supplierId);
+            if(supplier != null)
+            {
+                SupplierName = supplier.LookupValue;
+            }
             return Page();
         }
 
-        private async Task<IEnumerable<SelectListItem>> GetDropDown(int lookupTypeId, int selectedOption = 0)
+        public async Task<IActionResult> OnPostSaveSupplierProductDetailsAsync()
         {
-            var lookup = await _aggregateService.ReferenceService.GetLookup(lookupTypeId);
-            var options = lookup.Select(option => new SelectListItem() { Text = option.LookupValue, Value = option.LookupId.ToString(), Selected = selectedOption == option.LookupId }).ToList();
-            return options;
+            if (ModelState.IsValid)
+            {
+                var supplierProduct = new DTO.Request.Reference.SupplierProduct() {
+                    SupplierId = SelectedSupplier,
+                    ProductName = ProductName,
+                    ProductUseCase = ProductUseCase
+                };
+                await _aggregateService.ReferenceService.AddProduct(supplierProduct);
+                return LocalRedirect($"~/Lookup/Supplier");
+            }
+            return Page();
         }
     }
 }

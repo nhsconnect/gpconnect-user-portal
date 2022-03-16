@@ -205,6 +205,15 @@ namespace gpconnect_user_portal.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to * Enter the product use case.
+        /// </summary>
+        public static string ProductUseCase {
+            get {
+                return ResourceManager.GetString("ProductUseCase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Provider.
         /// </summary>
         public static string Provider {
@@ -390,6 +399,15 @@ namespace gpconnect_user_portal.Resources {
         public static string SubmitterHintText {
             get {
                 return ResourceManager.GetString("SubmitterHintText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Supplier Name.
+        /// </summary>
+        public static string SupplierName {
+            get {
+                return ResourceManager.GetString("SupplierName", resourceCulture);
             }
         }
         

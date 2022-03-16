@@ -124,6 +124,15 @@ namespace gpconnect_user_portal.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You must enter a value for Product Use Case.
+        /// </summary>
+        public static string ProductUseCase {
+            get {
+                return ResourceManager.GetString("ProductUseCase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to You must select a value for Access Record: HTML.
         /// </summary>
         public static string RecordAccessHtmlView {
@@ -192,6 +201,15 @@ namespace gpconnect_user_portal.Resources {
         public static string SitePostcode {
             get {
                 return ResourceManager.GetString("SitePostcode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You must enter a value for Supplier Name.
+        /// </summary>
+        public static string SupplierName {
+            get {
+                return ResourceManager.GetString("SupplierName", resourceCulture);
             }
         }
         

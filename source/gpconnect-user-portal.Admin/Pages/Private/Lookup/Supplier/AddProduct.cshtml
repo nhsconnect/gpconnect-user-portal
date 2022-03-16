@@ -5,6 +5,7 @@
 @model SupplierProductModel
 @{
     var productNameInvalid = Model.ModelState["ProductName"]?.ValidationState == ModelValidationState.Invalid;
+    var productUseCaseInvalid = Model.ModelState["ProductUseCase"]?.ValidationState == ModelValidationState.Invalid;
 }
 
 <div class="nhsuk-grid-row">
@@ -22,11 +23,27 @@
 </div>
 
 <form method="post" id="search-input-form">
+
     <div class="nhsuk-grid-row">
         <div class="nhsuk-grid-column-full">
-            <div class="nhsuk-form-group">
-                <label asp-for="Suppliers" class="nhsuk-label"></label>
-                <select asp-for="SelectedSupplier" aria-describedby="input-hint-supplier" novalidate asp-items="@Model.Suppliers" class="nhsuk-select"></select>
+            <div class="nhsuk-card nhsuk-card--feature">
+                <div class="nhsuk-card__content nhsuk-card__content--feature">
+                    <h2 class="nhsuk-card__heading nhsuk-card__heading--feature nhsuk-heading-m">Supplier Details</h2>
+                    <div class="nhsuk-grid-row">
+                        <div class="nhsuk-grid-column-full">
+                            <dl class="nhsuk-summary-list">
+                                <div class="nhsuk-summary-list__row">
+                                    <dt class="nhsuk-summary-list__key">
+                                        <label asp-for="SupplierName"></label>
+                                    </dt>
+                                    <dd class="nhsuk-summary-list__value">
+                                            @Html.DisplayFor(x => x.SupplierName)
+                                    </dd>
+                                </div>
+                            </dl>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -44,12 +61,30 @@
                                 {
                                     <span asp-validation-for="ProductName" class="nhsuk-error-message"></span>
                                 }
-                                <input class="nhsuk-input@(productNameInvalid ? " nhsuk-input--error": string.Empty)" aria-describedby="input-hint-productname" novalidate asp-for="ProductName" type="search">
+                                <input id="@Model.ProductName" class="nhsuk-input@(productNameInvalid ? " nhsuk-input--error": string.Empty)" aria-describedby="input-hint-productname" novalidate asp-for="ProductName" type="search">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="nhsuk-grid-row">
+                        <div class="nhsuk-grid-column-one-half">
+                            <div class="nhsuk-form-group@(productUseCaseInvalid ? " nhsuk-form-group--error": string.Empty)">
+                                <label asp-for="ProductUseCase" class="nhsuk-label"></label>
+                                @if (productUseCaseInvalid)
+                                {
+                                    <span asp-validation-for="ProductUseCase" class="nhsuk-error-message"></span>
+                                }
+                                <input id="@Model.ProductUseCase" class="nhsuk-input@(productUseCaseInvalid ? " nhsuk-input--error": string.Empty)" aria-describedby="input-hint-productusecase" novalidate asp-for="ProductUseCase" type="search">
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+    <input type="hidden" asp-for="SelectedSupplier" value="@Model.SelectedSupplier" />    
+    <div class="nhsuk-grid-row">
+        <div class="nhsuk-grid-column-full">
+            <button class="nhsuk-button" asp-page-handler="SaveSupplierProductDetails" type="submit">@ButtonConstants.SAVE</button>
         </div>
     </div>
 </form>

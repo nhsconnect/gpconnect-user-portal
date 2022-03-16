@@ -138,6 +138,9 @@
   <data name="ProductName" xml:space="preserve">
     <value>You must enter a value for Product Name</value>
   </data>
+  <data name="ProductUseCase" xml:space="preserve">
+    <value>You must enter a value for Product Use Case</value>
+  </data>
   <data name="RecordAccessHtmlView" xml:space="preserve">
     <value>You must select a value for Access Record: HTML</value>
   </data>
@@ -161,6 +164,9 @@
   </data>
   <data name="SitePostcode" xml:space="preserve">
     <value>You must enter a value for Site Postcode</value>
+  </data>
+  <data name="SupplierName" xml:space="preserve">
+    <value>You must enter a value for Supplier Name</value>
   </data>
   <data name="UpdateLookupValue" xml:space="preserve">
     <value>You must enter a value for the Lookup Value</value>

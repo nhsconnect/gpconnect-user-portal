@@ -165,6 +165,9 @@
   <data name="ProductName" xml:space="preserve">
     <value>* Enter the name of the product</value>
   </data>
+  <data name="ProductUseCase" xml:space="preserve">
+    <value>* Enter the product use case</value>
+  </data>
   <data name="Provider" xml:space="preserve">
     <value>Provider</value>
   </data>
@@ -227,6 +230,9 @@
   </data>
   <data name="SubmitterHintText" xml:space="preserve">
     <value>* Enter the name of the individual who is submitting these details</value>
+  </data>
+  <data name="SupplierName" xml:space="preserve">
+    <value>Supplier Name</value>
   </data>
   <data name="UseCaseDescription" xml:space="preserve">
     <value>Use Case Description</value>

@@ -4,6 +4,7 @@
     {
         public const string ALLSITEDOWNLOAD = "Download all sites as CSV";
         public const string SEARCH = "Search";
+        public const string ADD = "Add";
         public const string CLEAR = "Clear";
         public const string CHANGE = "Change";
         public const string SAVE = "Save";
