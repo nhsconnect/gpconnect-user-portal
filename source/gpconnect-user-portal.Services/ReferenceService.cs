@@ -158,11 +158,6 @@ namespace gpconnect_user_portal.Services
             return null;
         }
 
-        public async Task AddCareSetting(string lookupValue)
-        {
-            await AddLookup(Enumerations.LookupType.CareSetting, lookupValue);
-        }
-
         public async Task AddSupplier(string lookupValue)
         {
             await AddLookup(Enumerations.LookupType.Supplier, lookupValue);
@@ -175,6 +170,12 @@ namespace gpconnect_user_portal.Services
             {
                 await AddSupplierProduct(supplierProduct.SupplierId, productAdded.LookupId, supplierProduct.ProductUseCase);
             }
+        }
+
+        public async Task AddLookup(DTO.Request.Reference.Lookup lookup)
+        {
+            Enumerations.LookupType lookupTypeEnum = (Enumerations.LookupType)lookup.LookupTypeId;
+            await AddLookup(lookupTypeEnum, lookup.LookupValue);
         }
 
         private async Task AddSupplierProduct(int supplierId, int supplierProductId, string productUseCase)
@@ -274,6 +275,19 @@ namespace gpconnect_user_portal.Services
             parameters.Add("_lookup_id", lookupId, DbType.Int16, ParameterDirection.Input);
             var result = await _dataService.ExecuteQueryFirstOrDefault<Lookup>(query, parameters);
             return result;
+        }
+
+        public async Task<LookupType> GetLookupType(int lookupTypeId)
+        {
+            if (lookupTypeId > 0)
+            {
+                var query = "reference.get_lookup_type";
+                var parameters = new DynamicParameters();
+                parameters.Add("_lookup_type_id", lookupTypeId, DbType.Int16, ParameterDirection.Input);
+                var result = await _dataService.ExecuteQueryFirstOrDefault<LookupType>(query, parameters);
+                return result;
+            }
+            return null;
         }
     }
 }

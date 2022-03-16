@@ -156,6 +156,9 @@
   <data name="HTMLAssurance" xml:space="preserve">
     <value>Access Record: HTML Assurance</value>
   </data>
+  <data name="LookupValue" xml:space="preserve">
+    <value>* Enter the value for this lookup</value>
+  </data>
   <data name="NoOdsIssued" xml:space="preserve">
     <value>No ODS Issued</value>
   </data>

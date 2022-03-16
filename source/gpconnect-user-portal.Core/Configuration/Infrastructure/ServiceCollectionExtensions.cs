@@ -50,6 +50,7 @@ namespace gpconnect_user_portal.Core.Configuration.Infrastructure
                 options.Conventions.AllowAnonymousToFolder("/Public");
                 options.Conventions.AddPageRoute("/Private/Lookup/Supplier/Index", "/Lookup/Supplier");
                 options.Conventions.AddPageRoute("/Private/Lookup/Supplier/AddProduct", "/Lookup/Supplier/AddProduct/{supplierId}");
+                options.Conventions.AddPageRoute("/Private/Lookup/AddLookup", "/Lookup/AddLookup/{lookupTypeId}");
                 options.Conventions.AddPageRoute("/Private/Lookup/Supplier/AddSupplier", "/Lookup/Supplier/AddSupplier");
                 options.Conventions.AddPageRoute("/Private/Lookup/Detail", "/Lookup/{lookupType}");
                 options.Conventions.AddPageRoute("/Private/Outstanding/Index", "/Outstanding");

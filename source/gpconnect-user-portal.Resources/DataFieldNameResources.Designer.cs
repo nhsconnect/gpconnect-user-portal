@@ -178,6 +178,15 @@ namespace gpconnect_user_portal.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to * Enter the value for this lookup.
+        /// </summary>
+        public static string LookupValue {
+            get {
+                return ResourceManager.GetString("LookupValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No ODS Issued.
         /// </summary>
         public static string NoOdsIssued {

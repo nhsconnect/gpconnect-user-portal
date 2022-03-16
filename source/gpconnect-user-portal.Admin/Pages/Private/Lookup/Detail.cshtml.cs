@@ -27,10 +27,11 @@ namespace gpconnect_user_portal.Admin.Pages
         private async Task<IActionResult> PopulatePage(int lookupTypeId)
         {
             var lookups = await _aggregateService.ReferenceService.GetLookup(lookupTypeId);
-            if (lookups != null)
+            if (lookups != null && lookups.Count > 0)
             {
                 Lookups = lookups;
                 LookupName = lookups?.FirstOrDefault()?.LookupTypeDescription;
+                LookupTypeId = lookupTypeId;
                 return Page();
             }
             return new NotFoundResult();
@@ -40,6 +41,11 @@ namespace gpconnect_user_portal.Admin.Pages
         {
             await _aggregateService.ReferenceService.EnableDisableLookup(lookupId, true);
             return await PopulatePage(lookupTypeId);
+        }
+
+        public IActionResult OnPostAddLookup()
+        {
+            return LocalRedirect($"~/Lookup/AddLookup/{LookupTypeId}");
         }
 
         public async Task<IActionResult> OnPostEnableLookupAsync(int lookupTypeId, int lookupId)

@@ -11,6 +11,9 @@ namespace gpconnect_user_portal.Admin.Pages
         public string LookupName { get; set; }
         public int? UpdateLookupId { get; set; }
 
+        [BindProperty(SupportsGet = true)]
+        public int LookupTypeId { get; set; }
+
         [Required(ErrorMessageResourceName = "UpdateLookupValue", ErrorMessageResourceType = typeof(ErrorMessageResources))]
         [BindProperty(SupportsGet = true)]
         public string UpdateLookupValue { get; set; }

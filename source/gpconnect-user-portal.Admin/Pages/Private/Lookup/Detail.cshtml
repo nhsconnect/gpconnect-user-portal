@@ -24,9 +24,9 @@
 <form method="post" id="search-input-form">    
     <div class="nhsuk-grid-row">
         <div class="nhsuk-grid-column-full">
-            <button class="nhsuk-button" asp-page-handler="AddLookup" asp-route-lookup-type-id="" type="submit">@ButtonConstants.ADD @Model.LookupName </button>
+            <button class="nhsuk-button" asp-page-handler="AddLookup" type="submit">@ButtonConstants.ADD @Model.LookupName </button>
         </div>
-    </div>
+    </div>    
     <div class="nhsuk-grid-row">
         <div class="nhsuk-grid-column-full">
             <div class="nhsuk-table__panel-with-heading-tab">
@@ -86,4 +86,5 @@
             </div>
         </div>
     </div>
+    <input type="hidden" asp-for="LookupTypeId" value="@Model.LookupTypeId" />
 </form>

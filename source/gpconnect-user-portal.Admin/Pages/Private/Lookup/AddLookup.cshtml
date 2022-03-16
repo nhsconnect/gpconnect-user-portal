@@ -1,0 +1,53 @@
+﻿@page "{lookupTypeId?}"
+@using Microsoft.AspNetCore.Mvc.ModelBinding
+@using gpconnect_user_portal.Helpers
+@using gpconnect_user_portal.Helpers.Constants
+@model LookupModel
+@{
+    var lookupValueInvalid = Model.ModelState["LookupValue"]?.ValidationState == ModelValidationState.Invalid;
+}
+
+<div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-two-thirds">
+        <div class="nhsuk-back-link">
+            <a class="nhsuk-back-link__link" href="~/">
+                <svg class="nhsuk-icon nhsuk-icon__chevron-left" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" height="24" width="24">
+                    <path d="M8.5 12c0-.3.1-.5.3-.7l5-5c.4-.4 1-.4 1.4 0s.4 1 0 1.4L10.9 12l4.3 4.3c.4.4.4 1 0 1.4s-1 .4-1.4 0l-5-5c-.2-.2-.3-.4-.3-.7z"></path>
+                </svg>
+                Back to Dashboard
+            </a>
+        </div>
+    </div>
+</div>
+
+<form method="post" id="search-input-form">
+    <div class="nhsuk-grid-row">
+        <div class="nhsuk-grid-column-full">
+            <div class="nhsuk-card nhsuk-card--feature">
+                <div class="nhsuk-card__content nhsuk-card__content--feature">
+                    <h2 class="nhsuk-card__heading nhsuk-card__heading--feature nhsuk-heading-m">
+                        @Html.DisplayFor(x => x.LookupType.LookupTypeDescription)
+                    </h2>
+                    <div class="nhsuk-grid-row">
+                        <div class="nhsuk-grid-column-one-half">
+                            <div class="nhsuk-form-group@(lookupValueInvalid ? " nhsuk-form-group--error": string.Empty)">
+                                <label asp-for="LookupValue" class="nhsuk-label"></label>
+                                @if (lookupValueInvalid)
+                                {
+                                    <span asp-validation-for="LookupValue" class="nhsuk-error-message"></span>
+                                }
+                                <input id="@Model.LookupValue" class="nhsuk-input@(lookupValueInvalid ? " nhsuk-input--error": string.Empty)" aria-describedby="input-hint-lookupvalue" novalidate asp-for="LookupValue" type="search">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="nhsuk-grid-row">
+        <div class="nhsuk-grid-column-full">
+            <button class="nhsuk-button" asp-page-handler="SaveLookup" type="submit">@ButtonConstants.SAVE</button>
+        </div>
+    </div>
+    <input type="hidden" asp-for="LookupType.LookupTypeId" value="@Model.LookupType.LookupTypeId" />
+</form>

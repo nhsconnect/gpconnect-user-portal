@@ -16,10 +16,11 @@ namespace gpconnect_user_portal.Services.Interfaces
         Task<List<SupplierProducts>> GetSupplierProducts(int supplierId);
         Task UpdateSupplierProductCapabilities(string supplierProductCapabilitiesData);
         Task<EnabledSupplierProductCapability> GetSupplierProductCapabilities(int supplierProductId, bool includeNotEnabled = false);
-        Task AddCareSetting(string lookupValue);
         Task AddSupplier(string lookupValue);
         Task AddProduct(DTO.Request.Reference.SupplierProduct supplierProduct);
+        Task AddLookup(DTO.Request.Reference.Lookup lookup);
         Task<Lookup> GetLookupById(int lookupId);
+        Task<LookupType> GetLookupType(int lookupTypeId);
         Task UpdateLookup(int lookupId, string lookupValue);
         Task EnableDisableLookup(int lookupTypeId, bool isDisabled = false);
         Task<List<LookupDataCountByType>> GetLookupDataCountByType();
