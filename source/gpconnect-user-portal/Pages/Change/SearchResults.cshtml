@@ -1,0 +1,45 @@
+﻿@using gpconnect_user_portal.Helpers
+@using gpconnect_user_portal.Helpers.Constants
+@model ChangeModel
+
+<h2>@Model.SearchResult.SearchResultsHeading</h2>
+
+<div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-full">
+        @if (Model.SearchResult.HasNoMatches)
+        {
+            <div class="nhsuk-warning-callout">
+                <h3 class="nhsuk-warning-callout__label">
+                    <span role="text">
+                        <span class="nhsuk-u-visually-hidden">Important: </span>No sites found
+                    </span>
+                </h3>
+                <div class="nhsuk-hint" id="input-hint-createsite">Click on '@ButtonConstants.CREATESITE' to register a new site.</div>
+                <button class="nhsuk-button" asp-page-handler="Create" aria-describedby="input-hint-createsite" type="submit">@ButtonConstants.CREATESITE</button>
+            </div>
+        }
+        else
+        {
+            <div class="nhsuk-hint" id="input-hint-createsite">Click on '@ButtonConstants.CREATESITE' to register a new site.</div>
+            <button class="nhsuk-button" asp-page-handler="Create" aria-describedby="input-hint-createsite" type="submit">@ButtonConstants.CREATESITE</button>
+            <dl class="nhsuk-summary-list">
+                @foreach (var searchResultEntry in Model.SearchResult.SearchResultEntries)
+                {
+                    <div class="nhsuk-summary-list__row">
+                    <dt class="nhsuk-summary-list__key">@searchResultEntry.SiteODSCode</dt>
+                    <dd class="nhsuk-summary-list__value">@searchResultEntry.SiteName</dd>
+                    <dd class="nhsuk-summary-list__actions">
+                            @if (searchResultEntry.SiteDefinitionStatusId.ToString().ToEnum<gpconnect_user_portal.Services.Enumerations.SiteDefinitionStatus>() != Services.Enumerations.SiteDefinitionStatus.Completed)
+                            {
+                            <strong class="nhsuk-tag nhsuk-tag--yellow">@searchResultEntry.SiteDefinitionStatusName</strong>
+                            }
+                            else
+                            {
+                            <a href="/Change/Registration/@searchResultEntry.SiteUniqueIdentifier?@Model.ReferrerUrl">@ButtonConstants.CHANGE</a>
+                            }
+                    </dd>
+            </div>
+                }
+        </dl>
+        }
+</div>

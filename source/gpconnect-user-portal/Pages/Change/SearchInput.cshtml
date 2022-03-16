@@ -1,0 +1,57 @@
+﻿@using Microsoft.AspNetCore.Mvc.ModelBinding
+@using gpconnect_user_portal.Helpers.Constants
+@model ChangeModel
+@{
+    var providerOdsCodeInvalid = Model.ModelState["ProviderOdsCode"]?.ValidationState == ModelValidationState.Invalid;
+}
+
+<div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-full">
+        <div class="nhsuk-form-group @(providerOdsCodeInvalid ? "nhsuk-form-group--error": string.Empty)">
+            <label asp-for="@Model.ProviderOdsCode" class="nhsuk-label"></label>
+            <div class="nhsuk-hint" id="input-hint-providerodscode">You can enter multiple provider codes separated by a space or a comma.</div>
+            @if (providerOdsCodeInvalid)
+            {
+                @Html.ValidationMessageFor(m => m.ProviderOdsCode, "", new { @class = "nhsuk-error-message" })
+            }
+            <input id="@Model.ProviderOdsCode" class="nhsuk-input @(providerOdsCodeInvalid ? "nhsuk-input--error": string.Empty)" novalidate
+                   asp-for="@Model.ProviderOdsCode" aria-describedby="input-hint-providerodscode" value="@Model.ProviderOdsCode" type="search">
+        </div>
+
+        <h3>OR</h3>
+
+        <div class="nhsuk-form-group">
+            <label asp-for="@Model.ProviderName" class="nhsuk-label"></label>
+            <div class="nhsuk-hint" id="input-hint-providername">You can enter multiple provider names separated by a comma.</div>
+            <div class="nhsuk-hint" id="input-providername-hint-text">Note: provider name may be different to their patient facing name</div>
+            <input class="nhsuk-input" id="@Model.ProviderName" novalidate
+                   asp-for="@Model.ProviderName" aria-describedby="input-hint-providername" value="@Model.ProviderName" type="search">
+        </div>
+
+        <h3>OR</h3>
+
+        <div class="nhsuk-form-group">
+            <label asp-for="@Model.CCGOdsCodes" class="nhsuk-label"></label>
+            <div class="nhsuk-hint" id="input-hint-ccgodscode">You can select an option from the dropdown.</div>
+            <select asp-for="@Model.SelectedCCGOdsCode" asp-items="@Model.CCGOdsCodes" aria-describedby="input-hint-ccgodscode" class="nhsuk-select" id="@Model.SelectedCCGOdsCode"></select>
+        </div>
+
+        <h3>OR</h3>
+
+        <div class="nhsuk-form-group">
+            <label asp-for="@Model.CCGNames" class="nhsuk-label"></label>
+            <div class="nhsuk-hint" id="input-hint-ccgname">You can select an option from the dropdown.</div>
+            <select asp-for="@Model.SelectedCCGName" asp-items="@Model.CCGNames" aria-describedby="input-hint-ccgname" class="nhsuk-select" id="@Model.SelectedCCGName"></select>
+        </div>
+    </div>
+</div>
+<div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-one-half">
+        <div class="nhsuk-hint" id="input-hint-search">Click on '@ButtonConstants.SEARCH' to run the search.</div>
+        <button class="nhsuk-button" aria-describedby="input-hint-search" asp-page-handler="Search" type="submit">@ButtonConstants.SEARCH</button>
+    </div>
+    <div class="nhsuk-grid-column-one-half">
+        <div class="nhsuk-hint" id="input-hint-clear">Click on '@ButtonConstants.CLEAR' to clear the inputs and results.</div>
+        <button class="nhsuk-button nhsuk-button--secondary" aria-describedby="input-hint-clear" asp-page-handler="Clear" type="submit">@ButtonConstants.CLEAR</button>
+    </div>
+</div>

@@ -1,0 +1,38 @@
+﻿@using gpconnect_user_portal.Helpers.Constants
+@model SearchModel
+
+<div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-one-half">
+        <div class="nhsuk-hint" id="input-hint-exportresults">Click on '@ButtonConstants.EXPORTASCSV' to export the results to a spreadsheet.</div>
+        <button class="nhsuk-button" disabled="@Model.SearchResult.HasNoMatches" aria-aria-describedby="input-hint-exportresults" asp-page-handler="ExportResults" type="submit">@ButtonConstants.EXPORTASCSV</button>
+    </div>
+    <div class="nhsuk-grid-column-one-half">
+        <div class="nhsuk-form-group">
+            <div class="nhsuk-hint" id="input-hint-selectedsortoption">Click on '@ButtonConstants.FILTER' to filter the results using the option selected in the dropdown.</div>
+            <select asp-for="@Model.SelectedSortOption" aria-describedby="input-hint-selectedsortoption" asp-items="@Model.SearchResultSortOptions" class="nhsuk-select" id="@Model.SelectedSortOption"></select>
+            <button class="nhsuk-button" asp-page-handler="Search" type="submit">@ButtonConstants.FILTER</button>
+        </div>
+    </div>    
+</div>
+
+<table class="nhsuk-table">
+    <caption class="nhsuk-table__caption">Results</caption>
+    <thead role="rowgroup" class="nhsuk-table__head">
+        <tr role="row">
+            <th role="columnheader" class="" scope="col">@Html.DisplayNameFor(model => model.SearchResult.MatchedCount)</th>
+            <th role="columnheader" class="" scope="col">@Html.DisplayNameFor(model => model.SearchResult.HasHtmlViewCount)</th>
+            <th role="columnheader" class="" scope="col">@Html.DisplayNameFor(model => model.SearchResult.HasStructuredCount)</th>
+            <th role="columnheader" class="" scope="col">@Html.DisplayNameFor(model => model.SearchResult.HasAppointmentCount)</th>
+            <th role="columnheader" class="" scope="col">@Html.DisplayNameFor(model => model.SearchResult.HasSendDocumentCount)</th>
+        </tr>
+    </thead>
+    <tbody class="nhsuk-table__body">
+        <tr role="row" class="nhsuk-table__row">
+            <td class="nhsuk-table__cell">@Model.SearchResult.MatchedCount</td>
+            <td class="nhsuk-table__cell">@Model.SearchResult.HasHtmlViewCount</td>
+            <td class="nhsuk-table__cell">@Model.SearchResult.HasStructuredCount</td>
+            <td class="nhsuk-table__cell">@Model.SearchResult.HasAppointmentCount</td>
+            <td class="nhsuk-table__cell">@Model.SearchResult.HasSendDocumentCount</td>
+        </tr>
+    </tbody>
+</table>

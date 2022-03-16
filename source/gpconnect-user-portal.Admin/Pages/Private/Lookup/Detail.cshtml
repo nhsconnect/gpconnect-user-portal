@@ -1,0 +1,89 @@
+﻿@page "{lookupType}"
+@using Microsoft.AspNetCore.Mvc.ModelBinding
+@using gpconnect_user_portal.Helpers
+@using gpconnect_user_portal.Helpers.Constants
+@model LookupDetailModel
+@{
+    var lookupValueInvalid = Model.ModelState["UpdateLookupValue"]?.ValidationState == ModelValidationState.Invalid;
+}
+
+<div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-two-thirds">
+        <div class="nhsuk-back-link">
+            <a class="nhsuk-back-link__link" href="~/">
+                <svg class="nhsuk-icon nhsuk-icon__chevron-left" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" height="24" width="24">
+                    <path d="M8.5 12c0-.3.1-.5.3-.7l5-5c.4-.4 1-.4 1.4 0s.4 1 0 1.4L10.9 12l4.3 4.3c.4.4.4 1 0 1.4s-1 .4-1.4 0l-5-5c-.2-.2-.3-.4-.3-.7z"></path>
+                </svg>
+                Back to Dashboard
+            </a>
+        </div>
+
+    </div>
+</div>
+
+<form method="post" id="search-input-form">    
+    <div class="nhsuk-grid-row">
+        <div class="nhsuk-grid-column-full">
+            <button class="nhsuk-button" asp-page-handler="AddLookup" asp-route-lookup-type-id="" type="submit">@ButtonConstants.ADD @Model.LookupName </button>
+        </div>
+    </div>
+    <div class="nhsuk-grid-row">
+        <div class="nhsuk-grid-column-full">
+            <div class="nhsuk-table__panel-with-heading-tab">
+                <h3 class="nhsuk-table__heading-tab">@Model.LookupName</h3>
+                <table class="nhsuk-table">
+                    <thead role="rowgroup" class="nhsuk-table__head">
+                        <tr role="row">
+                            <th role="columnheader" class="" scope="col">&nbsp;</th>
+                            <th role="columnheader" class="" scope="col">Is Disabled?</th>
+                            <th role="columnheader" class="" scope="col">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="nhsuk-table__body">
+                        @foreach (var lookup in Model.Lookups)
+                        {
+                            <tr role="row" class="nhsuk-table__row">
+                                <td class="nhsuk-table__cell">
+
+                                    @if (Model.UpdateLookupId == lookup.LookupId)
+                                    {
+                                        <div class="nhsuk-form-group@(lookupValueInvalid ? " nhsuk-form-group--error": string.Empty)">
+                                            @if (lookupValueInvalid)
+                                            {
+                                                <span asp-validation-for="UpdateLookupValue" class="nhsuk-error-message"></span>
+                                            }
+                                            <input class="nhsuk-input@(lookupValueInvalid ? " nhsuk-input--error": string.Empty)" id="input-updatelookupvalue" aria-describedby="input-updatelookupvalue-hint-text" novalidate asp-for="@Model.UpdateLookupValue" name="updatelookupvalue" value="@lookup.LookupValue" type="search">
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        @Html.DisplayFor(m => lookup.LookupValue)
+                                    }
+                                </td>
+                                <td class="nhsuk-table__cell">@lookup.IsDisabled.BooleanToHtml()</td>
+                                <td class="nhsuk-table__cell">
+                                    @if (!lookup.IsDisabled)
+                                    {
+                                        <button class="nhsuk-button nhsuk-button--secondary" asp-page-handler="DisableLookup" asp-route-lookuptypeid="@lookup.LookupTypeId" asp-route-lookupid="@lookup.LookupId" type="submit">@ButtonConstants.DISABLE</button>
+                                    }
+                                    else
+                                    {
+                                        <button class="nhsuk-button nhsuk-button" asp-page-handler="EnableLookup" asp-route-lookuptypeid="@lookup.LookupTypeId" asp-route-lookupid="@lookup.LookupId" type="submit">@ButtonConstants.ENABLE</button>
+                                    }
+                                    @if (Model.UpdateLookupId == lookup.LookupId)
+                                    {
+                                        <button class="nhsuk-button" asp-page-handler="SaveLookup" asp-route-lookuptypeid="@lookup.LookupTypeId" asp-route-lookupid="@lookup.LookupId" type="submit">@ButtonConstants.SAVE</button>
+                                    }
+                                    else
+                                    {
+                                        <button class="nhsuk-button nhsuk-button--secondary" asp-page-handler="UpdateLookup" asp-route-lookuptypeid="@lookup.LookupTypeId" asp-route-lookupid="@lookup.LookupId" type="submit">@ButtonConstants.CHANGE</button>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</form>

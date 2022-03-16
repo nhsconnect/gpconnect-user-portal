@@ -1,0 +1,53 @@
+﻿@model RegistrationModel
+@{
+    string referrerQueryString = Context.Request.QueryString.ToString();
+} 
+
+<div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-full">
+        <div class="nhsuk-warning-callout">
+            <h3 class="nhsuk-warning-callout__label">
+                Important<span class="nhsuk-u-visually-hidden">:</span>
+            </h3>
+            <p>Site details are not editable because they are for an existing site registration. If you believe you have chosen the wrong site, please click <a href="~/Change@(referrerQueryString)">here</a> to re-execute the search.</p>
+        </div>
+        <dl class="nhsuk-summary-list">
+            <div class="nhsuk-summary-list__row">
+            <dt class="nhsuk-summary-list__key">
+                <label asp-for="EndpointRegistration.EndpointSiteDetails.OdsCode"></label>
+            </dt>
+            <dd class="nhsuk-summary-list__value">
+                @Html.DisplayFor(x => x.EndpointRegistration.EndpointSiteDetails.OdsCode)
+                <input type="hidden" asp-for="EndpointRegistration.EndpointSiteDetails.OdsCode" />
+            </dd>
+            </div>
+            <div class="nhsuk-summary-list__row">
+                <dt class="nhsuk-summary-list__key">
+                    <label asp-for="EndpointRegistration.EndpointSiteDetails.SiteName"></label>
+                </dt>
+                <dd class="nhsuk-summary-list__value">
+                    @Html.DisplayFor(x => x.EndpointRegistration.EndpointSiteDetails.SiteName)
+                    <input type="hidden" asp-for="EndpointRegistration.EndpointSiteDetails.SiteName" />
+                </dd>
+            </div>
+            <div class="nhsuk-summary-list__row">
+                <dt class="nhsuk-summary-list__key">
+                    <label asp-for="EndpointRegistration.EndpointSiteDetails.SitePostcode"></label>
+                </dt>
+                <dd class="nhsuk-summary-list__value">
+                    @Html.DisplayFor(x => x.EndpointRegistration.EndpointSiteDetails.SitePostcode)
+                    <input type="hidden" asp-for="EndpointRegistration.EndpointSiteDetails.SitePostcode" />
+                </dd>
+            </div>
+            <div class="nhsuk-summary-list__row">
+                <dt class="nhsuk-summary-list__key">
+                    <label asp-for="EndpointRegistration.EndpointSiteDetails.SelectedCCGName"></label>
+                </dt>
+                <dd class="nhsuk-summary-list__value">
+                    @Html.DisplayFor(x => x.EndpointRegistration.EndpointSiteDetails.SelectedCCGName)
+                    <input type="hidden" asp-for="EndpointRegistration.EndpointSiteDetails.SelectedCCGName" />
+                </dd>
+            </div>
+        </dl>
+    </div>
+</div>

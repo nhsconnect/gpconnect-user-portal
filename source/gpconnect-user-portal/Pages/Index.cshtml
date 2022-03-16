@@ -1,10 +1,63 @@
 ﻿@page
 @model IndexModel
-@{
-    ViewData["Title"] = "Home page";
-}
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<section class="nhsuk-hero nhsuk-hero--image nhsuk-hero--image-description" style="background-image: url('https://assets.nhs.uk/prod/images/S_0818_homepage_hero_1_F0147446.width-1000.jpg');">
+    <div class="nhsuk-hero__overlay">
+        <div class="nhsuk-width-container">
+            <div class="nhsuk-grid-row">
+                <div class="nhsuk-grid-column-two-thirds">
+                    <div class="nhsuk-hero-content">
+                        <h1 class="nhsuk-u-margin-bottom-3">@Model.ApplicationName</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="nhsuk-section-break--m">
+    <div class="nhsuk-grid-row">
+        <div class="nhsuk-grid-column-full">
+            <div class="nhsuk-card">
+                <div class="nhsuk-card__content">
+                    <h3 class="nhsuk-card__heading">This portal provides:</h3>
+                    <p class="nhsuk-card__description">
+                        <ol class="nhsuk-contents-list__list">
+                            <li class="nhsuk-contents-list__item"><span>Information about end users who are using GP Connect products for Direct Patient Care.</span></li>
+                            <li class="nhsuk-contents-list__item"><span>Support to end users who wish to start to use GP Connect products or change the ones they are currently using.</span></li>
+                            <li class="nhsuk-contents-list__item"><span>The National Data Sharing Agreement which all users and suppliers of GP Connect products must adhere to.</span></li>
+                            <li class="nhsuk-contents-list__item"><span>Transparency for patients regarding which services are able to view their GP Patient Record to support their direct care.</span></li>
+                        </ol>
+                    <p>To find out more about GP Connect products, please visit the <a class="nhsuk-card__link" href="https://digital.nhs.uk/services/gp-connect">GP Connect website</a></p>
+                    <p>If you are a supplier looking to gain assurance for any of the GP Connect products, please visit the <a class="nhsuk-card__link" href="https://github.com/nhsconnect/gpc-consumer-support/wiki">GP Connect Consumer Support Hub</a></p>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="nhsuk-section-break--m">
+    <div class="nhsuk-grid-row">
+        <div class="nhsuk-grid-column-one-half">
+            <div class="nhsuk-card nhsuk-card--clickable">
+                <img class="nhsuk-card__img" src="https://assets.nhs.uk/prod/images/A_0218_exercise-main_FKW1X7.width-690.jpg" alt="">
+                <div class="nhsuk-card__content">
+                    <h2 class="nhsuk-card__heading nhsuk-heading-m">
+                        <a class="nhsuk-card__link" href="/Search">View services able to view GP Patient Records</a>
+                    </h2>
+                </div>
+            </div>
+        </div>
+        <div class="nhsuk-grid-column-one-half">
+            <div class="nhsuk-card nhsuk-card--clickable">
+                <img class="nhsuk-card__img" src="https://assets.nhs.uk/prod/images/A_0218_exercise-main_FKW1X7.width-690.jpg" alt="">
+                <div class="nhsuk-card__content">
+                    <h2 class="nhsuk-card__heading nhsuk-heading-m">
+                        <a class="nhsuk-card__link" href="/Change">Update or register service to use GP Connect product(s) for Direct Patient Care</a>
+                    </h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

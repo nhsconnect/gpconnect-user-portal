@@ -1,16 +1,26 @@
 using gpconnect_user_portal.Models;
-using gpconnect_user_portal.Models.Interfaces;
+using gpconnect_user_portal.Services.Interfaces;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 
-namespace gpconnect_appointment_checker.Pages
+namespace gpconnect_user_portal.Pages
 {
-    public class IndexModel : BaseModel
+    public class HelpModel : BaseModel
     {
-        public IndexModel(ICommon common) : base(common)
-        {            
+        private readonly ILogger<IndexModel> _logger;
+        private readonly IAggregateService _aggregateService;
+        private readonly IOptionsMonitor<DTO.Response.Configuration.General> _generalOptionsDelegate;
+
+        public HelpModel(ILogger<IndexModel> logger, IAggregateService aggregateService, IOptionsMonitor<DTO.Response.Configuration.General> generalOptionsDelegate) : base(aggregateService, generalOptionsDelegate)
+        {
+            _logger = logger;
+            _aggregateService = aggregateService;
+            _generalOptionsDelegate = generalOptionsDelegate;
         }
 
         public void OnGet()
-        {            
+        {
+            var scheme = _aggregateService.Request.Scheme;
         }
     }
 }

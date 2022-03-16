@@ -1,0 +1,49 @@
+﻿@using Microsoft.AspNetCore.Mvc.ModelBinding
+@using gpconnect_user_portal.Helpers.Constants
+@model RegistrationModel
+@{
+    var supplierProductInvalid = Model.ModelState["EndpointRegistration.EndpointSupplierDetails.SelectedSupplier"]?.ValidationState == ModelValidationState.Invalid;
+    var careSettingInvalid = Model.ModelState["EndpointRegistration.EndpointSupplierDetails.SelectedCareSetting"]?.ValidationState == ModelValidationState.Invalid;
+}
+
+<div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-full">
+        <div class="nhsuk-card nhsuk-card--feature">
+            <div class="nhsuk-card__content nhsuk-card__content--feature">
+                <h2 class="nhsuk-card__heading nhsuk-card__heading--feature nhsuk-heading-m">Product</h2>
+                <div class="nhsuk-grid-row">
+                    <div class="nhsuk-grid-column-one-half">
+                        <div class="nhsuk-form-group@(careSettingInvalid ? " nhsuk-form-group--error": string.Empty)">
+                            <label asp-for="EndpointRegistration.EndpointSupplierDetails.CareSettings" class="nhsuk-label"></label>
+                            <div class="nhsuk-hint" id="input-hint-caresetting">* Select the care setting for the site.</div>
+                            @if (careSettingInvalid)
+                            {
+                                <span asp-validation-for="EndpointRegistration.EndpointSupplierDetails.CareSettings" class="nhsuk-error-message"></span>
+                            }
+                            <select disabled="@Model.EndpointRegistration.EndpointSupplierDetails.DisplayGpConnectProducts" asp-for="EndpointRegistration.EndpointSupplierDetails.SelectedCareSetting" aria-describedby="input-hint-caresetting" novalidate asp-items="@Model.EndpointRegistration.EndpointSupplierDetails.CareSettings" class="nhsuk-select@(careSettingInvalid ? " nhsuk-select--error": string.Empty)"></select>
+                        </div>
+                    </div>
+                    <div class="nhsuk-grid-column-one-half">
+                        <div class="nhsuk-form-group@(supplierProductInvalid ? " nhsuk-form-group--error": string.Empty)">
+                            <label asp-for="EndpointRegistration.EndpointSupplierDetails.SupplierProducts" class="nhsuk-label"></label>
+                            <div class="nhsuk-hint" id="input-hint-supplier">* Select the product name for the site.</div>
+                            @if (supplierProductInvalid)
+                            {
+                                <span asp-validation-for="EndpointRegistration.EndpointSupplierDetails.SupplierProducts" class="nhsuk-error-message"></span>
+                            }
+                            <select disabled="@Model.EndpointRegistration.EndpointSupplierDetails.DisplayGpConnectProducts" asp-for="EndpointRegistration.EndpointSupplierDetails.SelectedSupplier" aria-describedby="input-hint-supplier" novalidate asp-items="@Model.EndpointRegistration.EndpointSupplierDetails.SupplierProducts" class="nhsuk-select@(supplierProductInvalid ? " nhsuk-select--error": string.Empty)"></select>
+                        </div>
+                    </div>
+                </div>
+                @if (!Model.EndpointRegistration.EndpointSupplierDetails.DisplayGpConnectProducts)
+                {
+                    <button class="nhsuk-button" asp-page-handler="LoadSupplierOptions" type="submit">@ButtonConstants.LOADSUPPLIEROPTIONS</button>
+                }
+                else
+                {
+                    <button class="nhsuk-button" asp-page-handler="EnableSupplierUpdate" type="submit">@ButtonConstants.ENABLESUPPLIERUPDATE</button>
+                }
+            </div>
+        </div>
+    </div>
+</div>

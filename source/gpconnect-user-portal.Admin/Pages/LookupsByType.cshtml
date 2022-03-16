@@ -1,0 +1,26 @@
+﻿<div class="nhsuk-grid-column-full nhsuk-card-group__item">
+    <div class="nhsuk-card nhsuk-card--clickable">
+        <div class="nhsuk-card__content">
+            <h2 class="nhsuk-card__heading nhsuk-heading-m">
+                Lookups By Type
+            </h2>
+            @if (Model.LookupDataCountByType.Count > 0)
+            {
+                <dl class="nhsuk-summary-list">
+                    @foreach (var lookupType in Model.LookupDataCountByType)
+                    {
+                        <div class="nhsuk-summary-list__row">
+                            <dt class="nhsuk-summary-list__key">@lookupType.LookupTypeDescription</dt>
+                            <dd class="nhsuk-summary-list__value">@lookupType.LookupTypeCount</dd>
+                            <dd class="nhsuk-summary-list__actions"><a href="/Lookup/@lookupType.LookupTypeName">Manage</a></dd>
+                        </div>
+                    }
+                </dl>
+            }
+            else
+            {
+            <p class="nhsuk-card__description">There are no endpoint changes.</p>
+            }
+        </div>
+    </div>
+</div>

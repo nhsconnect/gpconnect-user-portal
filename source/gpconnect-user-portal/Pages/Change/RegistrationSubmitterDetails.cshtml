@@ -1,0 +1,44 @@
+﻿@using Microsoft.AspNetCore.Mvc.ModelBinding
+@model RegistrationModel
+@{
+    var submitterInvalid = Model.ModelState["EndpointRegistration.EndpointSubmitterDetails.SubmitterContactName"]?.ValidationState == ModelValidationState.Invalid;
+    var emailAddressInvalid = Model.ModelState["EndpointRegistration.EndpointSubmitterDetails.SubmitterContactEmailAddress"]?.ValidationState == ModelValidationState.Invalid;
+    var telephoneInvalid = Model.ModelState["EndpointRegistration.EndpointSubmitterDetails.SubmitterContactTelephone"]?.ValidationState == ModelValidationState.Invalid;
+}
+
+<div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-full">
+        <div class="nhsuk-card nhsuk-card--feature">
+            <div class="nhsuk-card__content nhsuk-card__content--feature">
+                <h2 class="nhsuk-card__heading nhsuk-card__heading--feature nhsuk-heading-m">Submitter Details</h2>
+                <div class="nhsuk-form-group@(submitterInvalid ? " nhsuk-form-group--error": string.Empty)">
+                    <label asp-for="EndpointRegistration.EndpointSubmitterDetails.SubmitterContactName" class="nhsuk-label"></label>
+                    <div class="nhsuk-hint" id="input-hint-submitter">* Enter the name of the individual who is submitting these details</div>
+                    @if (submitterInvalid)
+                    {
+                        <span asp-validation-for="EndpointRegistration.EndpointSubmitterDetails.SubmitterContactName" class="nhsuk-error-message"></span>
+                    }
+                    <input class="nhsuk-input@(submitterInvalid ? " nhsuk-input--error": string.Empty)" aria-describedby="input-hint-submitter" novalidate asp-for="EndpointRegistration.EndpointSubmitterDetails.SubmitterContactName" type="search">
+                </div>
+                <div class="nhsuk-form-group@(emailAddressInvalid ? " nhsuk-form-group--error": string.Empty)">
+                    <label asp-for="EndpointRegistration.EndpointSubmitterDetails.SubmitterContactEmailAddress" class="nhsuk-label"></label>
+                    <div class="nhsuk-hint" id="input-hint-email">* Enter the email address of the submitter.</div>
+                    @if (emailAddressInvalid)
+                    {
+                        <span asp-validation-for="EndpointRegistration.EndpointSubmitterDetails.SubmitterContactEmailAddress" class="nhsuk-error-message"></span>
+                    }
+                    <input class="nhsuk-input@(emailAddressInvalid ? " nhsuk-input--error": string.Empty)" aria-describedby="input-hint-email" novalidate asp-for="EndpointRegistration.EndpointSubmitterDetails.SubmitterContactEmailAddress" type="email">
+                </div>
+                <div class="nhsuk-form-group@(telephoneInvalid ? " nhsuk-form-group--error": string.Empty)">
+                    <label asp-for="EndpointRegistration.EndpointSubmitterDetails.SubmitterContactTelephone" class="nhsuk-label"></label>
+                    <div class="nhsuk-hint" id="input-hint-telephone">* Enter the telephone number of the submitter.</div>
+                    @if (telephoneInvalid)
+                    {
+                        <span asp-validation-for="EndpointRegistration.EndpointSubmitterDetails.SubmitterContactTelephone" class="nhsuk-error-message"></span>
+                    }
+                    <input class="nhsuk-input@(telephoneInvalid ? " nhsuk-input--error": string.Empty)" aria-describedby="input-hint-telephone" novalidate asp-for="EndpointRegistration.EndpointSubmitterDetails.SubmitterContactTelephone" type="tel">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

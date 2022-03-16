@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <RootNamespace>gpconnect_user_portal.Services</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Dapper" Version="2.0.123" />
+    <PackageReference Include="Dapper.FluentMap" Version="2.0.0" />
+    <PackageReference Include="DocumentFormat.OpenXml" Version="2.14.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
+    <PackageReference Include="System.Resources.ResourceManager" Version="4.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\gpconnect-user-portal.DAL\gpconnect-user-portal.DAL.csproj" />
+    <ProjectReference Include="..\gpconnect-user-portal.DTO\gpconnect-user-portal.DTO.csproj" />
+    <ProjectReference Include="..\gpconnect-user-portal.Helpers\gpconnect-user-portal.Helpers.csproj" />
+  </ItemGroup>
+
+</Project>

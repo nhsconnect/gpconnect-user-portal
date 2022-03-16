@@ -1,0 +1,19 @@
+﻿@page
+@using gpconnect_user_portal.Helpers.Constants
+@model ChangeModel
+
+<form method="post" id="search-input-form">
+    <h1>@DisplayConstants.CHANGETITLE</h1>
+    <p>Declaration: By using continuing you agree you have legal authority to act on behalf of your organisation.</p>
+    <h2>Search for your organisation</h2>
+
+    @if (Model.DisplaySearchInvalid)
+    {
+        <partial name="SearchInvalid" />
+    }
+    <partial name="SearchInput" />
+    @if (Model.SearchResult != null && Model.IsValidSearch)
+    {
+        <partial name="SearchResults" />
+    }
+</form>

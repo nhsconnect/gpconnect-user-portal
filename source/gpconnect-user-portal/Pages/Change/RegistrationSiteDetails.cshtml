@@ -1,0 +1,105 @@
+﻿@using Microsoft.AspNetCore.Mvc.ModelBinding
+@model RegistrationModel
+@{
+    var odsCodeInvalid = Model.ModelState["EndpointRegistration.EndpointSiteDetails.OdsCode"]?.ValidationState == ModelValidationState.Invalid;
+    var odsCodeIssuedInvalid = Model.ModelState["EndpointRegistration.EndpointSiteDetails.NoOdsIssued"]?.ValidationState == ModelValidationState.Invalid;
+    var siteNameInvalid = Model.ModelState["EndpointRegistration.EndpointSiteDetails.SiteName"]?.ValidationState == ModelValidationState.Invalid;
+    var sitePostcodeInvalid = Model.ModelState["EndpointRegistration.EndpointSiteDetails.SitePostcode"]?.ValidationState == ModelValidationState.Invalid;
+    var canEditEndpointSiteDetails = string.IsNullOrEmpty(Model.EndpointRegistration.SiteUniqueIdentifier);
+}
+
+<div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-full">
+        <div class="nhsuk-card">
+            <div class="nhsuk-card__content">
+                <p class="nhsuk-card__description">
+                    <ol class="nhsuk-contents-list__list">
+                        <li class="nhsuk-contents-list__item"><span>Use this form if you wish to start to use GP Connect products, change the ones you are currently using or change your GP Connect supplier.</span></li>
+                        <li class="nhsuk-contents-list__item"><span>Information about end users who are using GP Connect products for Direct Patient Care.</span></li>
+                        <li class="nhsuk-contents-list__item"><span>Support to end users who wish to start to use GP Connect products or change the ones they are currently using.</span></li>
+                        <li class="nhsuk-contents-list__item"><span>Please note that mandatory fields are indicated with an asterisk (*)</span></li>
+                    </ol>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-full">
+        <div class="nhsuk-card nhsuk-card--feature">
+            <div class="nhsuk-card__content nhsuk-card__content--feature">
+                <h2 class="nhsuk-card__heading nhsuk-card__heading--feature nhsuk-heading-m">Site Details</h2>
+
+                @if (canEditEndpointSiteDetails)
+                {
+                     <div class="nhsuk-grid-row">
+                    <div class="nhsuk-grid-column-one-half">
+                        <div class="nhsuk-form-group@(odsCodeInvalid ? " nhsuk-form-group--error": string.Empty)">
+                            <label asp-for="EndpointRegistration.EndpointSiteDetails.OdsCode" class="nhsuk-label"></label>
+                            <div class="nhsuk-hint" id="input-hint-odscode">Enter the ODS code of the site OR specify that an ODS code has not been issued.</div>
+                                @if (odsCodeInvalid)
+                                {
+                                <span asp-validation-for="EndpointRegistration.EndpointSiteDetails.OdsCode" class="nhsuk-error-message"></span>
+                                }
+                            <input class="nhsuk-input@(odsCodeInvalid ? " nhsuk-input--error": string.Empty)" aria-describedby="input-hint-odscode" novalidate asp-for="EndpointRegistration.EndpointSiteDetails.OdsCode" type="search">
+                        </div>
+                    </div>
+                    <div class="nhsuk-grid-column-one-half">
+                        <div class="nhsuk-form-group">
+                            <div class="nhsuk-checkboxes">
+                                <div class="nhsuk-checkboxes__item">
+                                    <input class="nhsuk-checkboxes__input@(odsCodeIssuedInvalid ? " nhsuk-input--error": string.Empty)" asp-for="EndpointRegistration.EndpointSiteDetails.NoOdsIssued">
+                                        @if (odsCodeIssuedInvalid)
+                                        {
+                                        <span asp-validation-for="EndpointRegistration.EndpointSiteDetails.NoOdsIssued" class="nhsuk-error-message"></span>
+                                        }
+                                    <label asp-for="EndpointRegistration.EndpointSiteDetails.NoOdsIssued" class="nhsuk-label nhsuk-checkboxes__label"></label>
+                                    <div class="nhsuk-hint nhsuk-checkboxes__hint" id="input-hint-odsissued">If you have not been issued an ODS code.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="nhsuk-grid-row">
+                    <div class="nhsuk-grid-column-one-half">
+                        <div class="nhsuk-form-group@(siteNameInvalid ? " nhsuk-form-group--error": string.Empty)">
+                            <label asp-for="EndpointRegistration.EndpointSiteDetails.SiteName" class="nhsuk-label"></label>
+                            <div class="nhsuk-hint" id="input-hint-sitename">* Enter the name of the site.</div>
+                                @if (siteNameInvalid)
+                                {
+                                <span asp-validation-for="EndpointRegistration.EndpointSiteDetails.SiteName" class="nhsuk-error-message"></span>
+                                }
+                            <input class="nhsuk-input@(siteNameInvalid ? " nhsuk-input--error": string.Empty)" aria-describedby="input-hint-sitename" novalidate asp-for="EndpointRegistration.EndpointSiteDetails.SiteName" type="search">
+                        </div>
+                    </div>
+                    <div class="nhsuk-grid-column-one-half">
+                        <div class="nhsuk-form-group@(sitePostcodeInvalid ? " nhsuk-form-group--error": string.Empty)">
+                            <label asp-for="EndpointRegistration.EndpointSiteDetails.SitePostcode" class="nhsuk-label"></label>
+                            <div class="nhsuk-hint" id="input-hint-sitepostcode">* Enter the postcode of the site.</div>
+                                @if (sitePostcodeInvalid)
+                                {
+                                <span asp-validation-for="EndpointRegistration.EndpointSiteDetails.SitePostcode" class="nhsuk-error-message"></span>
+                                }
+                            <input class="nhsuk-input@(sitePostcodeInvalid ? " nhsuk-input--error": string.Empty)" aria-describedby="input-hint-sitepostcode" novalidate asp-for="EndpointRegistration.EndpointSiteDetails.SitePostcode" type="search">
+                        </div>
+                    </div>
+                </div>
+                <div class="nhsuk-grid-row">
+                    <div class="nhsuk-grid-column-full">
+                        <div class="nhsuk-form-group">
+                            <label asp-for="EndpointRegistration.EndpointSiteDetails.CCGNames" class="nhsuk-label"></label>
+                            <div class="nhsuk-hint" id="input-hint-ccgodsname">If applicable, please select the CCG for the site.</div>
+                            <select asp-for="EndpointRegistration.EndpointSiteDetails.SelectedCCGName" asp-items="@Model.EndpointRegistration.EndpointSiteDetails.CCGNames" aria-describedby="input-hint-ccgodsname" novalidate class="nhsuk-select"></select>
+                        </div>
+                    </div>
+                </div>                
+                }
+                else
+                {
+                    <partial name="RegistrationSiteDetailsReadOnly" />
+                }
+        </div>
+    </div>
+</div>
+</div>

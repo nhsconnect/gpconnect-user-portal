@@ -1,0 +1,25 @@
+﻿@page
+@model OutstandingEndpointChangesModel
+
+<div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-full">
+        <div class="nhsuk-table__panel-with-heading-tab">
+            <h3 class="nhsuk-table__heading-tab">Outstanding Endpoint Changes (@Model.EndpointChanges.Count)</h3>
+            @if (Model.EndpointChanges.Count > 0)
+            {
+                <table class="nhsuk-table">
+                    <tbody class="nhsuk-table__body">
+                        @foreach (var endpointChange in Model.EndpointChanges)
+                        {
+                            <tr role="row" class="nhsuk-table__row">
+                                <td class="nhsuk-table__cell"><a href="~/Outstanding/Detail/@endpointChange.SiteUniqueIdentifier">@endpointChange.SiteName</a></td>
+                                <td class="nhsuk-table__cell">@endpointChange.SubmittedDateText</td>
+                                <td class="nhsuk-table__cell">@endpointChange.SiteDefinitionStatusName</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+        </div>
+    </div>
+</div>

@@ -1,20 +1,48 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <RootNamespace>gpconnect_user_portal</RootNamespace>
     <UserSecretsId>f80978bc-ada6-4d3a-9668-640a98fdf872</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <Company>NHS Digital</Company>
+    <Description>GP Connect End User Portal</Description>
+    <Product>GP Connect End User Portal 1.0</Product>
+    <Authors>NHS Digital</Authors>
+    <Copyright>Copyright © NHS Digital 2021</Copyright>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="CsvHelper" Version="27.2.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="5.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.ViewFeatures" Version="2.2.0" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.13" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.1" />
+    <PackageReference Include="NLog.Web.AspNetCore" Version="4.9.3" />
+    <PackageReference Include="System.Resources.ResourceManager" Version="4.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\gpconnect-user-portal.Core\gpconnect-user-portal.Core.csproj" />
+    <ProjectReference Include="..\gpconnect-user-portal.DAL\gpconnect-user-portal.DAL.csproj" />
+    <ProjectReference Include="..\gpconnect-user-portal.Services\gpconnect-user-portal.Services.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <Compile Update="Pages\Help\Index - Copy.cshtml.cs">
       <DependentUpon>Index.cshtml.cs</DependentUpon>
     </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="Pages\Error.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\content\" />
   </ItemGroup>
 
 </Project>

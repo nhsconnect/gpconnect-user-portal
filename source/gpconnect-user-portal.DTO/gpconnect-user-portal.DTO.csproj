@@ -1,8 +1,17 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <RootNamespace>gpconnect_user_portal.DTO</RootNamespace>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\gpconnect-user-portal.Helpers\gpconnect-user-portal.Helpers.csproj" />
+    <ProjectReference Include="..\gpconnect-user-portal.Resources\gpconnect-user-portal.Resources.csproj" />
+  </ItemGroup>
 
 </Project>

@@ -1,0 +1,14 @@
+﻿@page
+@model LogoutModel
+@using gpconnect_user_portal.Helpers.Constants
+@using gpconnect_user_portal.Helpers.Enumerations
+@using gpconnect_user_portal.Helpers
+
+@if (User.Identity.IsAuthenticated)
+{
+    <div style="color: #ffffff; font-style: italic">
+        @User.GetClaimValue("Email")<br />
+        @User.GetClaimValue("DisplayName")
+    </div>
+    @Html.ActionLink("Sign out", "Logout", "Auth", null, new { @style = "color:#ffffff" })
+}
