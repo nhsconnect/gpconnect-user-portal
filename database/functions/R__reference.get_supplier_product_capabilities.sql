@@ -16,7 +16,8 @@ returns table
 	consumer_assured boolean,
 	awaiting_assurance boolean,
 	assurance_date timestamp without time zone,
-	capability_version varchar(100)
+	capability_version varchar(100),
+	can_send_action_request boolean
 )
 as $$
 declare _supplier_id smallint;
@@ -44,7 +45,8 @@ begin
 		consumer_assured boolean,
 		awaiting_assurance boolean,
 		assurance_date timestamp without time zone,
-		capability_version character varying(50)
+		capability_version character varying(50),
+		can_send_action_request boolean
 	);
 	
 	insert into enabled_supplier_product_capabilities 
@@ -58,7 +60,8 @@ begin
 		consumer_assured,
 		awaiting_assurance,
 		assurance_date,
-		capability_version
+		capability_version,
+		can_send_action_request
 	)	
 	select 
 		spc.supplier_product_capability_id,
@@ -70,7 +73,8 @@ begin
 		spc.consumer_assured,
 		spc.awaiting_assurance,
 		spc.assurance_date,
-		spc.capability_version
+		spc.capability_version,
+		(spc.provider_assured OR spc.consumer_assured) AND ((spc.assurance_date is not null AND spc.assurance_date <= now()) OR spc.awaiting_assurance) can_send_action_request
 	from
 		reference.supplier_product_capability spc
 		inner join reference.lookup l on spc.product_capability_id=l.lookup_id
@@ -93,7 +97,8 @@ begin
 			consumer_assured,
 			awaiting_assurance,
 			assurance_date,
-			capability_version
+			capability_version,
+			can_send_action_request
 		)	
 		select 
 			null,
@@ -105,7 +110,8 @@ begin
 			null,
 			null,
 			null,
-			null
+			null,
+			false
 		from
 			reference.lookup l
 		where
@@ -130,7 +136,8 @@ begin
 		espc.consumer_assured,
 		espc.awaiting_assurance,
 		espc.assurance_date,
-		espc.capability_version
+		espc.capability_version,
+		espc.can_send_action_request
 	from
 		enabled_supplier_product_capabilities espc;
 end;

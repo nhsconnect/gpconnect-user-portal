@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Hosting;
+using System.Net;
 
 namespace gpconnect_user_portal.Core.Configuration.Infrastructure
 {

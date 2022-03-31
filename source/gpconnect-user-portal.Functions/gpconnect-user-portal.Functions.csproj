@@ -17,7 +17,7 @@
 	-->
 
     <!-- Generate ready to run images during publishing to improvement cold starts. -->
-    <PublishReadyToRun>true</PublishReadyToRun>
+    <PublishReadyToRun>false</PublishReadyToRun>
 
   </PropertyGroup>
   

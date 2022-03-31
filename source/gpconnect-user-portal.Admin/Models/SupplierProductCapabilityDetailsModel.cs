@@ -26,5 +26,10 @@ namespace gpconnect_user_portal.Models
 
         [Display(Name = "Version", ResourceType = typeof(DataFieldNameResources))]
         public string? CapabilityVersion { get; set; }
+
+        [Display(Name = "RecipientEmailAddress", ResourceType = typeof(DataFieldNameResources))]
+        public string? RecipientEmailAddress { get; set; }
+
+        public bool CanSendActionRequest { get; set; }
     }
 }

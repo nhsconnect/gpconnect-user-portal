@@ -24,5 +24,6 @@ namespace gpconnect_user_portal.DTO.Response.Reference
         public bool AwaitingAssurance { get; set; }
         public DateTime? AssuranceDate { get; set; }
         public string CapabilityVersion { get; set; }
+        public bool CanSendActionRequest { get; set; }
     }
 }

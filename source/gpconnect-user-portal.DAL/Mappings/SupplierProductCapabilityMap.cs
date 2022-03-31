@@ -17,6 +17,7 @@ namespace gpconnect_user_portal.DAL.Mappings
             Map(p => p.AwaitingAssurance).ToColumn("awaiting_assurance");
             Map(p => p.AssuranceDate).ToColumn("assurance_date");
             Map(p => p.CapabilityVersion).ToColumn("capability_version");
+            Map(p => p.CanSendActionRequest).ToColumn("can_send_action_request");
         }
     }
 }

@@ -232,6 +232,15 @@ namespace gpconnect_user_portal.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Recipient Email Address.
+        /// </summary>
+        public static string RecipientEmailAddress {
+            get {
+                return ResourceManager.GetString("RecipientEmailAddress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Access Record: HTML.
         /// </summary>
         public static string RecordAccessHtmlView {

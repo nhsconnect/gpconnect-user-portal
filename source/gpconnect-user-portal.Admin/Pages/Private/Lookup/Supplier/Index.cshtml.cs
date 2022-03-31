@@ -56,6 +56,7 @@ namespace gpconnect_user_portal.Admin.Pages
             if (selectedSupplierProduct != null && selectedSupplierProduct > 0)
             {
                 var supplierProductCapabilities = await _aggregateService.ReferenceService.GetSupplierProductCapabilities(selectedSupplierProduct.Value, true);
+
                 var capabilityList = new List<Models.SupplierProductCapabilityDetailsModel>();
 
                 foreach (var supplierProductCapability in supplierProductCapabilities.SupplierProductCapability)
@@ -71,10 +72,12 @@ namespace gpconnect_user_portal.Admin.Pages
                         SupplierProductCapabilityId = supplierProductCapability.SupplierProductCapabilityId,
                         ProductCapabilityId = supplierProductCapability.ProductCapabilityId,
                         SupplierProductId = supplierProductCapability.SupplierProductId,
-                        SupplierId = supplierProductCapability.SupplierId
+                        SupplierId = supplierProductCapability.SupplierId,
+                        CanSendActionRequest = supplierProductCapability.CanSendActionRequest
                     });
                 }
                 SupplierProductCapabilityModel.SupplierProductCapabilityDetailsModel = capabilityList;
+                SupplierProductCapabilityModel.SendActionRequestEnabled = supplierProductCapabilities.SendActionRequestEnabled;
             }
             SupplierProductCapabilityModel.DisplayCapabilities = true;
         }
@@ -94,35 +97,30 @@ namespace gpconnect_user_portal.Admin.Pages
 
         public async Task<IActionResult> OnPostSaveChangesAsync()
         {
+            ModelState.ClearValidationState("SupplierProductCapabilityModel.RecipientEmailAddress");
+            ModelState.MarkFieldValid("SupplierProductCapabilityModel.RecipientEmailAddress");
+
             if (ModelState.IsValid)
             {
                 await _aggregateService.ReferenceService.UpdateSupplierProductCapabilities(SupplierProductCapabilityModel.ConvertObjectToJsonData());
             }
-            //await PopulateForm();
             GetSuppliers();
             await GetSupplierProducts();
             await GetSupplierProductCapabilities();
             return Page();
         }
 
-        //private async Task<IActionResult> PopulateForm()
-        //{
-        //    SupplierProductCapabilityModel.SupplierProductCapabilitySupplierModel.Suppliers = GetDropDown(Services.Enumerations.LookupType.Supplier, SupplierProductCapabilityModel.SupplierProductCapabilitySupplierModel.SelectedSupplier);
-        //    var supplierProducts = await _aggregateService.ReferenceService.GetSupplierProducts(SupplierProductCapabilityModel.SupplierProductCapabilitySupplierModel.SelectedSupplier);
-        //    var options = supplierProducts.Select(option => new SelectListItem() { Text = option.ProductName, Value = option.SupplierProductId.ToString() }).ToList();
-        //    if (options.Any())
-        //    {
-        //        options.Insert(0, new SelectListItem());
-        //    }
-        //    SupplierProductCapabilityModel.SupplierProductCapabilitySupplierModel.SupplierProducts = options;
-
-        //    if (SupplierProductCapabilityModel.SupplierProductCapabilitySupplierModel.SelectedSupplierProduct != null && SupplierProductCapabilityModel.SupplierProductCapabilitySupplierModel.SelectedSupplierProduct > 0)
-        //    {
-        //        var supplierProductCapabilities = await _aggregateService.ReferenceService.GetSupplierProductCapabilities(SupplierProductCapabilityModel.SupplierProductCapabilitySupplierModel.SelectedSupplierProduct.Value);
-        //        return PopulateSupplierCapabilities(supplierProductCapabilities.SupplierProductCapability);
-        //    }
-        //    return Page();
-        //}
+        public async Task<IActionResult> OnPostSendRequestAsync()
+        {
+            if (ModelState.IsValid)
+            {
+                //await _aggregateService.ReferenceService.UpdateSupplierProductCapabilities(SupplierProductCapabilityModel.ConvertObjectToJsonData());
+            }
+            GetSuppliers();
+            await GetSupplierProducts();
+            await GetSupplierProductCapabilities();
+            return Page();
+        }
 
         private IEnumerable<SelectListItem> GetDropDown(Services.Enumerations.LookupType lookupType, int selectedOption = 0)
         {

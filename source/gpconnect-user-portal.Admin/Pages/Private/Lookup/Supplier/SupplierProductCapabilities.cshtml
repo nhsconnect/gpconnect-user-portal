@@ -3,7 +3,33 @@
 @using gpconnect_user_portal.Helpers.Enumerations
 @model SupplierDetailModel
 @{
-    //var useCaseDescriptionInvalid = Model.ModelState["EndpointRegistration.EndpointSupplierProductCapability.UseCaseDescription"]?.ValidationState == ModelValidationState.Invalid;
+    var recipientEmailAddressInvalid = Model.ModelState["SupplierProductCapabilityModel.RecipientEmailAddress"]?.ValidationState == ModelValidationState.Invalid;
+}
+
+@if (Model.SupplierProductCapabilityModel.SendActionRequestEnabled)
+{
+    <div class="nhsuk-grid-row">
+        <div class="nhsuk-grid-column-two-thirds">
+            <div class="nhsuk-card nhsuk-card--feature">
+                <div class="nhsuk-card__content nhsuk-card__content--feature">
+                    <h2 class="nhsuk-card__heading nhsuk-card__heading--feature nhsuk-heading-m">
+                        DSA Request Notification
+                    </h2>
+                    <p class="nhsuk-card__description">
+                        <div class="nhsuk-form-group@(recipientEmailAddressInvalid ? " nhsuk-form-group--error": string.Empty)">
+                            <label asp-for="SupplierProductCapabilityModel.RecipientEmailAddress" class="nhsuk-label nhsuk-checkboxes__label"></label>
+                            @if (recipientEmailAddressInvalid)
+                            {
+                                <span asp-validation-for="SupplierProductCapabilityModel.RecipientEmailAddress" class="nhsuk-error-message"></span>
+                            }
+                            <input id="@Model.SupplierProductCapabilityModel.RecipientEmailAddress" class="nhsuk-input@(recipientEmailAddressInvalid ? " nhsuk-input--error": string.Empty)" novalidate asp-for="SupplierProductCapabilityModel.RecipientEmailAddress" type="search">
+                        </div>
+                        <button class="nhsuk-button" asp-page-handler="SendRequest" type="submit">@ButtonConstants.SENDREQUEST</button>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
 }
 
 <div class="nhsuk-grid-row">
@@ -56,6 +82,22 @@
                             </div>
                         </div>
                     </div>
+                    @if (Model.SupplierProductCapabilityModel.SupplierProductCapabilityDetailsModel[i].CanSendActionRequest)
+                    {
+                        <div class="nhsuk-grid-row">
+                            <div class="nhsuk-grid-column-one-half">
+                                <div class="nhsuk-form-group">
+                                    <label asp-for="SupplierProductCapabilityModel.SupplierProductCapabilityDetailsModel[i].RecipientEmailAddress" class="nhsuk-label nhsuk-checkboxes__label"></label>
+                                    <input class="nhsuk-input" novalidate asp-for="SupplierProductCapabilityModel.SupplierProductCapabilityDetailsModel[i].RecipientEmailAddress" type="search">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="nhsuk-grid-row">
+                            <div class="nhsuk-grid-column-one-half">
+                                <button class="nhsuk-button" asp-page-handler="SendRequest" type="submit">@ButtonConstants.SENDREQUEST</button>
+                            </div>
+                        </div>
+                    }
                 </div>
             </div>
         </div>
@@ -63,7 +105,8 @@
         <input type="hidden" asp-for="SupplierProductCapabilityModel.SupplierProductCapabilityDetailsModel[i].SupplierId" value="@Model.SupplierProductCapabilityModel.SupplierProductCapabilityDetailsModel[i].SupplierId" />
         <input type="hidden" asp-for="SupplierProductCapabilityModel.SupplierProductCapabilityDetailsModel[i].ProductCapabilityId" value="@Model.SupplierProductCapabilityModel.SupplierProductCapabilityDetailsModel[i].ProductCapabilityId" />
         <input type="hidden" asp-for="SupplierProductCapabilityModel.SupplierProductCapabilityDetailsModel[i].SupplierProductId" value="@Model.SupplierProductCapabilityModel.SupplierProductCapabilityDetailsModel[i].SupplierProductId" />
-        <input type="hidden" asp-for="SupplierProductCapabilityModel.SupplierProductCapabilityDetailsModel[i].Name" value="@Model.SupplierProductCapabilityModel.SupplierProductCapabilityDetailsModel[i].Name" />        
+        <input type="hidden" asp-for="SupplierProductCapabilityModel.SupplierProductCapabilityDetailsModel[i].Name" value="@Model.SupplierProductCapabilityModel.SupplierProductCapabilityDetailsModel[i].Name" />
+        <input type="hidden" asp-for="SupplierProductCapabilityModel.SupplierProductCapabilityDetailsModel[i].CanSendActionRequest" value="@Model.SupplierProductCapabilityModel.SupplierProductCapabilityDetailsModel[i].CanSendActionRequest" />
     }
 </div>
 <div class="nhsuk-grid-row">

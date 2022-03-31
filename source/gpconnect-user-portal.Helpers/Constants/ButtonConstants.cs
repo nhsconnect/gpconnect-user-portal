@@ -8,6 +8,7 @@
         public const string CLEAR = "Clear";
         public const string CHANGE = "Change";
         public const string SAVE = "Save";
+        public const string SENDREQUEST = "Send Request";
         public const string DISABLE = "Disable";
         public const string ENABLE = "Enable";
         public const string CONTINUE = "Continue";

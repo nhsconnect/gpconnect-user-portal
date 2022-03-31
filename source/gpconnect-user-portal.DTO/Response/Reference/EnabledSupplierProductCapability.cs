@@ -6,6 +6,9 @@ namespace gpconnect_user_portal.DTO.Response.Reference
     public class EnabledSupplierProductCapability
     {
         public List<SupplierProductCapability> SupplierProductCapability { get; set; }
+
+        public bool SendActionRequestEnabled => SupplierProductCapability.Any(x => x.CanSendActionRequest);
+
         public bool IsHtmlEnabled => SupplierProductCapability.Any(x => x.LookupValue.Contains("HTML"));
         public bool IsStructuredEnabled => SupplierProductCapability.Any(x => x.LookupValue.Contains("Structured"));
         public bool IsAppointmentEnabled => SupplierProductCapability.Any(x => x.LookupValue.Contains("Appointments"));
