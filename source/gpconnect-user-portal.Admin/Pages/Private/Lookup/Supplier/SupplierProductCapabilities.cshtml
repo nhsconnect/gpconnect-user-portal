@@ -8,7 +8,7 @@
 
 @if (Model.SupplierProductCapabilityModel.SendActionRequestEnabled)
 {
-    <div class="nhsuk-grid-row">
+    @*<div class="nhsuk-grid-row">
         <div class="nhsuk-grid-column-two-thirds">
             <div class="nhsuk-card nhsuk-card--feature">
                 <div class="nhsuk-card__content nhsuk-card__content--feature">
@@ -29,7 +29,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>*@
 }
 
 <div class="nhsuk-grid-row">
@@ -82,7 +82,7 @@
                             </div>
                         </div>
                     </div>
-                    @if (Model.SupplierProductCapabilityModel.SupplierProductCapabilityDetailsModel[i].CanSendActionRequest)
+                    @*@if (Model.SupplierProductCapabilityModel.SupplierProductCapabilityDetailsModel[i].CanSendActionRequest)
                     {
                         <div class="nhsuk-grid-row">
                             <div class="nhsuk-grid-column-one-half">
@@ -97,7 +97,7 @@
                                 <button class="nhsuk-button" asp-page-handler="SendRequest" type="submit">@ButtonConstants.SENDREQUEST</button>
                             </div>
                         </div>
-                    }
+                    }*@
                 </div>
             </div>
         </div>

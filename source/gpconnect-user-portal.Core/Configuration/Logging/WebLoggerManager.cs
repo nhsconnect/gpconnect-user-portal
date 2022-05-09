@@ -9,7 +9,7 @@ namespace gpconnect_user_portal.Core.Configuration.Logging
 
         public void LogWebRequest(string webRequest)
         {
-            _webLogger.Trace(webRequest);
+            //_webLogger.Trace(webRequest);
         }
     }
 }

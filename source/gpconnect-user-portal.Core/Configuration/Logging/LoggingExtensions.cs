@@ -63,7 +63,6 @@ namespace gpconnect_user_portal.Core.Configuration.Logging
                 ProxyPassword = loggingConfiguration["ProxyPassword"]                
             };
 
-            //splunkTarget.Source = "${message}|${logger}";
             splunkTarget.Source = "${logger}";
             splunkTarget.SourceType = "_json";
             splunkTarget.IncludeEventProperties = false;

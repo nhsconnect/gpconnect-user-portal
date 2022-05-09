@@ -81,6 +81,7 @@ namespace gpconnect_user_portal.Services
             }
 
             var searchResultEntries = await _dataService.ExecuteQuery<DTO.Response.Application.Search.SearchResultEntry>(query, parameters);
+
             var searchResult = new DTO.Response.Application.Search.SearchResult()
             {
                 SearchResultEntries = searchResultEntries
