@@ -4,7 +4,7 @@ alter table application.site_attribute drop constraint application_siteattribute
 alter table application.site_definition add column site_interactions varchar(4000) null;
 
 alter table configuration.general add column admin_product_name varchar(100) null;
-update configuration.general set admin_product_name = 'GP Connect Enablement Team Portal'
+update configuration.general set admin_product_name = 'GP Connect Enablement Team Portal';
 alter table configuration.general alter column admin_product_name set not null;
 
 alter table configuration.general add column get_access_email_address varchar(100) null;

@@ -1,4 +1,4 @@
-drop type application.site_attributes_type;
+drop type if exists application.site_attributes_type;
 
 create type application.site_attributes_type as (SiteName varchar, SelectedCCGOdsCode varchar, SelectedCCGName varchar, IsAppointmentEnabled boolean, IsHtmlEnabled boolean, IsStructuredEnabled boolean, IsSendDocumentEnabled boolean, SitePostcode varchar, OdsCode varchar, SelectedSupplier varchar, UseCaseDescription varchar);
 
@@ -13,7 +13,6 @@ alter table application.site_definition add column master_site_unique_identifier
 alter table configuration.logging alter column index set data type varchar(500);
 alter table configuration.logging alter column token set data type varchar(1000);
 
-alter table application.site_definition add c
 grant usage on type application.site_attributes_type to app_user;
 
 grant usage on schema application to app_user;

@@ -29,8 +29,6 @@ alter table reference.supplier_product add column provider_assured bool;
 update application.site_definition set site_definition_status_id=2;
 alter table application.site_definition alter column site_definition_status_id set not null;
 
-alter table application.site_definition add constraint application_sitedefinition_sitedefinitionstatusid_fk foreign key (site_definition_status_id) references application.site_definition_status (site_definition_status_id);
-
 grant usage on schema application to app_user;
 grant select, insert, update on all tables in schema application to app_user;
 grant select, update on all sequences in schema application to app_user;
