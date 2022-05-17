@@ -46,7 +46,7 @@ namespace gpconnect_user_portal.Core.Configuration.Logging
 
         private static SplunkHttpEventCollector AddSplunkTarget(IConfiguration configuration, string indexName)
         {
-            var loggingConfiguration = configuration.GetSection("Logging");
+            var loggingConfiguration = configuration.GetSection("Splunk");
 
             var splunkTarget = new SplunkHttpEventCollector()
             {
