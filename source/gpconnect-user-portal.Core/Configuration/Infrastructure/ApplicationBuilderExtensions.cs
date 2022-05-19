@@ -1,4 +1,4 @@
-﻿using gpconnect_user_portal.Core.Configuration.Logging;
+﻿using System;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
@@ -6,8 +6,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Net.Http.Headers;
-using System;
 
+using gpconnect_user_portal.Core.Configuration.Logging;
 namespace gpconnect_user_portal.Core.Configuration.Infrastructure
 {
     public static class ApplicationBuilderExtensions

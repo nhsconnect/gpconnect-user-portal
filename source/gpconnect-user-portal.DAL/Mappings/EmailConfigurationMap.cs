@@ -10,7 +10,6 @@ namespace gpconnect_user_portal.DAL.Mapping
             Map(p => p.SenderAddress).ToColumn("sender_address"); 
             Map(p => p.HostName).ToColumn("host_name");
             Map(p => p.Port).ToColumn("port");
-            Map(p => p.Encryption).ToColumn("encryption");
             Map(p => p.UserName).ToColumn("user_name");
             Map(p => p.Password).ToColumn("password");
             Map(p => p.DefaultSubject).ToColumn("default_subject");

@@ -13,6 +13,7 @@ returns table
 	lookup_type_name varchar(200),
 	lookup_type_description varchar(200),
 	linked_lookup_value varchar(500),
+	disabled_date timestamp without time zone,
 	is_disabled boolean
 )
 as $$

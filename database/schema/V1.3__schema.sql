@@ -46,7 +46,7 @@ create table configuration.logging
 );
 
 insert into configuration.logging(single_row_lock, token, channel, index, server_url, source, source_type, use_proxy, proxy_user, proxy_password)
-values ('true','D5442FDE-6707-4A53-B919-98FC4D6DAC72','0E201D4D-3F48-4D5C-A4DE-EEF8B08A198E','index','https://splunk-server:8088','${logger}','_json', 'true', '***proxy_user***', '***proxy_password***');
+values ('true','D5442FDE-6707-4A53-B919-98FC4D6DAC72','0E201D4D-3F48-4D5C-A4DE-EEF8B08A198E','index','http://splunk-server:8088','${logger}','_json', 'true', '***proxy_user***', '***proxy_password***');
 
 grant usage on schema configuration to app_user;
 grant select, insert, update on all tables in schema configuration to app_user;

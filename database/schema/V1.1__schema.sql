@@ -14,12 +14,14 @@ create table reference.lookup
     lookup_id serial not null,
     lookup_value varchar(500) not null,
     lookup_type_id smallint not null,
+    linked_lookup_id integer null,
 	added_date timestamp not null,
 	disabled_date timestamp null,	
 
     constraint reference_lookup_lookupid_pk primary key (lookup_id),
     constraint reference_lookup_lookupvalue_ck check (char_length(trim(lookup_value)) > 0),
-    constraint reference_lookup_lookuptypeid_fk foreign key (lookup_type_id) references reference.lookup_type (lookup_type_id)    
+    constraint reference_lookup_lookuptypeid_fk foreign key (lookup_type_id) references reference.lookup_type (lookup_type_id),
+    constraint reference_lookup_linked_id_fk foreign key (linked_lookup_id) references reference.lookup (lookup_id)
 );
 
 insert into reference.lookup_type(lookup_type_id, lookup_type_name) values (1, 'CareSetting');

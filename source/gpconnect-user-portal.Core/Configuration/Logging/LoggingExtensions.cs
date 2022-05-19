@@ -16,23 +16,28 @@ namespace gpconnect_user_portal.Core.Configuration.Logging
             var nLogConfiguration = new NLog.Config.LoggingConfiguration();
 
             var consoleTarget = AddConsoleTarget();
-            var splunkTargetLogs = AddSplunkTarget(configuration, "LogsIndex");
-            var splunkTargetWeb = AddSplunkTarget(configuration, "WebIndex");
-            var splunkTargetError = AddSplunkTarget(configuration, "ErrorIndex");
 
             nLogConfiguration.AddTarget(consoleTarget);
-            nLogConfiguration.AddTarget(splunkTargetLogs);
-            nLogConfiguration.AddTarget(splunkTargetWeb);
-            nLogConfiguration.AddTarget(splunkTargetError);
-
             nLogConfiguration.AddRule(NLog.LogLevel.Trace, NLog.LogLevel.Fatal, consoleTarget);
-            nLogConfiguration.AddRuleForOneLevel(NLog.LogLevel.Info, splunkTargetLogs);
-            nLogConfiguration.AddRuleForOneLevel(NLog.LogLevel.Debug, splunkTargetLogs);
-            nLogConfiguration.AddRuleForOneLevel(NLog.LogLevel.Trace, splunkTargetWeb);
-            nLogConfiguration.AddRule(NLog.LogLevel.Debug, NLog.LogLevel.Fatal, splunkTargetError);
+
+            var splunkConfig = configuration.GetSection("Splunk");
+
+            if (splunkConfig.Value != null) {
+                var splunkTargetLogs = AddSplunkTarget(configuration, "LogsIndex");
+                var splunkTargetWeb = AddSplunkTarget(configuration, "WebIndex");
+                var splunkTargetError = AddSplunkTarget(configuration, "ErrorIndex");
+
+                nLogConfiguration.AddTarget(splunkTargetLogs);
+                nLogConfiguration.AddTarget(splunkTargetWeb);
+                nLogConfiguration.AddTarget(splunkTargetError);
+
+                nLogConfiguration.AddRuleForOneLevel(NLog.LogLevel.Info, splunkTargetLogs);
+                nLogConfiguration.AddRuleForOneLevel(NLog.LogLevel.Debug, splunkTargetLogs);
+                nLogConfiguration.AddRuleForOneLevel(NLog.LogLevel.Trace, splunkTargetWeb);
+                nLogConfiguration.AddRule(NLog.LogLevel.Debug, NLog.LogLevel.Fatal, splunkTargetError);
+            }
 
             nLogConfiguration.Variables.Add("applicationVersion", ApplicationHelper.ApplicationVersion.GetAssemblyVersion());
-
             LogManager.Configuration = nLogConfiguration;
 
             services.AddLogging(builder =>
@@ -47,7 +52,6 @@ namespace gpconnect_user_portal.Core.Configuration.Logging
         private static SplunkHttpEventCollector AddSplunkTarget(IConfiguration configuration, string indexName)
         {
             var loggingConfiguration = configuration.GetSection("Splunk");
-
             var splunkTarget = new SplunkHttpEventCollector()
             {
                 Name = $"Splunk_{indexName}",

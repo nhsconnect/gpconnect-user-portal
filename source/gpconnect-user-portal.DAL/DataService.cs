@@ -50,7 +50,8 @@ namespace gpconnect_user_portal.DAL
         {
             try
             {
-                using NpgsqlConnection connection = new NpgsqlConnection(_configuration.GetConnectionString(ConnectionStrings.DefaultConnection));
+                var connectionString = _configuration.GetConnectionString(ConnectionStrings.DefaultConnection);
+                using NpgsqlConnection connection = new NpgsqlConnection(connectionString);
                 var results = (await connection.QueryAsync<T>(query, parameters, commandType: CommandType.StoredProcedure)).AsList();
                 return results;
             }
