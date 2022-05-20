@@ -1,17 +1,18 @@
-drop function if exists reference.add_supplier_product;
+--
+-- Name: add_supplier_product(integer, integer, character varying); Type: FUNCTION; Schema: reference; Owner: postgres
+--
 
-create function reference.add_supplier_product
-(
-	_supplier_id integer,
-	_supplier_product_id integer,
-	_product_use_case character varying(1000)
-)
-returns void
-as $$
+CREATE FUNCTION reference.add_supplier_product(
+  _supplier_id integer,
+  _supplier_product_id integer,
+  _product_use_case character varying
+) RETURNS void
+    LANGUAGE plpgsql
+    AS $$
 begin
 	if not exists
 	(
-		select 
+		select
 			*
 		from
 			reference.supplier_product sp
@@ -20,13 +21,13 @@ begin
 			and sp.supplier_product_id = _supplier_product_id
 	)
 	then
-		insert into reference.supplier_product 
+		insert into reference.supplier_product
 		(
 			supplier_id,
 			supplier_product_id,
 			product_use_case
 		)
-		values 
+		values
 		(
 			_supplier_id,
 			_supplier_product_id,
@@ -34,4 +35,23 @@ begin
 		);
 	end if;
 end;
-$$ language plpgsql;
+$$;
+
+
+ALTER FUNCTION reference.add_supplier_product(
+  _supplier_id integer,
+  _supplier_product_id integer,
+  _product_use_case character varying
+) OWNER TO postgres;
+
+--
+-- Name: FUNCTION add_supplier_product(_supplier_id integer, _supplier_product_id integer, _product_use_case character varying); Type: ACL; Schema: reference; Owner: postgres
+--
+
+GRANT ALL ON FUNCTION reference.add_supplier_product(
+  _supplier_id integer,
+  _supplier_product_id integer,
+  _product_use_case character varying
+) TO app_user;
+
+

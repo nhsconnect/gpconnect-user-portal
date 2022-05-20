@@ -1,23 +1,23 @@
-drop function if exists application.get_site_attributes_friendly;
+--
+-- Name: get_site_attributes_friendly(uuid); Type: FUNCTION; Schema: application; Owner: postgres
+--
 
-create function application.get_site_attributes_friendly
-(
-	_site_unique_identifier uuid
+CREATE FUNCTION application.get_site_attributes_friendly(
+  _site_unique_identifier uuid
+) RETURNS TABLE(
+  "FieldName" character varying,
+  "FieldValue" character varying
 )
-returns table
-(
-	"FieldName" varchar(100),
-	"FieldValue" varchar(500)
-)
-as $$
+    LANGUAGE plpgsql
+    AS $$
 begin
 	return query
 	select
 		sa.site_attribute_name,
 		COALESCE(l.lookup_value, sa.site_attribute_value)
-	from 
+	from
 		application.site_attribute sa
-	inner join 
+	inner join
 		application.site_definition sd on sa.site_definition_id = sd.site_definition_id
 	left outer join
 		reference.lookup l on sa.site_attribute_value = l.lookup_id::varchar
@@ -27,4 +27,19 @@ begin
 	order by
 		sa.site_attribute_name;
 end;
-$$ language plpgsql;
+$$;
+
+
+ALTER FUNCTION application.get_site_attributes_friendly(
+  _site_unique_identifier uuid
+) OWNER TO postgres;
+
+--
+-- Name: FUNCTION get_site_attributes_friendly(_site_unique_identifier uuid); Type: ACL; Schema: application; Owner: postgres
+--
+
+GRANT ALL ON FUNCTION application.get_site_attributes_friendly(
+  _site_unique_identifier uuid
+) TO app_user;
+
+

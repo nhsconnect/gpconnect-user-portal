@@ -1,22 +1,21 @@
-drop function if exists reference.get_lookup;
+--
+-- Name: get_lookup(integer); Type: FUNCTION; Schema: reference; Owner: postgres
+--
 
-create function reference.get_lookup
-(
-	_lookup_type_id integer
+CREATE FUNCTION reference.get_lookup(
+  _lookup_type_id integer
+) RETURNS TABLE(
+  lookup_id integer,
+  lookup_type_id smallint,
+  lookup_value character varying,
+  linked_lookup_id integer,
+  lookup_type_name character varying,
+  lookup_type_description character varying,
+  linked_lookup_value character varying,
+  is_disabled boolean
 )
-returns table
-(
-	lookup_id integer,
-	lookup_type_id smallint,
-	lookup_value varchar(500),
-	linked_lookup_id integer,
-	lookup_type_name varchar(200),
-	lookup_type_description varchar(200),
-	linked_lookup_value varchar(500),
-	disabled_date timestamp without time zone,
-	is_disabled boolean
-)
-as $$
+    LANGUAGE plpgsql
+    AS $$
 begin
 	return query
 	select
@@ -27,7 +26,6 @@ begin
 		lt.lookup_type_name,
 		lt.lookup_type_description,
 		l2.lookup_value,
-		l.disabled_date,
 		case when l.disabled_date is null then false else true end is_disabled
 	from reference.lookup l
 	left outer join reference.lookup l2 on l.linked_lookup_id = l2.lookup_id
@@ -35,4 +33,19 @@ begin
 	where lt.lookup_type_id = _lookup_type_id
 	order by l.lookup_value;
 end;
-$$ language plpgsql;
+$$;
+
+
+ALTER FUNCTION reference.get_lookup(
+  _lookup_type_id integer
+) OWNER TO postgres;
+
+--
+-- Name: FUNCTION get_lookup(_lookup_type_id integer); Type: ACL; Schema: reference; Owner: postgres
+--
+
+GRANT ALL ON FUNCTION reference.get_lookup(
+  _lookup_type_id integer
+) TO app_user;
+
+

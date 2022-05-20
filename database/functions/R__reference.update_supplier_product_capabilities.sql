@@ -1,59 +1,55 @@
-drop function if exists reference.update_supplier_product_capabilities;
-
-create function reference.update_supplier_product_capabilities
-(
-	_supplier_product_capability_id integer,
-	_supplier_id integer,
-	_supplier_product_id integer,
-	_product_capability_id integer,
-	_assurance_date timestamp without time zone,
-	_awaiting_assurance boolean,
-	_provider_assured boolean,
-	_consumer_assured boolean,
-	_capability_version varchar(100)
+CREATE FUNCTION reference.update_supplier_product_capabilities(
+  _supplier_product_capability_id integer,
+  _supplier_id integer,
+  _supplier_product_id integer,
+  _product_capability_id integer,
+  _assurance_date timestamp without time zone,
+  _awaiting_assurance boolean,
+  _provider_assured boolean,
+  _consumer_assured boolean,
+  _capability_version character varying
+) RETURNS TABLE(
+  supplier_product_capability_id integer,
+  supplier_product_id smallint,
+  product_capability_id smallint,
+  lookup_value character varying,
+  supplier_id smallint,
+  provider_assured boolean,
+  consumer_assured boolean,
+  awaiting_assurance boolean,
+  assurance_date timestamp without time zone,
+  capability_version character varying
 )
-returns table
-(
-	supplier_product_capability_id integer,
-	supplier_product_id smallint,
-	product_capability_id smallint,
-	lookup_value varchar(500),
-	supplier_id smallint,
-	provider_assured boolean,
-	consumer_assured boolean,
-	awaiting_assurance boolean,
-	assurance_date timestamp without time zone,
-	capability_version varchar(100)
-)
-as $$
+LANGUAGE plpgsql
+AS $$
 begin
 	if _supplier_product_capability_id > 0 then
 		update
 			reference.supplier_product_capability
 		set
-			provider_assured = _provider_assured, 
-			consumer_assured = _consumer_assured, 
-			awaiting_assurance = _awaiting_assurance, 
-			assurance_date = _assurance_date, 
+			provider_assured = _provider_assured,
+			consumer_assured = _consumer_assured,
+			awaiting_assurance = _awaiting_assurance,
+			assurance_date = _assurance_date,
 			capability_version = _capability_version
-		where 
+		where
 			reference.supplier_product_capability.supplier_product_capability_id = _supplier_product_capability_id;
 	else
-		insert into 
+		insert into
 			reference.supplier_product_capability
 			(
-				supplier_product_id, 
-				product_capability_id, 
-				provider_assured, 
-				consumer_assured, 
+				supplier_product_id,
+				product_capability_id,
+				provider_assured,
+				consumer_assured,
 				awaiting_assurance,
 				assurance_date,
 				capability_version
 			)
-			values 
+			values
 			(
-				_supplier_product_id, 
-				_product_capability_id, 
+				_supplier_product_id,
+				_product_capability_id,
 				_provider_assured,
 				_consumer_assured,
 				_awaiting_assurance,
@@ -61,9 +57,9 @@ begin
 				_capability_version
 			) returning reference.supplier_product_capability.supplier_product_capability_id into _supplier_product_capability_id;
 	end if;
-	
+
 	return query
-	select 
+	select
 		spc.supplier_product_capability_id,
 		spc.supplier_product_id,
 		spc.product_capability_id,
@@ -83,4 +79,35 @@ begin
 		and l.lookup_type_id = 4
 		and now() <= coalesce(l.disabled_date, now());
 end;
-$$ language plpgsql;
+$$;
+
+
+ALTER FUNCTION reference.update_supplier_product_capabilities(
+  _supplier_product_capability_id integer,
+  _supplier_id integer,
+  _supplier_product_id integer,
+  _product_capability_id integer,
+  _assurance_date timestamp without time zone,
+  _awaiting_assurance boolean,
+  _provider_assured boolean,
+  _consumer_assured boolean,
+  _capability_version character varying
+) OWNER TO postgres;
+
+--
+-- Name: FUNCTION update_supplier_product_capabilities(_supplier_product_capability_id integer, _supplier_id integer, _supplier_product_id integer, _product_capability_id integer, _assurance_date timestamp without time zone, _awaiting_assurance boolean, _provider_assured boolean, _consumer_assured boolean, _capability_version character varying); Type: ACL; Schema: reference; Owner: postgres
+--
+
+GRANT ALL ON FUNCTION reference.update_supplier_product_capabilities(
+  _supplier_product_capability_id integer,
+  _supplier_id integer,
+  _supplier_product_id integer,
+  _product_capability_id integer,
+  _assurance_date timestamp without time zone,
+  _awaiting_assurance boolean,
+  _provider_assured boolean,
+  _consumer_assured boolean,
+  _capability_version character varying
+) TO app_user;
+
+

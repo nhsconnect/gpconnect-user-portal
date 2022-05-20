@@ -9,15 +9,15 @@ services:
       FLYWAY_EDITION: community
       FLYWAY_PLACEHOLDERS_logger: ndsa
     command: -url=jdbc:postgresql://database/ -user=postgres -password=g3epieC0nnect -connectRetries=10 migrate
-    depends_on: 
+    depends_on:
       - database
-  
+
   auth-server:
     image: ghcr.io/navikt/mock-oauth2-server:0.4.8
     ports:
       - 8080:8080
 
-        
+
   user-portal:
     image: mcr.microsoft.com/dotnet/aspnet
     volumes:
@@ -25,12 +25,12 @@ services:
     working_dir: /app
     entrypoint: dotnet gpconnect-user-portal.dll
     ports:
-      - 9080:80
+      - 5000:80
     environment:
       DOTNET_HOSTBUILDER__RELOADCONFIGONCHANGE: "false"
       ASPNETCORE_ENVIRONMENT: Development
       ConnectionStrings__GPConnectEndUserPortal: Host=database;Database=postgres;Username=postgres;Password=g3epieC0nnect;Include Error Detail=true;
-  
+
   admin-portal:
     image: mcr.microsoft.com/dotnet/aspnet
     volumes:
@@ -44,11 +44,11 @@ services:
       ASPNETCORE_ENVIRONMENT: Development
       ConnectionStrings__GPConnectEndUserPortal: Host=database;Database=postgres;Username=postgres;Password=g3epieC0nnect;Include Error Detail=true;
       Sso__RequireHttpsMetadata: false
-      
-  
+
+
   database:
     image: postgres:14
-    ports: 
+    ports:
       - 5432:5432
     environment:
       POSTGRES_PASSWORD: g3epieC0nnect

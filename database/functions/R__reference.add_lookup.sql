@@ -1,28 +1,28 @@
-drop function if exists reference.add_lookup;
+--
+-- Name: add_lookup(integer, character varying, integer); Type: FUNCTION; Schema: reference; Owner: postgres
+--
 
-create function reference.add_lookup
-(
-	_lookup_type_id integer,
-	_lookup_value varchar(500),
-	_linked_lookup_id integer default null
+CREATE FUNCTION reference.add_lookup(
+  _lookup_type_id integer,
+  _lookup_value character varying,
+  _linked_lookup_id integer DEFAULT NULL::integer
+) RETURNS TABLE(
+  lookup_id integer,
+  lookup_type_id smallint,
+  lookup_value character varying,
+  linked_lookup_id integer,
+  lookup_type_name character varying,
+  lookup_type_description character varying,
+  linked_lookup_value character varying,
+  is_disabled boolean
 )
-returns table
-(
-	lookup_id integer,
-	lookup_type_id smallint,
-	lookup_value varchar(500),
-	linked_lookup_id integer,
-	lookup_type_name varchar(200),
-	lookup_type_description varchar(200),
-	linked_lookup_value varchar(500),
-	is_disabled boolean
-)
-as $$
+    LANGUAGE plpgsql
+    AS $$
 declare	_lookup_id integer;
 begin
 	if not exists
 	(
-		select 
+		select
 			*
 		from
 			reference.lookup l
@@ -31,34 +31,34 @@ begin
 			and l.lookup_value = _lookup_value
 	)
 	then
-		insert into reference.lookup 
+		insert into reference.lookup
 		(
-			lookup_value, 
-			lookup_type_id, 
-			added_date, 
+			lookup_value,
+			lookup_type_id,
+			added_date,
 			linked_lookup_id
 		)
-		values 
+		values
 		(
-			_lookup_value, 
-			_lookup_type_id, 
-			now(), 
+			_lookup_value,
+			_lookup_type_id,
+			now(),
 			_linked_lookup_id
 		)
 		returning
 			reference.lookup.lookup_id
-		into 
+		into
 			_lookup_id;
 	else
-		select into 
+		select into
 			_lookup_id l.lookup_id
-		from 
+		from
 			reference.lookup l
 		where
 			l.lookup_type_id = _lookup_type_id
 			and l.lookup_value = _lookup_value;
 	end if;
-	
+
 	return query
 	select
 		l.lookup_id,
@@ -69,11 +69,30 @@ begin
 		lt.lookup_type_description,
 		l2.lookup_value,
 		case when l.disabled_date is null then false else true end is_disabled
-	from 
+	from
 		reference.lookup l
 	left outer join reference.lookup l2 on l.linked_lookup_id = l2.lookup_id
 	inner join reference.lookup_type lt on l.lookup_type_id = lt.lookup_type_id
-	where 
+	where
 		l.lookup_id = _lookup_id;
 end;
-$$ language plpgsql;
+$$;
+
+
+ALTER FUNCTION reference.add_lookup(
+  _lookup_type_id integer,
+  _lookup_value character varying,
+  _linked_lookup_id integer
+) OWNER TO postgres;
+
+--
+-- Name: FUNCTION add_lookup(_lookup_type_id integer, _lookup_value character varying, _linked_lookup_id integer); Type: ACL; Schema: reference; Owner: postgres
+--
+
+GRANT ALL ON FUNCTION reference.add_lookup(
+  _lookup_type_id integer,
+  _lookup_value character varying,
+  _linked_lookup_id integer
+) TO app_user;
+
+
