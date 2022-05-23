@@ -1,5 +1,7 @@
+using System;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Configuration;
 
 namespace gpconnect_user_portal.api
 {
