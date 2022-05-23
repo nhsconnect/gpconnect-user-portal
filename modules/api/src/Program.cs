@@ -23,7 +23,7 @@ namespace gpconnect_user_portal.api
                 .ConfigureAppConfiguration((context, builder) => {
                     builder.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
                     builder.AddJsonFile($"appsettings.{environment}.json", optional: true, reloadOnChange: true);
-
+                    builder.AddEnvironmentVariables();
                     // More config here
                 });
         }
