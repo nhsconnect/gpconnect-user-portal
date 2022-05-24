@@ -1,14 +1,13 @@
-drop function if exists reference.get_lookup_types;
+--
+-- Name: get_lookup_types(); Type: FUNCTION; Schema: reference; Owner: postgres
+--
 
-create function reference.get_lookup_types
-(
+CREATE FUNCTION reference.get_lookup_types() RETURNS TABLE(
+  lookup_type_id integer,
+  lookup_type_name character varying
 )
-returns table
-(
-	lookup_type_id integer,
-	lookup_type_name varchar(200)
-)
-as $$
+    LANGUAGE plpgsql
+    AS $$
 begin
 	return query
 	select
@@ -16,4 +15,15 @@ begin
 		lt.lookup_type_name
 	from reference.lookup_type lt;
 end;
-$$ language plpgsql;
+$$;
+
+
+ALTER FUNCTION reference.get_lookup_types() OWNER TO postgres;
+
+--
+-- Name: FUNCTION get_lookup_types(); Type: ACL; Schema: reference; Owner: postgres
+--
+
+GRANT ALL ON FUNCTION reference.get_lookup_types() TO app_user;
+
+

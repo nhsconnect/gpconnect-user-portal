@@ -1,18 +1,36 @@
-drop function if exists reference.update_lookup;
+--
+-- Name: update_lookup(smallint, character varying); Type: FUNCTION; Schema: reference; Owner: postgres
+--
 
-create function reference.update_lookup
-(
-	_lookup_id smallint,
-	_lookup_value varchar(500)
-)
-returns void
-as $$
+CREATE FUNCTION reference.update_lookup(
+  _lookup_id smallint,
+  _lookup_value character varying
+) RETURNS void
+    LANGUAGE plpgsql
+    AS $$
 begin
-	update 
+	update
 		reference.lookup
 	set
 		lookup_value = _lookup_value
 	where
 		lookup_id = _lookup_id;
 end;
-$$ language plpgsql;
+$$;
+
+
+ALTER FUNCTION reference.update_lookup(
+  _lookup_id smallint,
+  _lookup_value character varying
+) OWNER TO postgres;
+
+--
+-- Name: FUNCTION update_lookup(_lookup_id smallint, _lookup_value character varying); Type: ACL; Schema: reference; Owner: postgres
+--
+
+GRANT ALL ON FUNCTION reference.update_lookup(
+  _lookup_id smallint,
+  _lookup_value character varying
+) TO app_user;
+
+

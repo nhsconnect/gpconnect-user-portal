@@ -1,31 +1,32 @@
-drop function if exists application.add_site_definition;
+--
+-- Name: add_site_definition(uuid, character varying, character varying, character varying, smallint, character varying, uuid); Type: FUNCTION; Schema: application; Owner: postgres
+--
 
-create function application.add_site_definition
-(
-	_site_unique_identifier uuid,
-	_site_ods_code varchar(50),
-	_site_party_key varchar(50),
-	_site_asid varchar(50),
-	_site_definition_status smallint,
-	_site_interactions varchar(4000) default null,
-	_master_site_unique_identifier uuid default null
+CREATE FUNCTION application.add_site_definition(
+  _site_unique_identifier uuid,
+  _site_ods_code character varying,
+  _site_party_key character varying,
+  _site_asid character varying,
+  _site_definition_status smallint,
+  _site_interactions character varying DEFAULT NULL::character varying,
+  _master_site_unique_identifier uuid DEFAULT NULL::uuid
+) RETURNS TABLE(
+  site_ods_code character varying,
+  site_party_key character varying,
+  site_asid character varying,
+  site_unique_identifier uuid,
+  site_definition_id integer,
+  site_definition_status_id smallint,
+  site_interactions character varying,
+  master_site_unique_identifier uuid
 )
-returns table
-(
-	site_ods_code varchar(50),
-	site_party_key varchar(50),
-	site_asid varchar(50),
-	site_unique_identifier uuid,
-	site_definition_id integer,
-	site_definition_status_id smallint,
-	site_interactions varchar(4000)
-)
-as $$
+    LANGUAGE plpgsql
+    AS $$
 declare	_site_definition_id integer;
 begin
 	if not exists
 	(
-		select 
+		select
 			*
 		from
 			application.site_definition sd
@@ -38,9 +39,9 @@ begin
 	then
 		insert into application.site_definition
 		(
-			site_ods_code, 
+			site_ods_code,
 			site_party_key,
-			site_asid, 
+			site_asid,
 			site_unique_identifier,
 			added_date,
 			site_definition_status_id,
@@ -60,21 +61,21 @@ begin
 		)
 		returning
 			application.site_definition.site_definition_id
-		into 
+		into
 			_site_definition_id;
 	else
-		if 
+		if
 		(
-			_site_ods_code = '' and 
-			_site_party_key = '' and 
+			_site_ods_code = '' and
+			_site_party_key = '' and
 			_site_asid = ''
 		)
 		then
 			insert into application.site_definition
 			(
-				site_ods_code, 
+				site_ods_code,
 				site_party_key,
-				site_asid, 
+				site_asid,
 				site_unique_identifier,
 				added_date,
 				site_definition_status_id,
@@ -92,12 +93,12 @@ begin
 			)
 			returning
 				application.site_definition.site_definition_id
-			into 
+			into
 				_site_definition_id;
 		else
-			select into 
+			select into
 				_site_definition_id sd.site_definition_id
-			from 
+			from
 				application.site_definition sd
 			where
 				sd.site_ods_code = _site_ods_code
@@ -106,19 +107,47 @@ begin
 				and sd.site_definition_status_id = _site_definition_status;
 		end if;
 	end if;
-		
+
 	return query
 	select
-		sd.site_ods_code, 
+		sd.site_ods_code,
 		sd.site_party_key,
-		sd.site_asid, 
+		sd.site_asid,
 		sd.site_unique_identifier,
 		sd.site_definition_id,
 		sd.site_definition_status_id,
-		sd.site_interactions
-	from 
+		sd.site_interactions,
+		sd.master_site_unique_identifier
+	from
 		application.site_definition sd
 	where
 		sd.site_definition_id = _site_definition_id;
 end;
-$$ language plpgsql;
+$$;
+
+
+ALTER FUNCTION application.add_site_definition(
+  _site_unique_identifier uuid,
+  _site_ods_code character varying,
+  _site_party_key character varying,
+  _site_asid character varying,
+  _site_definition_status smallint,
+  _site_interactions character varying,
+  _master_site_unique_identifier uuid
+) OWNER TO postgres;
+
+--
+-- Name: FUNCTION add_site_definition(_site_unique_identifier uuid, _site_ods_code character varying, _site_party_key character varying, _site_asid character varying, _site_definition_status smallint, _site_interactions character varying, _master_site_unique_identifier uuid); Type: ACL; Schema: application; Owner: postgres
+--
+
+GRANT ALL ON FUNCTION application.add_site_definition(
+  _site_unique_identifier uuid,
+  _site_ods_code character varying,
+  _site_party_key character varying,
+  _site_asid character varying,
+  _site_definition_status smallint,
+  _site_interactions character varying,
+  _master_site_unique_identifier uuid
+) TO app_user;
+
+

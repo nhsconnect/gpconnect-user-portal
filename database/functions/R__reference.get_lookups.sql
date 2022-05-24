@@ -1,19 +1,18 @@
-drop function if exists reference.get_lookups;
+--
+-- Name: get_lookups(); Type: FUNCTION; Schema: reference; Owner: postgres
+--
 
-create function reference.get_lookups
-(
+CREATE FUNCTION reference.get_lookups() RETURNS TABLE(
+  lookup_id integer,
+  lookup_type_id smallint,
+  lookup_value character varying,
+  linked_lookup_id integer,
+  lookup_type_name character varying,
+  lookup_type_description character varying,
+  linked_lookup_value character varying
 )
-returns table
-(
-	lookup_id integer, 
-	lookup_type_id smallint, 
-	lookup_value character varying, 
-	linked_lookup_id integer, 
-	lookup_type_name character varying, 
-	lookup_type_description character varying, 
-	linked_lookup_value character varying
-)
-as $$
+    LANGUAGE plpgsql
+    AS $$
 begin
 	return query
 	select
@@ -29,4 +28,15 @@ begin
 	inner join reference.lookup_type lt on l.lookup_type_id = lt.lookup_type_id
 	where now() <= coalesce(l.disabled_date, now());
 end;
-$$ language plpgsql;
+$$;
+
+
+ALTER FUNCTION reference.get_lookups() OWNER TO postgres;
+
+--
+-- Name: FUNCTION get_lookups(); Type: ACL; Schema: reference; Owner: postgres
+--
+
+GRANT ALL ON FUNCTION reference.get_lookups() TO app_user;
+
+

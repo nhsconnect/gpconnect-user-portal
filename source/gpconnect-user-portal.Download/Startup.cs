@@ -27,10 +27,7 @@ namespace gpconnect_user_portal.Download
 
             var config = new ConfigurationBuilder()
             .AddEnvironmentVariables()
-            .AddConfiguration(options =>
-            {
-                options.ConnectionString = Environment.GetEnvironmentVariable(ConnectionStrings.DefaultConnection);
-            }).Build();
+            .Build();
 
             builder.Services.AddOptions();
             builder.Services.AddSingleton<IConfiguration>(config);            

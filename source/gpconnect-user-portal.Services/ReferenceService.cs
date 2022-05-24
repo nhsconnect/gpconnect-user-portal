@@ -55,7 +55,12 @@ namespace gpconnect_user_portal.Services
                 {
                     var tokenSource = new CancellationTokenSource();
                     var token = tokenSource.Token;
-                    var response = await _fhirRequestExecution.ExecuteFhirQuery<OrganisationsWithInteractions>(organisationsWithInteractions.QueryText, token, spineConfiguration.SpineFhirApiSystemsRegisterFqdn, spineConfiguration.SpineFhirApiKey);
+                    var response = await _fhirRequestExecution.ExecuteFhirQuery<OrganisationsWithInteractions>(
+                        organisationsWithInteractions.QueryText,
+                        token,
+                        spineConfiguration.SpineFhirApiSystemsRegisterFqdn,
+                        spineConfiguration.SpineFhirApiKey
+                    );
                     var tasks = new ConcurrentBag<Task<SiteDefinition>>();
 
                     Parallel.ForEach(response.SiteDefinitions, siteDefinition =>

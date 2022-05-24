@@ -1,29 +1,29 @@
-drop function if exists reference.get_supplier_product_capabilities;
+--
+-- Name: get_supplier_product_capabilities(integer, boolean); Type: FUNCTION; Schema: reference; Owner: postgres
+--
 
-create function reference.get_supplier_product_capabilities
-(
-	_supplier_product_id integer,
-	_include_supplier_product_capabilities_not_enabled boolean
+CREATE FUNCTION reference.get_supplier_product_capabilities(
+  _supplier_product_id integer,
+  _include_supplier_product_capabilities_not_enabled boolean
+) RETURNS TABLE(
+  supplier_product_capability_id integer,
+  supplier_product_id smallint,
+  product_capability_id smallint,
+  lookup_value character varying,
+  supplier_id smallint,
+  provider_assured boolean,
+  consumer_assured boolean,
+  awaiting_assurance boolean,
+  assurance_date timestamp without time zone,
+  capability_version character varying,
+  can_send_action_request boolean
 )
-returns table
-(
-	supplier_product_capability_id integer,
-	supplier_product_id smallint,
-	product_capability_id smallint,
-	lookup_value varchar(500),
-	supplier_id smallint,
-	provider_assured boolean,
-	consumer_assured boolean,
-	awaiting_assurance boolean,
-	assurance_date timestamp without time zone,
-	capability_version varchar(100),
-	can_send_action_request boolean
-)
-as $$
+    LANGUAGE plpgsql
+    AS $$
 declare _supplier_id smallint;
-begin	
-	select 
-		sp.supplier_id into _supplier_id	
+begin
+	select
+		sp.supplier_id into _supplier_id
 	from
 		reference.supplier_product_capability spc
 		inner join reference.lookup l on spc.product_capability_id=l.lookup_id
@@ -33,7 +33,7 @@ begin
 		and l.lookup_type_id = 4;
 
 	drop table if exists enabled_supplier_product_capabilities;
-	
+
 	create temp table enabled_supplier_product_capabilities
 	(
 		supplier_product_capability_id integer,
@@ -48,8 +48,8 @@ begin
 		capability_version character varying(50),
 		can_send_action_request boolean
 	);
-	
-	insert into enabled_supplier_product_capabilities 
+
+	insert into enabled_supplier_product_capabilities
 	(
 		supplier_product_capability_id,
 		supplier_product_id,
@@ -62,8 +62,8 @@ begin
 		assurance_date,
 		capability_version,
 		can_send_action_request
-	)	
-	select 
+	)
+	select
 		spc.supplier_product_capability_id,
 		spc.supplier_product_id,
 		spc.product_capability_id,
@@ -83,10 +83,10 @@ begin
 		spc.supplier_product_id = _supplier_product_id
 		and l.lookup_type_id = 4
 		and now() <= coalesce(l.disabled_date, now());
-	
+
 	if _include_supplier_product_capabilities_not_enabled then
-	
-		insert into enabled_supplier_product_capabilities 
+
+		insert into enabled_supplier_product_capabilities
 		(
 			supplier_product_capability_id,
 			supplier_product_id,
@@ -99,8 +99,8 @@ begin
 			assurance_date,
 			capability_version,
 			can_send_action_request
-		)	
-		select 
+		)
+		select
 			null,
 			_supplier_product_id,
 			l.lookup_id,
@@ -115,16 +115,16 @@ begin
 		from
 			reference.lookup l
 		where
-			l.lookup_id not in 
+			l.lookup_id not in
 			(
 				select
-					espc.product_capability_id 
+					espc.product_capability_id
 				from
 					enabled_supplier_product_capabilities espc
 			)
 			and lookup_type_id = 4;
 	end if;
-	
+
 	return query
 	select
 		espc.supplier_product_capability_id,
@@ -141,4 +141,11 @@ begin
 	from
 		enabled_supplier_product_capabilities espc;
 end;
-$$ language plpgsql;
+$$;
+
+
+ALTER FUNCTION reference.get_supplier_product_capabilities(
+  _supplier_product_id integer,
+  _include_supplier_product_capabilities_not_enabled boolean
+) OWNER TO postgres;
+

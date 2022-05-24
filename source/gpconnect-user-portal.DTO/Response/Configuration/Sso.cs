@@ -10,6 +10,7 @@
         public string TokenEndpoint { get; set; }
         public string ChallengeScheme { get; set; }
         public string MetadataEndpoint { get; set; }
+        public bool RequireHttpsMetadata { get; set; }
         public string SignedOutCallbackPath { get; set; }
     }
 }

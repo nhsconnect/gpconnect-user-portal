@@ -1,13 +1,13 @@
-﻿using gpconnect_user_portal.Core.Configuration.Infrastructure.Authentication.Interfaces;
-using gpconnect_user_portal.DTO.Response.Configuration;
-using gpconnect_user_portal.Services.Interfaces;
+﻿using System;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
-using System;
-using System.Threading.Tasks;
+
+using gpconnect_user_portal.Core.Configuration.Infrastructure.Authentication.Interfaces;
+using gpconnect_user_portal.DTO.Response.Configuration;
 
 namespace gpconnect_user_portal.Core.Configuration.Infrastructure.Authentication
 {
@@ -46,6 +46,7 @@ namespace gpconnect_user_portal.Core.Configuration.Infrastructure.Authentication
                     options.SignInScheme = _ssoConfig.AuthScheme;
                     options.Authority = _ssoConfig.AuthEndpoint;
                     options.MetadataAddress = _ssoConfig.MetadataEndpoint;
+                    options.RequireHttpsMetadata = _ssoConfig.RequireHttpsMetadata;
                     options.MaxAge = TimeSpan.FromMinutes(30);
                     options.SaveTokens = true;
                     options.Scope.Clear();
