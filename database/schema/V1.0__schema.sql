@@ -1,61 +1,35 @@
---
--- PostgreSQL database dump
---
 
--- Dumped from database version 14.2 (Debian 14.2-1.pgdg110+1)
--- Dumped by pg_dump version 14.2 (Debian 14.2-1.pgdg110+1)
 
 CREATE ROLE app_user;
 
---
--- Name: application; Type: SCHEMA; Schema: -; Owner: postgres
---
 
 CREATE SCHEMA application;
 
 
 ALTER SCHEMA application OWNER TO postgres;
 
---
--- Name: reference; Type: SCHEMA; Schema: -; Owner: postgres
---
 
 CREATE SCHEMA reference;
 
 
 ALTER SCHEMA reference OWNER TO postgres;
 
---
--- Name: tablefunc; Type: EXTENSION; Schema: -; Owner: -
---
 
 CREATE EXTENSION IF NOT EXISTS tablefunc WITH SCHEMA public;
 
 
---
--- Name: EXTENSION tablefunc; Type: COMMENT; Schema: -; Owner:
---
 
 COMMENT ON EXTENSION tablefunc IS 'functions that manipulate whole tables, including crosstab';
 
 
---
--- Name: uuid-ossp; Type: EXTENSION; Schema: -; Owner: -
---
 
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp" WITH SCHEMA application;
 
 
---
--- Name: EXTENSION "uuid-ossp"; Type: COMMENT; Schema: -; Owner:
---
 
 COMMENT ON EXTENSION "uuid-ossp" IS 'generate universally unique identifiers (UUIDs)';
 
 
---
--- Name: site_attributes_type; Type: TYPE; Schema: application; Owner: postgres
---
 
 CREATE TYPE application.site_attributes_type AS (
 	sitename character varying,
@@ -74,9 +48,6 @@ CREATE TYPE application.site_attributes_type AS (
 
 ALTER TYPE application.site_attributes_type OWNER TO postgres;
 
---
--- Name: site_attributes_type; Type: TYPE; Schema: public; Owner: postgres
---
 
 CREATE TYPE public.site_attributes_type AS (
 	sitename character varying,
@@ -94,9 +65,6 @@ CREATE TYPE public.site_attributes_type AS (
 
 ALTER TYPE public.site_attributes_type OWNER TO postgres;
 
---
--- Name: email_recipient; Type: TABLE; Schema: application; Owner: postgres
---
 
 CREATE TABLE application.email_recipient (
     email_template_id smallint NOT NULL,
@@ -107,9 +75,6 @@ CREATE TABLE application.email_recipient (
 
 ALTER TABLE application.email_recipient OWNER TO postgres;
 
---
--- Name: email_template; Type: TABLE; Schema: application; Owner: postgres
---
 
 CREATE TABLE application.email_template (
     email_template_id smallint NOT NULL,
@@ -122,9 +87,6 @@ CREATE TABLE application.email_template (
 
 ALTER TABLE application.email_template OWNER TO postgres;
 
---
--- Name: site_attribute; Type: TABLE; Schema: application; Owner: postgres
---
 
 CREATE TABLE application.site_attribute (
     site_attribute_id integer NOT NULL,
@@ -138,9 +100,6 @@ CREATE TABLE application.site_attribute (
 
 ALTER TABLE application.site_attribute OWNER TO postgres;
 
---
--- Name: site_attribute_site_attribute_id_seq; Type: SEQUENCE; Schema: application; Owner: postgres
---
 
 CREATE SEQUENCE application.site_attribute_site_attribute_id_seq
     AS integer
@@ -153,16 +112,10 @@ CREATE SEQUENCE application.site_attribute_site_attribute_id_seq
 
 ALTER TABLE application.site_attribute_site_attribute_id_seq OWNER TO postgres;
 
---
--- Name: site_attribute_site_attribute_id_seq; Type: SEQUENCE OWNED BY; Schema: application; Owner: postgres
---
 
 ALTER SEQUENCE application.site_attribute_site_attribute_id_seq OWNED BY application.site_attribute.site_attribute_id;
 
 
---
--- Name: site_definition; Type: TABLE; Schema: application; Owner: postgres
---
 
 CREATE TABLE application.site_definition (
     site_definition_id integer NOT NULL,
@@ -180,9 +133,6 @@ CREATE TABLE application.site_definition (
 
 ALTER TABLE application.site_definition OWNER TO postgres;
 
---
--- Name: site_definition_site_definition_id_seq; Type: SEQUENCE; Schema: application; Owner: postgres
---
 
 CREATE SEQUENCE application.site_definition_site_definition_id_seq
     AS integer
@@ -195,16 +145,10 @@ CREATE SEQUENCE application.site_definition_site_definition_id_seq
 
 ALTER TABLE application.site_definition_site_definition_id_seq OWNER TO postgres;
 
---
--- Name: site_definition_site_definition_id_seq; Type: SEQUENCE OWNED BY; Schema: application; Owner: postgres
---
 
 ALTER SEQUENCE application.site_definition_site_definition_id_seq OWNED BY application.site_definition.site_definition_id;
 
 
---
--- Name: site_definition_status; Type: TABLE; Schema: application; Owner: postgres
---
 
 CREATE TABLE application.site_definition_status (
     site_definition_status_id smallint NOT NULL,
@@ -215,9 +159,6 @@ CREATE TABLE application.site_definition_status (
 
 ALTER TABLE application.site_definition_status OWNER TO postgres;
 
---
--- Name: user; Type: TABLE; Schema: application; Owner: postgres
---
 
 CREATE TABLE application."user" (
     user_id integer NOT NULL,
@@ -232,9 +173,6 @@ CREATE TABLE application."user" (
 
 ALTER TABLE application."user" OWNER TO postgres;
 
---
--- Name: user_session; Type: TABLE; Schema: application; Owner: postgres
---
 
 CREATE TABLE application.user_session (
     user_session_id integer NOT NULL,
@@ -246,9 +184,6 @@ CREATE TABLE application.user_session (
 
 ALTER TABLE application.user_session OWNER TO postgres;
 
---
--- Name: user_session_user_session_id_seq; Type: SEQUENCE; Schema: application; Owner: postgres
---
 
 CREATE SEQUENCE application.user_session_user_session_id_seq
     AS integer
@@ -261,16 +196,10 @@ CREATE SEQUENCE application.user_session_user_session_id_seq
 
 ALTER TABLE application.user_session_user_session_id_seq OWNER TO postgres;
 
---
--- Name: user_session_user_session_id_seq; Type: SEQUENCE OWNED BY; Schema: application; Owner: postgres
---
 
 ALTER SEQUENCE application.user_session_user_session_id_seq OWNED BY application.user_session.user_session_id;
 
 
---
--- Name: user_user_id_seq; Type: SEQUENCE; Schema: application; Owner: postgres
---
 
 CREATE SEQUENCE application.user_user_id_seq
     AS integer
@@ -283,16 +212,10 @@ CREATE SEQUENCE application.user_user_id_seq
 
 ALTER TABLE application.user_user_id_seq OWNER TO postgres;
 
---
--- Name: user_user_id_seq; Type: SEQUENCE OWNED BY; Schema: application; Owner: postgres
---
 
 ALTER SEQUENCE application.user_user_id_seq OWNED BY application."user".user_id;
 
 
---
--- Name: lookup; Type: TABLE; Schema: reference; Owner: postgres
---
 
 CREATE TABLE reference.lookup (
     lookup_id integer NOT NULL,
@@ -307,9 +230,6 @@ CREATE TABLE reference.lookup (
 
 ALTER TABLE reference.lookup OWNER TO postgres;
 
---
--- Name: lookup_lookup_id_seq; Type: SEQUENCE; Schema: reference; Owner: postgres
---
 
 CREATE SEQUENCE reference.lookup_lookup_id_seq
     AS integer
@@ -322,16 +242,10 @@ CREATE SEQUENCE reference.lookup_lookup_id_seq
 
 ALTER TABLE reference.lookup_lookup_id_seq OWNER TO postgres;
 
---
--- Name: lookup_lookup_id_seq; Type: SEQUENCE OWNED BY; Schema: reference; Owner: postgres
---
 
 ALTER SEQUENCE reference.lookup_lookup_id_seq OWNED BY reference.lookup.lookup_id;
 
 
---
--- Name: lookup_type; Type: TABLE; Schema: reference; Owner: postgres
---
 
 CREATE TABLE reference.lookup_type (
     lookup_type_id integer NOT NULL,
@@ -344,9 +258,6 @@ CREATE TABLE reference.lookup_type (
 
 ALTER TABLE reference.lookup_type OWNER TO postgres;
 
---
--- Name: lookup_type_lookup_type_id_seq; Type: SEQUENCE; Schema: reference; Owner: postgres
---
 
 CREATE SEQUENCE reference.lookup_type_lookup_type_id_seq
     AS integer
@@ -359,16 +270,10 @@ CREATE SEQUENCE reference.lookup_type_lookup_type_id_seq
 
 ALTER TABLE reference.lookup_type_lookup_type_id_seq OWNER TO postgres;
 
---
--- Name: lookup_type_lookup_type_id_seq; Type: SEQUENCE OWNED BY; Schema: reference; Owner: postgres
---
 
 ALTER SEQUENCE reference.lookup_type_lookup_type_id_seq OWNED BY reference.lookup_type.lookup_type_id;
 
 
---
--- Name: supplier_product; Type: TABLE; Schema: reference; Owner: postgres
---
 
 CREATE TABLE reference.supplier_product (
     supplier_id smallint NOT NULL,
@@ -379,9 +284,6 @@ CREATE TABLE reference.supplier_product (
 
 ALTER TABLE reference.supplier_product OWNER TO postgres;
 
---
--- Name: supplier_product_capability; Type: TABLE; Schema: reference; Owner: postgres
---
 
 CREATE TABLE reference.supplier_product_capability (
     supplier_product_capability_id integer NOT NULL,
@@ -397,9 +299,6 @@ CREATE TABLE reference.supplier_product_capability (
 
 ALTER TABLE reference.supplier_product_capability OWNER TO postgres;
 
---
--- Name: supplier_product_capability_supplier_product_capability_id_seq; Type: SEQUENCE; Schema: reference; Owner: postgres
---
 
 CREATE SEQUENCE reference.supplier_product_capability_supplier_product_capability_id_seq
     AS integer
@@ -412,121 +311,73 @@ CREATE SEQUENCE reference.supplier_product_capability_supplier_product_capabilit
 
 ALTER TABLE reference.supplier_product_capability_supplier_product_capability_id_seq OWNER TO postgres;
 
---
--- Name: supplier_product_capability_supplier_product_capability_id_seq; Type: SEQUENCE OWNED BY; Schema: reference; Owner: postgres
---
 
 ALTER SEQUENCE reference.supplier_product_capability_supplier_product_capability_id_seq OWNED BY reference.supplier_product_capability.supplier_product_capability_id;
 
 
---
--- Name: site_attribute site_attribute_id; Type: DEFAULT; Schema: application; Owner: postgres
---
 
 ALTER TABLE ONLY application.site_attribute ALTER COLUMN site_attribute_id SET DEFAULT nextval('application.site_attribute_site_attribute_id_seq'::regclass);
 
 
---
--- Name: site_definition site_definition_id; Type: DEFAULT; Schema: application; Owner: postgres
---
 
 ALTER TABLE ONLY application.site_definition ALTER COLUMN site_definition_id SET DEFAULT nextval('application.site_definition_site_definition_id_seq'::regclass);
 
 
---
--- Name: user user_id; Type: DEFAULT; Schema: application; Owner: postgres
---
 
 ALTER TABLE ONLY application."user" ALTER COLUMN user_id SET DEFAULT nextval('application.user_user_id_seq'::regclass);
 
 
---
--- Name: user_session user_session_id; Type: DEFAULT; Schema: application; Owner: postgres
---
 
 ALTER TABLE ONLY application.user_session ALTER COLUMN user_session_id SET DEFAULT nextval('application.user_session_user_session_id_seq'::regclass);
 
 
---
--- Name: lookup lookup_id; Type: DEFAULT; Schema: reference; Owner: postgres
---
 
 ALTER TABLE ONLY reference.lookup ALTER COLUMN lookup_id SET DEFAULT nextval('reference.lookup_lookup_id_seq'::regclass);
 
 
---
--- Name: lookup_type lookup_type_id; Type: DEFAULT; Schema: reference; Owner: postgres
---
 
 ALTER TABLE ONLY reference.lookup_type ALTER COLUMN lookup_type_id SET DEFAULT nextval('reference.lookup_type_lookup_type_id_seq'::regclass);
 
 
---
--- Name: supplier_product_capability supplier_product_capability_id; Type: DEFAULT; Schema: reference; Owner: postgres
---
 
 ALTER TABLE ONLY reference.supplier_product_capability ALTER COLUMN supplier_product_capability_id SET DEFAULT nextval('reference.supplier_product_capability_supplier_product_capability_id_seq'::regclass);
 
 
---
--- Data for Name: email_recipient; Type: TABLE DATA; Schema: application; Owner: postgres
---
 
 COPY application.email_recipient (email_template_id, email_address) FROM stdin;
 \.
 
 
---
--- Data for Name: email_template; Type: TABLE DATA; Schema: application; Owner: postgres
---
 
 COPY application.email_template (email_template_id, subject, body) FROM stdin;
 \.
 
 
---
--- Data for Name: site_attribute; Type: TABLE DATA; Schema: application; Owner: postgres
---
 
 COPY application.site_attribute (site_attribute_id, site_definition_id, site_attribute_name, site_attribute_value, added_date, last_updated) FROM stdin;
 \.
 
 
---
--- Data for Name: site_definition; Type: TABLE DATA; Schema: application; Owner: postgres
---
 
 COPY application.site_definition (site_definition_id, site_ods_code, site_party_key, site_asid, site_unique_identifier, added_date, last_updated, site_definition_status_id, site_interactions, master_site_unique_identifier) FROM stdin;
 \.
 
 
---
--- Data for Name: site_definition_status; Type: TABLE DATA; Schema: application; Owner: postgres
---
 
 COPY application.site_definition_status (site_definition_status_id, site_definition_status_name) FROM stdin;
 \.
 
 
---
--- Data for Name: user; Type: TABLE DATA; Schema: application; Owner: postgres
---
 
 COPY application."user" (user_id, email_address, last_logon_date, is_admin, added_date, authorised_date) FROM stdin;
 \.
 
 
---
--- Data for Name: user_session; Type: TABLE DATA; Schema: application; Owner: postgres
---
 
 COPY application.user_session (user_session_id, user_id, start_time, end_time) FROM stdin;
 \.
 
 
---
--- Data for Name: lookup; Type: TABLE DATA; Schema: reference; Owner: postgres
---
 
 COPY reference.lookup (lookup_id, lookup_value, lookup_type_id, added_date, disabled_date, linked_lookup_id) FROM stdin;
 4	A&E	1	2021-12-17 09:16:58.167949	\N	\N
@@ -942,9 +793,6 @@ COPY reference.lookup (lookup_id, lookup_value, lookup_type_id, added_date, disa
 \.
 
 
---
--- Data for Name: lookup_type; Type: TABLE DATA; Schema: reference; Owner: postgres
---
 
 COPY reference.lookup_type (lookup_type_id, lookup_type_name, lookup_type_description, is_system) FROM stdin;
 1	CareSetting	Care Setting	f
@@ -956,389 +804,230 @@ COPY reference.lookup_type (lookup_type_id, lookup_type_name, lookup_type_descri
 \.
 
 
---
--- Data for Name: supplier_product; Type: TABLE DATA; Schema: reference; Owner: postgres
---
 
 COPY reference.supplier_product (supplier_id, supplier_product_id, product_use_case) FROM stdin;
 \.
 
 
---
--- Data for Name: supplier_product_capability; Type: TABLE DATA; Schema: reference; Owner: postgres
---
 
 COPY reference.supplier_product_capability (supplier_product_capability_id, supplier_product_id, product_capability_id, provider_assured, consumer_assured, awaiting_assurance, assurance_date, capability_version) FROM stdin;
 \.
 
 
---
--- Name: site_attribute_site_attribute_id_seq; Type: SEQUENCE SET; Schema: application; Owner: postgres
---
 
 SELECT pg_catalog.setval('application.site_attribute_site_attribute_id_seq', 1, false);
 
 
---
--- Name: site_definition_site_definition_id_seq; Type: SEQUENCE SET; Schema: application; Owner: postgres
---
 
 SELECT pg_catalog.setval('application.site_definition_site_definition_id_seq', 1, false);
 
 
---
--- Name: user_session_user_session_id_seq; Type: SEQUENCE SET; Schema: application; Owner: postgres
---
 
 SELECT pg_catalog.setval('application.user_session_user_session_id_seq', 1, false);
 
 
---
--- Name: user_user_id_seq; Type: SEQUENCE SET; Schema: application; Owner: postgres
---
 
 SELECT pg_catalog.setval('application.user_user_id_seq', 1, false);
 
 
---
--- Name: lookup_lookup_id_seq; Type: SEQUENCE SET; Schema: reference; Owner: postgres
---
 
 SELECT pg_catalog.setval('reference.lookup_lookup_id_seq', 788, true);
 
 
---
--- Name: lookup_type_lookup_type_id_seq; Type: SEQUENCE SET; Schema: reference; Owner: postgres
---
 
 SELECT pg_catalog.setval('reference.lookup_type_lookup_type_id_seq', 1, true);
 
 
---
--- Name: supplier_product_capability_supplier_product_capability_id_seq; Type: SEQUENCE SET; Schema: reference; Owner: postgres
---
 
 SELECT pg_catalog.setval('reference.supplier_product_capability_supplier_product_capability_id_seq', 17, true);
 
 
---
--- Name: email_template application_emailtemplate_emailtemplateid_pk; Type: CONSTRAINT; Schema: application; Owner: postgres
---
 
 ALTER TABLE ONLY application.email_template
     ADD CONSTRAINT application_emailtemplate_emailtemplateid_pk PRIMARY KEY (email_template_id);
 
 
---
--- Name: site_attribute application_siteattribute_siteattributeid_pk; Type: CONSTRAINT; Schema: application; Owner: postgres
---
 
 ALTER TABLE ONLY application.site_attribute
     ADD CONSTRAINT application_siteattribute_siteattributeid_pk PRIMARY KEY (site_attribute_id);
 
 
---
--- Name: site_definition application_sitedefinition_sitedefinitionid_pk; Type: CONSTRAINT; Schema: application; Owner: postgres
---
 
 ALTER TABLE ONLY application.site_definition
     ADD CONSTRAINT application_sitedefinition_sitedefinitionid_pk PRIMARY KEY (site_definition_id);
 
 
---
--- Name: site_definition_status application_sitedefinitionstatus_sitedefinitionstatusid_pk; Type: CONSTRAINT; Schema: application; Owner: postgres
---
 
 ALTER TABLE ONLY application.site_definition_status
     ADD CONSTRAINT application_sitedefinitionstatus_sitedefinitionstatusid_pk PRIMARY KEY (site_definition_status_id);
 
 
---
--- Name: user application_user_userid_pk; Type: CONSTRAINT; Schema: application; Owner: postgres
---
 
 ALTER TABLE ONLY application."user"
     ADD CONSTRAINT application_user_userid_pk PRIMARY KEY (user_id);
 
 
---
--- Name: lookup reference_lookup_lookupid_pk; Type: CONSTRAINT; Schema: reference; Owner: postgres
---
 
 ALTER TABLE ONLY reference.lookup
     ADD CONSTRAINT reference_lookup_lookupid_pk PRIMARY KEY (lookup_id);
 
 
---
--- Name: lookup_type reference_lookup_type_lookuptypeid_pk; Type: CONSTRAINT; Schema: reference; Owner: postgres
---
 
 ALTER TABLE ONLY reference.lookup_type
     ADD CONSTRAINT reference_lookup_type_lookuptypeid_pk PRIMARY KEY (lookup_type_id);
 
 
---
--- Name: supplier_product_capability reference_supplierproductcapability_productcapabilityid_pk; Type: CONSTRAINT; Schema: reference; Owner: postgres
---
 
 ALTER TABLE ONLY reference.supplier_product_capability
     ADD CONSTRAINT reference_supplierproductcapability_productcapabilityid_pk PRIMARY KEY (supplier_product_capability_id);
 
 
---
--- Name: application_siteattribute_siteattributename_ix; Type: INDEX; Schema: application; Owner: postgres
---
 
 CREATE UNIQUE INDEX application_siteattribute_siteattributename_ix ON application.site_attribute USING btree (site_definition_id, site_attribute_name);
 
 
---
--- Name: application_sitedefinition_siteuniqueidentifier_ix; Type: INDEX; Schema: application; Owner: postgres
---
 
 CREATE UNIQUE INDEX application_sitedefinition_siteuniqueidentifier_ix ON application.site_definition USING btree (site_unique_identifier);
 
 
---
--- Name: application_user_emailaddress_ix; Type: INDEX; Schema: application; Owner: postgres
---
 
 CREATE UNIQUE INDEX application_user_emailaddress_ix ON application."user" USING btree (lower((email_address)::text));
 
 
---
--- Name: reference_lookuptype_lookuptypename_ix; Type: INDEX; Schema: reference; Owner: postgres
---
 
 CREATE UNIQUE INDEX reference_lookuptype_lookuptypename_ix ON reference.lookup_type USING btree (lower((lookup_type_name)::text));
 
 
---
--- Name: email_recipient application_emailtemplate_emailtemplateid_fk; Type: FK CONSTRAINT; Schema: application; Owner: postgres
---
 
 ALTER TABLE ONLY application.email_recipient
     ADD CONSTRAINT application_emailtemplate_emailtemplateid_fk FOREIGN KEY (email_template_id) REFERENCES application.email_template(email_template_id);
 
 
---
--- Name: site_attribute application_siteattribute_sitedefinitionid_fk; Type: FK CONSTRAINT; Schema: application; Owner: postgres
---
 
 ALTER TABLE ONLY application.site_attribute
     ADD CONSTRAINT application_siteattribute_sitedefinitionid_fk FOREIGN KEY (site_definition_id) REFERENCES application.site_definition(site_definition_id);
 
 
---
--- Name: site_definition application_sitedefinition_sitedefinitionstatusid_fk; Type: FK CONSTRAINT; Schema: application; Owner: postgres
---
 
 ALTER TABLE ONLY application.site_definition
     ADD CONSTRAINT application_sitedefinition_sitedefinitionstatusid_fk FOREIGN KEY (site_definition_status_id) REFERENCES application.site_definition_status(site_definition_status_id);
 
 
---
--- Name: lookup reference_lookup_lookuptypeid_fk; Type: FK CONSTRAINT; Schema: reference; Owner: postgres
---
 
 ALTER TABLE ONLY reference.lookup
     ADD CONSTRAINT reference_lookup_lookuptypeid_fk FOREIGN KEY (lookup_type_id) REFERENCES reference.lookup_type(lookup_type_id);
 
 
---
--- Name: supplier_product reference_supplierproduct_supplierid_fk; Type: FK CONSTRAINT; Schema: reference; Owner: postgres
---
 
 ALTER TABLE ONLY reference.supplier_product
     ADD CONSTRAINT reference_supplierproduct_supplierid_fk FOREIGN KEY (supplier_id) REFERENCES reference.lookup(lookup_id);
 
 
---
--- Name: supplier_product reference_supplierproduct_supplierproductid_fk; Type: FK CONSTRAINT; Schema: reference; Owner: postgres
---
 
 ALTER TABLE ONLY reference.supplier_product
     ADD CONSTRAINT reference_supplierproduct_supplierproductid_fk FOREIGN KEY (supplier_product_id) REFERENCES reference.lookup(lookup_id);
 
 
---
--- Name: supplier_product_capability reference_supplierproductcapability_productcapabilityid_fk; Type: FK CONSTRAINT; Schema: reference; Owner: postgres
---
 
 ALTER TABLE ONLY reference.supplier_product_capability
     ADD CONSTRAINT reference_supplierproductcapability_productcapabilityid_fk FOREIGN KEY (product_capability_id) REFERENCES reference.lookup(lookup_id);
 
 
---
--- Name: supplier_product_capability reference_supplierproductcapability_supplierproductid_fk; Type: FK CONSTRAINT; Schema: reference; Owner: postgres
---
 
 ALTER TABLE ONLY reference.supplier_product_capability
     ADD CONSTRAINT reference_supplierproductcapability_supplierproductid_fk FOREIGN KEY (supplier_product_id) REFERENCES reference.lookup(lookup_id);
 
 
---
--- Name: SCHEMA application; Type: ACL; Schema: -; Owner: postgres
---
 
 GRANT USAGE ON SCHEMA application TO app_user;
 
 
---
--- Name: SCHEMA public; Type: ACL; Schema: -; Owner: postgres
---
 
 REVOKE ALL ON SCHEMA public FROM PUBLIC;
 
 
---
--- Name: SCHEMA reference; Type: ACL; Schema: -; Owner: postgres
---
 
 GRANT USAGE ON SCHEMA reference TO app_user;
 
 
---
--- Name: TYPE site_attributes_type; Type: ACL; Schema: application; Owner: postgres
---
 
 GRANT ALL ON TYPE application.site_attributes_type TO app_user;
 
 
---
--- Name: TYPE site_attributes_type; Type: ACL; Schema: public; Owner: postgres
---
 
 GRANT ALL ON TYPE public.site_attributes_type TO app_user;
 
 
---
--- Name: TABLE email_recipient; Type: ACL; Schema: application; Owner: postgres
---
 
 GRANT SELECT,INSERT,UPDATE ON TABLE application.email_recipient TO app_user;
 
 
---
--- Name: TABLE email_template; Type: ACL; Schema: application; Owner: postgres
---
 
 GRANT SELECT,INSERT,UPDATE ON TABLE application.email_template TO app_user;
 
 
---
--- Name: TABLE site_attribute; Type: ACL; Schema: application; Owner: postgres
---
 
 GRANT SELECT,INSERT,UPDATE ON TABLE application.site_attribute TO app_user;
 
 
---
--- Name: SEQUENCE site_attribute_site_attribute_id_seq; Type: ACL; Schema: application; Owner: postgres
---
 
 GRANT SELECT,UPDATE ON SEQUENCE application.site_attribute_site_attribute_id_seq TO app_user;
 
 
---
--- Name: TABLE site_definition; Type: ACL; Schema: application; Owner: postgres
---
 
 GRANT SELECT,INSERT,UPDATE ON TABLE application.site_definition TO app_user;
 
 
---
--- Name: SEQUENCE site_definition_site_definition_id_seq; Type: ACL; Schema: application; Owner: postgres
---
 
 GRANT SELECT,UPDATE ON SEQUENCE application.site_definition_site_definition_id_seq TO app_user;
 
 
---
--- Name: TABLE site_definition_status; Type: ACL; Schema: application; Owner: postgres
---
 
 GRANT SELECT,INSERT,UPDATE ON TABLE application.site_definition_status TO app_user;
 
 
---
--- Name: TABLE "user"; Type: ACL; Schema: application; Owner: postgres
---
 
 GRANT SELECT,INSERT,UPDATE ON TABLE application."user" TO app_user;
 
 
---
--- Name: TABLE user_session; Type: ACL; Schema: application; Owner: postgres
---
 
 GRANT SELECT,INSERT,UPDATE ON TABLE application.user_session TO app_user;
 
 
---
--- Name: SEQUENCE user_session_user_session_id_seq; Type: ACL; Schema: application; Owner: postgres
---
 
 GRANT SELECT,UPDATE ON SEQUENCE application.user_session_user_session_id_seq TO app_user;
 
 
---
--- Name: SEQUENCE user_user_id_seq; Type: ACL; Schema: application; Owner: postgres
---
 
 GRANT SELECT,UPDATE ON SEQUENCE application.user_user_id_seq TO app_user;
 
 
---
--- Name: TABLE lookup; Type: ACL; Schema: reference; Owner: postgres
---
 
 GRANT SELECT,INSERT,UPDATE ON TABLE reference.lookup TO app_user;
 
 
---
--- Name: SEQUENCE lookup_lookup_id_seq; Type: ACL; Schema: reference; Owner: postgres
---
 
 GRANT SELECT,UPDATE ON SEQUENCE reference.lookup_lookup_id_seq TO app_user;
 
 
---
--- Name: TABLE lookup_type; Type: ACL; Schema: reference; Owner: postgres
---
 
 GRANT SELECT,INSERT,UPDATE ON TABLE reference.lookup_type TO app_user;
 
 
---
--- Name: SEQUENCE lookup_type_lookup_type_id_seq; Type: ACL; Schema: reference; Owner: postgres
---
 
 GRANT SELECT,UPDATE ON SEQUENCE reference.lookup_type_lookup_type_id_seq TO app_user;
 
 
---
--- Name: TABLE supplier_product; Type: ACL; Schema: reference; Owner: postgres
---
 
 GRANT SELECT,INSERT,UPDATE ON TABLE reference.supplier_product TO app_user;
 
 
---
--- Name: TABLE supplier_product_capability; Type: ACL; Schema: reference; Owner: postgres
---
 
 GRANT SELECT,INSERT,UPDATE ON TABLE reference.supplier_product_capability TO app_user;
 
 
---
--- Name: SEQUENCE supplier_product_capability_supplier_product_capability_id_seq; Type: ACL; Schema: reference; Owner: postgres
---
 
 GRANT SELECT,UPDATE ON SEQUENCE reference.supplier_product_capability_supplier_product_capability_id_seq TO app_user;
 
 
---
--- PostgreSQL database dump complete
---
 
