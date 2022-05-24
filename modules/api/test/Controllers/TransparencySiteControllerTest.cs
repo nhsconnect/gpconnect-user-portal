@@ -1,17 +1,17 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using gpconnect_user_portal.api.Controllers;
-using gpconnect_user_portal.api.dto;
-using gpconnect_user_portal.api.dto.request;
-using gpconnect_user_portal.api.service;
-using gpconnect_user_portal.api.validators;
+using GpConnect.NationalDataSharingPortal.Api.Controllers;
+using GpConnect.NationalDataSharingPortal.Api.DTO;
+using GpConnect.NationalDataSharingPortal.Api.DTO.Request;
+using GpConnect.NationalDataSharingPortal.Api.Service;
+using GpConnect.NationalDataSharingPortal.Api.Validators;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
 using Xunit;
 
-namespace gpconnect_user_portal.api.test.controllers;
+namespace GpConnect.NationalDataSharingPortal.Api.test.controllers;
 
 public class TransparencySiteControllerTest
 {

@@ -1,6 +1,6 @@
 using System;
 
-namespace gpconnect_user_portal.api.dto;
+namespace GpConnect.NationalDataSharingPortal.Api.DTO;
 
 public class TransparencySite
 {

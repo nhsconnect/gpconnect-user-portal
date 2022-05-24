@@ -4,12 +4,12 @@ using Microsoft.Extensions.Logging;
 using System.Linq;
 using System;
 
-using gpconnect_user_portal.api.dto;
-using gpconnect_user_portal.api.dto.request;
-using gpconnect_user_portal.api.validators;
-using gpconnect_user_portal.api.service;
+using GpConnect.NationalDataSharingPortal.Api.DTO;
+using GpConnect.NationalDataSharingPortal.Api.DTO.Request;
+using GpConnect.NationalDataSharingPortal.Api.Validators;
+using GpConnect.NationalDataSharingPortal.Api.Service;
 
-namespace gpconnect_user_portal.api.Controllers;
+namespace GpConnect.NationalDataSharingPortal.Api.Controllers;
 
 [ApiController]
 [Route("transparency-site")]

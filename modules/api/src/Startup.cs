@@ -1,13 +1,13 @@
 using System;
-using gpconnect_user_portal.api.service;
-using gpconnect_user_portal.api.validators;
+using GpConnect.NationalDataSharingPortal.Api.Service;
+using GpConnect.NationalDataSharingPortal.Api.Validators;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 
-namespace gpconnect_user_portal.api
+namespace GpConnect.NationalDataSharingPortal.Api
 {
     public class Startup
     {

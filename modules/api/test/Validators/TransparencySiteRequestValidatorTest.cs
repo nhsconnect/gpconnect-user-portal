@@ -1,8 +1,8 @@
-using gpconnect_user_portal.api.dto.request;
-using gpconnect_user_portal.api.validators;
+using GpConnect.NationalDataSharingPortal.Api.DTO.Request;
+using GpConnect.NationalDataSharingPortal.Api.Validators;
 using Xunit;
 
-namespace gpconnect_user_portal.api.test.validators;
+namespace GpConnect.NationalDataSharingPortal.Api.test.validators;
 
 public class TransparencySiteRequestValidatorTest
 {

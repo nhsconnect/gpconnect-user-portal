@@ -1,8 +1,8 @@
 using System.Collections.Generic;
-using gpconnect_user_portal.api.dto;
-using gpconnect_user_portal.api.dto.request;
+using GpConnect.NationalDataSharingPortal.Api.DTO;
+using GpConnect.NationalDataSharingPortal.Api.DTO.Request;
 
-namespace gpconnect_user_portal.api.service
+namespace GpConnect.NationalDataSharingPortal.Api.Service
 {
     public class TransparencySiteService: ITransparencySiteService
     {

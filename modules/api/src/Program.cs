@@ -6,7 +6,7 @@ using Microsoft.Extensions.Logging;
 using NLog.Web;
 using NLog;
 
-namespace gpconnect_user_portal.api
+namespace GpConnect.NationalDataSharingPortal.Api
 {
     public class Program
     {

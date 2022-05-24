@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using Microsoft.Extensions.Logging;
 using System.Linq;
 using System;
-using gpconnect_user_portal.api.dto;
+using GpConnect.NationalDataSharingPortal.Api.DTO;
 
-namespace gpconnect_user_portal.api.Controllers;
+namespace GpConnect.NationalDataSharingPortal.Api.Controllers;
 
 [ApiController]
 [Route("[controller]")]
