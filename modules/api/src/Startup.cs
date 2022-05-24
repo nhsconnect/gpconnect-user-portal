@@ -1,4 +1,6 @@
 using System;
+using gpconnect_user_portal.api.service;
+using gpconnect_user_portal.api.validators;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -24,6 +26,9 @@ namespace gpconnect_user_portal.api
         {
             services.AddControllers();
             services.AddHealthChecks();
+
+            services.AddSingleton<ITransparencySiteRequestValidator, TransparencySiteRequestValidator>();
+            services.AddSingleton<ITransparencySiteService, TransparencySiteService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

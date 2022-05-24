@@ -1,6 +1,6 @@
 using System;
 
-namespace gpconnect_user_portal.api;
+namespace gpconnect_user_portal.api.dto;
 
 public class WeatherForecast
 {

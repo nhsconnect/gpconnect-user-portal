@@ -56,6 +56,10 @@ paths:
                   type: string
   /transparency-site:
     get:
+      summary: Returns a list of transparencySites
+      description: >-
+        In order to allow Users to see why their data could be accessed by a site or CCG. 
+        This method will return a list of matching transparency sites.
       parameters:
         - name: provider_code
           in: query
@@ -77,19 +81,17 @@ paths:
           required: false
           schema: 
             type: string
-      summary: Returns a list of users.
-      description: Optional extended description in CommonMark or HTML.
       responses:
         '400': 
           description: Bad Request. No query terms where provided at least one must be provided
         '200':    # status code
-          description: A JSON array of user names
+          description: An array of Direct Care API Sites who have signed the NDSA that match the provided search criteria
           content:
             application/json:
               schema: 
                 type: array
                 items: 
-                  type: string
+                  $ref: '#/components/schemas/transparencySite'
   /ccg:
     get:
       summary: Returns a list of users.
@@ -324,3 +326,19 @@ paths:
                 type: array
                 items: 
                   type: string
+
+components:
+  schemas:
+    transparencySite:
+      description: >-
+        Transparency Sites are Direct Care API sites that have signed up to the NDSA. 
+        The object contains details of the site and the use case for Data Access.
+      type: object
+      properties:
+        odsCode:
+          type: string
+        name:
+          type: string
+        useCase:
+          type: string
+

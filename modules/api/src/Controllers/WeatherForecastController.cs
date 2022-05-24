@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Microsoft.Extensions.Logging;
 using System.Linq;
 using System;
+using gpconnect_user_portal.api.dto;
 
 namespace gpconnect_user_portal.api.Controllers;
 
