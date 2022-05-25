@@ -1,8 +1,9 @@
+using GpConnect.NationalDataSharingPortal.Api.Dto.Request;
+using GpConnect.NationalDataSharingPortal.Api.Dto.Response;
+using GpConnect.NationalDataSharingPortal.Api.Service.Interface;
 using System.Collections.Generic;
-using gpconnect_user_portal.api.dto;
-using gpconnect_user_portal.api.dto.request;
 
-namespace gpconnect_user_portal.api.service
+namespace GpConnect.NationalDataSharingPortal.Api.Service
 {
     public class TransparencySiteService: ITransparencySiteService
     {

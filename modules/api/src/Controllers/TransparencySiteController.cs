@@ -1,13 +1,10 @@
+using GpConnect.NationalDataSharingPortal.Api.Dto.Request;
+using GpConnect.NationalDataSharingPortal.Api.Dto.Response;
+using GpConnect.NationalDataSharingPortal.Api.Service.Interface;
+using GpConnect.NationalDataSharingPortal.Api.Validators;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 using Microsoft.Extensions.Logging;
-using System.Linq;
-using System;
-
-using gpconnect_user_portal.api.dto;
-using gpconnect_user_portal.api.dto.request;
-using gpconnect_user_portal.api.validators;
-using gpconnect_user_portal.api.service;
+using System.Collections.Generic;
 
 namespace gpconnect_user_portal.api.Controllers;
 

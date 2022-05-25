@@ -1,6 +1,4 @@
-using System;
-
-namespace gpconnect_user_portal.api.dto;
+namespace GpConnect.NationalDataSharingPortal.Api.Dto.Response;
 
 public class TransparencySite
 {
@@ -8,6 +6,5 @@ public class TransparencySite
 
     public string Name { get; set; } = "";
 
-    public string UseCase { get; set; } = "";
-   
+    public string UseCase { get; set; } = "";   
 }

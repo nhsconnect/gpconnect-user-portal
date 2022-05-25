@@ -1,14 +1,14 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using GpConnect.NationalDataSharingPortal.Api.Dto.Request;
+using GpConnect.NationalDataSharingPortal.Api.Dto.Response;
+using GpConnect.NationalDataSharingPortal.Api.Service.Interface;
+using GpConnect.NationalDataSharingPortal.Api.Validators;
 using gpconnect_user_portal.api.Controllers;
-using gpconnect_user_portal.api.dto;
-using gpconnect_user_portal.api.dto.request;
-using gpconnect_user_portal.api.service;
-using gpconnect_user_portal.api.validators;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using Xunit;
 
 namespace gpconnect_user_portal.api.test.controllers;

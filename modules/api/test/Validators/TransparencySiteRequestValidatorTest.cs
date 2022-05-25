@@ -1,5 +1,5 @@
-using gpconnect_user_portal.api.dto.request;
-using gpconnect_user_portal.api.validators;
+using GpConnect.NationalDataSharingPortal.Api.Dto.Request;
+using GpConnect.NationalDataSharingPortal.Api.Validators;
 using Xunit;
 
 namespace gpconnect_user_portal.api.test.validators;

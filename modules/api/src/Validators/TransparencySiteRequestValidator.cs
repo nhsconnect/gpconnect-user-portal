@@ -1,7 +1,7 @@
+using GpConnect.NationalDataSharingPortal.Api.Dto.Request;
 using System;
-using gpconnect_user_portal.api.dto.request;
 
-namespace gpconnect_user_portal.api.validators;
+namespace GpConnect.NationalDataSharingPortal.Api.Validators;
 
 public class TransparencySiteRequestValidator: ITransparencySiteRequestValidator
 {

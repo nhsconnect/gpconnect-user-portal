@@ -1,10 +1,12 @@
-using System;
+using Autofac.Extensions.DependencyInjection;
+using GpConnect.NationalDataSharingPortal.Api;
+using GpConnect.NationalDataSharingPortal.Api.Core;
+using GpConnect.NationalDataSharingPortal.Api.Core.Logging;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
-using NLog.Web;
 using NLog;
+using NLog.Web;
+using System;
 
 namespace gpconnect_user_portal.api
 {
@@ -12,7 +14,7 @@ namespace gpconnect_user_portal.api
     {
         public static void Main(string[] args)
         {
-            var logger = NLog.LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
+            var logger = LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
 
             try
             {
@@ -28,31 +30,26 @@ namespace gpconnect_user_portal.api
             finally
             {
                 // Ensure to flush and stop internal timers/threads before application-exit (Avoid segmentation fault on Linux)
-                NLog.LogManager.Shutdown();
+                LogManager.Shutdown();
             }
-        
         }
 
-        public static IHostBuilder CreateHostBuilder(string[] args) {
-            var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
-            
-            return Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webHostDefaultsBuilder =>
-                {                    
-                    webHostDefaultsBuilder.UseStartup<Startup>();
-                })
-                .ConfigureAppConfiguration((context, builder) => {
-                    builder.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
-                    builder.AddJsonFile($"appsettings.{environment}.json", optional: true, reloadOnChange: true);
-                    builder.AddEnvironmentVariables();
-                    // More config here
-                })
-                .ConfigureLogging(logging =>
+        public static IHostBuilder CreateHostBuilder(string[] args) =>
+            Host.CreateDefaultBuilder(args)
+                .ConfigureWebHost((webHostBuilder) =>
                 {
-                    logging.ClearProviders();
-                    logging.SetMinimumLevel(Microsoft.Extensions.Logging.LogLevel.Trace);
+                    WebConfigurationBuilder.ConfigureWebHost(webHostBuilder);
                 })
-                .UseNLog();
-        }
+                .UseServiceProviderFactory(new AutofacServiceProviderFactory())
+                .ConfigureWebHostDefaults(webHostDefaultsBuilder =>
+                {
+                    webHostDefaultsBuilder.UseStartup<Startup>();
+                    WebConfigurationBuilder.ConfigureWebHostDefaults(webHostDefaultsBuilder);
+                })
+                .ConfigureAppConfiguration(CustomConfigurationBuilder.AddCustomConfiguration)
+                .ConfigureLogging((builderContext, logging) =>
+                {
+                    LoggingConfigurationBuilder.AddLoggingConfiguration(builderContext, logging);
+                }).UseNLog();
     }
 }
