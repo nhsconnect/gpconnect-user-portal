@@ -2,6 +2,8 @@
 {
     public class Sso
     {
+
+        public string Flow { get; set; }
         public string ClientId { get; set; }
         public string ClientSecret { get; set; }
         public string CallbackPath { get; set; }
