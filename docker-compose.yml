@@ -16,6 +16,28 @@ services:
     image: ghcr.io/navikt/mock-oauth2-server:0.4.8
     ports:
       - 8080:8080
+    hostname: auth.docker.internal
+    environment:
+      JSON_CONFIG: |-
+        {
+          "interactiveLogin": false,
+          "tokenCallbacks": [
+            {
+              "issuerId": "default",
+              "tokenExpiry": 120,
+              "requestMappings": [
+                {
+                  "requestParam": "client_id",
+                  "match": "*",
+                  "claims": {
+                    "sub": "adrian",
+                    "email address": "adrian.wilkins3@nhs.net"
+                  }
+                }
+              ]
+            }
+          ]
+        }
 
 
   user-portal:

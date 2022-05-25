@@ -53,7 +53,7 @@ namespace gpconnect_user_portal.Core.Configuration.Infrastructure.Authentication
                     options.Scope.Add("openid");
                     options.Scope.Add("profile");
                     options.Scope.Add("email");
-                    options.ResponseType = OpenIdConnectResponseType.CodeIdToken;
+                    options.ResponseType = _ssoConfig.Flow;
 
                     options.ClientId = _ssoConfig.ClientId;
                     options.ClientSecret = _ssoConfig.ClientSecret;
