@@ -4,9 +4,15 @@ using GpConnect.NationalDataSharingPortal.Api.Service.Interface;
 using GpConnect.NationalDataSharingPortal.Api.Validators;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System.Collections.Generic;
+using System.Linq;
+using System;
 
-namespace gpconnect_user_portal.api.Controllers;
+using gpconnect_user_portal.api.dto;
+using gpconnect_user_portal.api.dto.request;
+using gpconnect_user_portal.api.validators;
+using gpconnect_user_portal.api.service;
+
+namespace GpConnect.NationalDataSharingPortal.Api.Controllers;
 
 [ApiController]
 [Route("transparency-site")]

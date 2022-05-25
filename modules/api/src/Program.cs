@@ -8,7 +8,7 @@ using NLog;
 using NLog.Web;
 using System;
 
-namespace gpconnect_user_portal.api
+namespace GpConnect.NationalDataSharingPortal.Api
 {
     public class Program
     {

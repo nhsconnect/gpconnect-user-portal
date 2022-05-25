@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace GpConnect.NationalDataSharingPortal.Api.Dto.Request;
+namespace gpconnect_user_portal.api.dto.request;
 
 public class TransparencySiteRequest
 {

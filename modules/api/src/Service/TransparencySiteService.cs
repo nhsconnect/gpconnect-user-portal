@@ -2,6 +2,8 @@ using GpConnect.NationalDataSharingPortal.Api.Dto.Request;
 using GpConnect.NationalDataSharingPortal.Api.Dto.Response;
 using GpConnect.NationalDataSharingPortal.Api.Service.Interface;
 using System.Collections.Generic;
+using gpconnect_user_portal.api.dto;
+using gpconnect_user_portal.api.dto.request;
 
 namespace GpConnect.NationalDataSharingPortal.Api.Service
 {

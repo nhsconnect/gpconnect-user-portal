@@ -9,7 +9,7 @@
     }
   },
   "profiles": {
-    "gpconnect_user_portal.api": {
+    "GpConnect.NationalDataSharingPortal.Api": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": false,
