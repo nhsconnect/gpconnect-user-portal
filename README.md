@@ -48,9 +48,17 @@ To run over HTTPS replace the last command above with the following, replacing t
 docker run -d -p 5001:443 -e ASPNETCORE_URLS="https://+" -e ASPNETCORE_HTTPS_PORT=5001 -e ASPNETCORE_Kestrel__Certificates__Default__Path=/certs/localhost.pfx -e "ConnectionStrings:DefaultConnection=Server=DB_HOST;Port=DB_PORT;Database=DB_DBNAME;User Id=DB_USERID;Password=DB_PASS" -v /path/to/certs:/certs --name gpconnect-user-portal-application gpconnect-user-portal-application
 ```
 
+## Local Auth
+
+Add the following to your `/etc/hosts` (or `C:\Windows\System32\Drivers\etc\hosts`)
+
+```
+127.0.0.1     auth.docker.internal
+```
+
 ## Links
 
 - [NHS UK frontend](https://github.com/nhsuk/nhsuk-frontend)
 - [GOV.UK service manual - technology](https://www.gov.uk/service-manual/technology)
 
- 
+
