@@ -16,6 +16,7 @@ namespace GpConnect.NationalDataSharingPortal.Api.Core
             containerBuilder.RegisterType<TransparencySiteService>().As<ITransparencySiteService>().InstancePerLifetimeScope();
             containerBuilder.RegisterType<CareSettingRequestValidator>().As<ICareSettingRequestValidator>().InstancePerLifetimeScope();
             containerBuilder.RegisterType<CareSettingService>().As<ICareSettingService>().InstancePerLifetimeScope();
+            containerBuilder.RegisterType<CcgService>().As<ICcgService>().InstancePerLifetimeScope();
         }
     }
 }

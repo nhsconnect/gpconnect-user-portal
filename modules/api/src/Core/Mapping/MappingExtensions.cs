@@ -10,6 +10,7 @@ namespace GpConnect.NationalDataSharingPortal.Api.Core.Mapping
             FluentMapper.Initialize(config =>
             {
                 config.AddMap(new CareSettingMap());
+                config.AddMap(new CcgMap());
             });
         }
     }

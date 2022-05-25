@@ -2,6 +2,6 @@
 {
     public static class ConnectionStrings
     {
-        public static string DefaultConnection { get; } = "GPConnectEndUserPortal";
+        public static string DefaultConnection { get; } = "GpConnectEndUserPortal";
     }
 }

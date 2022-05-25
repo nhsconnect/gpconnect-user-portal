@@ -1,9 +1,6 @@
-﻿using System;
+﻿namespace GpConnect.NationalDataSharingPortal.Api.Dto.Request;
 
-namespace GpConnect.NationalDataSharingPortal.Api.Dto.Request
+public class BaseChangeRequest
 {
-    public class BaseChangeRequest
-    {
-        public string ApiKey { get; set; } = "";
-    }
+    public string ApiKey { get; set; } = "";
 }
