@@ -30,8 +30,8 @@ services:
                   "requestParam": "client_id",
                   "match": "*",
                   "claims": {
-                    "sub": "adrian",
-                    "email address": "adrian.wilkins3@nhs.net"
+                    "sub": "testy.mctestface",
+                    "email address": "testy.mctestface@nhs.net"
                   }
                 }
               ]
