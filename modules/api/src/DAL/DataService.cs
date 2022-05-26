@@ -1,7 +1,7 @@
 ﻿using Dapper;
 using GpConnect.NationalDataSharingPortal.Api.Dal.Interfaces;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Npgsql;
 using System;
 using System.Collections.Generic;
@@ -13,19 +13,19 @@ namespace GpConnect.NationalDataSharingPortal.Api.Dal
     public class DataService : IDataService
     {
         private readonly ILogger<DataService> _logger;
-        private readonly IConfiguration _configuration;
+        private readonly string _connectionString;
 
-        public DataService(IConfiguration configuration, ILogger<DataService> logger)
+        public DataService(IOptions<ConnectionStrings> optionsAccessor, ILogger<DataService> logger)
         {
             _logger = logger;
-            _configuration = configuration;
+            _connectionString = optionsAccessor.Value.DefaultConnection;
         }
 
         public async Task<List<T>> ExecuteQuery<T>(string query, DynamicParameters? parameters = null) where T : class
         {
             try
             {
-                using NpgsqlConnection connection = new NpgsqlConnection(_configuration.GetConnectionString(ConnectionStrings.DefaultConnection));
+                using NpgsqlConnection connection = new NpgsqlConnection(_connectionString);
                 var results = (await connection.QueryAsync<T>(query, parameters, commandType: CommandType.StoredProcedure)).AsList();
                 return results;
             }
@@ -40,7 +40,7 @@ namespace GpConnect.NationalDataSharingPortal.Api.Dal
         {
             try
             {
-                using NpgsqlConnection connection = new NpgsqlConnection(_configuration.GetConnectionString(ConnectionStrings.DefaultConnection));
+                using NpgsqlConnection connection = new NpgsqlConnection(_connectionString);
                 var result = await connection.QueryFirstOrDefaultAsync<T>(query, parameters, commandType: CommandType.StoredProcedure);
                 return result;
             }
@@ -55,7 +55,7 @@ namespace GpConnect.NationalDataSharingPortal.Api.Dal
         {
             try
             {
-                using NpgsqlConnection connection = new NpgsqlConnection(_configuration.GetConnectionString(ConnectionStrings.DefaultConnection));
+                using NpgsqlConnection connection = new NpgsqlConnection(_connectionString);
                 var rowsProcessed = await connection.ExecuteAsync(query, parameters, commandType: CommandType.StoredProcedure);
                 return rowsProcessed;
             }
@@ -70,7 +70,7 @@ namespace GpConnect.NationalDataSharingPortal.Api.Dal
         {
             try
             {
-                using NpgsqlConnection connection = new NpgsqlConnection(_configuration.GetConnectionString(ConnectionStrings.DefaultConnection));
+                using NpgsqlConnection connection = new NpgsqlConnection(_connectionString);
                 var results = (await connection.QueryAsync<T>(query, commandType: CommandType.Text)).AsList();
                 return results;
             }

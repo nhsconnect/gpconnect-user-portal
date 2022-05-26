@@ -35,19 +35,19 @@ public class CareSettingController : ControllerBase
     public async Task<ActionResult<CareSetting>> Get([FromRoute] int careSettingId)
     {
         var careSetting = await _service.GetCareSetting(careSettingId);
-
-        if(careSetting == null)
+        if (careSetting == null)
         {
             return NotFound();
         }
         return Ok(careSetting);
     }
 
-    [HttpPut(Name = "UpdateCareSetting"), Route("update")]
-    public async Task<ActionResult> Put([FromBody] CareSettingUpdateRequest careSettingUpdateRequest)
+    [HttpPut("{id:int}", Name = "UpdateCareSetting")]
+    public async Task<ActionResult<CareSettingUpdateRequest>> Put(int id, [FromBody] CareSettingUpdateRequest careSettingUpdateRequest)
     {
         _logger.LogInformation("Received Request {@query}", careSettingUpdateRequest);
 
+        careSettingUpdateRequest.CareSettingId = id;
         if (!_validator.IsValidUpdate(careSettingUpdateRequest))
         {
             _logger.LogWarning("Invalid Request");
@@ -58,22 +58,23 @@ public class CareSettingController : ControllerBase
         return Ok();
     }
 
-    [HttpPut(Name = "EnableDisableCareSetting"), Route("enable-disable")]
-    public async Task<ActionResult> Put([FromBody] CareSettingEnableDisableRequest careSettingEnableDisableRequest)
+    [HttpPut(Name = "DisableCareSetting"), Route("{id}/disable")]
+    public async Task<ActionResult<CareSettingDisableRequest>> Put(int id, [FromBody] CareSettingDisableRequest careSettingDisableRequest)
     {
-        _logger.LogInformation("Received Request {@query}", careSettingEnableDisableRequest);
+        _logger.LogInformation("Received Request {@query}", careSettingDisableRequest);
 
-        if (!_validator.IsValidEnableDisable(careSettingEnableDisableRequest))
+        careSettingDisableRequest.CareSettingId = id;
+        if (!_validator.IsValidDisable(careSettingDisableRequest))
         {
             _logger.LogWarning("Invalid Request");
             return BadRequest();
         }
 
-        await _service.EnableDisableCareSetting(careSettingEnableDisableRequest);
+        await _service.DisableCareSetting(careSettingDisableRequest);
         return Ok();
     }
 
-    [HttpPost(Name = "AddCareSetting"), Route("add")]
+    [HttpPost(Name = "AddCareSetting")]
     public async Task<ActionResult<CareSetting>> Post([FromBody] CareSettingAddRequest careSettingAddRequest)
     {
         _logger.LogInformation("Received Request {@query}", careSettingAddRequest);

@@ -10,6 +10,6 @@ public interface ICareSettingService
     Task<IEnumerable<CareSetting>> GetCareSettings();
     Task<CareSetting> GetCareSetting(int id);
     Task UpdateCareSetting(CareSettingUpdateRequest careSettingUpdateRequest);
-    Task EnableDisableCareSetting(CareSettingEnableDisableRequest careSettingEnableDisableRequest);
+    Task DisableCareSetting(CareSettingDisableRequest careSettingDisableRequest);
     Task<CareSetting> AddCareSetting(CareSettingAddRequest careSettingAddRequest);
 }

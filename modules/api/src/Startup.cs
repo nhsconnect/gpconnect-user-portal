@@ -2,7 +2,6 @@ using Autofac;
 using GpConnect.NationalDataSharingPortal.Api.Core;
 using GpConnect.NationalDataSharingPortal.Api.Core.Logging;
 using GpConnect.NationalDataSharingPortal.Api.Core.Mapping;
-using GpConnect.NationalDataSharingPortal.Api.Dal;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -19,7 +18,6 @@ public class Startup
     public Startup(IConfiguration configuration, IWebHostEnvironment webHostEnvironment)
     {
         if (configuration == null) throw new ArgumentNullException(nameof(configuration));
-        if (configuration.GetConnectionString(ConnectionStrings.DefaultConnection) == null) throw new ArgumentNullException(nameof(ConnectionStrings.DefaultConnection));
 
         _configuration = configuration;
         _webHostEnvironment = webHostEnvironment;

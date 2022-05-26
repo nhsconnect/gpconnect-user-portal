@@ -21,7 +21,7 @@ public class CcgService : ICcgService
     {
         var query = "reference.get_lookup";
         var parameters = new DynamicParameters();
-        parameters.Add("_lookup_type_id", (int)Enumerations.LookupType.CCGICBODSCode, DbType.Int16, ParameterDirection.Input);
+        parameters.Add("_lookup_type_id", (int)Dal.Enumerations.LookupType.CCGICBODSCode, DbType.Int16, ParameterDirection.Input);
         var result = await _dataService.ExecuteQuery<Ccg>(query, parameters);
         return result;
     }

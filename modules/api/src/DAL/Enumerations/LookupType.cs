@@ -1,4 +1,4 @@
-﻿namespace GpConnect.NationalDataSharingPortal.Api.Service.Enumerations
+﻿namespace GpConnect.NationalDataSharingPortal.Api.Dal.Enumerations
 {
     public enum LookupType
     {

@@ -9,7 +9,7 @@ public class CareSettingRequestValidator : ICareSettingRequestValidator
         return request.CareSettingId > 0 && (!string.IsNullOrWhiteSpace(request.CareSettingValue));
     }
 
-    public bool IsValidEnableDisable(CareSettingEnableDisableRequest request)
+    public bool IsValidDisable(CareSettingDisableRequest request)
     {
         return request.CareSettingId > 0;
     }

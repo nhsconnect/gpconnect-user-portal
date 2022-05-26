@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using GpConnect.NationalDataSharingPortal.Api.Dal;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
@@ -19,6 +20,9 @@ namespace GpConnect.NationalDataSharingPortal.Api.Core
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
+
+            services.AddOptions();
+            services.Configure<ConnectionStrings>(configuration.GetSection("ConnectionStrings"));
 
             services.AddHsts(options =>
             {

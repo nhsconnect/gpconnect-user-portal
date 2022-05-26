@@ -1,7 +1,18 @@
 ﻿namespace GpConnect.NationalDataSharingPortal.Api.Dal
 {
-    public static class ConnectionStrings
+    public class ConnectionStrings
     {
-        public static string DefaultConnection { get; } = "GpConnectEndUserPortal";
+        public ConnectionStrings()
+        {
+            DefaultConnection = "GpConnectEndUserPortal";
+        }
+
+        public string DefaultConnection { get; set; }
     }
+
+
+    //public class ConnectionStrings
+    //{
+    //    public string DefaultConnection { get; } = "GpConnectEndUserPortal";
+    //}
 }

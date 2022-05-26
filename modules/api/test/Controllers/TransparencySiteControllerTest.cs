@@ -1,11 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using gpconnect_user_portal.api.Controllers;
-using gpconnect_user_portal.api.dto;
-using gpconnect_user_portal.api.dto.request;
-using gpconnect_user_portal.api.service;
-using gpconnect_user_portal.api.validators;
+using GpConnect.NationalDataSharingPortal.Api.Controllers;
+using GpConnect.NationalDataSharingPortal.Api.Dto.Request;
+using GpConnect.NationalDataSharingPortal.Api.Dto.Response;
+using GpConnect.NationalDataSharingPortal.Api.Service.Interface;
+using GpConnect.NationalDataSharingPortal.Api.Validators;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
@@ -14,7 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 
-namespace GpConnect.NationalDataSharingPortal.Api.test.controllers;
+namespace GpConnect.NationalDataSharingPortal.Api.Test.Controllers;
 
 public class TransparencySiteControllerTest
 {
@@ -92,6 +89,6 @@ public class TransparencySiteControllerTest
         var value = result?.Value as IEnumerable<TransparencySite>;
 
         Assert.StrictEqual(1, value?.ToList().Count);
-        Assert.StrictEqual("Test", value?.ToList()[0].Name);
+        Assert.Equal("Test", value?.ToList()[0].Name);
     }
 }
