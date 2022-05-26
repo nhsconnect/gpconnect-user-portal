@@ -4,6 +4,7 @@ using GpConnect.NationalDataSharingPortal.Api.Service.Interface;
 using GpConnect.NationalDataSharingPortal.Api.Validators;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -48,10 +49,19 @@ public class CareSettingController : ControllerBase
         _logger.LogInformation("Received Request {@query}", careSettingUpdateRequest);
 
         careSettingUpdateRequest.CareSettingId = id;
-        if (!_validator.IsValidUpdate(careSettingUpdateRequest))
+        var validator = await _validator.IsValidUpdate(careSettingUpdateRequest);
+        if (!validator.RequestValid)
         {
             _logger.LogWarning("Invalid Request");
             return BadRequest();
+        }
+        else
+        {
+            if (!validator.EntityFound)
+            {
+                _logger.LogWarning("Entity Not Found");
+                return NotFound();
+            }
         }
 
         await _service.UpdateCareSetting(careSettingUpdateRequest);
@@ -64,11 +74,21 @@ public class CareSettingController : ControllerBase
         _logger.LogInformation("Received Request {@query}", careSettingDisableRequest);
 
         careSettingDisableRequest.CareSettingId = id;
-        if (!_validator.IsValidDisable(careSettingDisableRequest))
+        var validator = await _validator.IsValidDisable(careSettingDisableRequest);
+        if (!validator.RequestValid)
         {
             _logger.LogWarning("Invalid Request");
             return BadRequest();
         }
+        else
+        {
+            if (!validator.EntityFound)
+            {
+                _logger.LogWarning("Entity Not Found");
+                return NotFound();
+            }
+        }
+
 
         await _service.DisableCareSetting(careSettingDisableRequest);
         return Ok();

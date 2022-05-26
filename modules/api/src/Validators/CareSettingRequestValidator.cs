@@ -1,17 +1,30 @@
 using GpConnect.NationalDataSharingPortal.Api.Dto.Request;
+using GpConnect.NationalDataSharingPortal.Api.Service.Interface;
+using System.Threading.Tasks;
 
 namespace GpConnect.NationalDataSharingPortal.Api.Validators;
 
 public class CareSettingRequestValidator : ICareSettingRequestValidator
 {
-    public bool IsValidUpdate(CareSettingUpdateRequest request) 
+    private readonly ICareSettingService _careSettingService;
+
+    public CareSettingRequestValidator(ICareSettingService careSettingService)
     {
-        return request.CareSettingId > 0 && (!string.IsNullOrWhiteSpace(request.CareSettingValue));
+        _careSettingService = careSettingService;
     }
 
-    public bool IsValidDisable(CareSettingDisableRequest request)
+    public async Task<BaseRequestValidator> IsValidUpdate(CareSettingUpdateRequest request) 
     {
-        return request.CareSettingId > 0;
+        var validParameters = request.CareSettingId > 0 && (!string.IsNullOrWhiteSpace(request.CareSettingValue));
+        var careSetting = await _careSettingService.GetCareSetting(request.CareSettingId);
+        return new BaseRequestValidator() { EntityFound = careSetting != null, RequestValid = validParameters };
+    }
+
+    public async Task<BaseRequestValidator> IsValidDisable(CareSettingDisableRequest request)
+    {
+        var validParameters = request.CareSettingId > 0;
+        var careSetting = await _careSettingService.GetCareSetting(request.CareSettingId);
+        return new BaseRequestValidator() { EntityFound = careSetting != null, RequestValid = validParameters };
     }
 
     public bool IsValidAdd(CareSettingAddRequest request)

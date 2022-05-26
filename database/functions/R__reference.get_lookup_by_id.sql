@@ -2,7 +2,8 @@ drop function if exists reference.get_lookup_by_id;
 
 create function reference.get_lookup_by_id
 (
-	_lookup_id integer
+	_lookup_id integer,
+	_lookup_type_id smallint
 )
 returns table
 (
@@ -30,6 +31,7 @@ begin
 	from reference.lookup l
 	left outer join reference.lookup l2 on l.linked_lookup_id = l2.lookup_id
 	inner join reference.lookup_type lt on l.lookup_type_id = lt.lookup_type_id
-	where l.lookup_id = _lookup_id;
+	where l.lookup_id = _lookup_id
+	and l.lookup_type_id = _lookup_type_id;
 end;
 $$ language plpgsql;

@@ -73,9 +73,9 @@ public class CareSettingControllerTest
     public async Task Update_CallsValidator_WithExpectedParameters()
     {
         var expected = new CareSettingUpdateRequest();
+        _mockValidator.Setup(v => v.IsValidUpdate(It.IsAny<CareSettingUpdateRequest>())).ReturnsAsync(new BaseRequestValidator() { RequestValid = true, EntityFound = true });
 
         await _sut.Put(It.IsAny<int>(), expected);
-
         _mockValidator.Verify(v => v.IsValidUpdate(expected), Times.Once);
     }
 
@@ -83,6 +83,7 @@ public class CareSettingControllerTest
     public async Task Disable_CallsValidator_WithExpectedParameters()
     {
         var expected = new CareSettingDisableRequest();
+        _mockValidator.Setup(v => v.IsValidDisable(It.IsAny<CareSettingDisableRequest>())).ReturnsAsync(new BaseRequestValidator() { RequestValid = true, EntityFound = true });
 
         await _sut.Put(It.IsAny<int>(), expected);
 
@@ -92,7 +93,8 @@ public class CareSettingControllerTest
     [Fact]
     public async Task Update_WhenValidatorReturnsFalse_ReturnsBadRequest()
     {
-        _mockValidator.Setup(v => v.IsValidUpdate(It.IsAny<CareSettingUpdateRequest>())).Returns(false);
+        
+        _mockValidator.Setup(v => v.IsValidUpdate(It.IsAny<CareSettingUpdateRequest>())).ReturnsAsync(new BaseRequestValidator() { RequestValid = false, EntityFound = true });
         var response = await _sut.Put(It.IsAny<int>(), new CareSettingUpdateRequest());
         Assert.IsType<BadRequestResult>(response.Result);
     }
@@ -100,7 +102,7 @@ public class CareSettingControllerTest
     [Fact]
     public async Task Disable_WhenValidatorReturnsFalse_ReturnsBadRequest()
     {
-        _mockValidator.Setup(v => v.IsValidDisable(It.IsAny<CareSettingDisableRequest>())).Returns(false);
+        _mockValidator.Setup(v => v.IsValidDisable(It.IsAny<CareSettingDisableRequest>())).ReturnsAsync(new BaseRequestValidator() { RequestValid = false, EntityFound = true });
         var response = await _sut.Put(It.IsAny<int>(), new CareSettingDisableRequest());
         Assert.IsType<BadRequestResult>(response.Result);
     }
@@ -109,7 +111,7 @@ public class CareSettingControllerTest
     public async Task Update_WhenValidatorReturnsTrue_WithExpectedParameters()
     {
         var expected = new CareSettingUpdateRequest();
-        _mockValidator.Setup(v => v.IsValidUpdate(It.IsAny<CareSettingUpdateRequest>())).Returns(true);
+        _mockValidator.Setup(v => v.IsValidUpdate(It.IsAny<CareSettingUpdateRequest>())).ReturnsAsync(new BaseRequestValidator() { RequestValid = true, EntityFound = true });
 
         await _sut.Put(It.IsAny<int>(), expected);
         _mockService.Verify(s => s.UpdateCareSetting(expected), Times.Once);
@@ -119,7 +121,7 @@ public class CareSettingControllerTest
     public async Task Disable_WhenValidatorReturnsTrue_WithExpectedParameters()
     {
         var expected = new CareSettingDisableRequest();
-        _mockValidator.Setup(v => v.IsValidDisable(It.IsAny<CareSettingDisableRequest>())).Returns(true);
+        _mockValidator.Setup(v => v.IsValidDisable(It.IsAny<CareSettingDisableRequest>())).ReturnsAsync(new BaseRequestValidator() { RequestValid = true, EntityFound = true });
 
         await _sut.Put(It.IsAny<int>(), expected);
         _mockService.Verify(s => s.DisableCareSetting(expected), Times.Once);
@@ -128,7 +130,7 @@ public class CareSettingControllerTest
     [Fact]
     public async Task Update_WhenServiceThrows_ThrowsException()
     {
-        _mockValidator.Setup(v => v.IsValidUpdate(It.IsAny<CareSettingUpdateRequest>())).Returns(true);
+        _mockValidator.Setup(v => v.IsValidUpdate(It.IsAny<CareSettingUpdateRequest>())).ReturnsAsync(new BaseRequestValidator() { RequestValid = true, EntityFound = true });
         _mockService.Setup(s => s.UpdateCareSetting(It.IsAny<CareSettingUpdateRequest>())).Throws(new Exception(DateTime.Now.ToString()));
         await Assert.ThrowsAsync<Exception>(() => _sut.Put(It.IsAny<int>(), new CareSettingUpdateRequest()));
     }
@@ -136,7 +138,7 @@ public class CareSettingControllerTest
     [Fact]
     public async Task Disable_WhenServiceThrows_ThrowsException()
     {
-        _mockValidator.Setup(v => v.IsValidDisable(It.IsAny<CareSettingDisableRequest>())).Returns(true);
+        _mockValidator.Setup(v => v.IsValidDisable(It.IsAny<CareSettingDisableRequest>())).ReturnsAsync(new BaseRequestValidator() { RequestValid = true, EntityFound = true });
         _mockService.Setup(s => s.DisableCareSetting(It.IsAny<CareSettingDisableRequest>())).Throws(new Exception(DateTime.Now.ToString()));
         await Assert.ThrowsAsync<Exception>(() => _sut.Put(It.IsAny<int>(), new CareSettingDisableRequest()));
     }
