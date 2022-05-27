@@ -14,6 +14,7 @@ namespace GpConnect.NationalDataSharingPortal.Api.Core.Mapping
                 config.AddMap(new SupplierMap());
                 config.AddMap(new ProductMap());
                 config.AddMap(new SupplierProductMap());
+                config.AddMap(new UserMap());
             });
         }
     }

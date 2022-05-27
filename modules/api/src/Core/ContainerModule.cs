@@ -21,6 +21,7 @@ namespace GpConnect.NationalDataSharingPortal.Api.Core
             containerBuilder.RegisterType<SupplierService>().As<ISupplierService>().InstancePerLifetimeScope();
             containerBuilder.RegisterType<ProductRequestValidator>().As<IProductRequestValidator>().InstancePerLifetimeScope();
             containerBuilder.RegisterType<ProductService>().As<IProductService>().InstancePerLifetimeScope();
+            containerBuilder.RegisterType<UserService>().As<IUserService>().InstancePerLifetimeScope();
         }
     }
 }
