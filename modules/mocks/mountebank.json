@@ -1,0 +1,52 @@
+{
+    "port": 5555,
+    "protocol": "http",
+    "name": "origin",
+    "stubs": [
+      {
+        "predicates": [
+            { 
+                "equals": { 
+                    "path": "/transparency-site",
+                    "query": { 
+                        "provider_name": "name" 
+                    } 
+                } 
+            }
+        ],
+        "responses": [
+            { 
+                "is": { 
+                    "body": [
+                        {
+                            "id": 234,
+                            "name": "Name",
+                            "odsCode": "ODS Code",
+                            "accessRecordHTMLEnabled": true,
+                            "structuredRecordEnabled": true,
+                            "appointmentManagementEnabled": true,
+                            "sendDocumentEnabled": true,
+                            "postcode": "BA1 1DS",
+                            "useCase": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin varius, dui vitae vehicula cursus, turpis nunc pellentesque magna, nec faucibus urna ante eu velit. Suspendisse varius tempus neque mattis imperdiet.",
+                            "ccgIcbName": "CCG",
+                            "ccgIcbOdsCode": "CCG Code"
+                        }
+                    ],
+                    "headers": {
+                        "Content-Type": "application/json"
+                    }
+                }
+            }
+        ]
+      },
+      {
+        "responses": [
+            {
+                "is": {
+                    "statusCode": 404
+                }
+            }
+        ]
+      }
+    ]
+  }

@@ -1,0 +1,1 @@
+docker run -p 5555:5555 -v ${PWD}:/tmp/config bbyars/mountebank mb --configfile /tmp/config/mountebank.json
