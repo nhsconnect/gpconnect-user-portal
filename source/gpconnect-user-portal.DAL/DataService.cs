@@ -1,11 +1,4 @@
-﻿using Dapper;
-using gpconnect_user_portal.DAL.Interfaces;
-using gpconnect_user_portal.Resources;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
-using Npgsql;
-using NpgsqlTypes;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -13,7 +6,17 @@ using System.Reflection;
 using System.Resources;
 using System.Threading.Tasks;
 
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
+using Npgsql;
+using NpgsqlTypes;
+using Dapper;
+
+using gpconnect_user_portal.DAL.Interfaces;
+using gpconnect_user_portal.Resources;
+
 namespace gpconnect_user_portal.DAL
+
 {
     public class DataService : IDataService
     {
@@ -47,7 +50,8 @@ namespace gpconnect_user_portal.DAL
         {
             try
             {
-                using NpgsqlConnection connection = new NpgsqlConnection(_configuration.GetConnectionString(ConnectionStrings.DefaultConnection));
+                var connectionString = _configuration.GetConnectionString(ConnectionStrings.DefaultConnection);
+                using NpgsqlConnection connection = new NpgsqlConnection(connectionString);
                 var results = (await connection.QueryAsync<T>(query, parameters, commandType: CommandType.StoredProcedure)).AsList();
                 return results;
             }

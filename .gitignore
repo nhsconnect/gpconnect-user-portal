@@ -255,3 +255,7 @@ paket-files/
 
 # CodeRush
 .cr/
+
+.sonarqube/
+.vagrant/
+.vscode/

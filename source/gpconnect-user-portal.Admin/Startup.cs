@@ -1,6 +1,8 @@
 using Autofac;
+
 using gpconnect_user_portal.Core.Configuration.Infrastructure;
 using gpconnect_user_portal.Core.Configuration.Logging;
+using gpconnect_user_portal.Core.Configuration.Mapping;
 using gpconnect_user_portal.Core.Configuration.Infrastructure.Authentication;
 using gpconnect_user_portal.DAL;
 
@@ -15,10 +17,11 @@ namespace gpconnect_user_portal.Admin
         {
             if (configuration == null) throw new ArgumentNullException(nameof(configuration));
             if (configuration.GetConnectionString(ConnectionStrings.DefaultConnection) == null) throw new ArgumentNullException(nameof(ConnectionStrings.DefaultConnection));
+            MappingExtensions.ConfigureMappingServices();
 
             _configuration = configuration;
             _webHostEnvironment = webHostEnvironment;
-        }        
+        }
 
         public void ConfigureServices(IServiceCollection services)
         {
