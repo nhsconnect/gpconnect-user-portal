@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30114.105
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "gpconnect-user-portal.api", "src\gpconnect-user-portal.api.csproj", "{057D28A4-4407-437A-840C-20327214911D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "gpconnect-user-portal.api.test", "test\gpconnect-user-portal.api.test.csproj", "{EC382C52-F853-409E-A57C-C84C93726C8C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{057D28A4-4407-437A-840C-20327214911D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{057D28A4-4407-437A-840C-20327214911D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{057D28A4-4407-437A-840C-20327214911D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{057D28A4-4407-437A-840C-20327214911D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EC382C52-F853-409E-A57C-C84C93726C8C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EC382C52-F853-409E-A57C-C84C93726C8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EC382C52-F853-409E-A57C-C84C93726C8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EC382C52-F853-409E-A57C-C84C93726C8C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

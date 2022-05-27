@@ -1,21 +1,22 @@
---
--- Name: get_lookup_by_id(integer); Type: FUNCTION; Schema: reference; Owner: postgres
---
+drop function if exists reference.get_lookup_by_id;
 
-CREATE FUNCTION reference.get_lookup_by_id(
-  _lookup_id integer
-) RETURNS TABLE(
-  lookup_id integer,
-  lookup_type_id smallint,
-  lookup_value character varying,
-  linked_lookup_id integer,
-  lookup_type_name character varying,
-  lookup_type_description character varying,
-  linked_lookup_value character varying,
-  is_disabled boolean
+create function reference.get_lookup_by_id
+(
+	_lookup_id integer,
+	_lookup_type_id smallint
 )
-    LANGUAGE plpgsql
-    AS $$
+returns table
+(
+	lookup_id integer,
+	lookup_type_id smallint,
+	lookup_value varchar(500),
+	linked_lookup_id integer,
+	lookup_type_name varchar(200),
+	lookup_type_description varchar(200),
+	linked_lookup_value varchar(500),
+	is_disabled boolean
+)
+as $$
 begin
 	return query
 	select
@@ -30,21 +31,7 @@ begin
 	from reference.lookup l
 	left outer join reference.lookup l2 on l.linked_lookup_id = l2.lookup_id
 	inner join reference.lookup_type lt on l.lookup_type_id = lt.lookup_type_id
-	where l.lookup_id = _lookup_id;
+	where l.lookup_id = _lookup_id
+	and l.lookup_type_id = _lookup_type_id;
 end;
-$$;
-
-
-ALTER FUNCTION reference.get_lookup_by_id(
-  _lookup_id integer
-) OWNER TO postgres;
-
---
--- Name: FUNCTION get_lookup_by_id(_lookup_id integer); Type: ACL; Schema: reference; Owner: postgres
---
-
-GRANT ALL ON FUNCTION reference.get_lookup_by_id(
-  _lookup_id integer
-) TO app_user;
-
-
+$$ language plpgsql;
