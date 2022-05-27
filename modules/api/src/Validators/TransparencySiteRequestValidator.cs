@@ -7,26 +7,18 @@ public class TransparencySiteRequestValidator: ITransparencySiteRequestValidator
 {
     public bool IsValid(TransparencySiteRequest request) 
     {
-        if (!string.IsNullOrWhiteSpace(request.CcgCode))
-        {
-            return true;
-        }
-
-        if (!string.IsNullOrWhiteSpace(request.CcgName))
-        {
-            return true;
-        }
+        bool isValid = false;
 
         if (!string.IsNullOrWhiteSpace(request.ProviderCode))
         {
-            return true;
+            isValid = true;
         }
 
         if (!string.IsNullOrWhiteSpace(request.ProviderName))
         {
-            return true;
+            return !isValid;
         }
 
-        return false;
+        return isValid;
     }
 }

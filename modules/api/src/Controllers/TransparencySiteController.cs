@@ -1,10 +1,9 @@
 using GpConnect.NationalDataSharingPortal.Api.Dto.Request;
-using GpConnect.NationalDataSharingPortal.Api.Dto.Response;
 using GpConnect.NationalDataSharingPortal.Api.Service.Interface;
 using GpConnect.NationalDataSharingPortal.Api.Validators;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace GpConnect.NationalDataSharingPortal.Api.Controllers;
 
@@ -24,7 +23,7 @@ public class TransparencySiteController : ControllerBase
     }
 
     [HttpGet(Name = "GetMatchingSites")]
-    public ActionResult<IEnumerable<TransparencySite>> Get([FromQuery] TransparencySiteRequest query)
+    public async Task<ActionResult> Get([FromQuery] TransparencySiteRequest query)
     {
         _logger.LogInformation("Received Request {@query}", query);
 
@@ -34,7 +33,7 @@ public class TransparencySiteController : ControllerBase
             return BadRequest();
         }
 
-        var sites = _service.GetMatchingSites(query);
+        var sites = await _service.GetMatchingSitesAsync(query);
 
         return Ok(sites);
     }
