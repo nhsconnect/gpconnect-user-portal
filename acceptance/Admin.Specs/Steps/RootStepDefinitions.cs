@@ -11,10 +11,12 @@ namespace Admin.Specs.Steps
     public sealed class RootStepDefinitions
     {
 
+        private BrowserDriver _browserDriver;
         private readonly RootPageObject _rootPageObject;
 
         public RootStepDefinitions(BrowserDriver browserDriver)
         {
+            _browserDriver = browserDriver;
             _rootPageObject = new RootPageObject(browserDriver.Current);
         }
 
@@ -22,6 +24,12 @@ namespace Admin.Specs.Steps
         public void GivenIHaveOpenedSite()
         {
             _rootPageObject.Open();
+        }
+
+        [Then("the Sign In element is shown")]
+        public void ThenSignInIsDisplayed()
+        {
+            Assert.True(_rootPageObject.IsSignInElementVisible());
         }
 
         [Given("I sign in")]

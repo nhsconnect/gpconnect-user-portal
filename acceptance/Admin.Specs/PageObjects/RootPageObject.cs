@@ -19,6 +19,7 @@ namespace Admin.Specs.PageObjects
     }
 
     private IWebElement SignInElement => _webDriver.FindElement(By.LinkText("Sign in"));
+    private IWebElement UserNameElement => _webDriver.FindElement(By.XPath("//div[contains(text(), 'testy.mctestface@nhs.net')]"));
     private IWebElement EndpointChangesHeaderElement => _webDriver.FindElement(By.XPath("//h2[contains(text(), 'Endpoint')]"));
 
     public void Open()
@@ -27,6 +28,12 @@ namespace Admin.Specs.PageObjects
         {
             _webDriver.Url = AdminUrl;
         }
+    }
+
+    public bool IsSignInElementVisible()
+    {
+        var wait = new WebDriverWait(_webDriver, DefaultWait);
+        return wait.Until(driver => SignInElement.Displayed);
     }
 
     public void ClickSignIn()
