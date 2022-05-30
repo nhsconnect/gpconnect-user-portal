@@ -1,4 +1,4 @@
-﻿using Dapper.FluentMap;
+using Dapper.FluentMap;
 using GpConnect.NationalDataSharingPortal.Api.Dal.Mapping;
 
 namespace GpConnect.NationalDataSharingPortal.Api.Core.Mapping
@@ -15,6 +15,7 @@ namespace GpConnect.NationalDataSharingPortal.Api.Core.Mapping
                 config.AddMap(new ProductMap());
                 config.AddMap(new SupplierProductMap());
                 config.AddMap(new UserMap());
+                config.AddMap(new TransparencySiteMap());
             });
         }
     }

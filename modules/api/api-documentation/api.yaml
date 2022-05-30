@@ -335,10 +335,26 @@ components:
         The object contains details of the site and the use case for Data Access.
       type: object
       properties:
+        id:
+          type: number
         odsCode:
           type: string
         name:
           type: string
         useCase:
           type: string
+        postCode:
+          type: string
+        ccgIcbName:
+          type: string
+        ccgIcbOdsCode:
+          type: string
+        appointmentManagementEnabled:
+          type: boolean
+        accessRecordHTMLEnabled:
+          type: boolean
+        sendDocumentEnabled:
+          type: boolean
+        structuredRecordEnabled:
+          type: boolean
 

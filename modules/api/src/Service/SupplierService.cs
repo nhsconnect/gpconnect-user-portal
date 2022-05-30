@@ -22,7 +22,7 @@ public class SupplierService : ISupplierService
     {
         var query = "reference.get_lookup";
         var parameters = new DynamicParameters();
-        parameters.Add("_lookup_type_id", (int)Dal.Enumerations.LookupType.Supplier, DbType.Int16, ParameterDirection.Input);
+        parameters.Add("_lookup_type_id", Dal.Enumerations.LookupType.SUPPLIER, DbType.Int16, ParameterDirection.Input);
         var result = await _dataService.ExecuteQuery<Supplier>(query, parameters);
         return result;
     }
@@ -31,7 +31,7 @@ public class SupplierService : ISupplierService
     {
         var query = "reference.get_lookup_by_id";
         var parameters = new DynamicParameters();
-        parameters.Add("_lookup_type_id", (int)Dal.Enumerations.LookupType.Supplier, DbType.Int16, ParameterDirection.Input);
+        parameters.Add("_lookup_type_id", Dal.Enumerations.LookupType.SUPPLIER, DbType.Int16, ParameterDirection.Input);
         parameters.Add("_lookup_id", id, DbType.Int16, ParameterDirection.Input);
         var result = await _dataService.ExecuteQueryFirstOrDefault<Supplier>(query, parameters);
         return result;
@@ -41,7 +41,7 @@ public class SupplierService : ISupplierService
     {
         var query = "reference.add_lookup";
         var parameters = new DynamicParameters();
-        parameters.Add("_lookup_type_id", (int)Dal.Enumerations.LookupType.Supplier, DbType.Int16, ParameterDirection.Input);
+        parameters.Add("_lookup_type_id", Dal.Enumerations.LookupType.SUPPLIER, DbType.Int16, ParameterDirection.Input);
         parameters.Add("_lookup_value", supplierAddRequest.SupplierValue, DbType.String, ParameterDirection.Input);
         parameters.Add("_linked_lookup_id", null, DbType.Int16, ParameterDirection.Input);
         return await _dataService.ExecuteQueryFirstOrDefault<Supplier>(query, parameters);
@@ -52,7 +52,7 @@ public class SupplierService : ISupplierService
         var query = "reference.enable_disable_lookup";
         var parameters = new DynamicParameters();
         parameters.Add("_lookup_id", supplierDisableRequest.SupplierId, DbType.Int16, ParameterDirection.Input);
-        parameters.Add("_lookup_type_id", (int)Dal.Enumerations.LookupType.Supplier, DbType.Int16, ParameterDirection.Input);
+        parameters.Add("_lookup_type_id", Dal.Enumerations.LookupType.SUPPLIER, DbType.Int16, ParameterDirection.Input);
         parameters.Add("_is_disabled", supplierDisableRequest.SupplierDisabled, DbType.Boolean, ParameterDirection.Input);
         await _dataService.ExecuteQueryFirstOrDefault<Supplier>(query, parameters);
     }
@@ -62,7 +62,7 @@ public class SupplierService : ISupplierService
         var query = "reference.update_lookup";
         var parameters = new DynamicParameters();
         parameters.Add("_lookup_id", supplierUpdateRequest.SupplierId, DbType.Int16, ParameterDirection.Input);
-        parameters.Add("_lookup_type_id", (int)Dal.Enumerations.LookupType.Supplier, DbType.Int16, ParameterDirection.Input);
+        parameters.Add("_lookup_type_id", Dal.Enumerations.LookupType.SUPPLIER, DbType.Int16, ParameterDirection.Input);
         parameters.Add("_lookup_value", supplierUpdateRequest.SupplierValue, DbType.String, ParameterDirection.Input);
         await _dataService.ExecuteQueryFirstOrDefault<Supplier>(query, parameters);
     }

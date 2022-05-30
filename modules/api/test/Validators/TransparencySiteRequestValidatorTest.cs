@@ -15,25 +15,27 @@ public class TransparencySiteRequestValidatorTest
     }
 
     [Theory]
-    [InlineData("Value", "", "", "")]
-    [InlineData("", "Value", "", "")]
-    [InlineData("", "", "Value", "")]
-    [InlineData("", "", "", "Value")]
-    public void IsValid_GivenValidInput_ReturnsTrue(string providerCode, string providerName, string ccgName, string ccgCode)
+    [InlineData("Value", "")]
+    [InlineData("", "Value")]
+    public void IsValid_GivenValidInput_ReturnsTrue(string providerCode, string providerName)
     {
         var request = new TransparencySiteRequest {
             ProviderCode = providerCode,
-            ProviderName = providerName,
-            CcgCode = ccgCode,
-            CcgName = ccgName
+            ProviderName = providerName
         };
 
         Assert.True(_sut.IsValid(request));
     }
 
-    [Fact]
-    public void IsValid_GivenInvalidInput_ReturnsFalse()
+    [Theory]
+    [InlineData("", "")]
+    [InlineData("Value", "Value")]
+    public void IsValid_GivenInvalidInput_ReturnsFalse(string providerCode, string providerName)
     {
-        Assert.False(_sut.IsValid(new TransparencySiteRequest()));
+        Assert.False(_sut.IsValid(new TransparencySiteRequest
+        {
+            ProviderCode = providerCode,
+            ProviderName = providerName
+        }));
     }
 }
