@@ -22,7 +22,7 @@ public class ProductService : IProductService
     {
         var query = "reference.get_lookup";
         var parameters = new DynamicParameters();
-        parameters.Add("_lookup_type_id", (int)Dal.Enumerations.LookupType.Product, DbType.Int16, ParameterDirection.Input);
+        parameters.Add("_lookup_type_id", (int)Dal.Enumerations.LookupType.PRODUCT, DbType.Int16, ParameterDirection.Input);
         var result = await _dataService.ExecuteQuery<Product>(query, parameters);
         return result;
     }
@@ -31,7 +31,7 @@ public class ProductService : IProductService
     {
         var query = "reference.get_lookup_by_id";
         var parameters = new DynamicParameters();
-        parameters.Add("_lookup_type_id", (int)Dal.Enumerations.LookupType.Product, DbType.Int16, ParameterDirection.Input);
+        parameters.Add("_lookup_type_id", Dal.Enumerations.LookupType.PRODUCT, DbType.Int16, ParameterDirection.Input);
         parameters.Add("_lookup_id", id, DbType.Int16, ParameterDirection.Input);
         var result = await _dataService.ExecuteQueryFirstOrDefault<Product>(query, parameters);
         return result;
@@ -50,7 +50,7 @@ public class ProductService : IProductService
     {
         var query = "reference.add_lookup";
         var parameters = new DynamicParameters();
-        parameters.Add("_lookup_type_id", (int)Dal.Enumerations.LookupType.Product, DbType.Int16, ParameterDirection.Input);
+        parameters.Add("_lookup_type_id", Dal.Enumerations.LookupType.PRODUCT, DbType.Int16, ParameterDirection.Input);
         parameters.Add("_lookup_value", productAddRequest.ProductValue, DbType.String, ParameterDirection.Input);
         parameters.Add("_linked_lookup_id", null, DbType.Int16, ParameterDirection.Input);
         return await _dataService.ExecuteQueryFirstOrDefault<Product>(query, parameters);
@@ -61,7 +61,7 @@ public class ProductService : IProductService
         var query = "reference.enable_disable_lookup";
         var parameters = new DynamicParameters();
         parameters.Add("_lookup_id", productDisableRequest.ProductId, DbType.Int16, ParameterDirection.Input);
-        parameters.Add("_lookup_type_id", (int)Dal.Enumerations.LookupType.Product, DbType.Int16, ParameterDirection.Input);
+        parameters.Add("_lookup_type_id", Dal.Enumerations.LookupType.PRODUCT, DbType.Int16, ParameterDirection.Input);
         parameters.Add("_is_disabled", productDisableRequest.ProductDisabled, DbType.Boolean, ParameterDirection.Input);
         await _dataService.ExecuteQueryFirstOrDefault<Product>(query, parameters);
     }
@@ -71,7 +71,7 @@ public class ProductService : IProductService
         var query = "reference.update_lookup";
         var parameters = new DynamicParameters();
         parameters.Add("_lookup_id", productUpdateRequest.ProductId, DbType.Int16, ParameterDirection.Input);
-        parameters.Add("_lookup_type_id", (int)Dal.Enumerations.LookupType.Product, DbType.Int16, ParameterDirection.Input);
+        parameters.Add("_lookup_type_id", Dal.Enumerations.LookupType.PRODUCT, DbType.Int16, ParameterDirection.Input);
         parameters.Add("_lookup_value", productUpdateRequest.ProductValue, DbType.String, ParameterDirection.Input);
         await _dataService.ExecuteQueryFirstOrDefault<Product>(query, parameters);
     }

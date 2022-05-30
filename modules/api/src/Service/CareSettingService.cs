@@ -22,7 +22,7 @@ public class CareSettingService : ICareSettingService
     {
         var query = "reference.get_lookup";
         var parameters = new DynamicParameters();
-        parameters.Add("_lookup_type_id", (int)Dal.Enumerations.LookupType.CareSetting, DbType.Int16, ParameterDirection.Input);
+        parameters.Add("_lookup_type_id", Dal.Enumerations.LookupType.CARESETTING, DbType.Int16, ParameterDirection.Input);
         var result = await _dataService.ExecuteQuery<CareSetting>(query, parameters);
         return result;
     }
@@ -31,7 +31,7 @@ public class CareSettingService : ICareSettingService
     {
         var query = "reference.get_lookup_by_id";
         var parameters = new DynamicParameters();
-        parameters.Add("_lookup_type_id", (int)Dal.Enumerations.LookupType.CareSetting, DbType.Int16, ParameterDirection.Input);
+        parameters.Add("_lookup_type_id", Dal.Enumerations.LookupType.CARESETTING, DbType.Int16, ParameterDirection.Input);
         parameters.Add("_lookup_id", id, DbType.Int16, ParameterDirection.Input);
         var result = await _dataService.ExecuteQueryFirstOrDefault<CareSetting>(query, parameters);
         return result;
@@ -41,7 +41,7 @@ public class CareSettingService : ICareSettingService
     {
         var query = "reference.add_lookup";
         var parameters = new DynamicParameters();
-        parameters.Add("_lookup_type_id", (int)Dal.Enumerations.LookupType.CareSetting, DbType.Int16, ParameterDirection.Input);
+        parameters.Add("_lookup_type_id", Dal.Enumerations.LookupType.CARESETTING, DbType.Int16, ParameterDirection.Input);
         parameters.Add("_lookup_value", careSettingAddRequest.CareSettingValue, DbType.String, ParameterDirection.Input);
         parameters.Add("_linked_lookup_id", null, DbType.Int16, ParameterDirection.Input);
         return await _dataService.ExecuteQueryFirstOrDefault<CareSetting>(query, parameters);
@@ -52,7 +52,7 @@ public class CareSettingService : ICareSettingService
         var query = "reference.enable_disable_lookup";
         var parameters = new DynamicParameters();
         parameters.Add("_lookup_id", careSettingDisableRequest.CareSettingId, DbType.Int16, ParameterDirection.Input);
-        parameters.Add("_lookup_type_id", (int)Dal.Enumerations.LookupType.CareSetting, DbType.Int16, ParameterDirection.Input);
+        parameters.Add("_lookup_type_id", Dal.Enumerations.LookupType.CARESETTING, DbType.Int16, ParameterDirection.Input);
         parameters.Add("_is_disabled", careSettingDisableRequest.CareSettingDisabled, DbType.Boolean, ParameterDirection.Input);
         await _dataService.ExecuteQueryFirstOrDefault<CareSetting>(query, parameters);
     }
@@ -62,7 +62,7 @@ public class CareSettingService : ICareSettingService
         var query = "reference.update_lookup";
         var parameters = new DynamicParameters();
         parameters.Add("_lookup_id", careSettingUpdateRequest.CareSettingId, DbType.Int16, ParameterDirection.Input);
-        parameters.Add("_lookup_type_id", (int)Dal.Enumerations.LookupType.CareSetting, DbType.Int16, ParameterDirection.Input);
+        parameters.Add("_lookup_type_id", Dal.Enumerations.LookupType.CARESETTING, DbType.Int16, ParameterDirection.Input);
         parameters.Add("_lookup_value", careSettingUpdateRequest.CareSettingValue, DbType.String, ParameterDirection.Input);
         await _dataService.ExecuteQueryFirstOrDefault<CareSetting>(query, parameters);
     }
