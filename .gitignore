@@ -259,3 +259,6 @@ paket-files/
 .sonarqube/
 .vagrant/
 .vscode/
+
+# SpecFlow
+*.feature.cs
