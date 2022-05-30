@@ -1,5 +1,7 @@
 using Dapper;
+using GpConnect.NationalDataSharingPortal.Api.Dal.Enumerations;
 using GpConnect.NationalDataSharingPortal.Api.Dal.Interfaces;
+using GpConnect.NationalDataSharingPortal.Api.Dal.Constants;
 using GpConnect.NationalDataSharingPortal.Api.Dto.Request;
 using GpConnect.NationalDataSharingPortal.Api.Dto.Response;
 using GpConnect.NationalDataSharingPortal.Api.Service.Interface;
@@ -11,16 +13,7 @@ using System.Threading.Tasks;
 namespace GpConnect.NationalDataSharingPortal.Api.Service
 {
     public class TransparencySiteService: ITransparencySiteService
-    {
-        private enum SiteStatus {
-            LIVE = 5,
-        }
-
-        public const string HtmlQueryFilterInteraction = "gpc.getcarerecord";
-        public const string StructuredQueryFilterInteraction = "structured:fhir:rest:read:metadata-1";
-        public const string AppointmentQueryFilterInteraction = "appointments-1";
-        public const string SendDocumentQueryFilterInteraction = "documents:fhir:rest:read:metadata-1";        
-
+    {        
         private readonly IDataService _dataService;
         private readonly ILogger<TransparencySiteService> _logger;
 
@@ -61,10 +54,10 @@ namespace GpConnect.NationalDataSharingPortal.Api.Service
             
             // Add blank filters as we are not interested in filtering
             parameters.Add("_filter_by", 0, DbType.Int16, ParameterDirection.Input);
-            parameters.Add("_html_query_filter_interaction", HtmlQueryFilterInteraction, DbType.String, ParameterDirection.Input);
-            parameters.Add("_structured_query_filter_interaction", StructuredQueryFilterInteraction, DbType.String, ParameterDirection.Input);
-            parameters.Add("_appointment_query_filter_interaction", AppointmentQueryFilterInteraction, DbType.String, ParameterDirection.Input);
-            parameters.Add("_send_document_query_filter_interaction", SendDocumentQueryFilterInteraction, DbType.String, ParameterDirection.Input);            
+            parameters.Add("_html_query_filter_interaction", SiteInteraction.HTMLQUERYFILTERINTERACTION, DbType.String, ParameterDirection.Input);
+            parameters.Add("_structured_query_filter_interaction", SiteInteraction.STRUCTUREDQUERYFILTERINTERACTION, DbType.String, ParameterDirection.Input);
+            parameters.Add("_appointment_query_filter_interaction", SiteInteraction.APPOINTMENTQUERYFILTERINTERACTION, DbType.String, ParameterDirection.Input);
+            parameters.Add("_send_document_query_filter_interaction", SiteInteraction.SENDDOCUMENTQUERYFILTERINTERACTION, DbType.String, ParameterDirection.Input);
 
             // Blank off the ccg fields as not searching by this in MVP
             parameters.Add("_ccg_name", null, DbType.String, ParameterDirection.Input);
