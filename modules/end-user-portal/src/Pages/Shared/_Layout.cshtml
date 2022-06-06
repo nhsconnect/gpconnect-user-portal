@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<!--[if lt IE 9]><html class="ie8" lang="en"><![endif]--><!--[if IE 9]><html class="ie9" lang="en"><![endif]--><!--[if gt IE 9]><!-->
+<html lang="en" style="background-color: #f0f4f5;">
+<!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+
+    <title>@Model.ProductName</title>
+    <link rel="stylesheet" href="~/css/site.css" />
+    <script src="https://nhsuk.github.io/nhsuk-frontend/assets/nhsuk.js" defer></script>
+    <meta property="og:url" content="">
+    <meta property="og:title" content="@Model.ProductName">
+    <meta property="og:description" content="@Model.ProductName">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://assets.nhs.uk/images/nhs-logo.png">
+    <meta property="og:image:alt" content="NHS">
+</head>
+
+<body>
+    <script>
+        document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');
+    </script>
+    <partial name="Header" />
+    <div class="nhsuk-width-container">
+        <main class="nhsuk-main-wrapper" id="maincontent">
+            @RenderBody()
+        </main>
+    </div>
+    <partial name="Footer" />
+</body>
+</html>
