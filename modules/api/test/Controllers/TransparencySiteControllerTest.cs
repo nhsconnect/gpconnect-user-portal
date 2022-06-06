@@ -1,0 +1,95 @@
+using GpConnect.NationalDataSharingPortal.Api.Controllers;
+using GpConnect.NationalDataSharingPortal.Api.Dto.Request;
+using GpConnect.NationalDataSharingPortal.Api.Dto.Response;
+using GpConnect.NationalDataSharingPortal.Api.Service.Interface;
+using GpConnect.NationalDataSharingPortal.Api.Validators;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using Moq;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Xunit;
+
+namespace GpConnect.NationalDataSharingPortal.Api.Test.Controllers;
+
+public class TransparencySiteControllerTest
+{
+    private readonly TransparencySiteController _sut;
+    private readonly Mock<ITransparencySiteRequestValidator> _mockValidator;
+    private readonly Mock<ITransparencySiteService> _mockService;
+
+    // setup
+    public TransparencySiteControllerTest()
+    {
+        _mockValidator = new Mock<ITransparencySiteRequestValidator>();
+        _mockService = new Mock<ITransparencySiteService>(); 
+
+        _sut = new TransparencySiteController(_mockValidator.Object, _mockService.Object, (new Mock<ILogger<TransparencySiteController>>()).Object);
+    }
+
+    [Fact]
+    public async Task Get_CallsValidator_WithExpectedParameters()
+    {
+        var expected = new TransparencySiteRequest();
+
+        await _sut.Get(expected);
+
+        _mockValidator.Verify(v => v.IsValid(expected), Times.Once);
+    }
+
+    [Fact]
+    public async Task Get_WhenValidatorReturnsFalse_ReturnsBadRequest()
+    {
+        _mockValidator.Setup(v => v.IsValid(It.IsAny<TransparencySiteRequest>())).Returns(false);
+
+        var response = await _sut.Get(new TransparencySiteRequest());
+
+        Assert.IsType<BadRequestResult>(response);
+    }
+
+    [Fact]
+    public async Task Get_WhenValidatorReturnsTrue_CallsService_WithExpectedParameters()
+    {
+        var expected = new TransparencySiteRequest();
+
+        _mockValidator.Setup(v => v.IsValid(It.IsAny<TransparencySiteRequest>())).Returns(true);
+
+        var response = await _sut.Get(expected);
+
+       _mockService.Verify(s => s.GetMatchingSitesAsync(expected), Times.Once);
+    }
+
+    [Fact]
+    public void Get_WhenServiceThrows_ThrowsException()
+    {
+        _mockValidator.Setup(v => v.IsValid(It.IsAny<TransparencySiteRequest>())).Returns(true);
+        _mockService.Setup(s => s.GetMatchingSitesAsync(It.IsAny<TransparencySiteRequest>())).ThrowsAsync(new System.Exception("Boom!!!"));
+
+        Assert.ThrowsAsync<Exception>(async () => await _sut.Get(new TransparencySiteRequest()));
+    }
+
+    [Fact]
+    public void Get_WhenServiceReturns_ReturnsOkRequestWithArray()
+    {
+        _mockValidator.Setup(v => v.IsValid(It.IsAny<TransparencySiteRequest>())).Returns(true);
+        _mockService.Setup(s => s.GetMatchingSitesAsync(It.IsAny<TransparencySiteRequest>())).ReturnsAsync(
+            new List<TransparencySite>
+            { 
+                new TransparencySite { Name = "Test"}
+            }
+        );
+
+        var response = _sut.Get(new TransparencySiteRequest());
+
+        Assert.NotNull(response.Result);
+        Assert.IsType<OkObjectResult>(response.Result);
+
+        var result = response.Result as OkObjectResult;
+        var value = result?.Value as IEnumerable<TransparencySite>;
+
+        Assert.StrictEqual(1, value?.ToList().Count);
+        Assert.Equal("Test", value?.ToList()[0].Name);
+    }
+}

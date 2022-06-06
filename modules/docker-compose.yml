@@ -1,0 +1,30 @@
+
+services:
+
+  data-migrator:
+    image: flyway/flyway
+    volumes:
+      - ../database:/flyway/sql
+    environment:
+      FLYWAY_EDITION: community
+      FLYWAY_PLACEHOLDERS_logger: ndsa
+    command: -url=jdbc:postgresql://database/ -user=postgres -password=g3epieC0nnect -connectRetries=10 migrate
+    depends_on:
+      - database
+  
+  api: 
+    build: api
+    ports:
+      - 5001:80
+
+  database:
+    image: postgres:14
+    ports:
+      - 5432:5432
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: g3epieC0nnect
+
+  # To be configured
+  # smtp: 

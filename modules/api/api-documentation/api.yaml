@@ -1,0 +1,360 @@
+openapi: 3.0.0
+info:
+  title: NDSP Core API
+  description: API to gain access to core data
+  version: 0.0.1-alpha
+servers:
+  - url: http://api.example.com/v1
+    description: Optional server description, e.g. Main (production) server
+  - url: http://staging-api.example.com
+    description: Optional server description, e.g. Internal staging server for testing
+paths:
+  /site:
+    get:
+      summary: Returns a list of users.
+      description: Optional extended description in CommonMark or HTML.
+      responses:
+        '200':    # status code
+          description: A JSON array of user names
+          content:
+            application/json:
+              schema: 
+                type: array
+                items: 
+                  type: string
+    post:
+      summary: Returns a list of users.
+      description: Optional extended description in CommonMark or HTML.
+      responses:
+        '200':    # status code
+          description: A JSON array of user names
+          content:
+            application/json:
+              schema: 
+                type: array
+                items: 
+                  type: string
+  /site/{ods_code}:
+    parameters:
+      - name: ods_code
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The user ID
+    get:
+      summary: Returns a list of users.
+      description: Optional extended description in CommonMark or HTML.
+      responses:
+        '200':    # status code
+          description: A JSON array of user names
+          content:
+            application/json:
+              schema: 
+                type: array
+                items: 
+                  type: string
+  /transparency-site:
+    get:
+      summary: Returns a list of transparencySites
+      description: >-
+        In order to allow Users to see why their data could be accessed by a site or CCG. 
+        This method will return a list of matching transparency sites.
+      parameters:
+        - name: provider_code
+          in: query
+          required: false
+          schema: 
+            type: string
+        - name: provider_name
+          in: query
+          required: false
+          schema: 
+            type: string
+        - name: ccg_code
+          in: query
+          required: false
+          schema: 
+            type: string
+        - name: ccg_name
+          in: query
+          required: false
+          schema: 
+            type: string
+      responses:
+        '400': 
+          description: Bad Request. No query terms where provided at least one must be provided
+        '200':    # status code
+          description: An array of Direct Care API Sites who have signed the NDSA that match the provided search criteria
+          content:
+            application/json:
+              schema: 
+                type: array
+                items: 
+                  $ref: '#/components/schemas/transparencySite'
+  /ccg:
+    get:
+      summary: Returns a list of users.
+      description: Optional extended description in CommonMark or HTML.
+      responses:
+        '200':    # status code
+          description: A JSON array of user names
+          content:
+            application/json:
+              schema: 
+                type: array
+                items: 
+                  type: string
+    post:
+      summary: Returns a list of users.
+      description: Optional extended description in CommonMark or HTML.
+      responses:
+        '200':    # status code
+          description: A JSON array of user names
+          content:
+            application/json:
+              schema: 
+                type: array
+                items: 
+                  type: string
+    put:
+      summary: Returns a list of users.
+      description: Optional extended description in CommonMark or HTML.
+      responses:
+        '200':    # status code
+          description: A JSON array of user names
+          content:
+            application/json:
+              schema: 
+                type: array
+                items: 
+                  type: string
+  /care-setting:
+    get:
+      summary: Returns a list of users.
+      description: Optional extended description in CommonMark or HTML.
+      responses:
+        '200':    # status code
+          description: A JSON array of user names
+          content:
+            application/json:
+              schema: 
+                type: array
+                items: 
+                  type: string
+    post:
+      summary: Returns a list of users.
+      description: Optional extended description in CommonMark or HTML.
+      responses:
+        '200':    # status code
+          description: A JSON array of user names
+          content:
+            application/json:
+              schema: 
+                type: array
+                items: 
+                  type: string
+  /user:
+    get:
+      summary: Returns a list of users.
+      description: Optional extended description in CommonMark or HTML.
+      responses:
+        '200':    # status code
+          description: A JSON array of user names
+          content:
+            application/json:
+              schema: 
+                type: array
+                items: 
+                  type: string
+      tags:
+        - User
+    post:
+      summary: Returns a list of users.
+      description: Optional extended description in CommonMark or HTML.
+      responses:
+        '200':    # status code
+          description: A JSON array of user names
+          content:
+            application/json:
+              schema: 
+                type: array
+                items: 
+                  type: string
+      tags:
+        - User
+    put:
+      summary: Returns a list of users.
+      description: Optional extended description in CommonMark or HTML.
+      responses:
+        '200':    # status code
+          description: A JSON array of user names
+          content:
+            application/json:
+              schema: 
+                type: array
+                items: 
+                  type: string
+  /product:
+    get:
+      summary: Returns a list of users.
+      description: Optional extended description in CommonMark or HTML.
+      responses:
+        '200':    # status code
+          description: A JSON array of user names
+          content:
+            application/json:
+              schema: 
+                type: array
+                items: 
+                  type: string
+    post:
+      summary: Returns a list of users.
+      description: Optional extended description in CommonMark or HTML.
+      responses:
+        '200':    # status code
+          description: A JSON array of user names
+          content:
+            application/json:
+              schema: 
+                type: array
+                items: 
+                  type: string
+  /supplier:
+    get:
+      summary: Returns a list of users.
+      description: Optional extended description in CommonMark or HTML.
+      responses:
+        '200':    # status code
+          description: A JSON array of user names
+          content:
+            application/json:
+              schema: 
+                type: array
+                items: 
+                  type: string
+    post:
+      summary: Returns a list of users.
+      description: Optional extended description in CommonMark or HTML.
+      responses:
+        '200':    # status code
+          description: A JSON array of user names
+          content:
+            application/json:
+              schema: 
+                type: array
+                items: 
+                  type: string
+    put:
+      summary: Returns a list of users.
+      description: Optional extended description in CommonMark or HTML.
+      responses:
+        '200':    # status code
+          description: A JSON array of user names
+          content:
+            application/json:
+              schema: 
+                type: array
+                items: 
+                  type: string
+  /supplier/{id}/product:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The user ID
+    get:
+      summary: Returns a list of users.
+      description: Optional extended description in CommonMark or HTML.
+      responses:
+        '200':    # status code
+          description: A JSON array of user names
+          content:
+            application/json:
+              schema: 
+                type: array
+                items: 
+                  type: string
+    post:
+      summary: Returns a list of users.
+      description: Optional extended description in CommonMark or HTML.
+      responses:
+        '200':    # status code
+          description: A JSON array of user names
+          content:
+            application/json:
+              schema: 
+                type: array
+                items: 
+                  type: string
+  /acceptance:
+    get:
+      summary: Returns a list of users.
+      description: Optional extended description in CommonMark or HTML.
+      responses:
+        '200':    # status code
+          description: A JSON array of user names
+          content:
+            application/json:
+              schema: 
+                type: array
+                items: 
+                  type: string
+    post:
+      summary: Returns a list of users.
+      description: Optional extended description in CommonMark or HTML.
+      responses:
+        '200':    # status code
+          description: A JSON array of user names
+          content:
+            application/json:
+              schema: 
+                type: array
+                items: 
+                  type: string
+    put:
+      summary: Returns a list of users.
+      description: Optional extended description in CommonMark or HTML
+      responses:
+        '200':    # status code
+          description: A JSON array of user names
+          content:
+            application/json:
+              schema: 
+                type: array
+                items: 
+                  type: string
+
+components:
+  schemas:
+    transparencySite:
+      description: >-
+        Transparency Sites are Direct Care API sites that have signed up to the NDSA. 
+        The object contains details of the site and the use case for Data Access.
+      type: object
+      properties:
+        id:
+          type: number
+        odsCode:
+          type: string
+        name:
+          type: string
+        useCase:
+          type: string
+        postCode:
+          type: string
+        ccgIcbName:
+          type: string
+        ccgIcbOdsCode:
+          type: string
+        appointmentManagementEnabled:
+          type: boolean
+        accessRecordHTMLEnabled:
+          type: boolean
+        sendDocumentEnabled:
+          type: boolean
+        structuredRecordEnabled:
+          type: boolean
+
