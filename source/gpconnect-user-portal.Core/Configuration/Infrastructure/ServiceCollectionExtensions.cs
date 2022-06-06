@@ -17,8 +17,8 @@ namespace gpconnect_user_portal.Core.Configuration.Infrastructure
     {
         public static IServiceCollection ConfigureApplicationServices(this IServiceCollection services, IConfiguration configuration, IWebHostEnvironment env)
         {
-            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;            
-            
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+
             services.AddSession(s =>
             {
                 s.Cookie.Name = ".GpConnectEnablementTeamPortal.Session";
@@ -82,7 +82,7 @@ namespace gpconnect_user_portal.Core.Configuration.Infrastructure
             services.Configure<Email>(configuration.GetSection("Email"));
 
             services.ConfigureNLogService();
-            
+
             HttpClientExtensions.AddHttpClientServices(services, env);
             SmtpClientExtensions.AddSmtpClientServices(services);
 
