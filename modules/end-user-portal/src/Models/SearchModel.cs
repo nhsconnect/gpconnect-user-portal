@@ -37,9 +37,9 @@ public partial class SearchModel : BaseModel
   public string? SelectedCcgIcbOdsCode { get; set; } = "";
 
   public bool IsValidSearch => CheckForValidSearch();
-  public bool HasMultipleSearchParamaters => HasMultipleSearchParameters();
+  public bool HasMultipleSearchParameters => CheckForMultipleSearchParameters();
 
-  private bool HasMultipleSearchParameters()
+  private bool CheckForMultipleSearchParameters()
   {
     var multipleSearchParametersEntered = new string[] { ProviderOdsCode, ProviderName };
     return multipleSearchParametersEntered.Count(s => !string.IsNullOrEmpty(s)) > 1;

@@ -31,14 +31,21 @@ public partial class SearchModel : BaseModel
 
   public async Task<IActionResult> OnPostSearchAsync()
   {
-    if (ModelState.IsValid && IsValidSearch && !HasMultipleSearchParamaters)
+    if (HasMultipleSearchParameters)
     {
-      DisplaySearchInvalid = false;
-      await GetSearchResults();
+      DisplaySearchInvalid = true;
     }
     else
     {
-      DisplaySearchInvalid = !IsValidSearch;
+      if (ModelState.IsValid && IsValidSearch)
+      {
+        DisplaySearchInvalid = false;
+        await GetSearchResults();
+      }
+      else
+      {
+        DisplaySearchInvalid = !IsValidSearch;
+      }
     }
     await PopulateControls();
     return Page();
