@@ -7,7 +7,7 @@ namespace GpConnect.NationalDataSharingPortal.EndUserPortal.Core;
 
 public static class ApplicationBuilderExtensions
 {
-  public static void ConfigureApplicationBuilderServices(this IApplicationBuilder app, IWebHostEnvironment env)
+  public static void ConfigureApplicationBuilderServices(this IApplicationBuilder app)
   {
     app.UseDeveloperExceptionPage();
 
@@ -41,7 +41,7 @@ public static class ApplicationBuilderExtensions
         NoStore = true,
         NoCache = true
       };
-      //context.Response.Headers.Add("Pragma", "no-cache");
+      context.Response.Headers.Add("Pragma", "no-cache");
       await next();
     });
 

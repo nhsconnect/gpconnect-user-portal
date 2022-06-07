@@ -8,25 +8,17 @@ namespace GpConnect.NationalDataSharingPortal.EndUserPortal.Pages;
 
 public partial class SearchModel : BaseModel
 {
-  private readonly ILogger<SearchModel> _logger;
   private readonly IRequestService _requestService;
 
-  public SearchModel(ILogger<SearchModel> logger, IOptions<ApplicationParameters> applicationParameters, IRequestService requestService) : base(applicationParameters)
+  public SearchModel(IOptions<ApplicationParameters> applicationParameters, IRequestService requestService) : base(applicationParameters)
   {
-    _logger = logger;
     _requestService = requestService;
   }
 
-  public async Task<IActionResult> OnGet()
+  public IActionResult OnGet()
   {
     ClearModelState();
-    await PopulateControls();
     return Page();
-  }
-
-  private async Task PopulateControls()
-  {
-    CcgList = await GetCCGs();
   }
 
   public async Task<IActionResult> OnPostSearchAsync()
@@ -47,15 +39,12 @@ public partial class SearchModel : BaseModel
         DisplaySearchInvalid = !IsValidSearch;
       }
     }
-    await PopulateControls();
     return Page();
   }
 
   public IActionResult OnPostClear()
   {
     ProviderOdsCode = null;
-    SelectedCcgIcbOdsCode = null;
-    SelectedCcgIcbName = null;
     ProviderName = null;
     ModelState.Clear();
     return Page();
@@ -77,19 +66,11 @@ public partial class SearchModel : BaseModel
   private SearchRequest CreateSearchRequest() => new SearchRequest()
   {
     SiteOdsCode = ProviderOdsCode,
-    SiteName = ProviderName,
-    CcgIcbOdsCode = SelectedCcgIcbOdsCode,
-    CcgIcbName = SelectedCcgIcbName
+    SiteName = ProviderName
   };
 
   private void ClearModelState()
   {
     ModelState.ClearValidationState("ProviderOdsCode");
-  }
-
-  private async Task<List<CcgModel>> GetCCGs()
-  {
-    var ccgList = await _requestService.ExecuteApiGetAsync<List<CcgModel>>("ccg");
-    return ccgList;
   }
 }
