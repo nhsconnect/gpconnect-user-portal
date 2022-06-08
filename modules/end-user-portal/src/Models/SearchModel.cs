@@ -37,12 +37,15 @@ public partial class SearchModel : BaseModel
   public string? SelectedCcgIcbOdsCode { get; set; } = "";
 
   public bool IsValidSearch => CheckForValidSearch();
-  public bool HasMultipleSearchParamaters => HasMultipleSearchParameters();
-
-  private bool HasMultipleSearchParameters()
+  private bool HasMultipleSearchParameters
   {
-    var multipleSearchParametersEntered = new string[] { ProviderOdsCode, ProviderName };
-    return multipleSearchParametersEntered.Count(s => !string.IsNullOrEmpty(s)) > 1;
+      get {
+          return
+            !(
+                String.IsNullOrEmpty(ProviderOdsCode) ||
+                String.IsNullOrEmpty(ProviderName)
+            );
+      }
   }
 
   private bool CheckForValidSearch()

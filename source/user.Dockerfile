@@ -1,7 +1,5 @@
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 
-
-
 # Do the restore first so it's cached as a layer as long as the projects don't change
 COPY *.sln ./
 COPY gpconnect-user-portal.Admin/*.csproj ./gpconnect-user-portal.Admin/

@@ -1,25 +1,20 @@
-FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS base
-ARG BUILD_TAG
-ENV BUILD_TAG=$BUILD_TAG
-WORKDIR /app
-EXPOSE 80
-
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
-WORKDIR /src
-COPY gpconnect-user-portal.api.sln ./
-COPY src/*.csproj ./src/
-COPY test/*.csproj ./test/
+
+# Do the restore first so it's cached as a layer as long as the projects don't change
+COPY *.sln ./
+COPY gpconnect-user-portal.Helpers/*.csproj gpconnect-user-portal.Helpers/
+COPY gpconnect-user-portal.Resources/*.csproj gpconnect-user-portal.Resources/
+COPY src/*.csproj src/
 
 RUN dotnet restore
-COPY . .
-WORKDIR /src
-RUN dotnet build -c Debug -o /app/build
 
-FROM build AS publish
+# Now do the real build
+COPY . .
+
 RUN dotnet publish -c Debug -o /app/publish
 
-FROM base AS final
+FROM mcr.microsoft.com/dotnet/sdk:6.0 AS final
 WORKDIR /app
-COPY --from=publish /app/publish .
+COPY --from=build /app/publish .
 
-ENTRYPOINT ["dotnet", "gpconnect-user-portal.api.dll"]
+ENTRYPOINT dotnet gpconnect-user-portal.dll
