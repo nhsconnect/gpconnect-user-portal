@@ -1,4 +1,4 @@
-using GpConnect.NationalDataSharingPortal.EndUserPortal.Core.HttpRequestHandler;
+using GpConnect.NationalDataSharingPortal.EndUserPortal.Core.HttpClientServices;
 
 namespace GpConnect.NationalDataSharingPortal.EndUserPortal.Core;
 
@@ -47,7 +47,7 @@ public static class ServiceCollectionExtensions
       options.Cookie.SameSite = SameSiteMode.None;
     });
 
-    HttpClientExtensions.AddHttpClientServices(services, configuration, env);
+    services.AddHttpClientServices(configuration, env);
 
     return services;
   }  

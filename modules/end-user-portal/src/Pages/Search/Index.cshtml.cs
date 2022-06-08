@@ -1,5 +1,5 @@
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Core;
-using GpConnect.NationalDataSharingPortal.EndUserPortal.Core.HttpRequestHandler.Interfaces;
+using GpConnect.NationalDataSharingPortal.EndUserPortal.Core.HttpClientServices.Interfaces;
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -8,11 +8,11 @@ namespace GpConnect.NationalDataSharingPortal.EndUserPortal.Pages;
 
 public partial class SearchModel : BaseModel
 {
-  private readonly IRequestService _requestService;
+  private readonly ISiteService _siteService;
 
-  public SearchModel(IOptions<ApplicationParameters> applicationParameters, IRequestService requestService) : base(applicationParameters)
+  public SearchModel(IOptions<ApplicationParameters> applicationParameters, ISiteService siteService) : base(applicationParameters)
   {
-    _requestService = requestService;
+    _siteService = siteService;
   }
 
   public IActionResult OnGet()
@@ -54,7 +54,11 @@ public partial class SearchModel : BaseModel
   {
     try
     {
-      var searchResults = await _requestService.ExecuteApiGetAsync<SearchRequest, List<SearchResultEntry>>(CreateSearchRequest(), "transparency-site");
+      var searchResults = await _siteService.SearchSitesAsync<SearchRequest, List<SearchResultEntry>>(new SearchRequest()
+      {
+        SiteOdsCode = ProviderOdsCode,
+        SiteName = ProviderName
+      });
       SearchResult = new SearchResult() { SearchResults = searchResults };
     }
     catch
@@ -62,12 +66,6 @@ public partial class SearchModel : BaseModel
       throw;
     }
   }
-
-  private SearchRequest CreateSearchRequest() => new SearchRequest()
-  {
-    SiteOdsCode = ProviderOdsCode,
-    SiteName = ProviderName
-  };
 
   private void ClearModelState()
   {

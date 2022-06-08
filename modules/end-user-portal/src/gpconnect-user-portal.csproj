@@ -10,7 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Core\HttpRequestHandler\ApiRequestExecution.cs~RF48a90d43.TMP" />
+    <None Remove="Core\HttpClientServices\ApiRequestExecution.cs~RF48a90d43.TMP" />
   </ItemGroup>
 
   <ItemGroup>

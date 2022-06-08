@@ -1,13 +1,18 @@
+using GpConnect.NationalDataSharingPortal.EndUserPortal.Core;
+using GpConnect.NationalDataSharingPortal.EndUserPortal.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Extensions.Options;
 
-namespace GpConnect.NationalDataSharingPortal.EndUserPortal.Pages
+namespace GpConnect.NationalDataSharingPortal.EndUserPortal.Pages;
+
+public class IndexModel : BaseModel
 {
-  public class IndexModel : PageModel
+  public IndexModel(IOptions<ApplicationParameters> applicationParameters) : base(applicationParameters)
   {
-    public IActionResult OnGet()
-    {
-      return Redirect("/Search");
-    }
+  }
+
+  public RedirectResult OnGet()
+  {
+    return Redirect("/Search");
   }
 }

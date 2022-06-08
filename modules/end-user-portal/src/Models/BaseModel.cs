@@ -13,8 +13,8 @@ namespace GpConnect.NationalDataSharingPortal.EndUserPortal.Models
       _applicationParameters = applicationParameters;
     }
 
-    public string ProductName => _applicationParameters.Value.PRODUCT_NAME;
-    public string ProductVersion => _applicationParameters.Value.PRODUCT_VERSION;
+    public string ProductName => _applicationParameters.Value.ProductName;
+    public string ProductVersion => _applicationParameters.Value.ProductVersion;
     public string LastUpdated => $"{DateTime.UtcNow:MMMM yyyy}";
   }
 }
