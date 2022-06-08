@@ -45,7 +45,7 @@ describe('Transparency Site', () => {
             var status, result; 
 
             beforeAll(async () => {
-                var response = await request.get('/transparency-site?provider_name=name');
+                var response = await request.get('/transparency-site?provider_name=NHS DIGITAL');
                 result = response.body[0];
                 status = response.status;
             });
@@ -55,11 +55,11 @@ describe('Transparency Site', () => {
             })
             
             it('contains expected name', () => {
-                expect(result.name).toBe('Name');
+                expect(result.name).toBe('NHS DIGITAL');
             })
 
             it('contains expected ODS code', () => {
-                expect(result.odsCode).toBe('ODS Code');
+                expect(result.odsCode).toBe('X26');
             })
 
             it('contains expected access record enabled', () => {
@@ -71,7 +71,7 @@ describe('Transparency Site', () => {
             })
 
             it('contains expected access record enabled', () => {
-                expect(result.sendDocumentEnabled).toBe(true);
+                expect(result.sendDocumentEnabled).toBe(false);
             })
 
             it('contains expected access record enabled', () => {
@@ -83,11 +83,11 @@ describe('Transparency Site', () => {
             })
 
             it('contains expected useCase', () => {
-                expect(result.useCase).toBe('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin varius, dui vitae vehicula cursus, turpis nunc pellentesque magna, nec faucibus urna ante eu velit. Suspendisse varius tempus neque mattis imperdiet.');
+                expect(result.useCase).toBe('My Use Case');
             })
 
             it('contains expected CCG name', () => {
-                expect(result.ccgIcbName).toBe('CCG');
+                expect(result.ccgIcbName).toBe('CCG Name');
             })
 
             it('contains expected CCG ODS Code', () => {
