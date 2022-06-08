@@ -1,8 +1,7 @@
+using TechTalk.SpecFlow;
+
 using Admin.Specs.Drivers;
 using Admin.Specs.PageObjects;
-
-using Xunit;
-using TechTalk.SpecFlow;
 
 namespace Admin.Specs.Steps
 {

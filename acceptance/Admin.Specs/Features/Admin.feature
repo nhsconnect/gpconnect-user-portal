@@ -1,11 +1,17 @@
 @Admin
 Feature: Admin
 
-Scenario: Sign In
-  Given I have opened the admin site
-  And I sign in
-  Then the endpoints header should be displayed
-
-Scenario: Not Signed In
+Scenario: NotSignedIn
   Given I have opened the admin site
   Then the Sign In element is shown
+
+Scenario: SignInWithoutPrivs
+  Given I have opened the admin site
+  And I sign in
+  Then an access restriction message should be shown
+
+Scenario: SignInWithPrivs
+  Given I have opened the admin site
+  And my user has admin rights
+  And I sign in
+  Then the endpoints header should be displayed
