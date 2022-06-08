@@ -1,0 +1,51 @@
+
+services:
+
+  data-migrator:
+    image: flyway/flyway
+    volumes:
+      - ../../../database:/flyway/sql
+    environment:
+      FLYWAY_EDITION: community
+      FLYWAY_PLACEHOLDERS_logger: ndsa
+    command: -url=jdbc:postgresql://database/ -user=postgres -password=g3epieC0nnect -connectRetries=10 migrate
+    depends_on:
+      database:
+        condition: 
+          service_started
+  
+  api: 
+    build: ../
+    ports:
+      - 80:80
+    # healthcheck:
+    #   test: wget --no-verbose --tries=1 --spider http://localhost/health || exit 1
+    #   interval: 60s
+    #   retries: 5
+    #   start_period: 20s
+    #   timeout: 10s
+    environment:
+      ASPNETCORE_URLS: http://*:80
+      ConnectionStrings__DefaultConnection: Host=database;Database=postgres;Username=postgres;Password=g3epieC0nnect;Include Error Detail=true;
+    depends_on:
+      data-migrator:
+        condition: 
+          service_completed_successfully
+
+  database:
+    image: postgres:14
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_PASSWORD: g3epieC0nnect
+      POSTGRES_HOST_AUTH_METHOD: trust
+  
+  test:
+    build: .
+    environment:
+      ENDPOINT: http://api
+    depends_on:
+      - api
+
+  # To be configured
+  # smtp: 
