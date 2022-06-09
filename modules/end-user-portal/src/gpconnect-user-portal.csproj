@@ -10,7 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Core\HttpRequestHandler\ApiRequestExecution.cs~RF48a90d43.TMP" />
+    <None Remove="Core\HttpClientServices\ApiRequestExecution.cs~RF48a90d43.TMP" />
   </ItemGroup>
 
   <ItemGroup>
@@ -22,8 +22,42 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\gpconnect-user-portal.Helpers\gpconnect-user-portal.Helpers.csproj" />
-    <ProjectReference Include="..\gpconnect-user-portal.Resources\gpconnect-user-portal.Resources.csproj" />
+    <Compile Update="Resources\DataFieldNameResources.Designer.cs">
+      <DependentUpon>DataFieldNameResources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Resources\ErrorMessageResources.Designer.cs">
+      <DependentUpon>ErrorMessageResources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Resources\ValidationMessageResources.Designer.cs">
+      <DependentUpon>ValidationMessageResources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Resources\DataFieldNameResources.resx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CustomToolNamespace>GpConnect.NationalDataSharingPortal.EndUserPortal.Resources</CustomToolNamespace>
+      <LastGenOutput>DataFieldNameResources.Designer.cs</LastGenOutput>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\ErrorMessageResources.resx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CustomToolNamespace>GpConnect.NationalDataSharingPortal.EndUserPortal.Resources</CustomToolNamespace>
+      <LastGenOutput>ErrorMessageResources.Designer.cs</LastGenOutput>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\ValidationMessageResources.resx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CustomToolNamespace>GpConnect.NationalDataSharingPortal.EndUserPortal.Resources</CustomToolNamespace>
+      <LastGenOutput>ValidationMessageResources.Designer.cs</LastGenOutput>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
   </ItemGroup>
 
 </Project>

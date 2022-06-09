@@ -8,11 +8,5 @@ public class SearchRequest
   public string? SiteOdsCode { get; set; }
 
   [JsonProperty("provider_name")]
-  public string? SiteName { get; set; }
-
-  [JsonProperty("ccg_code")]
-  public string? CcgIcbOdsCode { get; set; }
-
-  [JsonProperty("ccg_name")]
-  public string? CcgIcbName { get; set; }
+  public string? SiteName { get; set; }  
 }

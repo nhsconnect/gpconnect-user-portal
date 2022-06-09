@@ -1,11 +1,16 @@
-using Microsoft.AspNetCore.Mvc.RazorPages;
+using GpConnect.NationalDataSharingPortal.EndUserPortal.Core;
+using GpConnect.NationalDataSharingPortal.EndUserPortal.Models;
+using Microsoft.Extensions.Options;
 
-namespace gpconnect_appointment_checker.Pages
+namespace GpConnect.NationalDataSharingPortal.EndUserPortal.Pages;
+
+public class FooterModel : BaseModel
 {
-    public class FooterModel : PageModel
-    {
-        public void OnGet()
-        {
-        }
-    }
+  public FooterModel(IOptions<ApplicationParameters> applicationParameters) : base(applicationParameters)
+  {    
+  }
+
+  public void OnGet()
+  {
+  }
 }

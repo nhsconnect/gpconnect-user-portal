@@ -1,19 +1,16 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
+using GpConnect.NationalDataSharingPortal.EndUserPortal.Core;
+using GpConnect.NationalDataSharingPortal.EndUserPortal.Models;
+using Microsoft.Extensions.Options;
 
-namespace gpconnect_user_portal.Pages
+namespace GpConnect.NationalDataSharingPortal.EndUserPortal.Pages;
+
+public class PrivacyModel : BaseModel
 {
-    public class PrivacyModel : PageModel
-    {
-        private readonly ILogger<PrivacyModel> _logger;
+  public PrivacyModel(IOptions<ApplicationParameters> applicationParameters) : base(applicationParameters)
+  {
+  }
 
-        public PrivacyModel(ILogger<PrivacyModel> logger)
-        {
-            _logger = logger;
-        }
-
-        public void OnGet()
-        {
-        }
-    }
+  public void OnGet()
+  {
+  }
 }

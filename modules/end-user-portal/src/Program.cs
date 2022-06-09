@@ -37,10 +37,6 @@ public class Program
           .ConfigureWebHostDefaults(webBuilder =>
           {
             webBuilder.UseStartup<Startup>();
-            webBuilder.UseKestrel(options =>
-            {
-              options.AddServerHeader = false;
-            });
           }).ConfigureAppConfiguration(CustomConfigurationBuilder.AddCustomConfiguration)
           .ConfigureLogging((builderContext, logging) =>
           {

@@ -1,23 +1,30 @@
-using GpConnect.NationalDataSharingPortal.EndUserPortal.Core.HttpRequestHandler.Interfaces;
+using GpConnect.NationalDataSharingPortal.EndUserPortal.Core.HttpClientServices.Interfaces;
 using Polly;
 using Polly.Extensions.Http;
 using System.Net.Http.Headers;
 using System.Security.Authentication;
 
-namespace GpConnect.NationalDataSharingPortal.EndUserPortal.Core.HttpRequestHandler;
+namespace GpConnect.NationalDataSharingPortal.EndUserPortal.Core.HttpClientServices;
 
 public static class HttpClientExtensions
 {
-  public static void AddHttpClientServices(IServiceCollection services, IConfiguration configuration, IWebHostEnvironment env)
+  public static void AddHttpClientServices(this IServiceCollection services, IConfiguration configuration, IWebHostEnvironment env)
   {
-    services.AddHttpClient<IRequestService, RequestService>(options =>
+    Action<HttpClient> httpClientConfig = options =>
     {
       options.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/fhir+json"));
       options.DefaultRequestHeaders.CacheControl = new CacheControlHeaderValue { NoCache = true };
       options.BaseAddress = ValidBaseAddress(configuration["API_BASEADDRESS"]);
-    }).AddPolicyHandler(GetRetryPolicy())
-    .SetHandlerLifetime(TimeSpan.FromMinutes(5))
-    .ConfigurePrimaryHttpMessageHandler(() => CreateHttpMessageHandler(env));
+    };
+
+    services.AddHttpClient<ISiteService, SiteService>(httpClientConfig).AugmentHttpClientBuilder(env);
+  }
+
+  private static IHttpClientBuilder AugmentHttpClientBuilder(this IHttpClientBuilder httpClientBuilder, IWebHostEnvironment env)
+  {
+    return httpClientBuilder.AddPolicyHandler(GetRetryPolicy())
+        .SetHandlerLifetime(TimeSpan.FromMinutes(5))
+        .ConfigurePrimaryHttpMessageHandler(() => CreateHttpMessageHandler(env));
   }
 
   private static IAsyncPolicy<HttpResponseMessage> GetRetryPolicy()
@@ -36,10 +43,14 @@ public static class HttpClientExtensions
 
   private static Uri ValidBaseAddress(string baseAddress)
   {
-    if (Uri.IsWellFormedUriString(baseAddress, UriKind.Absolute))
+    try
     {
-      return new Uri(baseAddress);
+      var uriBuilder = new UriBuilder(baseAddress);
+      return uriBuilder.Uri;
     }
-    throw new ArgumentException("API Base Address is not well formed", baseAddress);
+    catch(ArgumentException ex)
+    {
+      throw ex;
+    }    
   }
 }

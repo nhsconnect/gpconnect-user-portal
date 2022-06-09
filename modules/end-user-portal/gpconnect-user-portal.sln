@@ -5,9 +5,7 @@ VisualStudioVersion = 17.0.31919.166
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "gpconnect-user-portal", "src\gpconnect-user-portal.csproj", "{E8AC4630-EA50-4A41-BDF8-8E7A4FA22D6D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "gpconnect-user-portal.Resources", "gpconnect-user-portal.Resources\gpconnect-user-portal.Resources.csproj", "{D036E798-9E93-4068-B394-4FD8B605706E}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "gpconnect-user-portal.Helpers", "gpconnect-user-portal.Helpers\gpconnect-user-portal.Helpers.csproj", "{8B5CFF21-B72B-4300-8584-36641475E438}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "gpconnect-user-portal.test", "gpconnect-user-portal.test\gpconnect-user-portal.test.csproj", "{D86C2593-EED9-41A7-81CD-86F85BDE2367}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,14 +17,10 @@ Global
 		{E8AC4630-EA50-4A41-BDF8-8E7A4FA22D6D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E8AC4630-EA50-4A41-BDF8-8E7A4FA22D6D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E8AC4630-EA50-4A41-BDF8-8E7A4FA22D6D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D036E798-9E93-4068-B394-4FD8B605706E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D036E798-9E93-4068-B394-4FD8B605706E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D036E798-9E93-4068-B394-4FD8B605706E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D036E798-9E93-4068-B394-4FD8B605706E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8B5CFF21-B72B-4300-8584-36641475E438}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8B5CFF21-B72B-4300-8584-36641475E438}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8B5CFF21-B72B-4300-8584-36641475E438}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8B5CFF21-B72B-4300-8584-36641475E438}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D86C2593-EED9-41A7-81CD-86F85BDE2367}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D86C2593-EED9-41A7-81CD-86F85BDE2367}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D86C2593-EED9-41A7-81CD-86F85BDE2367}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D86C2593-EED9-41A7-81CD-86F85BDE2367}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
