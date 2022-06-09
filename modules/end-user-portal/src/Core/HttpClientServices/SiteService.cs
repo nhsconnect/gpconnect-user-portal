@@ -33,8 +33,6 @@ public class SiteService : ISiteService
       var response = await _httpClient.GetAsync(url, HttpCompletionOption.ResponseHeadersRead, cancellationTokenSource.Token);
       response.EnsureSuccessStatusCode();
 
-      _logger.LogError("Wrong");
-
       await response.Content.ReadAsStringAsync(cancellationTokenSource.Token).ContinueWith((Task<string> x) =>
       {
         if (x.IsFaulted)
@@ -52,7 +50,5 @@ public class SiteService : ISiteService
       _logger.LogError(exc, $"An exception has occurred while attempting to execute an API query - {searchRequest}");
       throw;
     }
-  }
-
-  
+  }  
 }
