@@ -1,5 +1,6 @@
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Core.HttpClientServices.Interfaces;
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Helpers;
+using GpConnect.NationalDataSharingPortal.EndUserPortal.Models;
 using Newtonsoft.Json;
 
 namespace GpConnect.NationalDataSharingPortal.EndUserPortal.Core.HttpClientServices;
@@ -17,7 +18,7 @@ public class SiteService : ISiteService
     _options = new JsonSerializerSettings() { NullValueHandling = NullValueHandling.Ignore };
   }
 
-  public async Task<TResult> SearchSitesAsync<TRequest, TResult>(TRequest searchRequest) where TRequest : class where TResult : class
+  public async Task<List<SearchResultEntry>> SearchSitesAsync(SearchRequest searchRequest)
   {
     try
     {
@@ -26,7 +27,7 @@ public class SiteService : ISiteService
       {
         Method = HttpMethod.Get
       };
-      var result = default(TResult);
+      var result = default(List<SearchResultEntry>);
       var url = UriExtensions.AddQueryParamsToObject("transparency-site", searchRequest, _options);
 
       var response = await _httpClient.GetAsync(url, HttpCompletionOption.ResponseHeadersRead, cancellationTokenSource.Token);
@@ -41,7 +42,7 @@ public class SiteService : ISiteService
           _logger.LogError(x.Exception, $"A serialization error occurred in trying to read the response from an API query");
           throw x.Exception;
         }
-        result = JsonConvert.DeserializeObject<TResult>(x.Result, _options);
+        result = JsonConvert.DeserializeObject<List<SearchResultEntry>>(x.Result, _options);
       });
 
       return result;

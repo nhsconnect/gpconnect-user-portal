@@ -54,7 +54,7 @@ public partial class SearchModel : BaseModel
   {
     try
     {
-      var searchResults = await _siteService.SearchSitesAsync<SearchRequest, List<SearchResultEntry>>(new SearchRequest()
+      var searchResults = await _siteService.SearchSitesAsync(new SearchRequest()
       {
         SiteOdsCode = ProviderOdsCode,
         SiteName = ProviderName
