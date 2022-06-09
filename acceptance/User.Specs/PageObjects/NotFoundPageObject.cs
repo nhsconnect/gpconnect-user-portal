@@ -7,8 +7,6 @@ namespace User.Specs.PageObjects
     public class NotFoundPageObject
     {
 
-        private const string NotFoundPageUrl = "https://localhost:5003/NotFound";
-
         private readonly IWebDriver _webDriver;
         private TimeSpan DefaultWait = TimeSpan.FromSeconds(5);
 
@@ -26,7 +24,7 @@ namespace User.Specs.PageObjects
         public bool IsNotFoundPageViewed()
         {
             var wait = new WebDriverWait(_webDriver, DefaultWait);
-            return wait.Until(driver => driver.Url == NotFoundPageUrl);
+            return wait.Until(driver => driver.FindElement(By.Id("error-summary-title")).Text.Contains("can't seem to find the page"));
         }
 
     }
