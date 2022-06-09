@@ -5,7 +5,7 @@ VisualStudioVersion = 17.0.31919.166
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "gpconnect-user-portal", "src\gpconnect-user-portal.csproj", "{E8AC4630-EA50-4A41-BDF8-8E7A4FA22D6D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "gpconnect-user-portal.test", "gpconnect-user-portal.test\gpconnect-user-portal.test.csproj", "{D86C2593-EED9-41A7-81CD-86F85BDE2367}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "gpconnect-user-portal.test", "gpconnect-user-portal.test\gpconnect-user-portal.test.csproj", "{D86C2593-EED9-41A7-81CD-86F85BDE2367}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

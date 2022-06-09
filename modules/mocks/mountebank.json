@@ -3,6 +3,59 @@
     "protocol": "http",
     "name": "origin",
     "stubs": [
+    {
+        "predicates": [
+            {
+                "equals": {
+                    "path": "/health"
+                }
+            }
+        ],
+        "responses": [
+            {
+                "is": {
+                    "statusCode": 200
+                }
+            }
+        ]
+      },
+      {
+        "predicates": [
+            {
+                "equals": {
+                    "path": "/transparency-site",
+                    "query": {
+                        "provider_name": "b",
+                        "provider_code": "a"
+                    }
+                }
+            }
+        ],
+        "responses": [
+            {
+                "is": {
+                    "statusCode": 400
+                }
+            }
+        ]
+      },
+      {
+        "predicates": [
+            {
+                "equals": {
+                    "path": "/transparency-site",
+                    "method": "DELETE"
+                }
+            }
+        ],
+        "responses": [
+            {
+                "is": {
+                    "statusCode": 405
+                }
+            }
+        ]
+      },
       {
         "predicates": [
             {
@@ -164,6 +217,22 @@
                     "headers": {
                         "Content-Type": "application/json"
                     }
+                }
+            }
+        ]
+      },
+      {
+        "predicates": [
+            {
+                "equals": {
+                    "path": "/transparency-site"
+                }
+            }
+        ],
+        "responses": [
+            {
+                "is": {
+                    "statusCode": 400
                 }
             }
         ]
