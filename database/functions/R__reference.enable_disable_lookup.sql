@@ -14,7 +14,7 @@ begin
 	set
 		disabled_date = case when _is_disabled then now() else null end
 	where
-		lookup_id = _lookup_id;
+		lookup_id = _lookup_id
 		and reference.lookup.lookup_type_id = _lookup_type_id;
 end;
 $$ language plpgsql;
