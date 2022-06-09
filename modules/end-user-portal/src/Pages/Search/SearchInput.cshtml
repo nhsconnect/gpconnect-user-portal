@@ -1,0 +1,40 @@
+@using GpConnect.NationalDataSharingPortal.EndUserPortal.Helpers.Constants
+@using Microsoft.AspNetCore.Mvc.ModelBinding
+@model GpConnect.NationalDataSharingPortal.EndUserPortal.Pages.SearchModel
+@{
+    var providerOdsCodeInvalid = Model.ModelState["ProviderOdsCode"]?.ValidationState == ModelValidationState.Invalid;
+}
+
+<div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-full">
+        <div class="nhsuk-form-group @(providerOdsCodeInvalid ? "nhsuk-form-group--error": string.Empty)">
+            <label asp-for="@Model.ProviderOdsCode" class="nhsuk-label"></label>
+            <div class="nhsuk-hint" id="input-hint-providerodscode">You can enter multiple provider codes separated by a space or a comma.</div>
+            @if (providerOdsCodeInvalid)
+            {
+                <span asp-validation-for="@Model.ProviderOdsCode" class="nhsuk-error-message"></span>
+            }
+            <input id="@Model.ProviderOdsCode" class="nhsuk-input@(providerOdsCodeInvalid ? " nhsuk-input--error": string.Empty)" novalidate
+                   asp-for="@Model.ProviderOdsCode" aria-describedby="input-hint-providerodscode" value="@Model.ProviderOdsCode" type="search">
+        </div>
+
+        <h3>OR</h3>
+
+        <div class="nhsuk-form-group">
+            <label asp-for="@Model.ProviderName" class="nhsuk-label"></label>
+            <div class="nhsuk-hint" id="input-hint-providername">You can enter multiple provider names separated by a comma.</div>
+            <div class="nhsuk-hint" id="input-providername-hint-text">Note: provider name may be different to their patient facing name</div>
+            <input id="@Model.ProviderName" class="nhsuk-input" novalidate asp-for="@Model.ProviderName" aria-describedby="input-hint-providername" value="@Model.ProviderName" type="search">
+        </div>
+    </div>
+</div>
+<div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-one-half">
+        <div class="nhsuk-hint" id="input-hint-search">Click on '@ButtonConstants.SEARCH' to run the search.</div>
+        <button class="nhsuk-button" asp-page-handler="Search" type="submit">@ButtonConstants.SEARCH</button>
+    </div>
+    <div class="nhsuk-grid-column-one-half">
+        <div class="nhsuk-hint" id="input-hint-search">Click on '@ButtonConstants.CLEAR' to clear the inputs and results.</div>
+        <button class="nhsuk-button nhsuk-button--secondary" asp-page-handler="Clear" type="submit">@ButtonConstants.CLEAR</button>
+    </div>
+</div>
