@@ -1,26 +1,31 @@
+using GpConnect.NationalDataSharingPortal.EndUserPortal.Core;
+using GpConnect.NationalDataSharingPortal.EndUserPortal.Models;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.Diagnostics;
+using Microsoft.Extensions.Options;
 
 namespace GpConnect.NationalDataSharingPortal.EndUserPortal.Pages;
 
 [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-[IgnoreAntiforgeryToken]
-public class ErrorModel : PageModel
+public class ErrorModel : BaseModel
 {
-  public string? RequestId { get; set; }
+    protected ILogger<ErrorModel> _logger;
 
-  public bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
+    public ErrorModel(IOptions<ApplicationParameters> applicationParameters, ILogger<ErrorModel> logger) : base(applicationParameters)
+    {
+        _logger = logger;
+    }
 
-  private readonly ILogger<ErrorModel> _logger;
+    public void OnGet()
+    {
+        var exceptionHandlerPathFeature = HttpContext.Features.Get<IExceptionHandlerPathFeature>();
 
-  public ErrorModel(ILogger<ErrorModel> logger)
-  {
-    _logger = logger;
-  }
+        if (exceptionHandlerPathFeature != null)
+        {
+            var exceptionPath = exceptionHandlerPathFeature.Path;
+            var exception = exceptionHandlerPathFeature.Error;
 
-  public void OnGet()
-  {
-    RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier;
-  }
+            _logger.LogError(exception, $"Error thrown at {exceptionPath}");
+        }
+    }
 }
