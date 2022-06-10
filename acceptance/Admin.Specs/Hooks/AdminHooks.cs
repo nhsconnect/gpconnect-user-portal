@@ -11,22 +11,9 @@ namespace GpConnect.DataSharing.Admin.Specs.Hooks
     public class AdminHooks
     {
         [AfterScenario]
-        public static async void DeleteUsers(BrowserDriver browserDriver)
+        public static void DeleteUsers(DataDriver dataDriver)
         {
-            await using var connection = new NpgsqlConnection(
-                "Host=localhost;Database=postgres;Username=postgres;Include Error Detail=true"
-            );
-            await connection.OpenAsync();
-
-            await using
-            (
-                var cmd = new NpgsqlCommand(
-                    "TRUNCATE TABLE application.user;",
-                    connection
-                )
-            ) {
-                await cmd.ExecuteNonQueryAsync();
-            }
+            dataDriver.TruncateUsers();
         }
     }
 }

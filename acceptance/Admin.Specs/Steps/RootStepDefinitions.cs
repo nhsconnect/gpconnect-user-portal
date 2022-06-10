@@ -1,7 +1,6 @@
 using Xunit;
 using TechTalk.SpecFlow;
 
-using Npgsql;
 
 using GpConnect.DataSharing.Admin.Specs.Drivers;
 using GpConnect.DataSharing.Admin.Specs.PageObjects;
@@ -14,11 +13,13 @@ namespace GpConnect.DataSharing.Admin.Specs.Steps
     {
 
         private BrowserDriver _browserDriver;
+        private DataDriver _dataDriver;
         private readonly RootPageObject _rootPageObject;
 
-        public RootStepDefinitions(BrowserDriver browserDriver)
+        public RootStepDefinitions(BrowserDriver browserDriver, DataDriver dataDriver)
         {
             _browserDriver = browserDriver;
+            _dataDriver = dataDriver;
             _rootPageObject = new RootPageObject(browserDriver.Current);
         }
 
@@ -37,22 +38,7 @@ namespace GpConnect.DataSharing.Admin.Specs.Steps
         [Given("my user is granted admin rights")]
         public void GivenMyUserHasAdminRights()
         {
-            using var connection = new NpgsqlConnection(
-                "Host=localhost;Database=postgres;Username=postgres;Include Error Detail=true"
-            );
-            connection.Open();
-
-            using
-            (
-                var cmd = new NpgsqlCommand(
-                    @"UPDATE application.user
-                        SET is_admin = TRUE, authorised_date = NOW()
-                        WHERE email_address = 'testy.mctestface@nhs.net';",
-                    connection
-                )
-            ) {
-                cmd.ExecuteNonQuery();
-            }
+            _dataDriver.GrantUserAdmin("testy.mctestface@nhs.net");
         }
 
         [Then("an access restriction message should be shown")]
