@@ -11,14 +11,14 @@ namespace GpConnect.DataSharing.Admin.Specs.Drivers
             using var connection = new NpgsqlConnection(
                 "Host=localhost;Database=postgres;Username=postgres;Include Error Detail=true"
             );
-            connection.OpenAsync();
+            connection.Open();
 
             using
                 var cmd = new NpgsqlCommand(
                     "TRUNCATE TABLE application.user;",
                     connection
                 );
-                cmd.ExecuteNonQueryAsync();
+                cmd.ExecuteNonQuery();
         }
 
         public void GrantUserAdmin(string userEmail)
