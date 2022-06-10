@@ -12,6 +12,8 @@ Scenario: SignInWithoutPrivs
 
 Scenario: SignInWithPrivs
   Given I have opened the admin site
-  And my user has admin rights
+  And I sign in
+  And I sign out
+  And my user is granted admin rights
   And I sign in
   Then the endpoints header should be displayed

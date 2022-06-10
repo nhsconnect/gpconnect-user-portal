@@ -19,6 +19,7 @@ namespace GpConnect.DataSharing.Admin.Specs.PageObjects
     }
 
     private IWebElement SignInElement => _webDriver.FindElement(By.LinkText("Sign in"));
+    private IWebElement SignOutElement => _webDriver.FindElement(By.LinkText("Sign out"));
     private IWebElement UserNameElement => _webDriver.FindElement(
         By.XPath("//div[contains(text(), 'testy.mctestface@nhs.net')]")
     );
@@ -46,6 +47,11 @@ namespace GpConnect.DataSharing.Admin.Specs.PageObjects
     public void ClickSignIn()
     {
       SignInElement.Click();
+    }
+
+    public void ClickSignOut()
+    {
+      SignOutElement.Click();
     }
 
     public bool IsEndpointHeaderVisible()

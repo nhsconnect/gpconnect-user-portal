@@ -22,21 +22,27 @@ namespace GpConnect.DataSharing.Admin.Specs.Steps
             _rootPageObject = new RootPageObject(browserDriver.Current);
         }
 
+        [Given("I sign out")]
+        public void GivenISignOut()
+        {
+            _rootPageObject.ClickSignOut();
+        }
+
         [Given("I have opened the admin site")]
         public void GivenIHaveOpenedSite()
         {
             _rootPageObject.Open();
         }
 
-        [Given("my user has admin rights")]
-        public async void GivenMyUserHasAdminRights()
+        [Given("my user is granted admin rights")]
+        public void GivenMyUserHasAdminRights()
         {
-            await using var connection = new NpgsqlConnection(
+            using var connection = new NpgsqlConnection(
                 "Host=localhost;Database=postgres;Username=postgres;Include Error Detail=true"
             );
-            await connection.OpenAsync();
+            connection.Open();
 
-            await using
+            using
             (
                 var cmd = new NpgsqlCommand(
                     @"UPDATE application.user
@@ -45,7 +51,7 @@ namespace GpConnect.DataSharing.Admin.Specs.Steps
                     connection
                 )
             ) {
-                await cmd.ExecuteNonQueryAsync();
+                cmd.ExecuteNonQuery();
             }
         }
 

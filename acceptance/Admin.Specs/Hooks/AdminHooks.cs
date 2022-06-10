@@ -10,8 +10,8 @@ namespace GpConnect.DataSharing.Admin.Specs.Hooks
     [Binding]
     public class AdminHooks
     {
-        [BeforeScenario]
-        public static async void BeforeScenario(BrowserDriver browserDriver)
+        [AfterScenario]
+        public static async void DeleteUsers(BrowserDriver browserDriver)
         {
             await using var connection = new NpgsqlConnection(
                 "Host=localhost;Database=postgres;Username=postgres;Include Error Detail=true"
@@ -21,9 +21,7 @@ namespace GpConnect.DataSharing.Admin.Specs.Hooks
             await using
             (
                 var cmd = new NpgsqlCommand(
-                    @"UPDATE application.user
-                        SET is_admin = FALSE, authorised_date = NULL
-                        WHERE email_address = 'testy.mctestface@nhs.net';",
+                    "TRUNCATE TABLE application.user;",
                     connection
                 )
             ) {
