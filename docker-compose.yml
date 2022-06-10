@@ -57,7 +57,8 @@ services:
       context: ./modules/api
       dockerfile: ./Dockerfile
     depends_on:
-      - database
+      data-migrator:
+        condition: service_completed_successfully
     ports:
       - target: 5002
         published: 5002
