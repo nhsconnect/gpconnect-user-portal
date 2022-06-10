@@ -1,7 +1,7 @@
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 
-namespace Admin.Specs.PageObjects
+namespace GpConnect.DataSharing.Admin.Specs.PageObjects
 {
     public class ErrorPageObject
     {

@@ -2,7 +2,7 @@
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 
-namespace User.Specs.PageObjects
+namespace GpConnect.DataSharing.User.Specs.PageObjects
 {
     public class NotFoundPageObject
     {

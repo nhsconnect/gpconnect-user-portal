@@ -2,9 +2,9 @@ using TechTalk.SpecFlow;
 
 using Npgsql;
 
-using Admin.Specs.Drivers;
+using GpConnect.DataSharing.Admin.Specs.Drivers;
 
-namespace Admin.Specs.Hooks
+namespace GpConnect.DataSharing.Admin.Specs.Hooks
 {
 
     [Binding]

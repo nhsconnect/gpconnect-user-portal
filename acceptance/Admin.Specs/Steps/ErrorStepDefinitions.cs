@@ -1,10 +1,10 @@
-using Admin.Specs.Drivers;
-using Admin.Specs.PageObjects;
+using GpConnect.DataSharing.Admin.Specs.Drivers;
+using GpConnect.DataSharing.Admin.Specs.PageObjects;
 
 using Xunit;
 using TechTalk.SpecFlow;
 
-namespace Admin.Specs.Steps
+namespace GpConnect.DataSharing.Admin.Specs.Steps
 {
 
     [Binding]

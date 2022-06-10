@@ -1,9 +1,9 @@
 using TechTalk.SpecFlow;
 
-using Admin.Specs.Drivers;
-using Admin.Specs.PageObjects;
+using GpConnect.DataSharing.Admin.Specs.Drivers;
+using GpConnect.DataSharing.Admin.Specs.PageObjects;
 
-namespace Admin.Specs.Steps
+namespace GpConnect.DataSharing.Admin.Specs.Steps
 {
 
     [Binding]
