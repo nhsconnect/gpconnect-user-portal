@@ -18,7 +18,7 @@ public static class ApplicationBuilderExtensions
 
         app.UseHsts();
 
-        app.UseStatusCodePagesWithReExecute("/Error/{0}");
+        app.UseStatusCodePagesWithReExecute("/StatusCode/{0}");
 
         app.UseHttpsRedirection();
 
@@ -41,9 +41,8 @@ public static class ApplicationBuilderExtensions
                 NoStore = true,
                 NoCache = true
             };
-            context.Response.Headers.Add("Pragma", "no-cache");
             await next();
-        });
+        });       
 
         app.UseResponseCompression();
 
