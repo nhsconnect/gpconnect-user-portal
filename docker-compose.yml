@@ -62,11 +62,10 @@ services:
       - target: 5002
         published: 5002
     volumes:
-      - ~/.aspnet/https:/https:ro
+      - ./cert:/https:ro
     environment:
       ASPNETCORE_ENVIRONMENT: Development
       ASPNETCORE_URLS: http://+:5002
-      # TODO refactor this into Docker secrets management?
       ASPNETCORE_Kestrel__Certificates__Default__Password: ndsa
       ASPNETCORE_Kestrel__Certificates__Default__Path: /https/aspnetapp.pfx
       ConnectionStrings__DefaultConnection: Host=database;Database=postgres;Username=postgres;Include Error Detail=true;
@@ -84,11 +83,10 @@ services:
       - target: 443
         published: 5000
     volumes:
-      - ~/.aspnet/https:/https:ro
+      - ./cert:/https:ro
     environment:
       ASPNETCORE_ENVIRONMENT: Development
       ASPNETCORE_URLS: https://+:443
-      # TODO refactor this into Docker secrets management?
       ASPNETCORE_Kestrel__Certificates__Default__Password: ndsa
       ASPNETCORE_Kestrel__Certificates__Default__Path: /https/aspnetapp.pfx
 
@@ -105,11 +103,10 @@ services:
       - target: 443
         published: 5003
     volumes:
-      - ~/.aspnet/https:/https:ro
+      - ./cert:/https:ro
     environment:
       ASPNETCORE_ENVIRONMENT: Development
       ASPNETCORE_URLS: https://+:443
-      # TODO refactor this into Docker secrets management?
       ASPNETCORE_Kestrel__Certificates__Default__Password: ndsa
       ASPNETCORE_Kestrel__Certificates__Default__Path: /https/aspnetapp.pfx
       # API_BASEADDRESS: http://api:5002
@@ -128,12 +125,11 @@ services:
       - target: 443
         published: 5001
     volumes:
-      - ~/.aspnet/https:/https:ro
+      - ./cert:/https:ro
     environment:
       DOTNET_HOSTBUILDER__RELOADCONFIGONCHANGE: "false"
       ASPNETCORE_ENVIRONMENT: Development
       ASPNETCORE_URLS: https://+:443
-      # TODO refactor this into Docker secrets management?
       ASPNETCORE_Kestrel__Certificates__Default__Password: ndsa
       ASPNETCORE_Kestrel__Certificates__Default__Path: /https/aspnetapp.pfx
       ConnectionStrings__GPConnectEndUserPortal: Host=database;Database=postgres;Username=postgres;Include Error Detail=true;
