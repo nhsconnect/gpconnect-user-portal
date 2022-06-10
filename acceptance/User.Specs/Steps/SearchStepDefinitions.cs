@@ -28,7 +28,7 @@ namespace User.Specs.Steps
             _searchPageObject.ClickSearchButton();
         }
 
-        [Then("A validation error is shown")]
+        [Then("A form level validation error is shown")]
         public void ThenAValidationErrorIsShown()
         {
             Assert.True(_searchPageObject.IsErrorBannerVisible());
