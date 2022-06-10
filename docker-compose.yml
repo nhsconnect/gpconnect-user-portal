@@ -141,14 +141,3 @@ services:
       - 5432:5432
     environment:
       POSTGRES_HOST_AUTH_METHOD: trust
-
-  # splunk-server:
-  #   image: splunk/splunk
-  #   ports:
-  #     - 8000:8000
-  #     - 8088:8088
-  #   environment:
-  #     SPLUNK_START_ARGS: --accept-license
-  #     SPLUNK_PASSWORD: kersplunk
-  #     SPLUNK_HEC_TOKEN: 0E201D4D-3F48-4D5C-A4DE-EEF8B08A198E
-  #     SPLUNK_SSL: "False"
