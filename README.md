@@ -56,14 +56,6 @@ Add the following to your `/etc/hosts` (or `C:\Windows\System32\Drivers\etc\host
 127.0.0.1     auth.docker.internal
 ```
 
-Set up development certificates as directed on
-[this page](https://docs.microsoft.com/en-us/aspnet/core/security/docker-compose-https?view=aspnetcore-6.0)
-
-```
-dotnet dev-certs https --export-path ~/.aspnet/https/aspnetapp.pfx -p ndsa
-```
-
-
 ## Links
 
 - [NHS UK frontend](https://github.com/nhsuk/nhsuk-frontend)
