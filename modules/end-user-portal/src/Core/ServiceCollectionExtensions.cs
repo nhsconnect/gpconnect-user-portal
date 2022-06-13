@@ -35,10 +35,16 @@ public static class ServiceCollectionExtensions
 
     services.AddHealthChecks();
 
-    services.AddRazorPages(options =>
+    var builder = services.AddRazorPages(options =>
     {      
     });
-
+    
+    var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+    if (environment == "Development") 
+    {
+      builder.AddRazorRuntimeCompilation();
+    } 
+    
     services.AddAntiforgery(options =>
     {
       options.SuppressXFrameOptionsHeader = true;

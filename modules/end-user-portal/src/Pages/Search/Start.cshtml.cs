@@ -4,6 +4,8 @@ using GpConnect.NationalDataSharingPortal.EndUserPortal.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 
+using GpConnect.NationalDataSharingPortal.EndUserPortal.Helpers.Enumerations;
+
 namespace GpConnect.NationalDataSharingPortal.EndUserPortal.Pages;
 
 public partial class SearchModel : BaseModel
@@ -23,22 +25,31 @@ public partial class SearchModel : BaseModel
 
   public async Task<IActionResult> OnPostSearchAsync()
   {
+    DisplaySearchInvalid = false;    
+
     if (HasMultipleSearchParameters)
     {
       DisplaySearchInvalid = true;
+      return Page();
     }
-    else
+
+    if (!ModelState.IsValid || !IsValidSearch)
     {
-      if (ModelState.IsValid && IsValidSearch)
-      {
-        DisplaySearchInvalid = false;
-        await GetSearchResults();
-      }
-      else
-      {
-        DisplaySearchInvalid = !IsValidSearch;
-      }
+      DisplaySearchInvalid = !IsValidSearch;
+      return Page();
     }
+
+    var results = await GetSearchResults();
+
+    if (results.Count == 0)
+    {
+      return RedirectToPage("/Search/NoResults", new Dictionary<string,object> {
+        { "query", ProviderName },
+        { "mode", SearchMode.Name }
+      });
+    }
+
+    SearchResult = new SearchResult { SearchResults = results };
     return Page();
   }
 
@@ -50,16 +61,16 @@ public partial class SearchModel : BaseModel
     return Page();
   }
 
-  private async Task GetSearchResults()
+  private Task<List<SearchResultEntry>> GetSearchResults()
   {
     try
     {
-      var searchResults = await _siteService.SearchSitesAsync(new SearchRequest()
+      return _siteService.SearchSitesAsync(new SearchRequest()
       {
         SiteOdsCode = ProviderOdsCode,
         SiteName = ProviderName
       });
-      SearchResult = new SearchResult() { SearchResults = searchResults };
+      
     }
     catch
     {
