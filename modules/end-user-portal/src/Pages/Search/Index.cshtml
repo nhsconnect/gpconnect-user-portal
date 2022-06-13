@@ -1,30 +1,44 @@
 @page
-@model GpConnect.NationalDataSharingPortal.EndUserPortal.Pages.SearchModel
+@model GpConnect.NationalDataSharingPortal.EndUserPortal.Pages.Search.IndexModel
+@{
+}
 
-<form method="post" id="search-input-form">
-    <h1>Search</h1>
-
-    @if (Model.DisplaySearchInvalid)
-    {
-        <partial name="SearchInvalid" />
-    }
-    <partial name="SearchInput" />
-
-    @if (Model.SearchResult != null && Model.IsValidSearch)
-    {
-        @if (Model.SearchResult.NoMatches)
-        {
-            <partial name="SearchNoResults" />
-        }
-        else
-        {
-            <h1>Results</h1>
-            <partial name="SearchResultsHeader" />
-            <partial name="SearchResults" />
-        }
-    }
-</form>
+<div class="nhsuk-width-container">
+    <main class="nhsuk-main-wrapper" id="maincontent">
+      <div class="nhsuk-grid-row">
 
 
 
 
+            <div class="nhsuk-grid-column-full">
+
+
+              <h1 class="nhsuk-label-wrapper">
+  <label class="nhsuk-label nhsuk-label--xl">
+    Find how an organisation shares patient records
+  </label></h1>
+
+
+
+                <div class="nhsuk-card nhsuk-card--feature">
+                    <div class="nhsuk-card__content nhsuk-card__content--feature">
+                        <h2 class="nhsuk-card__heading nhsuk-card__heading--feature nhsuk-heading-m">
+                            Find how an organisation shares patient records
+                        </h2>
+                        <p class="nhsuk-card__description">
+                            If you are an individual who wants to understand how data is shared or you want to fulfil your obligations as one of the following roles:
+                            <ol class="nhsuk-contents-list__list">
+                                <li class="nhsuk-contents-list__item" aria-current="page"><span class="nhsuk-contents-list__current">Caldicott Guardian</span></li>
+                                <li class="nhsuk-contents-list__item" aria-current="page"><span class="nhsuk-contents-list__current">Senior Information Risk Officer</span></li>
+                                <li class="nhsuk-contents-list__item" aria-current="page"><span class="nhsuk-contents-list__current">Data Officer</span></li>
+                            </ol>
+                        </p>
+                        <h2 class="nhsuk-card__heading nhsuk-heading-m">
+                            <a class="nhsuk-card__link" href="./search">Find how an organisation shares patient records</a>
+                        </h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
