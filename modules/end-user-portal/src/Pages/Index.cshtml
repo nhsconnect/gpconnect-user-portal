@@ -1,4 +1,62 @@
-﻿@page
+@page
 @model GpConnect.NationalDataSharingPortal.EndUserPortal.Pages.IndexModel
 @{
 }
+
+<section class="nhsuk-hero nhsuk-hero--image nhsuk-hero--image-description" style="background-image: url('https://assets.nhs.uk/prod/images/S_0818_homepage_hero_1_F0147446.width-1000.jpg');">
+    <div class="nhsuk-hero__overlay">
+        <div class="nhsuk-width-container">
+            <div class="nhsuk-grid-row">
+                <div class="nhsuk-grid-column-two-thirds">
+                    <div class="nhsuk-hero-content">
+                        <h1 class="nhsuk-u-margin-bottom-3">@Model.ProductName</h1>
+                        <p class="nhsuk-body-l nhsuk-u-margin-bottom-0">Promoting data transparency within health care.</p>
+                        <span class="nhsuk-hero__arrow" aria-hidden="true"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="nhsuk-width-container">
+    <main class="nhsuk-main-wrapper" id="maincontent">
+      <div class="nhsuk-grid-row">
+            <div class="nhsuk-grid-column-full">
+                <div class="nhsuk-card nhsuk-card--feature">
+                    <div class="nhsuk-card__content nhsuk-card__content--feature">
+                        <h2 class="nhsuk-card__heading nhsuk-card__heading--feature nhsuk-heading-m">
+                            Find how an organisation shares patient records
+                        </h2>
+                        <p class="nhsuk-card__description">
+                            If you are an individual who wants to understand how data is shared or you want to fulfil your obligations as one of the following roles:
+                            <ol class="nhsuk-contents-list__list">
+                                <li class="nhsuk-contents-list__item" aria-current="page"><span class="nhsuk-contents-list__current">Caldicott Guardian</span></li>
+                                <li class="nhsuk-contents-list__item" aria-current="page"><span class="nhsuk-contents-list__current">Senior Information Risk Officer</span></li>
+                                <li class="nhsuk-contents-list__item" aria-current="page"><span class="nhsuk-contents-list__current">Data Officer</span></li>
+                            </ol>
+                        </p>
+                        <h2 class="nhsuk-card__heading nhsuk-heading-m">
+                            <a class="nhsuk-card__link" href="./Search">Find how an organisation shares patient records</a>
+                        </h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="nhsuk-grid-row">
+            <div class="nhsuk-grid-column-full">
+                <div class="nhsuk-card nhsuk-card--feature">
+                    <div class="nhsuk-card__content nhsuk-card__content--feature">
+                        <h2 class="nhsuk-card__heading nhsuk-card__heading--feature nhsuk-heading-m">
+                            Sign the NDSA (National Data Sharing Agreement)
+                        </h2>
+                        <p class="nhsuk-card__description">If you represent an organisation that wants to use GP Connect products, you must apply to the National Data Sharing Agreement</p>
+                        <h2 class="nhsuk-card__heading nhsuk-heading-m">
+            <a class="nhsuk-card__link" href="./Apply">Sign the NDSA (National Data Sharing Agreement)</a>
+            </h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>

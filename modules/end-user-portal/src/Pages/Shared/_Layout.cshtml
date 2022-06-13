@@ -19,16 +19,12 @@
     <meta property="og:image:alt" content="NHS">
 </head>
 
-<body>
+<body class="">
     <script>
         document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');
     </script>
     <partial name="Header" />
-    <div class="nhsuk-width-container">
-        <main class="nhsuk-main-wrapper" id="maincontent">
-            @RenderBody()
-        </main>
-    </div>
+    @RenderBody()
     <partial name="Footer" />
 </body>
 </html>
