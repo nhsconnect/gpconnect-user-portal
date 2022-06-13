@@ -6,9 +6,9 @@ namespace GpConnect.NationalDataSharingPortal.EndUserPortal.Pages;
 
 public class IndexModel : BaseModel
 {
-  public IndexModel(IOptions<ApplicationParameters> applicationParameters) : base(applicationParameters)
-  {
-  }
+    public IndexModel(IOptions<ApplicationParameters> applicationParameters) : base(applicationParameters)
+    {
+    }
 
   public void OnGet()
   {    

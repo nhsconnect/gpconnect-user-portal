@@ -1,19 +1,19 @@
 using TechTalk.SpecFlow;
 
-using Admin.Specs.Drivers;
-using Admin.Specs.PageObjects;
+using Npgsql;
 
-namespace Admin.Specs.Hooks
+using GpConnect.DataSharing.Admin.Specs.Drivers;
+
+namespace GpConnect.DataSharing.Admin.Specs.Hooks
 {
 
     [Binding]
     public class AdminHooks
     {
-        [BeforeScenario("Admin")]
-        public static void BeforeScenario(BrowserDriver browserDriver)
+        [AfterScenario]
+        public static void DeleteUsers(DataDriver dataDriver)
         {
-            var rootPageObject = new RootPageObject(browserDriver.Current);
-            // TODO clear login cookies
+            dataDriver.TruncateUsers();
         }
     }
 }

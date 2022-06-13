@@ -7,62 +7,61 @@ namespace GpConnect.NationalDataSharingPortal.EndUserPortal.Core;
 
 public static class ApplicationBuilderExtensions
 {
-  public static void ConfigureApplicationBuilderServices(this IApplicationBuilder app)
-  {
-    app.UseDeveloperExceptionPage();
-
-    app.UseForwardedHeaders(new ForwardedHeadersOptions
+    public static void ConfigureApplicationBuilderServices(this IApplicationBuilder app)
     {
-      ForwardedHeaders = ForwardedHeaders.XForwardedProto
-    });
+        app.UseExceptionHandler("/Error");
 
-    app.UseHsts();
+        app.UseForwardedHeaders(new ForwardedHeadersOptions
+        {
+            ForwardedHeaders = ForwardedHeaders.XForwardedProto
+        });
 
-    app.UseStatusCodePagesWithReExecute("/Error/{0}");
+        app.UseHsts();
 
-    app.UseHttpsRedirection();
+        app.UseStatusCodePagesWithReExecute("/StatusCode/{0}");
 
-    app.UseStaticFiles(new StaticFileOptions
-    {
-      OnPrepareResponse = context =>
-      {
-        context.Context.Response.Headers[HeaderNames.CacheControl] = $"public, max-age={TimeSpan.FromSeconds(60 * 60 * 24)}";
-      }
-    });
-    app.UseSession();
-    app.UseCookiePolicy();
-    app.UseRouting();
-    app.UseResponseCaching();
+        app.UseHttpsRedirection();
 
-    app.Use(async (context, next) =>
-    {
-      context.Response.GetTypedHeaders().CacheControl = new CacheControlHeaderValue()
-      {
-        NoStore = true,
-        NoCache = true
-      };
-      context.Response.Headers.Add("Pragma", "no-cache");
-      await next();
-    });
+        app.UseStaticFiles(new StaticFileOptions
+        {
+            OnPrepareResponse = context =>
+            {
+                context.Context.Response.Headers[HeaderNames.CacheControl] = $"public, max-age={TimeSpan.FromSeconds(60 * 60 * 24)}";
+            }
+        });
+        app.UseSession();
+        app.UseCookiePolicy();
+        app.UseRouting();
+        app.UseResponseCaching();
 
-    app.UseResponseCompression();
+        app.Use(async (context, next) =>
+        {
+            context.Response.GetTypedHeaders().CacheControl = new CacheControlHeaderValue()
+            {
+                NoStore = true,
+                NoCache = true
+            };
+            await next();
+        });       
 
-    app.UseAuthentication();
-    app.UseAuthorization();
+        app.UseResponseCompression();
 
-    app.UseEndpoints(endpoints =>
-    {
-      endpoints.MapRazorPages();
-      endpoints.MapControllers();
-      endpoints.MapHealthChecks("/healthcheck", new HealthCheckOptions()
-      {
-        ResultStatusCodes =
-                  {
+        app.UseAuthentication();
+        app.UseAuthorization();
+
+        app.UseEndpoints(endpoints =>
+        {
+            endpoints.MapRazorPages();
+            endpoints.MapControllers();
+            endpoints.MapHealthChecks("/healthcheck", new HealthCheckOptions()
+            {
+                ResultStatusCodes =
+                      {
                         [HealthStatus.Healthy] = StatusCodes.Status200OK,
                         [HealthStatus.Unhealthy] = StatusCodes.Status503ServiceUnavailable
-                  },
-        AllowCachingResponses = false
-      });
-    });
-  }
+                      },
+                AllowCachingResponses = false
+            });
+        });
+    }
 }

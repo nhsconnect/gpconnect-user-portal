@@ -8,7 +8,7 @@ services:
     environment:
       FLYWAY_EDITION: community
       FLYWAY_PLACEHOLDERS_logger: ndsa
-    command: -url=jdbc:postgresql://database/ -user=postgres -password=g3epieC0nnect -connectRetries=10 migrate
+    command: -url=jdbc:postgresql://database/ -user=postgres -connectRetries=10 migrate
     depends_on:
       - database
 
@@ -39,49 +39,106 @@ services:
           ]
         }
 
+  mock-api:
+    image: bbyars/mountebank
+    volumes:
+      - ./modules/mocks/:/config:ro
+    ports:
+      - target: 5555
+        published: 5555
+    entrypoint:
+      - mb
+      - --configfile
+      - /config/mountebank.json
+
+  api:
+    image: ndsp/api
+    build:
+      context: ./modules/api
+      dockerfile: ./Dockerfile
+    depends_on:
+      data-migrator:
+        condition: service_completed_successfully
+    ports:
+      - target: 5002
+        published: 5002
+    volumes:
+      - ./cert:/https:ro
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_URLS: http://+:5002
+      ASPNETCORE_Kestrel__Certificates__Default__Password: ndsa
+      ASPNETCORE_Kestrel__Certificates__Default__Path: /https/aspnetapp.pfx
+      ConnectionStrings__DefaultConnection: Host=database;Database=postgres;Username=postgres;Include Error Detail=true;
+
 
   user-portal:
-    image: mcr.microsoft.com/dotnet/aspnet
-    volumes:
-      - ./source/gpconnect-user-portal/bin/Debug/net6.0/publish:/app
-    working_dir: /app
-    entrypoint: dotnet gpconnect-user-portal.dll
+    image: ndsp/user-portal
+    build:
+      context: ./source
+      dockerfile: ./user.Dockerfile
+    depends_on:
+      - database
+      - api
     ports:
-      - 5000:80
+      - target: 443
+        published: 5000
+    volumes:
+      - ./cert:/https:ro
     environment:
-      DOTNET_HOSTBUILDER__RELOADCONFIGONCHANGE: "false"
       ASPNETCORE_ENVIRONMENT: Development
-      ConnectionStrings__GPConnectEndUserPortal: Host=database;Database=postgres;Username=postgres;Password=g3epieC0nnect;Include Error Detail=true;
+      ASPNETCORE_URLS: https://+:443
+      ASPNETCORE_Kestrel__Certificates__Default__Password: ndsa
+      ASPNETCORE_Kestrel__Certificates__Default__Path: /https/aspnetapp.pfx
+
+      ConnectionStrings__GPConnectEndUserPortal: Host=database;Database=postgres;Username=postgres;Include Error Detail=true;
+
+  end-user-portal:
+    image: ndsp/end-user-portal
+    build:
+      context: ./modules/end-user-portal/
+      dockerfile: ./Dockerfile
+    depends_on:
+      - api
+    ports:
+      - target: 443
+        published: 5003
+    volumes:
+      - ./cert:/https:ro
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_URLS: https://+:443
+      ASPNETCORE_Kestrel__Certificates__Default__Password: ndsa
+      ASPNETCORE_Kestrel__Certificates__Default__Path: /https/aspnetapp.pfx
+      # API_BASEADDRESS: http://api:5002
+      API_BASEADDRESS: http://mock-api:5555
 
   admin-portal:
-    image: mcr.microsoft.com/dotnet/aspnet
-    volumes:
-      - ./source/gpconnect-user-portal.Admin/bin/Debug/net6.0/publish:/app
+    image: ndsp/admin-portal
+    build:
+      context: ./source/
+      dockerfile: ./admin.Dockerfile
     working_dir: /app
-    entrypoint: dotnet gpconnect-user-portal.Admin.dll
+    depends_on:
+      - auth-server
+      - database
     ports:
-      - 5001:80
+      - target: 443
+        published: 5001
+    volumes:
+      - ./cert:/https:ro
     environment:
       DOTNET_HOSTBUILDER__RELOADCONFIGONCHANGE: "false"
       ASPNETCORE_ENVIRONMENT: Development
-      ConnectionStrings__GPConnectEndUserPortal: Host=database;Database=postgres;Username=postgres;Password=g3epieC0nnect;Include Error Detail=true;
+      ASPNETCORE_URLS: https://+:443
+      ASPNETCORE_Kestrel__Certificates__Default__Password: ndsa
+      ASPNETCORE_Kestrel__Certificates__Default__Path: /https/aspnetapp.pfx
+      ConnectionStrings__GPConnectEndUserPortal: Host=database;Database=postgres;Username=postgres;Include Error Detail=true;
       Sso__RequireHttpsMetadata: false
-
 
   database:
     image: postgres:14
     ports:
       - 5432:5432
     environment:
-      POSTGRES_PASSWORD: g3epieC0nnect
-
-  # splunk-server:
-  #   image: splunk/splunk
-  #   ports:
-  #     - 8000:8000
-  #     - 8088:8088
-  #   environment:
-  #     SPLUNK_START_ARGS: --accept-license
-  #     SPLUNK_PASSWORD: kersplunk
-  #     SPLUNK_HEC_TOKEN: 0E201D4D-3F48-4D5C-A4DE-EEF8B08A198E
-  #     SPLUNK_SSL: "False"
+      POSTGRES_HOST_AUTH_METHOD: trust
