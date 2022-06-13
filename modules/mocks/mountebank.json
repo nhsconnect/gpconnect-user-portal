@@ -5,35 +5,35 @@
     "stubs": [
     {
         "predicates": [
-            { 
-                "equals": { 
+            {
+                "equals": {
                     "path": "/health"
-                } 
+                }
             }
         ],
         "responses": [
-            { 
-                "is": { 
-                    "statusCode": 200 
+            {
+                "is": {
+                    "statusCode": 200
                 }
             }
         ]
       },
       {
         "predicates": [
-            { 
-                "equals": { 
+            {
+                "equals": {
                     "path": "/transparency-site",
-                    "query": { 
+                    "query": {
                         "provider_name": "b",
-                        "provider_code": "a" 
-                    } 
-                } 
+                        "provider_code": "a"
+                    }
+                }
             }
         ],
         "responses": [
-            { 
-                "is": { 
+            {
+                "is": {
                     "statusCode": 400
                 }
             }
@@ -41,16 +41,16 @@
       },
       {
         "predicates": [
-            { 
-                "equals": { 
+            {
+                "equals": {
                     "path": "/transparency-site",
                     "method": "DELETE"
-                } 
+                }
             }
         ],
         "responses": [
-            { 
-                "is": { 
+            {
+                "is": {
                     "statusCode": 405
                 }
             }
@@ -58,18 +58,18 @@
       },
       {
         "predicates": [
-            { 
-                "equals": { 
+            {
+                "equals": {
                     "path": "/transparency-site",
-                    "query": { 
-                        "provider_name": "name" 
-                    } 
-                } 
+                    "query": {
+                        "provider_name": "name"
+                    }
+                }
             }
         ],
         "responses": [
-            { 
-                "is": { 
+            {
+                "is": {
                     "body": [
                         {
                             "id": 234,
@@ -94,18 +94,18 @@
       },
       {
         "predicates": [
-            { 
-                "equals": { 
+            {
+                "equals": {
                     "path": "/transparency-site",
-                    "query": { 
-                        "provider_code": "A1234" 
+                    "query": {
+                        "provider_code": "A1234"
                     }
-                } 
+                }
             }
         ],
         "responses": [
-            { 
-                "is": { 
+            {
+                "is": {
                     "body": [
                         {
                             "id": 234,
@@ -117,7 +117,7 @@
                             "sendDocumentEnabled": true,
                             "postcode": "BA1 1DS",
                             "useCase": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin varius, dui vitae vehicula cursus, turpis nunc pellentesque magna, nec faucibus urna ante eu velit. Suspendisse varius tempus neque mattis imperdiet.",
-                            "ccgIcbName": "CCG Name",
+                            "ccgIcbName": "CCG Nerp",
                             "ccgIcbOdsCode": "A9876"
                         }
                     ],
@@ -130,18 +130,62 @@
       },
       {
         "predicates": [
-            { 
-                "equals": { 
+            {
+                "equals": {
                     "path": "/transparency-site",
-                    "query": { 
-                        "provider_code": "A1234 A1235" 
-                    } 
-                } 
+                    "query": {
+                        "provider_name": "Nonsense"
+                    }
+                }
             }
         ],
         "responses": [
-            { 
-                "is": { 
+          {
+            "is": {
+              "body": [],
+              "headers": {
+                "Content-Type": "application/json"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "predicates": [
+            {
+                "equals": {
+                    "path": "/transparency-site",
+                    "query": {
+                        "provider_code": "Nonsense"
+                    }
+                }
+            }
+        ],
+        "responses": [
+          {
+            "is": {
+              "body": [],
+              "headers": {
+                "Content-Type": "application/json"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "predicates": [
+            {
+                "equals": {
+                    "path": "/transparency-site",
+                    "query": {
+                        "provider_code": "A1234 A1235"
+                    }
+                }
+            }
+        ],
+        "responses": [
+            {
+                "is": {
                     "body": [
                         {
                             "id": 234,
@@ -179,15 +223,15 @@
       },
       {
         "predicates": [
-            { 
-                "equals": { 
+            {
+                "equals": {
                     "path": "/transparency-site"
-                } 
+                }
             }
         ],
         "responses": [
-            { 
-                "is": { 
+            {
+                "is": {
                     "statusCode": 400
                 }
             }
@@ -195,15 +239,15 @@
       },
       {
         "predicates": [
-            { 
-                "equals": { 
+            {
+                "equals": {
                     "path": "/ccg"
-                } 
+                }
             }
         ],
         "responses": [
-            { 
-                "is": { 
+            {
+                "is": {
                     "statusCode": 200,
                     "body": [
                         {

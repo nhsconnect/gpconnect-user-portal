@@ -2,7 +2,7 @@ using System;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 
-namespace Admin.Specs.PageObjects
+namespace GpConnect.DataSharing.Admin.Specs.PageObjects
 {
 
   public class RootPageObject
@@ -19,7 +19,16 @@ namespace Admin.Specs.PageObjects
     }
 
     private IWebElement SignInElement => _webDriver.FindElement(By.LinkText("Sign in"));
-    private IWebElement EndpointChangesHeaderElement => _webDriver.FindElement(By.XPath("//h2[contains(text(), 'Endpoint')]"));
+    private IWebElement SignOutElement => _webDriver.FindElement(By.LinkText("Sign out"));
+    private IWebElement UserNameElement => _webDriver.FindElement(
+        By.XPath("//div[contains(text(), 'testy.mctestface@nhs.net')]")
+    );
+    private IWebElement EndpointChangesHeaderElement => _webDriver.FindElement(
+        By.XPath("//h2[contains(text(), 'Endpoint')]")
+    );
+    private IWebElement AccessRestrictionMessageElement => _webDriver.FindElement(
+        By.XPath("//p[contains(text(), 'application is restricted to registered users')]")
+    );
 
     public void Open()
     {
@@ -29,15 +38,32 @@ namespace Admin.Specs.PageObjects
         }
     }
 
+    public bool IsSignInElementVisible()
+    {
+        var wait = new WebDriverWait(_webDriver, DefaultWait);
+        return wait.Until(driver => SignInElement.Displayed);
+    }
+
     public void ClickSignIn()
     {
       SignInElement.Click();
+    }
+
+    public void ClickSignOut()
+    {
+      SignOutElement.Click();
     }
 
     public bool IsEndpointHeaderVisible()
     {
       var wait = new WebDriverWait(_webDriver, DefaultWait);
       return wait.Until(driver => EndpointChangesHeaderElement.Displayed);
+    }
+
+    public bool IsAccessRestrictionMessageVisible()
+    {
+        var wait = new WebDriverWait(_webDriver, DefaultWait);
+        return wait.Until(driver => AccessRestrictionMessageElement.Displayed);
     }
 
   }

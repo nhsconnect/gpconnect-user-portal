@@ -1,9 +1,8 @@
-using System;
 
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 
-namespace GpConnect.DataSharing.Admin.Specs.Drivers
+namespace GpConnect.DataSharing.User.Specs.Drivers
 {
 
   public class BrowserDriver : IDisposable

@@ -24,8 +24,11 @@ public partial class SearchModel : BaseModel
 
   private bool CheckForMultipleSearchParameters()
   {
-    var multipleSearchParametersEntered = new string[] { ProviderOdsCode, ProviderName };
-    return multipleSearchParametersEntered.Count(s => !string.IsNullOrEmpty(s)) > 1;
+      return
+        !(
+            String.IsNullOrEmpty(ProviderOdsCode) ||
+            String.IsNullOrEmpty(ProviderName)
+        );
   }
 
   private bool CheckForValidSearch()
@@ -33,5 +36,5 @@ public partial class SearchModel : BaseModel
     return !string.IsNullOrEmpty(ProviderOdsCode) || !string.IsNullOrEmpty(ProviderName);
   }
 
-  public bool DisplaySearchInvalid { get; set; } = false;  
+  public bool DisplaySearchInvalid { get; set; } = false;
 }

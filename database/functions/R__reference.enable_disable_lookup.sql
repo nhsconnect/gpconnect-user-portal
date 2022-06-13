@@ -9,7 +9,7 @@ create function reference.enable_disable_lookup
 returns void
 as $$
 begin
-	update 
+	update
 		reference.lookup
 	set
 		disabled_date = case when _is_disabled then now() else null end
