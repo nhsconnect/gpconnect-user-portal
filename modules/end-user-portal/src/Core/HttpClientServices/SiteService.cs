@@ -33,10 +33,10 @@ public class SiteService : ISiteService
 
             switch (searchRequest.Mode)
             {
-                case Helpers.Enumerations.SearchModeEnums.Name:
+                case Helpers.Enumerations.SearchMode.Name:
                     queryDictionary.Add("provider_name", searchRequest.Query);
                     break;
-                case Helpers.Enumerations.SearchModeEnums.Code:
+                case Helpers.Enumerations.SearchMode.Code:
                     queryDictionary.Add("provider_code", searchRequest.Query);
                     break;
             }

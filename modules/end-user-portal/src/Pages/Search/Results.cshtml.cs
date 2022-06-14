@@ -16,7 +16,7 @@ public partial class ResultsModel : BaseModel
         _siteService = siteService;
     }
 
-    public async Task<IActionResult> OnGet(string query, SearchModeEnums mode)
+    public async Task<IActionResult> OnGet(string query, SearchMode mode)
     {
         try
         {

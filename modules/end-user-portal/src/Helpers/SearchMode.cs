@@ -1,6 +1,6 @@
 namespace GpConnect.NationalDataSharingPortal.EndUserPortal.Helpers.Enumerations;
 
-public enum SearchModeEnums
+public enum SearchMode
 {
   Name,
   Code

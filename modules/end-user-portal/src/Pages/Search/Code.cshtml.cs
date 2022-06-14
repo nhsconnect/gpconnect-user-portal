@@ -24,7 +24,7 @@ public partial class SearchByCodeModel : BaseModel
         {
             return Page();
         }
-        return RedirectToPage("./Results", new { query = ProviderOdsCode, mode = SearchModeEnums.Code });
+        return RedirectToPage("./Results", new { query = ProviderOdsCode, mode = SearchMode.Code });
     }
 
     public IActionResult OnPostClear()

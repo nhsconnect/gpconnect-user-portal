@@ -24,7 +24,7 @@ public partial class SearchByNameModel : BaseModel
         {
             return Page();
         }
-        return RedirectToPage("./Results", new { query = ProviderName, mode = SearchModeEnums.Name });
+        return RedirectToPage("./Results", new { query = ProviderName, mode = SearchMode.Name });
     }
 
     public IActionResult OnPostClear()
