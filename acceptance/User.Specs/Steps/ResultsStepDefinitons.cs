@@ -11,14 +11,9 @@ namespace GpConnect.DataSharing.User.Specs.Steps
         {
             _scenarioContext = scenarioContext;
         }
+
         [Given(@"I have performed a search for records that exist")]
         public void GivenIHavePerformedASearchForRecordsThatExist()
-        {
-            _scenarioContext.Pending();
-        }
-
-        [Given(@"I have performed a search for records that don't exist")]
-        public void GivenIHavePerformedASearchForRecordsThatDontExist()
         {
             _scenarioContext.Pending();
         }
@@ -71,16 +66,5 @@ namespace GpConnect.DataSharing.User.Specs.Steps
             _scenarioContext.Pending();
         }
 
-        [Then(@"there is a link to search again by name")]
-        public void ThenThereIsALinkToSearchAgainByName()
-        {
-            _scenarioContext.Pending();
-        }
-
-        [Then(@"there is a link to search again by ODS code")]
-        public void ThenThereIsALinkToSearchAgainByODSCode()
-        {
-            _scenarioContext.Pending();
-        }
     }
 }

@@ -4,7 +4,7 @@ Feature: Results
 
 Scenario: NoResults
   Given I have performed a search for records that don't exist
-  Then I am on the results page
+  Then I am on the no results page
   And the original search parameter is shown
   And there are 0 results
   And there is a link to search again by name
