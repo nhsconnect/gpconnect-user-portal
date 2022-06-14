@@ -82,4 +82,39 @@ public class TransparencySiteServiceTest
 
         Assert.StrictEqual(expected, result);
     }
+
+    [Fact]
+    public void GetSiteAsync_CallsDataService_WithExpectedParameters()
+    {
+        var expected = new Guid();
+
+        _sut.GetSiteAsync(expected);
+
+         _mockDataService.Verify(m => m.ExecuteQueryFirstOrDefault<TransparencySite>(
+            "application.find_site",
+            It.Is<DynamicParameters>(d => d.ParameterNames.AsList<string>().Contains("_site_unique_identifier") 
+                                        && d.Get<Guid>("_site_unique_identifier") == expected
+                                    )
+        ));        
+    }
+
+    [Fact]
+    public void GetSiteAsync_ExecuteQueryThrows_Throws()
+    {
+        _mockDataService.Setup(d => d.ExecuteQueryFirstOrDefault<TransparencySite>(It.IsAny<string>(), It.IsAny<DynamicParameters>())).Throws(new Exception());
+
+        Assert.ThrowsAsync<Exception>(async () => await _sut.GetSiteAsync(new Guid()));
+    }
+
+    [Fact]
+    public void GetSiteAsync_ExecuteQuerySucceeds_Returns()
+    {
+        var expected = Task.FromResult<TransparencySite>(new TransparencySite());
+
+        _mockDataService.Setup(d => d.ExecuteQueryFirstOrDefault<TransparencySite>(It.IsAny<string>(), It.IsAny<DynamicParameters>())).Returns(expected);
+
+        var result = _sut.GetSiteAsync(new Guid());
+
+        Assert.StrictEqual(expected, result);
+    }
 }

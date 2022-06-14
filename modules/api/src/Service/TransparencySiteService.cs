@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Threading.Tasks;
 using GpConnect.NationalDataSharingPortal.Api.Helpers;
+using System;
 
 namespace GpConnect.NationalDataSharingPortal.Api.Service
 {
@@ -48,7 +49,7 @@ namespace GpConnect.NationalDataSharingPortal.Api.Service
 
       return _dataService.ExecuteQuery<TransparencySite>(query, parameters);
     }
-
+    
     private DynamicParameters BuildBlankSearchParameters()
     {
       var parameters = new DynamicParameters();
@@ -65,6 +66,26 @@ namespace GpConnect.NationalDataSharingPortal.Api.Service
       parameters.Add("_ccg_ods_code", null, DbType.String, ParameterDirection.Input);
 
       return parameters;
+    }
+
+    public Task<TransparencySite> GetSiteAsync(Guid id)
+    {
+      var query = "application.find_site";
+
+      var parameters = new DynamicParameters();
+      parameters.Add("_site_unique_identifier", id, DbType.Guid, ParameterDirection.Input);
+
+      return _dataService.ExecuteQueryFirstOrDefault<TransparencySite>(query, parameters);
+      // if (id == "test")
+      // {
+      //   return Task.FromResult<TransparencySite>((TransparencySite)null);
+      // }
+
+      // return Task.FromResult<TransparencySite>(new TransparencySite
+      //   {
+      //     OdsCode = "Code"
+      //   }
+      // );
     }
   }
 }
