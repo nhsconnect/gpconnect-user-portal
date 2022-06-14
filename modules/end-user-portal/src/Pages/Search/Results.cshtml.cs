@@ -26,6 +26,11 @@ public partial class ResultsModel : BaseModel
                 Mode = mode
             });
 
+            if (searchResults.Count == 0)
+            {
+                return RedirectToPage("./NoResults", new { query = query, mode = mode });
+            }
+
             SearchResult = new SearchResult() { SearchResults = searchResults };
         }
         catch

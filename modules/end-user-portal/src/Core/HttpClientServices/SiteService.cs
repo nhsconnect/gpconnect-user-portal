@@ -29,19 +29,7 @@ public class SiteService : ISiteService
             };
             var result = default(List<SearchResultEntry>);
 
-            var queryDictionary = new Dictionary<string, string>();
-
-            switch (searchRequest.Mode)
-            {
-                case Helpers.Enumerations.SearchMode.Name:
-                    queryDictionary.Add("provider_name", searchRequest.Query);
-                    break;
-                case Helpers.Enumerations.SearchMode.Code:
-                    queryDictionary.Add("provider_code", searchRequest.Query);
-                    break;
-            }
-
-            var url = UriExtensions.AddQueryParamsToObject("transparency-site", queryDictionary, _options);
+            var url = UriExtensions.AddQueryParamsToObject("transparency-site", CreateQuery(searchRequest), _options);
 
             var response = await _httpClient.GetAsync(url, HttpCompletionOption.ResponseHeadersRead, cancellationTokenSource.Token);
             response.EnsureSuccessStatusCode();
@@ -63,5 +51,12 @@ public class SiteService : ISiteService
             _logger.LogError(exc, $"An exception has occurred while attempting to execute an API query - {searchRequest}");
             throw;
         }
+    }
+
+    private Dictionary<string, string> CreateQuery(SearchRequest searchRequest)
+    {
+        return new Dictionary<string, string>() {
+            { searchRequest.Mode.GetQueryStringParameter(), searchRequest.Query }
+        };
     }
 }

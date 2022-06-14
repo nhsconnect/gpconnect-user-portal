@@ -138,6 +138,12 @@
   <data name="MatchedCount" xml:space="preserve">
     <value>Matched</value>
   </data>
+  <data name="OrganisationNameNoResults" xml:space="preserve">
+    <value>The organisations name</value>
+  </data>
+  <data name="OrganisationOdsCodeNoResults" xml:space="preserve">
+    <value>The organisations ODS code</value>
+  </data>
   <data name="ProviderName" xml:space="preserve">
     <value>Provider Name</value>
   </data>

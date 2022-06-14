@@ -125,6 +125,24 @@ namespace GpConnect.NationalDataSharingPortal.EndUserPortal.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The organisations name.
+        /// </summary>
+        public static string OrganisationNameNoResults {
+            get {
+                return ResourceManager.GetString("OrganisationNameNoResults", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The organisations ODS code.
+        /// </summary>
+        public static string OrganisationOdsCodeNoResults {
+            get {
+                return ResourceManager.GetString("OrganisationOdsCodeNoResults", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Provider Name.
         /// </summary>
         public static string ProviderName {

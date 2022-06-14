@@ -1,0 +1,30 @@
+@page
+@model GpConnect.NationalDataSharingPortal.EndUserPortal.Pages.Search.NoResultsModel
+
+<div class="nhsuk-width-container">
+    <main class="nhsuk-main-wrapper" id="maincontent">
+        <div class="nhsuk-grid-row">
+            <div class="nhsuk-grid-column-full">
+                <h1 class="nhsuk-label-wrapper">
+                    <label class="nhsuk-label nhsuk-label--xl">
+                        Find how an organisation shares patient records
+                    </label>
+                </h1>
+                <div class="nhsuk-card nhsuk-card">
+                    <div class="nhsuk-card__content">
+                        <h2 class="nhsuk-card__heading">
+                            No results for '@Model.Query'
+                        </h2>
+                        <p class="nhsuk-card__description">
+                            There are no results for this @Model.SearchType
+                        </p>
+                        <p class="nhsuk-card__description">
+                            You can search again by:
+                            <br><a class="nhsuk-card__link" asp-page="/search/name" asp-route-ProviderName=@Model.NameQueryOrNull>@Html.DisplayNameFor(x => x.NameQueryOrNull)</a>
+                            <br><a class="nhsuk-card__link" asp-page="/search/code" asp-route-ProviderOdsCode=@Model.CodeQueryOrNull>@Html.DisplayNameFor(x => x.CodeQueryOrNull)</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
