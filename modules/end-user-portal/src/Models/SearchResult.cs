@@ -1,10 +1,10 @@
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Resources;
 using System.ComponentModel.DataAnnotations;
 
-namespace GpConnect.NationalDataSharingPortal.EndUserPortal.Models
+namespace GpConnect.NationalDataSharingPortal.EndUserPortal.Models;
+
+public class SearchResult
 {
-  public class SearchResult
-  {
     public List<SearchResultEntry> SearchResults { get; set; } = new List<SearchResultEntry>();
 
     [Display(Name = "MatchedCount", ResourceType = typeof(DataFieldNameResources))]
@@ -23,5 +23,4 @@ namespace GpConnect.NationalDataSharingPortal.EndUserPortal.Models
     public int HasSendDocumentCount => SearchResults.Count(x => x.HasSendDocument);
 
     public bool NoMatches => SearchResults?.Count == 0;
-  }
 }
