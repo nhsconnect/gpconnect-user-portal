@@ -1,0 +1,87 @@
+version: "3.3"
+
+networks:
+  jenkins:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.15.238.0/24
+
+volumes:
+  jenkins-data:
+  jenkins-docker-certs:
+  postgres-data:
+  sonar-data:
+  sonar-extensions:
+  sonar-config:
+  sonar-temp:
+
+services:
+
+  jenkins:
+    image: jenkins/jenkins-plus-blueocean
+    build:
+      context: .
+      dockerfile: ./Dockerfile-jenkins
+    volumes:
+      - jenkins-data:/var/jenkins_home
+      - jenkins-docker-certs:/certs/client:ro
+      - ${SSH_AUTH_SOCK}:/ssh-agent
+    environment:
+      SSH_AUTH_SOCK: /ssh-agent
+      DOCKER_HOST: tcp://docker:2376
+      DOCKER_CERT_PATH: /certs/client
+      DOCKER_TLS_VERIFY: 1
+    ports:
+      - target: 8080
+        published: 8080
+      - target: 50000
+        published: 50000
+    networks:
+      - jenkins
+    extra_hosts:
+      - "bridge:172.15.238.1"
+
+  docker:
+    image: docker:dind
+    privileged: true
+    networks:
+      - jenkins
+    environment:
+      DOCKER_TLS_CERTDIR: /certs
+    volumes:
+      - jenkins-docker-certs:/certs/client
+      - jenkins-data:/var/jenkins_home
+    ports:
+      - 2376:2376
+
+  # sonarqube:
+  #   image: sonarqube:latest
+  #   ports:
+  #     - "9000:9000"
+  #     - "9092:9092"
+  #   networks:
+  #     - jenkins
+  #   environment:
+  #     - sonar.jdbc.url=jdbc:postgresql://db:5432/sonar
+  #     - sonar.jdbc.username=sonar
+  #     - sonar.jdbc.password=sonar
+  #     - SONARQUBE_JDBC_URL=jdbc:postgresql://db:5432/sonar
+  #   volumes:
+  #     - sonar-config:/opt/sonarqube/conf
+  #     - sonar-data:/opt/sonarqube/data
+  #     - sonar-extensions:/opt/sonarqube/extensions
+  #     - sonar-temp:/opt/sonarqube/temp
+  #   depends_on:
+  #     - db
+
+  # db:
+  #   image: postgres
+  #   networks:
+  #     - jenkins
+  #   environment:
+  #     - POSTGRES_USER=sonar
+  #     - POSTGRES_PASSWORD=sonar
+  #   volumes:
+  #     - postgres-data:/var/lib/postgresql
