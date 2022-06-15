@@ -7,7 +7,7 @@ namespace GpConnect.NationalDataSharingPortal.Api.Dal.Mapping
     {
         public TransparencySiteMap()
         {
-            Map(p => p.Id).ToColumn("site_definition_id");
+            Map(p => p.Id).ToColumn("site_unique_identifier");
             Map(p => p.Name).ToColumn("site_name");
             Map(p => p.OdsCode).ToColumn("site_ods_code");
             Map(p => p.Postcode).ToColumn("site_postcode");

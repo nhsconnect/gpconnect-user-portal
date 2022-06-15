@@ -71,20 +71,10 @@ paths:
           required: false
           schema: 
             type: string
-        - name: ccg_code
-          in: query
-          required: false
-          schema: 
-            type: string
-        - name: ccg_name
-          in: query
-          required: false
-          schema: 
-            type: string
       responses:
         '400': 
-          description: Bad Request. No query terms where provided at least one must be provided
-        '200':    # status code
+          description: Bad Request. No query terms where provided, exactly one must be provided
+        '200': 
           description: An array of Direct Care API Sites who have signed the NDSA that match the provided search criteria
           content:
             application/json:
@@ -92,6 +82,30 @@ paths:
                 type: array
                 items: 
                   $ref: '#/components/schemas/transparencySite'
+  /transparency-site/{provider_id}:
+    get:
+      summary: Returns a list of transparencySites
+      description: >-
+        In order to allow Users to see why their data could be accessed by a site or CCG. 
+        This method will return a list of matching transparency sites.
+      parameters:
+        - name: provider_id
+          in: path
+          required: true
+          schema: 
+            type: string
+            format: uuid
+      responses:
+        '400': 
+          description: Bad Request. Id is not valid
+        '404': 
+          description: Not Found. No matching site found for that Id 
+        '200':   
+          description: An array of Direct Care API Sites who have signed the NDSA that match the provided search criteria
+          content:
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/transparencySite'
   /ccg:
     get:
       summary: Returns a list of users.
@@ -336,7 +350,8 @@ components:
       type: object
       properties:
         id:
-          type: number
+          type: string
+          format: uuid
         odsCode:
           type: string
         name:

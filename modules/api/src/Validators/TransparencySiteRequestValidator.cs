@@ -1,11 +1,18 @@
 using GpConnect.NationalDataSharingPortal.Api.Dto.Request;
 using System;
 
+using GpConnect.NationalDataSharingPortal.Api.Validators.Interface;
+
 namespace GpConnect.NationalDataSharingPortal.Api.Validators;
 
 public class TransparencySiteRequestValidator: ITransparencySiteRequestValidator
 {
-    public bool IsValid(TransparencySiteRequest request) 
+    public bool IsValidId(string id)
+    {
+        return Guid.TryParse(id, out _);
+    }
+
+    public bool IsValidRequest(TransparencySiteRequest request) 
     {
         bool isValid = false;
 

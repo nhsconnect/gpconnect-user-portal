@@ -2,6 +2,7 @@ using GpConnect.NationalDataSharingPortal.Api.Controllers;
 using GpConnect.NationalDataSharingPortal.Api.Dto.Request;
 using GpConnect.NationalDataSharingPortal.Api.Dto.Response;
 using GpConnect.NationalDataSharingPortal.Api.Service.Interface;
+using GpConnect.NationalDataSharingPortal.Api.Validators.Interface;
 using GpConnect.NationalDataSharingPortal.Api.Validators;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;

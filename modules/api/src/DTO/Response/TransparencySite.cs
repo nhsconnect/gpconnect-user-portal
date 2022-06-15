@@ -1,8 +1,10 @@
+using System;
+
 namespace GpConnect.NationalDataSharingPortal.Api.Dto.Response;
 
 public class TransparencySite
 {
-    public int Id { get; set; }
+    public Guid Id { get; set; }
     public string OdsCode { get; set; } = "";
     public string Name { get; set; } = "";
     public string Postcode { get; set; } = "";

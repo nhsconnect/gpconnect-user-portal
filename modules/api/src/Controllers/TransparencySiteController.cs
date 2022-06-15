@@ -1,8 +1,9 @@
 using GpConnect.NationalDataSharingPortal.Api.Dto.Request;
 using GpConnect.NationalDataSharingPortal.Api.Service.Interface;
-using GpConnect.NationalDataSharingPortal.Api.Validators;
+using GpConnect.NationalDataSharingPortal.Api.Validators.Interface;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System;
 using System.Threading.Tasks;
 
 namespace GpConnect.NationalDataSharingPortal.Api.Controllers;
@@ -27,7 +28,7 @@ public class TransparencySiteController : ControllerBase
     {
         _logger.LogInformation("Received Request {@query}", query);
 
-        if (!_validator.IsValid(query))
+        if (!_validator.IsValidRequest(query))
         {
             _logger.LogWarning("Invalid Request");
             return BadRequest();
@@ -36,5 +37,26 @@ public class TransparencySiteController : ControllerBase
         var sites = await _service.GetMatchingSitesAsync(query);
 
         return Ok(sites);
+    }
+
+    [HttpGet("{id}", Name = "GetTransparencySite")]
+    public async Task<ActionResult> GetTransparencySite([FromRoute] string id)
+    {
+        _logger.LogInformation("Received Request {@id}", id);
+
+        if (!_validator.IsValidId(id))
+        {
+            _logger.LogWarning("Invalid Request");
+            return BadRequest();
+        }
+
+        var site = await _service.GetSiteAsync(Guid.Parse(id));
+
+        if (site == null)
+        {
+            return NotFound();
+        }
+
+        return Ok(site);
     }
 }
