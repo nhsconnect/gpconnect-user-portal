@@ -24,11 +24,11 @@ namespace GpConnect.DataSharing.User.Specs.Steps
             _scenarioContext.Pending();
         }
 
-        [Then(@"the original search parameter is shown")]
-        public void ThenTheOriginalSearchParameterIsShown()
-        {
-            _scenarioContext.Pending();
-        }
+        // [Then(@"the original search parameter is shown")]
+        // public void ThenTheOriginalSearchParameterIsShown()
+        // {
+        //     _scenarioContext.Pending();
+        // }
 
         [Then(@"there are no results")]
         public void ThenThereAreNoResults(string ignore, int resultCount)
