@@ -1,6 +1,8 @@
 using GpConnect.NationalDataSharingPortal.Api.Dto.Request;
 using System;
 
+using GpConnect.NationalDataSharingPortal.Api.Validators.Interface;
+
 namespace GpConnect.NationalDataSharingPortal.Api.Validators;
 
 public class TransparencySiteRequestValidator: ITransparencySiteRequestValidator

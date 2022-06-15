@@ -4,6 +4,7 @@ using GpConnect.NationalDataSharingPortal.Api.Dal.Interfaces;
 using GpConnect.NationalDataSharingPortal.Api.Service;
 using GpConnect.NationalDataSharingPortal.Api.Service.Interface;
 using GpConnect.NationalDataSharingPortal.Api.Validators;
+using GpConnect.NationalDataSharingPortal.Api.Validators.Interface;
 
 namespace GpConnect.NationalDataSharingPortal.Api.Core
 {

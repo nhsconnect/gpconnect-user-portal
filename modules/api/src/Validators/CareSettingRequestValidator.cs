@@ -2,6 +2,8 @@ using GpConnect.NationalDataSharingPortal.Api.Dto.Request;
 using GpConnect.NationalDataSharingPortal.Api.Service.Interface;
 using System.Threading.Tasks;
 
+using GpConnect.NationalDataSharingPortal.Api.Validators.Interface;
+
 namespace GpConnect.NationalDataSharingPortal.Api.Validators;
 
 public class CareSettingRequestValidator : ICareSettingRequestValidator

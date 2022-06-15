@@ -1,7 +1,7 @@
 using GpConnect.NationalDataSharingPortal.Api.Dto.Request;
 using System.Threading.Tasks;
 
-namespace GpConnect.NationalDataSharingPortal.Api.Validators;
+namespace GpConnect.NationalDataSharingPortal.Api.Validators.Interface;
 
 public interface IProductRequestValidator
 {
