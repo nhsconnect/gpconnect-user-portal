@@ -76,16 +76,6 @@ namespace GpConnect.NationalDataSharingPortal.Api.Service
       parameters.Add("_site_unique_identifier", id, DbType.Guid, ParameterDirection.Input);
 
       return _dataService.ExecuteQueryFirstOrDefault<TransparencySite>(query, parameters);
-      // if (id == "test")
-      // {
-      //   return Task.FromResult<TransparencySite>((TransparencySite)null);
-      // }
-
-      // return Task.FromResult<TransparencySite>(new TransparencySite
-      //   {
-      //     OdsCode = "Code"
-      //   }
-      // );
     }
   }
 }
