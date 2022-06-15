@@ -145,10 +145,10 @@
     <value>The organisations ODS code</value>
   </data>
   <data name="ProviderName" xml:space="preserve">
-    <value>Provider Name</value>
+    <value>Enter the name of the clinical care organisation</value>
   </data>
   <data name="ProviderOdsCode" xml:space="preserve">
-    <value>Provider ODS Code</value>
+    <value>Enter the ODS (Organisation Data Service) Code</value>
   </data>
   <data name="SiteName" xml:space="preserve">
     <value>Name</value>

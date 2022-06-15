@@ -9,14 +9,14 @@
 <div class="nhsuk-width-container">
     <main class="nhsuk-main-wrapper" id="maincontent">
         <h1 class="nhsuk-label-wrapper">
-            <label class="nhsuk-label nhsuk-label--xl">Find how an organisation shares patient records</label>
+            <label class="nhsuk-label nhsuk-label--xl">Find how an organisation shares patient records by ODS (organisation data service) code</label>
         </h1>
         <form method="post" id="search-input-form">
             <div class="nhsuk-grid-row">
-                <div class="nhsuk-grid-column-full">
+                <div class="nhsuk-grid-column-two-thirds">
                     <div class="nhsuk-form-group @(providerOdsCodeInvalid ? "nhsuk-form-group--error": string.Empty)">
                         <label asp-for="@Model.ProviderOdsCode" class="nhsuk-label"></label>
-                        <div class="nhsuk-hint" id="input-hint-providerodscode">You can enter multiple provider names separated by a space or comma.</div>
+                        <div class="nhsuk-hint" id="input-hint-providername">For example: J3T7E</div>
                         @if (providerOdsCodeInvalid)
                         {
                             <span asp-validation-for="@Model.ProviderOdsCode" class="nhsuk-error-message"></span>
@@ -26,15 +26,9 @@
                     </div>
                 </div>
             </div>
-
             <div class="nhsuk-grid-row">
                 <div class="nhsuk-grid-column-one-half">
-                    <div class="nhsuk-hint" id="input-hint-search">Click on '@ButtonConstants.SEARCH' to run the search.</div>
-                    <button class="nhsuk-button" asp-page-handler="Search" type="submit">@ButtonConstants.SEARCH</button>
-                </div>
-                <div class="nhsuk-grid-column-one-half">
-                    <div class="nhsuk-hint" id="input-hint-search">Click on '@ButtonConstants.CLEAR' to clear the inputs and results.</div>
-                    <button class="nhsuk-button nhsuk-button--secondary" asp-page-handler="Clear" type="submit">@ButtonConstants.CLEAR</button>
+                    <button class="nhsuk-button" asp-page-handler="Search" type="submit">@ButtonConstants.FIND</button>
                 </div>
             </div>
         </form>

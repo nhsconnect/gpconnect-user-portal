@@ -143,7 +143,7 @@ namespace GpConnect.NationalDataSharingPortal.EndUserPortal.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Provider Name.
+        ///   Looks up a localized string similar to Enter the name of the clinical care organisation.
         /// </summary>
         public static string ProviderName {
             get {
@@ -152,7 +152,7 @@ namespace GpConnect.NationalDataSharingPortal.EndUserPortal.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Provider ODS Code.
+        ///   Looks up a localized string similar to Enter the ODS (Organisation Data Service) Code.
         /// </summary>
         public static string ProviderOdsCode {
             get {
