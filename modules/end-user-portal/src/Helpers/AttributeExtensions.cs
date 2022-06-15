@@ -9,9 +9,9 @@ public static class AttributeExtensions
         return GetAttr<QueryStringParameterAttribute, T>(val)?.QueryStringParameter ?? "";
     }
 
-    public static string GetNameParameter<T>(this T val) where T : Enum
+    public static string GetDisplayParameter<T>(this T val) where T : Enum
     {
-        return GetAttr<NameParameterAttribute, T>(val)?.NameParameter ?? "";
+        return GetAttr<DisplayParameterAttribute, T>(val)?.DisplayParameter ?? "";
     }
 
     private static TAttr GetAttr<TAttr, T>(this T val) where TAttr : Attribute

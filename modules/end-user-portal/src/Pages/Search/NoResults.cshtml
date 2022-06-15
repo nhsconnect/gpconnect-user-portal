@@ -1,5 +1,7 @@
 @page
 @model GpConnect.NationalDataSharingPortal.EndUserPortal.Pages.Search.NoResultsModel
+@using GpConnect.NationalDataSharingPortal.EndUserPortal.Helpers.Enumerations
+@using GpConnect.NationalDataSharingPortal.EndUserPortal.Helpers
 
 <div class="nhsuk-width-container">
     <main class="nhsuk-main-wrapper" id="maincontent">
@@ -16,8 +18,8 @@
                     </h3>
                     <p>There are no results for this @Model.SearchType</p>
                     <p>You can search again by:
-                        <br/><a class="nhsuk-card__link" asp-page="/search/name" asp-route-ProviderName=@Model.NameQueryOrNull>@Html.DisplayNameFor(x => x.NameQueryOrNull)</a>
-                        <br/><a class="nhsuk-card__link" asp-page="/search/code" asp-route-ProviderOdsCode=@Model.CodeQueryOrNull>@Html.DisplayNameFor(x => x.CodeQueryOrNull)</a>
+                        <br/><a class="nhsuk-card__link" asp-page="/search/name" asp-route-ProviderName=@Model.NameQueryOrNull>@SearchMode.Name.GetDisplayParameter()</a>
+                        <br/><a class="nhsuk-card__link" asp-page="/search/code" asp-route-ProviderOdsCode=@Model.CodeQueryOrNull>@SearchMode.Code.GetDisplayParameter()</a>
                     </p>
                 </div>
             </div>

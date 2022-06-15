@@ -1,13 +1,14 @@
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Core.HttpClientServices.Interfaces;
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Helpers;
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Models;
+using Microsoft.AspNetCore.WebUtilities;
 using Newtonsoft.Json;
 
 namespace GpConnect.NationalDataSharingPortal.EndUserPortal.Core.HttpClientServices;
 
 public class SiteService : ISiteService
 {
-    private static ILogger<SiteService> _logger;
+    private readonly ILogger<SiteService> _logger;
     private readonly HttpClient _httpClient;
     private readonly JsonSerializerSettings _options;
 
@@ -29,7 +30,7 @@ public class SiteService : ISiteService
             };
             var result = default(List<SearchResultEntry>);
 
-            var url = UriExtensions.AddQueryParamsToObject("transparency-site", CreateQuery(searchRequest), _options);
+            var url = QueryHelpers.AddQueryString("transparency-site", searchRequest.Mode.GetQueryStringParameter(), searchRequest.Query);
 
             var response = await _httpClient.GetAsync(url, HttpCompletionOption.ResponseHeadersRead, cancellationTokenSource.Token);
             response.EnsureSuccessStatusCode();
@@ -51,12 +52,5 @@ public class SiteService : ISiteService
             _logger.LogError(exc, $"An exception has occurred while attempting to execute an API query - {searchRequest}");
             throw;
         }
-    }
-
-    private Dictionary<string, string> CreateQuery(SearchRequest searchRequest)
-    {
-        return new Dictionary<string, string>() {
-            { searchRequest.Mode.GetQueryStringParameter(), searchRequest.Query }
-        };
     }
 }

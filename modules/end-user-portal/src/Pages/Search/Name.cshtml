@@ -14,21 +14,21 @@
         <form method="post" id="search-input-form">
             <div class="nhsuk-grid-row">
                 <div class="nhsuk-grid-column-two-thirds">
-                    <div class="nhsuk-form-group @(providerNameInvalid ? "nhsuk-form-group--error": string.Empty)">
-                        <label asp-for="@Model.ProviderName" class="nhsuk-label"></label>
-                        <div class="nhsuk-hint" id="input-hint-providername">For example: Bodmin GP Surgery</div>
-                        @if (providerNameInvalid)
-                        {
-                            <span asp-validation-for="@Model.ProviderName" class="nhsuk-error-message"></span>
-                        }
-                        <input id="@Model.ProviderName" class="nhsuk-input@(providerNameInvalid ? " nhsuk-input--error": string.Empty)" novalidate
-                               asp-for="@Model.ProviderName" aria-describedby="input-hint-providername" value="@Model.ProviderName" type="search">
+                    <div class="nhsuk-card">
+                        <div class="nhsuk-card__content">
+                            <div class="nhsuk-form-group @(providerNameInvalid ? "nhsuk-form-group--error": string.Empty)">
+                                <label asp-for="@Model.ProviderName" class="nhsuk-label"></label>
+                                <div class="nhsuk-hint" id="input-hint-providername">For example: Bodmin GP Surgery</div>
+                                @if (providerNameInvalid)
+                                {
+                                    <span asp-validation-for="@Model.ProviderName" class="nhsuk-error-message"></span>
+                                }
+                                <input id="@Model.ProviderName" class="nhsuk-input@(providerNameInvalid ? " nhsuk-input--error": string.Empty)" novalidate
+                                       asp-for="@Model.ProviderName" aria-describedby="input-hint-providername" value="@Model.ProviderName" type="search">
+                            </div>
+                            <button class="nhsuk-button" asp-page-handler="Search" type="submit">@ButtonConstants.FIND</button>
+                        </div>
                     </div>
-                </div>
-            </div>
-            <div class="nhsuk-grid-row">
-                <div class="nhsuk-grid-column-one-half">
-                    <button class="nhsuk-button" asp-page-handler="Search" type="submit">@ButtonConstants.FIND</button>
                 </div>
             </div>
         </form>
