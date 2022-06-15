@@ -10,21 +10,17 @@
                         Find how an organisation shares patient records
                     </label>
                 </h1>
-                <div class="nhsuk-card nhsuk-card">
-                    <div class="nhsuk-card__content">
-                        <h2 class="nhsuk-card__heading">
-                            No results for '@Model.Query'
-                        </h2>
-                        <p class="nhsuk-card__description">
-                            There are no results for this @Model.SearchType
-                        </p>
-                        <p class="nhsuk-card__description">
-                            You can search again by:
-                            <br><a class="nhsuk-card__link" asp-page="/search/name" asp-route-ProviderName=@Model.NameQueryOrNull>@Html.DisplayNameFor(x => x.NameQueryOrNull)</a>
-                            <br><a class="nhsuk-card__link" asp-page="/search/code" asp-route-ProviderOdsCode=@Model.CodeQueryOrNull>@Html.DisplayNameFor(x => x.CodeQueryOrNull)</a>
-                        </p>
-                    </div>
+                <div class="nhsuk-warning-callout">
+                    <h3 class="nhsuk-warning-callout__label">
+                        No results for '@Model.Query'<span class="nhsuk-u-visually-hidden">:</span>
+                    </h3>
+                    <p>There are no results for this @Model.SearchType</p>
+                    <p>You can search again by:
+                        <br/><a class="nhsuk-card__link" asp-page="/search/name" asp-route-ProviderName=@Model.NameQueryOrNull>@Html.DisplayNameFor(x => x.NameQueryOrNull)</a>
+                        <br/><a class="nhsuk-card__link" asp-page="/search/code" asp-route-ProviderOdsCode=@Model.CodeQueryOrNull>@Html.DisplayNameFor(x => x.CodeQueryOrNull)</a>
+                    </p>
                 </div>
             </div>
         </div>
     </main>
+</div>
