@@ -3,14 +3,12 @@ using OpenQA.Selenium.Support.UI;
 
 namespace GpConnect.DataSharing.Admin.Specs.PageObjects
 {
-    public class ErrorPageObject
+    public class ErrorPageObject : BasePageObject
     {
 
-        private const string ErrorUrl = "https://localhost:5001/Error";
+        private const string PATH = "/Error";
 
         private readonly IWebDriver _webDriver;
-
-        private TimeSpan DefaultWait = TimeSpan.FromSeconds(5);
 
         public ErrorPageObject(IWebDriver webDriver)
         {
@@ -21,7 +19,7 @@ namespace GpConnect.DataSharing.Admin.Specs.PageObjects
         public bool IsOpen()
         {
             var wait = new WebDriverWait(_webDriver, DefaultWait);
-            return wait.Until(driver => driver.Url == ErrorUrl);
+            return wait.Until(driver => driver.Url == URL(PATH));
         }
 
     }
