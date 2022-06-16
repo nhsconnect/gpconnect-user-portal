@@ -29,7 +29,7 @@ public partial class ResultsModel : BaseModel
 
             if (searchResults.Count == 1)
             {
-                return RedirectToPage("./Detail", new { id = searchResults.FirstOrDefault()?.SiteDefinitionId });
+                return RedirectToPage("./Detail", new { id = searchResults[0].SiteDefinitionId });
             }
 
             searchResults.Sort((x, y) => x.SiteName.CompareTo(y.SiteName));

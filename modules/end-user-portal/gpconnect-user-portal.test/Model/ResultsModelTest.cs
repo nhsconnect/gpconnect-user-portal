@@ -24,6 +24,54 @@ public class ResultsModelTest
         _mockSiteService.Setup(mss => mss.SearchSitesAsync(It.IsAny<string>(), It.IsAny<SearchMode>())).ReturnsAsync(new List<SearchResultEntry>());
     }
 
+    [Fact]
+    public void NameQueryOrNull_WhenModeIsName_ReturnsQueryText()
+    {
+        var resultsModel = new ResultsModel(Mock.Of<IOptions<ApplicationParameters>>(), _mockSiteService.Object)
+        {
+            Query = "Query",
+            Mode = SearchMode.Name
+        };
+
+        Assert.Equal("Query", resultsModel.NameQueryOrNull);
+    }
+
+    [Fact]
+    public void NameQueryOrNull_WhenModeIsCode_ReturnsNull()
+    {
+        var resultsModel = new ResultsModel(Mock.Of<IOptions<ApplicationParameters>>(), _mockSiteService.Object)
+        {
+            Query = "Query",
+            Mode = SearchMode.Code
+        };
+
+        Assert.Null(resultsModel.NameQueryOrNull);
+    }
+
+    [Fact]
+    public void CodeQueryOrNull_WhenModeIsCode_ReturnsQueryText()
+    {
+        var resultsModel = new ResultsModel(Mock.Of<IOptions<ApplicationParameters>>(), _mockSiteService.Object)
+        {
+            Query = "Query",
+            Mode = SearchMode.Code
+        };
+
+        Assert.Equal("Query", resultsModel.CodeQueryOrNull);
+    }
+
+    [Fact]
+    public void CodeQueryOrNull_WhenModeIsName_ReturnsNull()
+    {
+        var resultsModel = new ResultsModel(Mock.Of<IOptions<ApplicationParameters>>(), _mockSiteService.Object)
+        {
+            Query = "Query",
+            Mode = SearchMode.Name
+        };
+
+        Assert.Null(resultsModel.CodeQueryOrNull);
+    }
+
     [Theory]
     [InlineData(SearchMode.Name)]
     [InlineData(SearchMode.Code)]
