@@ -1,7 +1,3 @@
---
--- Name: find_site(uuid); Type: FUNCTION; Schema: application; Owner: postgres
---
-
 CREATE FUNCTION application.find_site(
   _site_unique_identifier uuid
 ) RETURNS TABLE(
@@ -18,6 +14,11 @@ CREATE FUNCTION application.find_site(
   is_html_enabled boolean,
   is_structured_enabled boolean,
   is_send_document_enabled boolean,
+  site_address_line_1 character varying,
+  site_address_line_2 character varying,
+  site_address_town character varying,
+  site_address_county character varying,
+  site_address_country character varying,
   site_postcode character varying,
   ods_code character varying,
   selected_supplier character varying,
@@ -44,6 +45,11 @@ begin
 			a.ishtmlenabled,
 			a.isstructuredenabled,
 			a.issenddocumentenabled,
+			a.siteaddressline1,
+			a.siteaddressline2,
+			a.siteaddresstown,
+			a.siteaddresscounty,
+			a.siteaddresscountry,
 			a.sitepostcode,
 			a.odscode,
 			a.selectedsupplier,
@@ -76,4 +82,3 @@ $$;
 ALTER FUNCTION application.find_site(
   _site_unique_identifier uuid
 ) OWNER TO postgres;
-

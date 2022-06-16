@@ -358,6 +358,16 @@ components:
           type: string
         useCase:
           type: string
+        line1:
+          type: string
+        line2:
+          type: string
+        town:
+          type: string
+        county:
+          type: string
+	country:
+          type: string
         postCode:
           type: string
         ccgIcbName:
