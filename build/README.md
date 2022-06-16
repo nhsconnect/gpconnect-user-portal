@@ -53,3 +53,27 @@ If you see `vm.max_map_count` in your log, you need to increase it, see [this is
 
 I did all this on a Linux machine, so things may differ slightly on OSX.
 
+
+## Setup
+
+- You should be running `sshd`
+- You should have Docker and the Docker Compose plugin installed
+
+First, `docker compose up`. Watch for the admin password in the output log.
+
+1. Visit the Jenkins admin page at http://localhost:8080
+1. Perform initial setup
+  - Install the suggested plugins
+  - Create a user
+1. Create a "Multibranch" job with a source URL pointing to your source
+```
+ssh://your-user@bridge/~/gpconnect/gpconnect-user-portal
+```
+  - You shouldn't need credentials if you have a working SSH key for your own machine
+    - Because your SSH agent is mounted inside the Jenkins box
+    - You may be prompted to unlock your key
+  - (if you can't get SSH working, you can mount your source as a volume inside Jenkins and use file URLs)
+
+A scan for branches should discover any branches with a `Jenkinsfile` and may
+build them.
+
