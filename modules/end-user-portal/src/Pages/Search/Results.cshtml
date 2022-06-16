@@ -44,7 +44,7 @@
                                 <div class="nhsuk-summary-list__row">
                                     <dt class="nhsuk-summary-list__key">
                                         <a asp-page="./Detail" asp-route-id="@searchResult.SiteDefinitionId">
-                                            @searchResult.SiteName, @searchResult.Address, @searchResult.SitePostcode
+                                            @(string.Join(", ", searchResult.AddressFields))
                                         </a>
                                     </dt>
                                 </div>

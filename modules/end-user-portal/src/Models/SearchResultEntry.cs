@@ -49,5 +49,28 @@ public class SearchResultEntry
   [Display(Name = "HasSendDocument", ResourceType = typeof(DataFieldNameResources))]
   public bool HasSendDocument { get; set; }
 
-  public string Address { get; set; } = "My Street, Somewhere";
+  [JsonProperty("address1")]
+  public string Address1 { get; set; } = "";
+
+  [JsonProperty("address2")]
+  public string Address2 { get; set; } = "";
+
+  [JsonProperty("town")]
+  public string Town { get; set; } = "";
+
+  [JsonProperty("county")]
+  public string County { get; set; } = "";
+
+  [JsonProperty("country")]
+  public string Country { get; set; } = "";
+
+  [JsonIgnore]
+  public List<string> AddressFields => new List<string> {
+        SiteName,
+        Address1,
+        Address2,
+        Town,
+        County,
+        SitePostcode
+    }.FindAll((x) => !string.IsNullOrWhiteSpace(x));
 }
