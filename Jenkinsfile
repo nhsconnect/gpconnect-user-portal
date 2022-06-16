@@ -20,6 +20,7 @@ pipeline {
       steps {
         sh 'make serve'
         sh 'make acceptance-test'
+        sh 'docker compose down'
       }
     }
 
