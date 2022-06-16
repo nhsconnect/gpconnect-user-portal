@@ -10,8 +10,8 @@ namespace GpConnect.NationalDataSharingPortal.Api.Dal.Mapping
             Map(p => p.Id).ToColumn("site_unique_identifier");
             Map(p => p.Name).ToColumn("site_name");
             Map(p => p.OdsCode).ToColumn("site_ods_code");
-            Map(p => p.Line1).ToColumn("site_address_line_1");
-            Map(p => p.Line2).ToColumn("site_address_line_2");
+            Map(p => p.AddressLine1).ToColumn("site_address_line_1");
+            Map(p => p.AddressLine2).ToColumn("site_address_line_2");
             Map(p => p.Town).ToColumn("site_address_town");
             Map(p => p.County).ToColumn("site_address_county");
             Map(p => p.Country).ToColumn("site_address_country");

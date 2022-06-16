@@ -1,5 +1,6 @@
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Core.HttpClientServices.Interfaces;
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Helpers;
+using GpConnect.NationalDataSharingPortal.EndUserPortal.Helpers.Enumerations;
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Models;
 using Microsoft.AspNetCore.WebUtilities;
 using Newtonsoft.Json;
@@ -50,6 +51,40 @@ public class SiteService : ISiteService
         catch (Exception exc)
         {
             _logger.LogError(exc, $"An exception has occurred while attempting to execute an API query - {searchRequest}");
+            throw;
+        }
+    }
+
+    public async Task<SearchResultEntry> SearchSiteAsync(string id)
+    {
+        try
+        {
+            var cancellationTokenSource = new CancellationTokenSource();
+            var request = new HttpRequestMessage()
+            {
+                Method = HttpMethod.Get
+            };
+            var result = default(SearchResultEntry);
+
+            var url = $"transparency-site/{id}";
+            var response = await _httpClient.GetAsync(url, HttpCompletionOption.ResponseHeadersRead, cancellationTokenSource.Token);
+            response.EnsureSuccessStatusCode();
+
+            await response.Content.ReadAsStringAsync(cancellationTokenSource.Token).ContinueWith((Task<string> x) =>
+            {
+                if (x.IsFaulted)
+                {
+                    _logger.LogError(x.Exception, $"A serialization error occurred in trying to read the response from an API query");
+                    throw x.Exception;
+                }
+                result = JsonConvert.DeserializeObject<SearchResultEntry>(x.Result, _options);
+            });
+
+            return result;
+        }
+        catch (Exception exc)
+        {
+            _logger.LogError(exc, $"An exception has occurred while attempting to execute an API query - {id}");
             throw;
         }
     }
