@@ -24,10 +24,6 @@ public class SiteService : ISiteService
     {
         try
         {
-            var request = new HttpRequestMessage()
-            {
-                Method = HttpMethod.Get
-            };
             var result = default(List<SearchResultEntry>);
 
             var url = QueryHelpers.AddQueryString("transparency-site", mode.GetQueryStringParameter(), query);
