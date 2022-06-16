@@ -12,6 +12,7 @@ pipeline {
     stage('Test') {
       steps {
         sh 'make test'
+        sh 'docker compose -f docker-compose.build.yml down'
       }
     }
 
