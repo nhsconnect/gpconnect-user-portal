@@ -7,11 +7,13 @@ Scenario: NotSignedIn
 
 Scenario: SignInWithoutPrivs
   Given I have opened the admin site
+  And the Sign In element is shown
   And I sign in
   Then an access restriction message should be shown
 
 Scenario: SignInWithPrivs
   Given I have opened the admin site
+  And the Sign In element is shown
   And I sign in
   And I sign out
   And my user is granted admin rights
