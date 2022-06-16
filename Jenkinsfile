@@ -5,14 +5,20 @@ pipeline {
 
     stage('Build') {
       steps {
-        sh 'make serve'
-        sh 'make acceptance-test'
+        sh 'make build-containers'
       }
     }
 
     stage('Test') {
       steps {
-        echo 'Testing...'
+        sh 'make test'
+      }
+    }
+
+    stage('Acceptance') {
+      steps {
+        sh 'make serve'
+        sh 'make acceptance-test'
       }
     }
 
