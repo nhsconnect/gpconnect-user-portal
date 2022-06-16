@@ -7,7 +7,7 @@ namespace GpConnect.NationalDataSharingPortal.EndUserPortal.Models;
 public class SearchResultEntry
 {
   [JsonProperty("id")]
-  public int SiteDefinitionId { get; set; } = 0;
+  public Guid SiteDefinitionId { get; set; }
 
   [JsonProperty("odsCode")]
   [Display(Name = "SiteOdsCode", ResourceType = typeof(DataFieldNameResources))]
@@ -48,4 +48,6 @@ public class SearchResultEntry
   [JsonProperty("sendDocumentEnabled")]
   [Display(Name = "HasSendDocument", ResourceType = typeof(DataFieldNameResources))]
   public bool HasSendDocument { get; set; }
+
+  public string Address { get; set; } = "My Street, Somewhere";
 }
