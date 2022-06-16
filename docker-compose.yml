@@ -127,8 +127,8 @@ services:
       ASPNETCORE_URLS: https://+:443
       ASPNETCORE_Kestrel__Certificates__Default__Password: ndsa
       ASPNETCORE_Kestrel__Certificates__Default__Path: /https/aspnetapp.pfx
-      # API_BASEADDRESS: http://api:5002
-      API_BASEADDRESS: http://mock-api:5555
+      API_BASEADDRESS: http://api:5002
+      # API_BASEADDRESS: http://mock-api:5555
 
   admin-portal:
     image: ndsp/admin-portal
