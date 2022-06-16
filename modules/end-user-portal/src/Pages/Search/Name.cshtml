@@ -1,0 +1,53 @@
+@page "{ProviderName?}"
+@using GpConnect.NationalDataSharingPortal.EndUserPortal.Helpers.Constants
+@using Microsoft.AspNetCore.Mvc.ModelBinding
+@model GpConnect.NationalDataSharingPortal.EndUserPortal.Pages.Search.SearchByNameModel
+@{
+    var providerNameInvalid = Model.ModelState["ProviderName"]?.ValidationState == ModelValidationState.Invalid;
+}
+
+<div class="nhsuk-width-container">
+    <main class="nhsuk-main-wrapper" id="maincontent">
+        <h1 class="nhsuk-label-wrapper">
+            <label class="nhsuk-label nhsuk-label--xl">Find how an organisation shares patient records</label>
+        </h1>
+        <form method="post" id="search-input-form">
+            <div class="nhsuk-grid-row">
+                <div class="nhsuk-grid-column-two-thirds">
+                    <div class="nhsuk-card">
+                        <div class="nhsuk-card__content">
+                            <div class="nhsuk-form-group @(providerNameInvalid ? "nhsuk-form-group--error": string.Empty)">
+                                <label asp-for="@Model.ProviderName" class="nhsuk-label"></label>
+                                <div class="nhsuk-hint" id="input-hint-providername">For example: Bodmin GP Surgery</div>
+                                @if (providerNameInvalid)
+                                {
+                                    <span asp-validation-for="@Model.ProviderName" class="nhsuk-error-message"></span>
+                                }
+                                <input id="@Model.ProviderName" class="nhsuk-input@(providerNameInvalid ? " nhsuk-input--error": string.Empty)" novalidate
+                                       asp-for="@Model.ProviderName" aria-describedby="input-hint-providername" value="@Model.ProviderName" type="search">
+                            </div>
+                            <button class="nhsuk-button" asp-page-handler="Search" type="submit">@ButtonConstants.FIND</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <div class="nhsuk-grid-row">
+            <div class="nhsuk-grid-column-full">
+                <div class="nhsuk-card">
+                    <div class="nhsuk-card__content">
+                        <h3 class="nhsuk-card__heading">Search by ODS (organisational data service) identification code</h3>
+                        <p class="nhsuk-card__description">You can <a href="./Code">find how an organisation shares patient records by using its ODS code.</a></p>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+        <div class="nhsuk-grid-row">
+            <div class="nhsuk-grid-column-full">
+                <label class="nhsuk-label nhsuk-label--m"></label>
+            </div>
+        </div>
+    </main>
+</div>
