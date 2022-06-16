@@ -79,6 +79,11 @@
                             "structuredRecordEnabled": true,
                             "appointmentManagementEnabled": true,
                             "sendDocumentEnabled": true,
+                            "address1": "The Hedgerows",
+                            "address2": "",
+                            "town": "Bishop Stortford",
+                            "county": "Essex",
+                            "country": "United Kingdom",
                             "postcode": "BA1 1DS",
                             "useCase": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin varius, dui vitae vehicula cursus, turpis nunc pellentesque magna, nec faucibus urna ante eu velit. Suspendisse varius tempus neque mattis imperdiet.",
                             "ccgIcbName": "CCG",
@@ -92,6 +97,11 @@
                             "structuredRecordEnabled": true,
                             "appointmentManagementEnabled": true,
                             "sendDocumentEnabled": true,
+                            "address1": "Royal Cresent",
+                            "address2": "",
+                            "town": "Bath",
+                            "county": "Bath",
+                            "country": "United Kingdom",
                             "postcode": "BA1 1DS",
                             "useCase": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin varius, dui vitae vehicula cursus, turpis nunc pellentesque magna, nec faucibus urna ante eu velit. Suspendisse varius tempus neque mattis imperdiet.",
                             "ccgIcbName": "CCG",
@@ -124,6 +134,47 @@
                         "structuredRecordEnabled": true,
                         "appointmentManagementEnabled": true,
                         "sendDocumentEnabled": true,
+                        "address1": "The Hedgerows",
+                        "address2": "",
+                        "town": "Bishop Stortford",
+                        "county": "Essex",
+                        "country": "United Kingdom",
+                        "postcode": "BA1 1DS",
+                        "useCase": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin varius, dui vitae vehicula cursus, turpis nunc pellentesque magna, nec faucibus urna ante eu velit. Suspendisse varius tempus neque mattis imperdiet.",
+                        "ccgIcbName": "CCG",
+                        "ccgIcbOdsCode": "CCG Code"
+                    },
+                    "headers": {
+                        "Content-Type": "application/json"
+                    }
+                }
+            }
+        ]
+      },
+      {
+        "predicates": [
+            {
+                "equals": {
+                    "path": "/transparency-site/12341234-1234-1234-1234-123412341235"
+                }
+            }
+        ],
+        "responses": [
+            {
+                "is": {
+                    "body": {
+                        "id": "12341234-1234-1234-1234-123412341235",
+                        "name": "Test Setting 1",
+                        "odsCode": "ODS Code",
+                        "accessRecordHTMLEnabled": true,
+                        "structuredRecordEnabled": true,
+                        "appointmentManagementEnabled": true,
+                        "sendDocumentEnabled": true,
+                        "address1": "Royal Cresent",
+                        "address2": "",
+                        "town": "Bath",
+                        "county": "Bath",
+                        "country": "United Kingdom",
                         "postcode": "BA1 1DS",
                         "useCase": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin varius, dui vitae vehicula cursus, turpis nunc pellentesque magna, nec faucibus urna ante eu velit. Suspendisse varius tempus neque mattis imperdiet.",
                         "ccgIcbName": "CCG",
@@ -159,6 +210,11 @@
                             "structuredRecordEnabled": true,
                             "appointmentManagementEnabled": true,
                             "sendDocumentEnabled": true,
+                            "address1": "The Hedgerows",
+                            "address2": "",
+                            "town": "Bishop Stortford",
+                            "county": "Essex",
+                            "country": "United Kingdom",
                             "postcode": "BA1 1DS",
                             "useCase": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin varius, dui vitae vehicula cursus, turpis nunc pellentesque magna, nec faucibus urna ante eu velit. Suspendisse varius tempus neque mattis imperdiet.",
                             "ccgIcbName": "CCG Nerp",
@@ -214,55 +270,6 @@
               }
             }
           }
-        ]
-      },
-      {
-        "predicates": [
-            {
-                "equals": {
-                    "path": "/transparency-site",
-                    "query": {
-                        "provider_code": "A1234 A1235"
-                    }
-                }
-            }
-        ],
-        "responses": [
-            {
-                "is": {
-                    "body": [
-                        {
-                            "id": 234,
-                            "name": "Provider Name 1",
-                            "odsCode": "A1234",
-                            "accessRecordHTMLEnabled": true,
-                            "structuredRecordEnabled": true,
-                            "appointmentManagementEnabled": false,
-                            "sendDocumentEnabled": false,
-                            "postcode": "BA1 1DS",
-                            "useCase": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin varius, dui vitae vehicula cursus, turpis nunc pellentesque magna, nec faucibus urna ante eu velit. Suspendisse varius tempus neque mattis imperdiet.",
-                            "ccgIcbName": "CCG Name",
-                            "ccgIcbOdsCode": "A9876"
-                        },
-                        {
-                            "id": 234,
-                            "name": "Provider Name 2",
-                            "odsCode": "A1235",
-                            "accessRecordHTMLEnabled": false,
-                            "structuredRecordEnabled": false,
-                            "appointmentManagementEnabled": true,
-                            "sendDocumentEnabled": true,
-                            "postcode": "BA1 1DS",
-                            "useCase": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin varius, dui vitae vehicula cursus, turpis nunc pellentesque magna, nec faucibus urna ante eu velit. Suspendisse varius tempus neque mattis imperdiet.",
-                            "ccgIcbName": "CCG Name",
-                            "ccgIcbOdsCode": "A9876"
-                        }
-                    ],
-                    "headers": {
-                        "Content-Type": "application/json"
-                    }
-                }
-            }
         ]
       },
       {
