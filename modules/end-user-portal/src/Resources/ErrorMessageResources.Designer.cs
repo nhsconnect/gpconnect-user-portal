@@ -62,11 +62,20 @@ namespace GpConnect.NationalDataSharingPortal.EndUserPortal.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You must enter a valid value for Ods Code.
+        ///   Looks up a localized string similar to You must enter a value for Clinical Care Organisation Name.
         /// </summary>
-        public static string OdsCode {
+        public static string ProviderName {
             get {
-                return ResourceManager.GetString("OdsCode", resourceCulture);
+                return ResourceManager.GetString("ProviderName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You must enter a value for ODS Code.
+        /// </summary>
+        public static string ProviderOdsCode {
+            get {
+                return ResourceManager.GetString("ProviderOdsCode", resourceCulture);
             }
         }
     }

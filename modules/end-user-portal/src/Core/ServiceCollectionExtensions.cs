@@ -4,51 +4,55 @@ namespace GpConnect.NationalDataSharingPortal.EndUserPortal.Core;
 
 public static class ServiceCollectionExtensions
 {
-  public static IServiceCollection ConfigureApplicationServices(this IServiceCollection services, IConfiguration configuration, IWebHostEnvironment env)
-  {
-    services.AddSession(s =>
+    public static IServiceCollection ConfigureApplicationServices(this IServiceCollection services, IConfiguration configuration, IWebHostEnvironment env)
     {
-      s.Cookie.Name = ".GpConnect.NationalDataSharingPortal.EndUserPortal.Session";
-      s.IdleTimeout = new TimeSpan(0, 30, 0);
-      s.Cookie.HttpOnly = false;
-      s.Cookie.IsEssential = true;
-    });
+        services.AddSession(s =>
+        {
+            s.Cookie.Name = ".GpConnect.NationalDataSharingPortal.EndUserPortal.Session";
+            s.IdleTimeout = new TimeSpan(0, 30, 0);
+            s.Cookie.HttpOnly = false;
+            s.Cookie.IsEssential = true;
+        });
 
-    services.Configure<CookiePolicyOptions>(options =>
-    {
-      options.CheckConsentNeeded = context => true;
-      options.MinimumSameSitePolicy = SameSiteMode.None;
-    });
+        services.Configure<CookiePolicyOptions>(options =>
+        {
+            options.CheckConsentNeeded = context => true;
+            options.MinimumSameSitePolicy = SameSiteMode.None;
+        });
 
-    services.AddOptions();
-    services.Configure<ApplicationParameters>(configuration.GetSection("ApplicationParameters"));
+        services.AddOptions();
+        services.Configure<ApplicationParameters>(configuration.GetSection("ApplicationParameters"));
 
-    services.AddHsts(options =>
-    {
-      options.IncludeSubDomains = true;
-      options.MaxAge = TimeSpan.FromDays(730);
-    });
+        services.AddHsts(options =>
+        {
+            options.IncludeSubDomains = true;
+            options.MaxAge = TimeSpan.FromDays(730);
+        });
 
-    services.AddResponseCaching();
-    services.AddResponseCompression();
-    services.AddHttpContextAccessor();
+        services.AddResponseCaching();
+        services.AddResponseCompression();
+        services.AddHttpContextAccessor();
 
-    services.AddHealthChecks();
+        services.AddHealthChecks();
 
-    services.AddRazorPages(options =>
-    {      
-    });
+        var builder = services.AddRazorPages();
+        var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
 
-    services.AddAntiforgery(options =>
-    {
-      options.SuppressXFrameOptionsHeader = true;
-      options.Cookie.HttpOnly = false;
-      options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
-      options.Cookie.SameSite = SameSiteMode.None;
-    });
+        if (environment == "Development")
+        {
+            builder.AddRazorRuntimeCompilation();
+        }
 
-    services.AddHttpClientServices(configuration, env);
+        services.AddAntiforgery(options =>
+        {
+            options.SuppressXFrameOptionsHeader = true;
+            options.Cookie.HttpOnly = false;
+            options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+            options.Cookie.SameSite = SameSiteMode.None;
+        });
 
-    return services;
-  }  
+        services.AddHttpClientServices(configuration, env);
+
+        return services;
+    }
 }
