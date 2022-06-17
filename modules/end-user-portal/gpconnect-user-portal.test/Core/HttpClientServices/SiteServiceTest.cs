@@ -111,6 +111,6 @@ public class SiteServiceTests
         var result = await _sut.SearchSitesAsync("Query", SearchMode.Name);
 
         Assert.StrictEqual(1, result.Count);
-        Assert.Equal(Guid.Parse("12341234-1234-1234-1234-123412341234"), result[0].SiteDefinitionId);
+        Assert.Equal("12341234-1234-1234-1234-123412341234", result[0].SiteDefinitionId);
     }
 }

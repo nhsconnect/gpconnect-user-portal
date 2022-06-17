@@ -1,7 +1,9 @@
-@page "{id?}"
+@page
+@using GpConnect.NationalDataSharingPortal.EndUserPortal.Helpers
+@using GpConnect.NationalDataSharingPortal.EndUserPortal.Helpers.Constants
+@model GpConnect.NationalDataSharingPortal.EndUserPortal.Pages.Search.DetailModel
 @using GpConnect.NationalDataSharingPortal.EndUserPortal.Helpers.Enumerations
 @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
-@model GpConnect.NationalDataSharingPortal.EndUserPortal.Pages.Search.IndexModel
 @{
     var source = DetailViewSource.Search;
     if (HttpContextAccessor?.HttpContext?.Request.Query.TryGetValue("Source", out _) == true)
@@ -10,7 +12,7 @@
     }
 
     Enum.TryParse(HttpContextAccessor?.HttpContext?.Request.Query["Mode"][0].ToString(), out SearchMode mode);
-    @*  *@
+    
     var backModel = new BackPartialModel 
     {
         Query = HttpContextAccessor?.HttpContext?.Request.Query["Query"][0],
@@ -21,134 +23,90 @@
 }
 <div class="nhsuk-width-container">
     <main class="nhsuk-main-wrapper" id="maincontent">
-        <partial name="Back" 
-            model=backModel >
+        <partial name="Back" model=backModel ></partial>
         <div class="nhsuk-grid-row">
             <div class="nhsuk-grid-column-full">
                 <h1 class="nhsuk-label-wrapper">
                     <label class="nhsuk-label nhsuk-label--xl">
-                        Find how an organisation shares patient records
+                        How this organisation shares patient records
                     </label>
                 </h1>
-            </div>
-        </div>
-        <div class="nhsuk-grid-row">
-            <div class="nhsuk-grid-column-full">
-                <div class="nhsuk-card nhsuk-card--feature">
-                    <div class="nhsuk-card__content nhsuk-card__content--feature">
-                        <h2 class="nhsuk-card__heading nhsuk-card__heading--feature nhsuk-heading-m">
-                            Patient record sharing services and reasons
-                        </h2>
-                        <div class="nhsuk-card__content--feature">
-                            <h3 class="nhsuk-card__heading nhsuk-heading-s">@* @Model.Name *@ Name</h3>
-                            <label class="nhsuk-label">@* @Model.Address *@ Address </label>
-                            <div>
-                                <h4 class="nhsuk-card__heading nhsuk-heading-xs">
-                                    Reason:
-                                </h4>
-                                <p>@* @Model.Address *@ Use Case </p>     
-                                <h4 class="nhsuk-card__heading nhsuk-heading-xs">
-                                    Serice(s) used:
-                                </h4>        
-                                <ol class="nhsuk-contents-list__list">
-                                    @if (true) {
-                                        <li class="nhsuk-contents-list__item">
-                                            <a class="nhsuk-contents-list__link" 
-                                                href="https://www.nhs.uk/conditions/age-related-macular-degeneration-amd/symptoms/"
-                                            >
-                                                Access Record (HTML)
-                                            </a>
-                                        </li>
-                                    }
-                                    @if (true) {
-                                        <li class="nhsuk-contents-list__item">
-                                            <a class="nhsuk-contents-list__link" 
-                                                href="https://www.nhs.uk/conditions/age-related-macular-degeneration-amd/getting-diagnosed/"
-                                            >
-                                                Access Record (Structured)
-                                            </a>
-                                        </li>
-                                    }
-                                    @if (true) {
-                                        <li class="nhsuk-contents-list__item">
-                                            <a class="nhsuk-contents-list__link" 
-                                                href="https://www.nhs.uk/conditions/age-related-macular-degeneration-amd/treatment/"
-                                            >
-                                                Appointment Management
-                                            </a>
-                                        </li>
-                                    }
-                                    @if (true) {
-                                        <li class="nhsuk-contents-list__item">
-                                            <a class="nhsuk-contents-list__link" 
-                                                href="https://www.nhs.uk/conditions/age-related-macular-degeneration-amd/living-with-amd/"
-                                            >
-                                                Send Document
-                                            </a>
-                                        </li>
-                                    }
-                                </ol>
+                <div class="nhsuk-grid-row">
+                    <div class="nhsuk-grid-column-full">
+                        <div class="nhsuk-card nhsuk-card--care nhsuk-card--care--non-urgent">
+                            <div class="nhsuk-card--care__heading-container">
+                                <h3 class="nhsuk-card--care__heading">
+                                    <span role="text"><span class="nhsuk-u-visually-hidden">Information: </span>Patient record sharing services and reasons</span>
+                                </h3>
+                            </div>
+                            <div class="nhsuk-card__content">
+                                <label class="nhsuk-label nhsuk-label--m">
+                                    @Model.SearchResultEntry.SiteName
+                                </label>
+                                <p>@Model.SearchResultEntry.FullAddress</p>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="nhsuk-card">
-                    <div class="nhsuk-card__content">
-                        <h3 class="nhsuk-card__heading">
-                            Patient record sharing services and reasons
-                            
-                        </h3>
-                        <label class="nhsuk-label nhsuk-label--s">@* @Model.Name *@ Name</label>
-                        
-                        <p class="nhsuk-card__description">@* @Model.Address *@ Address </p>
-                        <label class="nhsuk-label">
-                            Reason:
-                        </label>
-                        <p>@* @Model.Address *@ Use Case </p>     
-                        <label class="nhsuk-label">
-                            Serice(s) used:
-                        </label>        
-                        <ol class="nhsuk-contents-list__list">
-                            @if (true) {
-                                <li class="nhsuk-contents-list__item">
-                                    <a class="nhsuk-contents-list__link" 
-                                        href="https://www.nhs.uk/conditions/age-related-macular-degeneration-amd/symptoms/"
-                                    >
-                                        Access Record (HTML)
-                                    </a>
-                                </li>
-                            }
-                            @if (true) {
-                                <li class="nhsuk-contents-list__item">
-                                    <a class="nhsuk-contents-list__link" 
-                                        href="https://www.nhs.uk/conditions/age-related-macular-degeneration-amd/getting-diagnosed/"
-                                    >
-                                        Access Record (Structured)
-                                    </a>
-                                </li>
-                            }
-                            @if (true) {
-                                <li class="nhsuk-contents-list__item">
-                                    <a class="nhsuk-contents-list__link" 
-                                        href="https://www.nhs.uk/conditions/age-related-macular-degeneration-amd/treatment/"
-                                    >
-                                        Appointment Management
-                                    </a>
-                                </li>
-                            }
-                            @if (true) {
-                                <li class="nhsuk-contents-list__item">
-                                    <a class="nhsuk-contents-list__link" 
-                                        href="https://www.nhs.uk/conditions/age-related-macular-degeneration-amd/living-with-amd/"
-                                    >
-                                        Send Document
-                                    </a>
-                                </li>
-                            }
-                        </ol>
+
+                <div class="nhsuk-grid-row">
+                    <div class="nhsuk-grid-column-full">
+                        <div class="nhsuk-do-dont-list">
+                            <h3 class="nhsuk-do-dont-list__label">Services Used</h3>
+                            <ul class="nhsuk-list nhsuk-list--tick">
+                                @if (Model.SearchResultEntry.HasHtmlView)
+                                {
+                                    <li>
+                                        <svg class="nhsuk-icon nhsuk-icon__tick" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" aria-hidden="true" width="34" height="34">
+                                            <path stroke-width="4" stroke-linecap="round" d="M18.4 7.8l-8.5 8.4L5.6 12" stroke="#007f3b"></path>
+                                        </svg>@Html.DisplayNameFor(model => Model.SearchResultEntry.HasHtmlView)
+                                    </li>
+                                }
+                                @if (Model.SearchResultEntry.HasAppointmentManagement)
+                                {
+                                    <li>
+                                        <svg class="nhsuk-icon nhsuk-icon__tick" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" aria-hidden="true" width="34" height="34">
+                                            <path stroke-width="4" stroke-linecap="round" d="M18.4 7.8l-8.5 8.4L5.6 12" stroke="#007f3b"></path>
+                                        </svg>@Html.DisplayNameFor(model => Model.SearchResultEntry.HasAppointmentManagement)
+                                    </li>
+                                }
+                                @if (Model.SearchResultEntry.HasStructured)
+                                {
+                                    <li>
+                                        <svg class="nhsuk-icon nhsuk-icon__tick" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" aria-hidden="true" width="34" height="34">
+                                            <path stroke-width="4" stroke-linecap="round" d="M18.4 7.8l-8.5 8.4L5.6 12" stroke="#007f3b"></path>
+                                        </svg>@Html.DisplayNameFor(model => Model.SearchResultEntry.HasStructured)
+                                    </li>
+                                }
+                                @if (Model.SearchResultEntry.HasSendDocument)
+                                {
+                                    <li>
+                                        <svg class="nhsuk-icon nhsuk-icon__tick" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" aria-hidden="true" width="34" height="34">
+                                            <path stroke-width="4" stroke-linecap="round" d="M18.4 7.8l-8.5 8.4L5.6 12" stroke="#007f3b"></path>
+                                        </svg>@Html.DisplayNameFor(model => Model.SearchResultEntry.HasSendDocument)
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="nhsuk-grid-row">
+                    <div class="nhsuk-grid-column-full">
+                        <div class="nhsuk-card nhsuk-card--feature">
+                            <div class="nhsuk-card__content nhsuk-card__content--feature">
+                                <h2 class="nhsuk-card__heading nhsuk-card__heading--feature nhsuk-heading-m">
+                                    Use Case Description
+                                </h2>
+                                <p class="nhsuk-card__description">@Model.SearchResultEntry.UseCaseDescription</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </main>
+<<<<<<< HEAD
 </div>
+=======
+</div>
+>>>>>>> task/GCNDSP-296-EndUserPortal-UI-SharingReportScreen

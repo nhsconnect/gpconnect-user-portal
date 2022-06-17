@@ -124,16 +124,16 @@
     <value>CCG/ICB Code</value>
   </data>
   <data name="HasAppointmentManagement" xml:space="preserve">
-    <value>Has Appointment Management</value>
+    <value>Appointment Management</value>
   </data>
   <data name="HasHtmlView" xml:space="preserve">
-    <value>Has Access Record: HTML</value>
+    <value>Access Record: HTML</value>
   </data>
   <data name="HasSendDocument" xml:space="preserve">
-    <value>Has Send Document</value>
+    <value>Send Document</value>
   </data>
   <data name="HasStructured" xml:space="preserve">
-    <value>Has Access Record: Structured</value>
+    <value>Access Record: Structured</value>
   </data>
   <data name="MatchedCount" xml:space="preserve">
     <value>Matched</value>

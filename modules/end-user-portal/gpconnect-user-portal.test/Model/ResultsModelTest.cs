@@ -129,25 +129,29 @@ public class ResultsModelTest
     public async Task OnGet_SearchSites_ReturnsOneResult_RedirectsToDetailsPage()
     {
         Guid expected = Guid.NewGuid();
+        const string expectedQuery = "Query";
+        const SearchMode expectedSearchMode = SearchMode.Name;
 
         _mockSiteService.Setup(mss => mss.SearchSitesAsync(It.IsAny<string>(), It.IsAny<SearchMode>())).ReturnsAsync(new List<SearchResultEntry>{
             new SearchResultEntry {
-                SiteDefinitionId = expected
+                SiteDefinitionId = expected.ToString()
             }
         });
-
+        
         var resultsModel = new ResultsModel(Mock.Of<IOptions<ApplicationParameters>>(), _mockSiteService.Object)
         {
-            Query = "Query",
-            Mode = SearchMode.Name
+            Query = expectedQuery,
+            Mode = expectedSearchMode
         };
 
         var result = await resultsModel.OnGet() as RedirectToPageResult;
 
         Assert.Equal("./Detail",result?.PageName);
-        Assert.StrictEqual(1, result?.RouteValues?.Count);
+        Assert.StrictEqual(3, result?.RouteValues?.Count);
 
-        Assert.StrictEqual(expected, result?.RouteValues?.GetValueOrDefault("id"));
+        Assert.Equal(expected.ToString(), result?.RouteValues?.GetValueOrDefault("id"));
+        Assert.Equal(expectedSearchMode, result?.RouteValues?.GetValueOrDefault("mode"));
+        Assert.Equal(expectedQuery, result?.RouteValues?.GetValueOrDefault("query"));
     }
 
     [Fact]
