@@ -1,56 +1,151 @@
 @page "{id?}"
+@using GpConnect.NationalDataSharingPortal.EndUserPortal.Helpers.Enumerations
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 @model GpConnect.NationalDataSharingPortal.EndUserPortal.Pages.Search.IndexModel
 @{
+    var source = DetailViewSource.Search;
+    if (HttpContextAccessor?.HttpContext?.Request.Query.TryGetValue("Source", out _) == true)
+    {
+        Enum.TryParse(HttpContextAccessor?.HttpContext?.Request.Query["Source"][0].ToString(), out source);
+    }
+
+    Enum.TryParse(HttpContextAccessor?.HttpContext?.Request.Query["Mode"][0].ToString(), out SearchMode mode);
+    @*  *@
+    var backModel = new BackPartialModel 
+    {
+        Query = HttpContextAccessor?.HttpContext?.Request.Query["Query"][0],
+        Mode = mode,
+        Source = source
+    };
+
 }
 <div class="nhsuk-width-container">
     <main class="nhsuk-main-wrapper" id="maincontent">
+        <partial name="Back" 
+            model=backModel >
         <div class="nhsuk-grid-row">
             <div class="nhsuk-grid-column-full">
                 <h1 class="nhsuk-label-wrapper">
                     <label class="nhsuk-label nhsuk-label--xl">
-                        Detail @RouteData.Values["id"]
+                        Find how an organisation shares patient records
                     </label>
                 </h1>
-                <div class="nhsuk-grid-row">
-                    <div class="nhsuk-grid-column-full">
-                        <div class="nhsuk-card nhsuk-card--care nhsuk-card--care--non-urgent">
-                            <div class="nhsuk-card--care__heading-container">
-                                <h3 class="nhsuk-card--care__heading">
-                                    <span role="text"><span class="nhsuk-u-visually-hidden">Information: </span>Find how a clinical care organisation shares patient records in England, Wales and Northern Ireland</span>
-                                </h3>
-                                <span class="nhsuk-card--care__arrow" aria-hidden="true"></span>
-                            </div>
-                            <div class="nhsuk-card__content">
-                                <p>A clinical care organisation commonly includes:</p>
-                                <ul>
-                                    <li>GP practices</li>
-                                    <li>Care Homes</li>
-                                    <li>Physiotherapists</li>
-                                </ul>
-                                <h3 class="nhsuk-card__heading">We'll ask you for:</h3>
-                                <p class="nhsuk-card__description">You can search by organisation name or ODS (Organisation Data Service) identification code.</p>
-                                <a class="nhsuk-button" href="~/Search/Name" draggable="false">Start now</a>
+            </div>
+        </div>
+        <div class="nhsuk-grid-row">
+            <div class="nhsuk-grid-column-full">
+                <div class="nhsuk-card nhsuk-card--feature">
+                    <div class="nhsuk-card__content nhsuk-card__content--feature">
+                        <h2 class="nhsuk-card__heading nhsuk-card__heading--feature nhsuk-heading-m">
+                            Patient record sharing services and reasons
+                        </h2>
+                        <div class="nhsuk-card__content--feature">
+                            <h3 class="nhsuk-card__heading nhsuk-heading-s">@* @Model.Name *@ Name</h3>
+                            <label class="nhsuk-label">@* @Model.Address *@ Address </label>
+                            <div>
+                                <h4 class="nhsuk-card__heading nhsuk-heading-xs">
+                                    Reason:
+                                </h4>
+                                <p>@* @Model.Address *@ Use Case </p>     
+                                <h4 class="nhsuk-card__heading nhsuk-heading-xs">
+                                    Serice(s) used:
+                                </h4>        
+                                <ol class="nhsuk-contents-list__list">
+                                    @if (true) {
+                                        <li class="nhsuk-contents-list__item">
+                                            <a class="nhsuk-contents-list__link" 
+                                                href="https://www.nhs.uk/conditions/age-related-macular-degeneration-amd/symptoms/"
+                                            >
+                                                Access Record (HTML)
+                                            </a>
+                                        </li>
+                                    }
+                                    @if (true) {
+                                        <li class="nhsuk-contents-list__item">
+                                            <a class="nhsuk-contents-list__link" 
+                                                href="https://www.nhs.uk/conditions/age-related-macular-degeneration-amd/getting-diagnosed/"
+                                            >
+                                                Access Record (Structured)
+                                            </a>
+                                        </li>
+                                    }
+                                    @if (true) {
+                                        <li class="nhsuk-contents-list__item">
+                                            <a class="nhsuk-contents-list__link" 
+                                                href="https://www.nhs.uk/conditions/age-related-macular-degeneration-amd/treatment/"
+                                            >
+                                                Appointment Management
+                                            </a>
+                                        </li>
+                                    }
+                                    @if (true) {
+                                        <li class="nhsuk-contents-list__item">
+                                            <a class="nhsuk-contents-list__link" 
+                                                href="https://www.nhs.uk/conditions/age-related-macular-degeneration-amd/living-with-amd/"
+                                            >
+                                                Send Document
+                                            </a>
+                                        </li>
+                                    }
+                                </ol>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="nhsuk-grid-row">
-                    <div class="nhsuk-grid-column-full">
-                        <div class="nhsuk-card">
-                            <div class="nhsuk-card__content">
-                                <h3 class="nhsuk-card__heading">If you need help finding how an organisation shares patient records, contact the @Model.ProductName administrator.</h3>
-                                <p class="nhsuk-card__description">@Model.ProductName<br />@Model.OwnerEmailAddress<br />Telephone: @Model.OwnerTelephone<br />Monday to Friday, 9am to 5pm<br />Find out more about call charges.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="nhsuk-grid-row">
-                    <div class="nhsuk-grid-column-full">
-                        <div class="nhsuk-card">
-                            <div class="nhsuk-card__content">
-                                <p class="nhsuk-card__description">By using this service you are agreeing to our terms of use and privacy policy.</p>
-                            </div>
-                        </div>
+                <div class="nhsuk-card">
+                    <div class="nhsuk-card__content">
+                        <h3 class="nhsuk-card__heading">
+                            Patient record sharing services and reasons
+                            
+                        </h3>
+                        <label class="nhsuk-label nhsuk-label--s">@* @Model.Name *@ Name</label>
+                        
+                        <p class="nhsuk-card__description">@* @Model.Address *@ Address </p>
+                        <label class="nhsuk-label">
+                            Reason:
+                        </label>
+                        <p>@* @Model.Address *@ Use Case </p>     
+                        <label class="nhsuk-label">
+                            Serice(s) used:
+                        </label>        
+                        <ol class="nhsuk-contents-list__list">
+                            @if (true) {
+                                <li class="nhsuk-contents-list__item">
+                                    <a class="nhsuk-contents-list__link" 
+                                        href="https://www.nhs.uk/conditions/age-related-macular-degeneration-amd/symptoms/"
+                                    >
+                                        Access Record (HTML)
+                                    </a>
+                                </li>
+                            }
+                            @if (true) {
+                                <li class="nhsuk-contents-list__item">
+                                    <a class="nhsuk-contents-list__link" 
+                                        href="https://www.nhs.uk/conditions/age-related-macular-degeneration-amd/getting-diagnosed/"
+                                    >
+                                        Access Record (Structured)
+                                    </a>
+                                </li>
+                            }
+                            @if (true) {
+                                <li class="nhsuk-contents-list__item">
+                                    <a class="nhsuk-contents-list__link" 
+                                        href="https://www.nhs.uk/conditions/age-related-macular-degeneration-amd/treatment/"
+                                    >
+                                        Appointment Management
+                                    </a>
+                                </li>
+                            }
+                            @if (true) {
+                                <li class="nhsuk-contents-list__item">
+                                    <a class="nhsuk-contents-list__link" 
+                                        href="https://www.nhs.uk/conditions/age-related-macular-degeneration-amd/living-with-amd/"
+                                    >
+                                        Send Document
+                                    </a>
+                                </li>
+                            }
+                        </ol>
                     </div>
                 </div>
             </div>

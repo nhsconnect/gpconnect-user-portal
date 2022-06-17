@@ -4,10 +4,12 @@
 @model GpConnect.NationalDataSharingPortal.EndUserPortal.Pages.Search.SearchByCodeModel
 @{
     var providerOdsCodeInvalid = Model.ModelState["ProviderOdsCode"]?.ValidationState == ModelValidationState.Invalid;
+
 }
 
 <div class="nhsuk-width-container">
     <main class="nhsuk-main-wrapper" id="maincontent">
+        <partial name="Back" model=@(new BackPartialModel())>
         <h1 class="nhsuk-label-wrapper">
             <label class="nhsuk-label nhsuk-label--xl">Find how an organisation shares patient records by ODS (organisation data service) code</label>
         </h1>

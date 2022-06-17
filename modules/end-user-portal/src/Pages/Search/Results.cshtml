@@ -1,26 +1,20 @@
 @page
-@using GpConnect.NationalDataSharingPortal.EndUserPortal.Helpers
-@using GpConnect.NationalDataSharingPortal.EndUserPortal.Helpers.Constants
+@using GpConnect.NationalDataSharingPortal.EndUserPortal.Helpers.Enumerations
 @model GpConnect.NationalDataSharingPortal.EndUserPortal.Pages.Search.ResultsModel
 
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
+@{
+    var backModel = new BackPartialModel 
+    {
+        Query = @Model.Query,
+        Mode = @Model.Mode,
+        Source = DetailViewSource.Search
+    };
+}
 <div class="nhsuk-width-container">
     <main class="nhsuk-main-wrapper" id="maincontent">
-        <div class="nhsuk-grid-row">
-            <div class="nhsuk-grid-column-two-thirds">
-                <div class="nhsuk-back-link">
-                    <a class="nhsuk-back-link__link" 
-                        asp-page="/Search/@Model.Mode" 
-                        asp-route-ProviderOdsCode=@Model.CodeQueryOrNull 
-                        asp-route-ProviderName=@Model.NameQueryOrNull 
-                    >
-                        <svg class="nhsuk-icon nhsuk-icon__chevron-left" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" height="24" width="24">
-                            <path d="M8.5 12c0-.3.1-.5.3-.7l5-5c.4-.4 1-.4 1.4 0s.4 1 0 1.4L10.9 12l4.3 4.3c.4.4.4 1 0 1.4s-1 .4-1.4 0l-5-5c-.2-.2-.3-.4-.3-.7z"></path>
-                        </svg>
-                        Back
-                    </a>
-                </div>
-            </div>
-        </div>
+        <partial name=Back model=backModel />
         <div class="nhsuk-grid-row">
             <div class="nhsuk-grid-column-full">
                 <h1 class="nhsuk-label-wrapper">
@@ -43,7 +37,12 @@
                             {
                                 <div class="nhsuk-summary-list__row">
                                     <dt class="nhsuk-summary-list__key">
-                                        <a asp-page="./Detail" asp-route-id="@searchResult.SiteDefinitionId">
+                                        <a asp-page="./Detail" 
+                                            asp-route-id="@searchResult.SiteDefinitionId"
+                                            asp-route-query="@Model.Query"
+                                            asp-route-mode="@Model.Mode"
+                                            asp-route-source=@DetailViewSource.Results
+                                        a>
                                             @(string.Join(", ", searchResult.AddressFields))
                                         </a>
                                     </dt>
