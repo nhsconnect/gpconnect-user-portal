@@ -72,6 +72,18 @@ public class ResultsModelTest
         Assert.Null(resultsModel.CodeQueryOrNull);
     }
 
+    [Fact]
+    public async Task OnGet_ModelStateInvalid_ReturnsRedirectToSearchPage()
+    {
+        var resultsModel = new ResultsModel(Mock.Of<IOptions<ApplicationParameters>>(), _mockSiteService.Object);
+        resultsModel.ModelState.AddModelError(String.Empty, "Adding Error to invalidate the model state");
+
+        var result = await resultsModel.OnGet() as RedirectToPageResult;
+
+        Assert.Equal("./Name", result?.PageName);
+    }
+
+
     [Theory]
     [InlineData(SearchMode.Name)]
     [InlineData(SearchMode.Code)]

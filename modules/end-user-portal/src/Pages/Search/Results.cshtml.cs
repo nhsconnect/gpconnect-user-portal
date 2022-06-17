@@ -1,6 +1,5 @@
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Core;
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Core.HttpClientServices.Interfaces;
-using GpConnect.NationalDataSharingPortal.EndUserPortal.Helpers.Enumerations;
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -18,6 +17,11 @@ public partial class ResultsModel : BaseModel
 
     public async Task<IActionResult> OnGet()
     {
+        if (!ModelState.IsValid) 
+        {
+            return RedirectToPage("./Name");
+        }
+
         try
         {
             var searchResults = await _siteService.SearchSitesAsync(Query, Mode);

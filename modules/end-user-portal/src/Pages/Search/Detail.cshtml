@@ -1,21 +1,27 @@
 @page
-@using GpConnect.NationalDataSharingPortal.EndUserPortal.Helpers
-@using GpConnect.NationalDataSharingPortal.EndUserPortal.Helpers.Constants
 @model GpConnect.NationalDataSharingPortal.EndUserPortal.Pages.Search.DetailModel
 @using GpConnect.NationalDataSharingPortal.EndUserPortal.Helpers.Enumerations
+@using Microsoft.Extensions.Primitives
 @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 @{
     var source = DetailViewSource.Search;
+    var mode = SearchMode.Name;
+    StringValues query = StringValues.Empty;
+    
+    HttpContextAccessor?.HttpContext?.Request.Query.TryGetValue("Query", out query);
     if (HttpContextAccessor?.HttpContext?.Request.Query.TryGetValue("Source", out _) == true)
     {
         Enum.TryParse(HttpContextAccessor?.HttpContext?.Request.Query["Source"][0].ToString(), out source);
     }
 
-    Enum.TryParse(HttpContextAccessor?.HttpContext?.Request.Query["Mode"][0].ToString(), out SearchMode mode);
+    if (HttpContextAccessor?.HttpContext?.Request.Query.TryGetValue("Source", out _) == true)
+    {
+        Enum.TryParse(HttpContextAccessor?.HttpContext?.Request.Query["Mode"][0].ToString(), out mode);
+    }
     
     var backModel = new BackPartialModel 
     {
-        Query = HttpContextAccessor?.HttpContext?.Request.Query["Query"][0],
+        Query = query.FirstOrDefault(),
         Mode = mode,
         Source = source
     };

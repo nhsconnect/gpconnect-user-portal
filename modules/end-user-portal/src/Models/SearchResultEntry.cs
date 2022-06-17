@@ -8,7 +8,7 @@ namespace GpConnect.NationalDataSharingPortal.EndUserPortal.Models;
 public class SearchResultEntry
 {
     [JsonProperty("id")]
-    public string SiteDefinitionId { get; set; }
+    public string SiteDefinitionId { get; set; } = "";
 
     [JsonProperty("odsCode")]
     [Display(Name = "SiteOdsCode", ResourceType = typeof(DataFieldNameResources))]
