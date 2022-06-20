@@ -37,14 +37,7 @@
                             {
                                 <div class="nhsuk-summary-list__row">
                                     <dt class="nhsuk-summary-list__key">
-                                        <a asp-page="./Detail" 
-                                            asp-route-id="@searchResult.SiteDefinitionId"
-                                            asp-route-query="@Model.Query"
-                                            asp-route-mode="@Model.Mode"
-                                            asp-route-source=@DetailViewSource.Results
-                                        a>
-                                            @(string.Join(", ", searchResult.AddressFields))
-                                        </a>
+                                        <a asp-page="./Detail" asp-route-id="@searchResult.SiteDefinitionId" asp-route-query="@Model.Query" asp-route-mode="@Model.Mode" asp-route-source=@DetailViewSource.Results>@searchResult.FullAddress</a>
                                     </dt>
                                 </div>
                             }

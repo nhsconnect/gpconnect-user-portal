@@ -36,7 +36,7 @@ public class SearchResultEntry
     [JsonProperty("postcode")]
     public string SitePostcode { get; set; } = "";
 
-    public string FullAddress => AddressBuilder.GetFullAddress(new List<string>() { SiteAddressLine1, SiteAddressLine2 }, SiteAddressTown, SiteAddressCounty, SitePostcode, SiteAddressCountry);
+    public string FullAddress => AddressBuilder.GetFullAddress(new List<string>() { SiteName, SiteAddressLine1, SiteAddressLine2 }, SiteAddressTown, SiteAddressCounty, SitePostcode, SiteAddressCountry);
 
     [JsonIgnore]
     
@@ -66,14 +66,5 @@ public class SearchResultEntry
 
     [JsonProperty("sendDocumentEnabled")]
     [Display(Name = "HasSendDocument", ResourceType = typeof(DataFieldNameResources))]
-    public bool HasSendDocument { get; set; }
-
-    public List<string> AddressFields => new List<string> {
-            SiteName,
-            SiteAddressLine1,
-            SiteAddressLine2,
-            SiteAddressTown,
-            SiteAddressCounty,
-            SitePostcode
-        }.FindAll((x) => !string.IsNullOrWhiteSpace(x));
+    public bool HasSendDocument { get; set; }    
 }

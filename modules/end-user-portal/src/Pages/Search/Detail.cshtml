@@ -7,7 +7,7 @@
     var source = DetailViewSource.Search;
     var mode = SearchMode.Name;
     StringValues query = StringValues.Empty;
-    
+
     HttpContextAccessor?.HttpContext?.Request.Query.TryGetValue("Query", out query);
     if (HttpContextAccessor?.HttpContext?.Request.Query.TryGetValue("Source", out _) == true)
     {
@@ -18,18 +18,18 @@
     {
         Enum.TryParse(HttpContextAccessor?.HttpContext?.Request.Query["Mode"][0].ToString(), out mode);
     }
-    
-    var backModel = new BackPartialModel 
-    {
-        Query = query.FirstOrDefault(),
-        Mode = mode,
-        Source = source
-    };
+
+    var backModel = new BackPartialModel
+            {
+                Query = query.FirstOrDefault(),
+                Mode = mode,
+                Source = source
+            };
 
 }
 <div class="nhsuk-width-container">
     <main class="nhsuk-main-wrapper" id="maincontent">
-        <partial name="Back" model=backModel ></partial>
+        <partial name="Back" model=backModel></partial>
         <div class="nhsuk-grid-row">
             <div class="nhsuk-grid-column-full">
                 <h1 class="nhsuk-label-wrapper">
@@ -111,8 +111,4 @@
             </div>
         </div>
     </main>
-<<<<<<< HEAD
 </div>
-=======
-</div>
->>>>>>> task/GCNDSP-296-EndUserPortal-UI-SharingReportScreen
