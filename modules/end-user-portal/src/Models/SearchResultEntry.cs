@@ -36,6 +36,7 @@ public class SearchResultEntry
     [JsonProperty("postcode")]
     public string SitePostcode { get; set; } = "";
 
+    public string FullAddressOnly => AddressBuilder.GetFullAddress(new List<string>() { SiteAddressLine1, SiteAddressLine2 }, SiteAddressTown, SiteAddressCounty, SitePostcode, SiteAddressCountry);
     public string FullAddress => AddressBuilder.GetFullAddress(new List<string>() { SiteName, SiteAddressLine1, SiteAddressLine2 }, SiteAddressTown, SiteAddressCounty, SitePostcode, SiteAddressCountry);
 
     [JsonIgnore]

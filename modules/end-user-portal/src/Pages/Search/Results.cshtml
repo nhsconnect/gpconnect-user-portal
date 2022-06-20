@@ -2,19 +2,9 @@
 @using GpConnect.NationalDataSharingPortal.EndUserPortal.Helpers.Enumerations
 @model GpConnect.NationalDataSharingPortal.EndUserPortal.Pages.Search.ResultsModel
 
-@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
-
-@{
-    var backModel = new BackPartialModel 
-    {
-        Query = @Model.Query,
-        Mode = @Model.Mode,
-        Source = DetailViewSource.Search
-    };
-}
 <div class="nhsuk-width-container">
     <main class="nhsuk-main-wrapper" id="maincontent">
-        <partial name=Back model=backModel />
+        <partial name=Back model=Model.BackPartial />
         <div class="nhsuk-grid-row">
             <div class="nhsuk-grid-column-full">
                 <h1 class="nhsuk-label-wrapper">
@@ -36,15 +26,19 @@
                             @foreach (var searchResult in Model.SearchResult.SearchResults)
                             {
                                 <div class="nhsuk-summary-list__row">
-                                    <dt class="nhsuk-summary-list__key">
-                                        <a asp-page="./Detail" asp-route-id="@searchResult.SiteDefinitionId" asp-route-query="@Model.Query" asp-route-mode="@Model.Mode" asp-route-source=@DetailViewSource.Results>@searchResult.FullAddress</a>
-                                    </dt>
-                                </div>
+                                <dt class="nhsuk-summary-list__key">
+                                   <a asp-page="./Detail"
+                                   asp-route-id="@searchResult.SiteDefinitionId"
+                                   asp-route-query="@Model.Query"
+                                   asp-route-mode="@Model.Mode"
+                                   asp-route-source=@DetailViewSource.Results>@searchResult.FullAddress</a>
+                                </dt>
+                        </div>
                             }
-                        </dl>
-                    </div>
+                    </dl>
+                </div>
                 <div>
+                </div>
             </div>
-        </div>
     </main>
 </div>

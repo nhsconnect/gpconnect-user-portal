@@ -1,5 +1,6 @@
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Core;
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Core.HttpClientServices.Interfaces;
+using GpConnect.NationalDataSharingPortal.EndUserPortal.Helpers.Enumerations;
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -24,6 +25,10 @@ public partial class ResultsModel : BaseModel
 
         try
         {
+            BackPartial.Mode = Mode;
+            BackPartial.Query = Query;
+            BackPartial.Source = DetailViewSource.Search;
+
             var searchResults = await _siteService.SearchSitesAsync(Query, Mode);
 
             if (searchResults.Count == 0)
