@@ -14,7 +14,6 @@ public partial class ResultsModel : BaseModel
     [BindProperty(SupportsGet = true)]
     public SearchMode Mode { get; set; } = SearchMode.Name;
 
-    public string? NameQueryOrNull => Mode == SearchMode.Name ? Query : null;
-
-    public string? CodeQueryOrNull => Mode == SearchMode.Code ? Query : null;
+    [FromQuery(Name = "PageNumber")]
+    public int PageNumber { get; set; } = 1;
 }

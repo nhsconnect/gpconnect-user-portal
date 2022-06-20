@@ -16,4 +16,7 @@ public partial class DetailModel : BaseModel
     
     [BindProperty(SupportsGet = true)]
     public DetailViewSource Source { get; set; } = DetailViewSource.Search;
+
+    [BindProperty(Name = "PageNumber", SupportsGet = true)]
+    public int ResultsPageNumber { get; set; } = 1;
 }

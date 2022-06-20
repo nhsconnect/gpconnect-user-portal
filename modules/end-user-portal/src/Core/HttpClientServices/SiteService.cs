@@ -21,7 +21,7 @@ public class SiteService : ISiteService
         _options = new JsonSerializerSettings() { NullValueHandling = NullValueHandling.Ignore };
     }
 
-    public async Task<List<SearchResultEntry>> SearchSitesAsync(string query, SearchMode mode)
+    public async Task<List<SearchResultEntry>> SearchSitesAsync(string query, SearchMode mode, int startingIndex, int numberResults)
     {
         try
         {

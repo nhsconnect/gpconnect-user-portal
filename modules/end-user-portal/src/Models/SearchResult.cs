@@ -23,4 +23,6 @@ public class SearchResult
     public int HasSendDocumentCount => SearchResults.Count(x => x.HasSendDocument);
 
     public bool NoMatches => SearchResults?.Count == 0;
+
+    public int TotalResults => 300; //SearchResults.Count;
 }

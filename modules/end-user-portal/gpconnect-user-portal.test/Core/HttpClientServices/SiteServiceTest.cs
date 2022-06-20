@@ -47,13 +47,13 @@ public class SiteServiceTests
     }
 
     [Theory]
-    [InlineData(SearchMode.Name, "provider_name")]
-    [InlineData(SearchMode.Code, "provider_code")]
-    public async Task SearchSitesAsync_CallsHttpClient_WithExpectedParameters(SearchMode mode, string expectedParameterName)
+    [InlineData(SearchMode.Name, "provider_name", 1, 30)]
+    [InlineData(SearchMode.Code, "provider_code", 2, 75)]
+    public async Task SearchSitesAsync_CallsHttpClient_WithExpectedParameters(SearchMode mode, string expectedParameterName, int expectedStart, int expectedLength)
     {
         Uri expectedUri = new Uri($"{BASE_URI}/transparency-site?{expectedParameterName}=Query");
 
-        await _sut.SearchSitesAsync("Query", mode);
+        await _sut.SearchSitesAsync("Query", mode, expectedStart, expectedLength);
 
         _mockMessageHandler.Protected().Verify(
             "SendAsync",
@@ -74,7 +74,7 @@ public class SiteServiceTests
             .Setup<Task<HttpResponseMessage>>("SendAsync", ItExpr.IsAny<HttpRequestMessage>(), ItExpr.IsAny<CancellationToken>())
             .ThrowsAsync(new Exception("Boom!"));
 
-        Assert.ThrowsAsync<Exception>(async () => await _sut.SearchSitesAsync("Query", SearchMode.Name));
+        Assert.ThrowsAsync<Exception>(async () => await _sut.SearchSitesAsync("Query", SearchMode.Name, 0, int.MaxValue));
     }
 
     [Fact]
@@ -91,7 +91,7 @@ public class SiteServiceTests
                 })
             ));
 
-        Assert.ThrowsAsync<HttpRequestException>(async () => await _sut.SearchSitesAsync("Query", SearchMode.Name));
+        Assert.ThrowsAsync<HttpRequestException>(async () => await _sut.SearchSitesAsync("Query", SearchMode.Name, 0, int.MaxValue));
     }
 
     [Fact]
@@ -108,7 +108,7 @@ public class SiteServiceTests
                 })
             ));
 
-        var result = await _sut.SearchSitesAsync("Query", SearchMode.Name);
+        var result = await _sut.SearchSitesAsync("Query", SearchMode.Name, 0, int.MaxValue);
 
         Assert.StrictEqual(1, result.Count);
         Assert.Equal("12341234-1234-1234-1234-123412341234", result[0].SiteDefinitionId);

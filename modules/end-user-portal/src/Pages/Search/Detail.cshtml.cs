@@ -38,6 +38,7 @@ public partial class DetailModel : BaseModel
     public BackPartialModel BackPartial => new BackPartialModel {
         Query = Query,
         Source = Source,
-        Mode = Mode
+        Mode = Mode,
+        ResultsPageNumber = ResultsPageNumber
     };
 }
