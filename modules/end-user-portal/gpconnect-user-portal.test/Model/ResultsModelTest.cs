@@ -83,7 +83,6 @@ public class ResultsModelTest
         Assert.Equal("./Name", result?.PageName);
     }
 
-
     [Theory]
     [InlineData(SearchMode.Name)]
     [InlineData(SearchMode.Code)]

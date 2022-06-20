@@ -4,55 +4,41 @@ using GpConnect.NationalDataSharingPortal.EndUserPortal.Helpers.Enumerations;
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
-using Microsoft.Extensions.Primitives;
 
 namespace GpConnect.NationalDataSharingPortal.EndUserPortal.Pages.Search;
 
 public partial class DetailModel : BaseModel
 {
     private readonly ISiteService _siteService;
-    private readonly IHttpContextAccessor _httpContextAccessor;
 
-    public DetailModel(IOptions<ApplicationParameters> applicationParameters, ISiteService siteService, IHttpContextAccessor httpContextAccessor) : base(applicationParameters)
+    public DetailModel(IOptions<ApplicationParameters> applicationParameters, ISiteService siteService) : base(applicationParameters)
     {
         _siteService = siteService;
-        _httpContextAccessor = httpContextAccessor;
     }
 
-    public async Task<IActionResult> OnGet(string id, string query, SearchMode mode)
+    public async Task<IActionResult> OnGet(string id)
     {
         try
         {
             var searchResultEntry = await _siteService.SearchSiteAsync(id);
+
+            if (searchResultEntry == null) 
+            {
+                return NotFound();
+            }
+            
             SearchResultEntry = searchResultEntry;
-            PopulateBack();
+            return Page();
         }
         catch
         {
             throw;
         }
-        return Page();
     }
 
-    private void PopulateBack()
-    {
-        var source = DetailViewSource.Search;
-        var mode = SearchMode.Name;
-        StringValues query = StringValues.Empty;
-
-        _httpContextAccessor?.HttpContext?.Request.Query.TryGetValue("Query", out query);
-        if (_httpContextAccessor?.HttpContext?.Request.Query.TryGetValue("Source", out _) == true)
-        {
-            Enum.TryParse(_httpContextAccessor?.HttpContext?.Request.Query["Source"][0].ToString(), out source);
-        }
-
-        if (_httpContextAccessor?.HttpContext?.Request.Query.TryGetValue("Source", out _) == true)
-        {
-            Enum.TryParse(_httpContextAccessor?.HttpContext?.Request.Query["Mode"][0].ToString(), out mode);
-        }
-
-        BackPartial.Mode = mode;
-        BackPartial.Query = query.FirstOrDefault();
-        BackPartial.Source = source;
-    }
+    public BackPartialModel BackPartial => new BackPartialModel {
+        Query = Query,
+        Source = Source,
+        Mode = Mode
+    };
 }

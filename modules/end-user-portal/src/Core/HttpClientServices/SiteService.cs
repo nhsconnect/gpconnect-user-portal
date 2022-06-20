@@ -1,3 +1,4 @@
+using System.Net;
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Core.HttpClientServices.Interfaces;
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Helpers;
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Helpers.Enumerations;
@@ -63,6 +64,12 @@ public class SiteService : ISiteService
 
             var url = $"transparency-site/{id}";
             var response = await _httpClient.GetAsync(url, HttpCompletionOption.ResponseHeadersRead, cancellationTokenSource.Token);
+            
+            if (response.StatusCode == HttpStatusCode.NotFound) 
+            {
+                return null;
+            }
+
             response.EnsureSuccessStatusCode();
 
             await response.Content.ReadAsStringAsync(cancellationTokenSource.Token).ContinueWith((Task<string> x) =>
