@@ -25,10 +25,6 @@ public partial class ResultsModel : BaseModel
 
         try
         {
-            BackPartial.Mode = Mode;
-            BackPartial.Query = Query;
-            BackPartial.Source = DetailViewSource.Search;
-
             var searchResults = await _siteService.SearchSitesAsync(Query, Mode);
 
             if (searchResults.Count == 0)
@@ -55,4 +51,11 @@ public partial class ResultsModel : BaseModel
         }
         return Page();
     }
+
+    public BackPartialModel BackPartial => new BackPartialModel
+    {
+        Query = Query,
+        Source = DetailViewSource.Search,
+        Mode = Mode
+    };
 }

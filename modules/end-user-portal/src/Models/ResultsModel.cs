@@ -8,8 +8,6 @@ public partial class ResultsModel : BaseModel
 {
     public SearchResult SearchResult { get; set; }
 
-    public BackPartialModel BackPartial { get; set; } = new BackPartialModel();
-
     [BindProperty(SupportsGet = true)]
     public string Query { get; set; } = "";
 

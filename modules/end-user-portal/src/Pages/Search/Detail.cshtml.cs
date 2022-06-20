@@ -1,6 +1,5 @@
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Core;
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Core.HttpClientServices.Interfaces;
-using GpConnect.NationalDataSharingPortal.EndUserPortal.Helpers.Enumerations;
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
