@@ -9,7 +9,7 @@ public static class ApplicationBuilderExtensions
 {
     public static void ConfigureApplicationBuilderServices(this IApplicationBuilder app)
     {
-        app.UseExceptionHandler("/Error");
+        //app.UseExceptionHandler("/Error");
 
         app.UseForwardedHeaders(new ForwardedHeadersOptions
         {

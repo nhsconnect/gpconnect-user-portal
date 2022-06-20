@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Dapper;
 using GpConnect.NationalDataSharingPortal.Api.Dal.Interfaces;
+using GpConnect.NationalDataSharingPortal.Api.Dal.Mapping;
 using GpConnect.NationalDataSharingPortal.Api.Dto.Request;
 using GpConnect.NationalDataSharingPortal.Api.Dto.Response;
 using GpConnect.NationalDataSharingPortal.Api.Service;
@@ -16,7 +18,6 @@ public class TransparencySiteServiceTest
 {
     private readonly Mock<IDataService> _mockDataService;
     private readonly Mock<ILogger<TransparencySiteService>> _mockLogger;
-
     private readonly TransparencySiteService _sut;
 
     public TransparencySiteServiceTest()
@@ -37,12 +38,12 @@ public class TransparencySiteServiceTest
 
         _mockDataService.Verify(m => m.ExecuteQuery<TransparencySite>(
             "application.find_sites",
-            It.Is<DynamicParameters>(d => d.ParameterNames.AsList<string>().Contains("_site_name") 
+            It.Is<DynamicParameters>(d => d.ParameterNames.AsList<string>().Contains("_site_name")
                                         && d.Get<string>("_site_name") == "Name"
                                         && d.Get<int>("_site_definition_status_min") == 5
                                         && d.Get<int>("_site_definition_status_max") == 5
                                     )
-        ));        
+        ));
     }
 
     [Fact]
@@ -53,14 +54,14 @@ public class TransparencySiteServiceTest
             ProviderCode = "Code"
         });
 
-         _mockDataService.Verify(m => m.ExecuteQuery<TransparencySite>(
-            "application.find_sites",
-            It.Is<DynamicParameters>(d => d.ParameterNames.AsList<string>().Contains("_site_ods_code") 
-                                        && d.Get<string>("_site_ods_code") == "Code"
-                                        && d.Get<int>("_site_definition_status_min") == 5
-                                        && d.Get<int>("_site_definition_status_max") == 5
-                                    )
-        ));        
+        _mockDataService.Verify(m => m.ExecuteQuery<TransparencySite>(
+           "application.find_sites",
+           It.Is<DynamicParameters>(d => d.ParameterNames.AsList<string>().Contains("_site_ods_code")
+                                       && d.Get<string>("_site_ods_code") == "Code"
+                                       && d.Get<int>("_site_definition_status_min") == 5
+                                       && d.Get<int>("_site_definition_status_max") == 5
+                                   )
+       ));
     }
 
     [Fact]
@@ -90,12 +91,12 @@ public class TransparencySiteServiceTest
 
         _sut.GetSiteAsync(expected);
 
-         _mockDataService.Verify(m => m.ExecuteQueryFirstOrDefault<TransparencySite>(
-            "application.find_site",
-            It.Is<DynamicParameters>(d => d.ParameterNames.AsList<string>().Contains("_site_unique_identifier") 
-                                        && d.Get<Guid>("_site_unique_identifier") == expected
-                                    )
-        ));        
+        _mockDataService.Verify(m => m.ExecuteQueryFirstOrDefault<TransparencySite>(
+           "application.find_site",
+           It.Is<DynamicParameters>(d => d.ParameterNames.AsList<string>().Contains("_site_unique_identifier")
+                                       && d.Get<Guid>("_site_unique_identifier") == expected
+                                   )
+       ));
     }
 
     [Fact]
@@ -116,5 +117,33 @@ public class TransparencySiteServiceTest
         var result = _sut.GetSiteAsync(new Guid());
 
         Assert.StrictEqual(expected, result);
+    }
+
+    [Fact]
+    public async Task GetSiteAsync_Returns_ExpectedFieldMappings()
+    {
+        var expected = Task.FromResult(new TransparencySite());
+        _mockDataService.Setup(d => d.ExecuteQueryFirstOrDefault<TransparencySite>(It.IsAny<string>(), It.IsAny<DynamicParameters>())).Returns(expected);
+        var result = await _sut.GetSiteAsync(new Guid());
+
+        var resultTypes = result.GetType().GetProperties();
+        var map = new TransparencySiteMap();
+        var propertyMaps = map.PropertyMaps.ToList();
+        var propertyCount = resultTypes.Count();
+
+        Assert.Equal(propertyCount, map.PropertyMaps.Count);
+        var notMappedElements = propertyMaps.Where(p => resultTypes.All(p2 => p2.Name != p.PropertyInfo.Name));
+        Assert.Empty(notMappedElements);
+
+        foreach (var resultType in resultTypes)
+        {
+            Assert.NotNull(resultType);
+            var propertyMap = map.PropertyMaps.Single(x => x.PropertyInfo.Name == resultType.Name);
+            Assert.NotNull(propertyMap);
+            Assert.Equal(resultType.Name, propertyMap.PropertyInfo.Name);
+            Assert.NotNull(propertyMap.ColumnName);
+            Assert.True(propertyMap.CaseSensitive);
+        }
+        Assert.Equal(propertyCount, propertyMaps.Count);
     }
 }

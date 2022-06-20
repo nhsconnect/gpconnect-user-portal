@@ -80,7 +80,7 @@ namespace GpConnect.NationalDataSharingPortal.EndUserPortal.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Has Appointment Management.
+        ///   Looks up a localized string similar to Appointment Management.
         /// </summary>
         public static string HasAppointmentManagement {
             get {
@@ -89,7 +89,7 @@ namespace GpConnect.NationalDataSharingPortal.EndUserPortal.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Has Access Record: HTML.
+        ///   Looks up a localized string similar to Access Record: HTML.
         /// </summary>
         public static string HasHtmlView {
             get {
@@ -98,7 +98,7 @@ namespace GpConnect.NationalDataSharingPortal.EndUserPortal.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Has Send Document.
+        ///   Looks up a localized string similar to Send Document.
         /// </summary>
         public static string HasSendDocument {
             get {
@@ -107,7 +107,7 @@ namespace GpConnect.NationalDataSharingPortal.EndUserPortal.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Has Access Record: Structured.
+        ///   Looks up a localized string similar to Access Record: Structured.
         /// </summary>
         public static string HasStructured {
             get {

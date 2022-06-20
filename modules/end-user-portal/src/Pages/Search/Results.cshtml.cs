@@ -16,20 +16,32 @@ public partial class ResultsModel : BaseModel
         _siteService = siteService;
     }
 
-    public async Task<IActionResult> OnGet(string query, SearchMode mode)
+    public async Task<IActionResult> OnGet()
     {
+        if (!ModelState.IsValid) 
+        {
+            return RedirectToPage("./Name");
+        }
+
         try
         {
-            var searchResults = await _siteService.SearchSitesAsync(new SearchRequest()
-            {
-                Query = query,
-                Mode = mode
-            });
+            var searchResults = await _siteService.SearchSitesAsync(Query, Mode);
 
             if (searchResults.Count == 0)
             {
-                return RedirectToPage("./NoResults", new { query = query, mode = mode });
+                return RedirectToPage("./NoResults", new { query = Query, mode = Mode });
             }
+
+            if (searchResults.Count == 1)
+            {
+                return RedirectToPage("./Detail", new { 
+                    id = searchResults[0].SiteDefinitionId, 
+                    query = Query, 
+                    mode = Mode 
+                });
+            }
+
+            searchResults.Sort((x, y) => x.SiteName.CompareTo(y.SiteName));
 
             SearchResult = new SearchResult() { SearchResults = searchResults };
         }
@@ -39,4 +51,11 @@ public partial class ResultsModel : BaseModel
         }
         return Page();
     }
+
+    public BackPartialModel BackPartial => new BackPartialModel
+    {
+        Query = Query,
+        Source = DetailViewSource.Search,
+        Mode = Mode
+    };
 }

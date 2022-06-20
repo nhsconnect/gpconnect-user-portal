@@ -4,17 +4,16 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace GpConnect.NationalDataSharingPortal.EndUserPortal.Pages.Search;
 
-public partial class ResultsModel : BaseModel
+public partial class DetailModel : BaseModel
 {
-    public SearchResult SearchResult { get; set; }
+    public SearchResultEntry SearchResultEntry { get; set; } = null;
 
     [BindProperty(SupportsGet = true)]
     public string Query { get; set; } = "";
 
     [BindProperty(SupportsGet = true)]
     public SearchMode Mode { get; set; } = SearchMode.Name;
-
-    public string? NameQueryOrNull => Mode == SearchMode.Name ? Query : null;
-
-    public string? CodeQueryOrNull => Mode == SearchMode.Code ? Query : null;
+    
+    [BindProperty(SupportsGet = true)]
+    public DetailViewSource Source { get; set; } = DetailViewSource.Search;
 }
