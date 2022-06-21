@@ -1,6 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace GpConnect.NationalDataSharingPortal.Api.Dto.Request;
 
