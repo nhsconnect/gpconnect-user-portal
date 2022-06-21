@@ -34,8 +34,6 @@ public class SiteServiceTests
                     StatusCode = HttpStatusCode.OK
                 };
 
-                //...decide what to put in the response after looking at the contents of the request
-
                 return Task.FromResult(response);
             })
             .Verifiable();
@@ -51,7 +49,7 @@ public class SiteServiceTests
     [InlineData(SearchMode.Code, "provider_code", 2, 75)]
     public async Task SearchSitesAsync_CallsHttpClient_WithExpectedParameters(SearchMode mode, string expectedParameterName, int expectedStart, int expectedLength)
     {
-        Uri expectedUri = new Uri($"{BASE_URI}/transparency-site?{expectedParameterName}=Query");
+        Uri expectedUri = new Uri($"{BASE_URI}/transparency-site?{expectedParameterName}=Query&start={expectedStart}&count={expectedLength}");
 
         await _sut.SearchSitesAsync("Query", mode, expectedStart, expectedLength);
 
