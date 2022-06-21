@@ -29,7 +29,9 @@ public class ResultsModelTest
         _mockConfig = new Mock<IOptions<ResultPageConfig>>();
 
         _mockConfig.SetupGet(mc => mc.Value).Returns(_config);
-        _mockSiteService.Setup(mss => mss.SearchSitesAsync(It.IsAny<string>(), It.IsAny<SearchMode>(), It.IsAny<int>(), It.IsAny<int>())).ReturnsAsync(new List<SearchResultEntry>());
+        _mockSiteService.Setup(mss => mss.SearchSitesAsync(It.IsAny<string>(), It.IsAny<SearchMode>(), It.IsAny<int>(), It.IsAny<int>())).ReturnsAsync(new SearchResult {
+            SearchResults = new List<SearchResultEntry>()
+        });
     }
 
     [Fact]
@@ -150,7 +152,7 @@ public class ResultsModelTest
     [InlineData(SearchMode.Code)]
     public async Task OnGet_SearchSites_ReturnsNoResult_RedirectsToNoResultsPage(SearchMode mode)
     {
-        _mockSiteService.Setup(mss => mss.SearchSitesAsync(It.IsAny<string>(), It.IsAny<SearchMode>(), It.IsAny<int>(), It.IsAny<int>())).ReturnsAsync(new List<SearchResultEntry>());
+        _mockSiteService.Setup(mss => mss.SearchSitesAsync(It.IsAny<string>(), It.IsAny<SearchMode>(), It.IsAny<int>(), It.IsAny<int>())).ReturnsAsync(new SearchResult());
 
         var resultsModel = new ResultsModel(_mockConfig.Object, Mock.Of<IOptions<ApplicationParameters>>(), _mockSiteService.Object)
         {
@@ -169,16 +171,19 @@ public class ResultsModelTest
     }
 
     [Fact]
-    public async Task OnGet_SearchSites_ReturnsOneResult_RedirectsToDetailsPage()
+    public async Task OnGet_SearchSites_ReturnsTotalOneResult_RedirectsToDetailsPage()
     {
         Guid expected = Guid.NewGuid();
         const string expectedQuery = "Query";
         const SearchMode expectedSearchMode = SearchMode.Name;
         const int expectedPage = 1;
 
-        _mockSiteService.Setup(mss => mss.SearchSitesAsync(It.IsAny<string>(), It.IsAny<SearchMode>(), It.IsAny<int>(), It.IsAny<int>())).ReturnsAsync(new List<SearchResultEntry>{
-            new SearchResultEntry {
-                SiteDefinitionId = expected.ToString()
+        _mockSiteService.Setup(mss => mss.SearchSitesAsync(It.IsAny<string>(), It.IsAny<SearchMode>(), It.IsAny<int>(), It.IsAny<int>())).ReturnsAsync(new SearchResult {
+            TotalResults = 1,
+            SearchResults = new List<SearchResultEntry>{
+                new SearchResultEntry {
+                    SiteDefinitionId = expected.ToString()
+                }
             }
         });
         
@@ -208,7 +213,13 @@ public class ResultsModelTest
         const SearchMode expectedSearchMode = SearchMode.Name;
         const int expectedPage = 10;
 
-        _mockSiteService.Setup(mss => mss.SearchSitesAsync(It.IsAny<string>(), It.IsAny<SearchMode>(), It.IsAny<int>(), It.IsAny<int>())).ReturnsAsync(new List<SearchResultEntry>());
+        var response = new SearchResult
+        {
+            TotalResults = 300,
+            SearchResults = new List<SearchResultEntry>()
+        };
+
+        _mockSiteService.Setup(mss => mss.SearchSitesAsync(It.IsAny<string>(), It.IsAny<SearchMode>(), It.IsAny<int>(), It.IsAny<int>())).ReturnsAsync(response);
         
         var resultsModel = new ResultsModel(_mockConfig.Object, Mock.Of<IOptions<ApplicationParameters>>(), _mockSiteService.Object)
         {
@@ -241,7 +252,14 @@ public class ResultsModelTest
                 SiteName = "connect"
             }
         };
-        _mockSiteService.Setup(mss => mss.SearchSitesAsync(It.IsAny<string>(), It.IsAny<SearchMode>(), It.IsAny<int>(), It.IsAny<int>())).ReturnsAsync(unorderedList);
+
+        var response = new SearchResult
+        {
+            TotalResults = 2,
+            SearchResults = unorderedList
+        };
+
+        _mockSiteService.Setup(mss => mss.SearchSitesAsync(It.IsAny<string>(), It.IsAny<SearchMode>(), It.IsAny<int>(), It.IsAny<int>())).ReturnsAsync(response);
 
         var resultsModel = new ResultsModel(_mockConfig.Object, Mock.Of<IOptions<ApplicationParameters>>(), _mockSiteService.Object)
         {
@@ -255,22 +273,18 @@ public class ResultsModelTest
         Assert.Equal("gp", resultsModel.SearchResult.SearchResults[1].SiteName);
     }
 
-    [Fact]
-    public async Task OnGet_SearchSites_ReturnsMoreThanOneResult_RendersPage()
+    [Theory]
+    [InlineData(31,30)]
+    [InlineData(31,1)]
+    public async Task OnGet_SearchSites_ReturnsPagedResults_RendersPage(int totalResults, int currentPageResults)
     {
-        var results = new List<SearchResultEntry>
+        var response = new SearchResult
         {
-            new SearchResultEntry
-            {
-                SiteName = "gp"
-            },
-            new SearchResultEntry
-            {
-                SiteName = "connect"
-            }
+            TotalResults = totalResults,
+            SearchResults = BuildResults(currentPageResults)
         };
 
-        _mockSiteService.Setup(mss => mss.SearchSitesAsync(It.IsAny<string>(), It.IsAny<SearchMode>(), It.IsAny<int>(), It.IsAny<int>())).ReturnsAsync(results);
+        _mockSiteService.Setup(mss => mss.SearchSitesAsync(It.IsAny<string>(), It.IsAny<SearchMode>(), It.IsAny<int>(), It.IsAny<int>())).ReturnsAsync(response);
 
         var resultsModel = new ResultsModel(_mockConfig.Object, Mock.Of<IOptions<ApplicationParameters>>(), _mockSiteService.Object)
         {
@@ -281,5 +295,126 @@ public class ResultsModelTest
         var result = await resultsModel.OnGet();
         
         Assert.IsType<PageResult>(result);
+    }
+
+    [Theory]
+    [InlineData("query", SearchMode.Code)]
+    [InlineData("some-query", SearchMode.Name)]
+    public void BackPartial_ReadsExpectedParameters_ReturnsModel(string query, SearchMode mode)
+    {
+        var resultsModel = new ResultsModel(_mockConfig.Object, Mock.Of<IOptions<ApplicationParameters>>(), _mockSiteService.Object)
+        {
+            Query = query,
+            Mode = mode
+        };
+
+        var result = resultsModel.BackPartial; 
+
+        Assert.Equal(query, result.Query);
+        Assert.StrictEqual(mode, result.Mode);
+        Assert.StrictEqual(DetailViewSource.Search, result.Source);
+    }
+
+    [Theory]
+    [InlineData(1, 10, 1)]
+    [InlineData(31, 10, 4)]
+    [InlineData(30, 10, 3)]
+    public void NumPages_CalculatesNumPagesForTotalResults(int results, int resultsPerPage, int expectedPages)
+    {
+        _config.ResultsPerPage = resultsPerPage;
+
+        var resultsModel = new ResultsModel(_mockConfig.Object, Mock.Of<IOptions<ApplicationParameters>>(), _mockSiteService.Object)
+        {
+            SearchResult = new SearchResult
+            {
+                TotalResults = results
+            }
+        };
+
+        var result = resultsModel.NumPages; 
+
+        Assert.StrictEqual(expectedPages, result);
+    }
+
+    [Theory]
+    [InlineData(1)]
+    [InlineData(27)]
+    public void CurrentPageNumber_ReadsFromModel_ReturnsExpected(int pageNumber)
+    {
+        var resultsModel = new ResultsModel(_mockConfig.Object, Mock.Of<IOptions<ApplicationParameters>>(), _mockSiteService.Object)
+        {
+            PageNumber = pageNumber
+        };
+
+        var result = resultsModel.CurrentPageNumber; 
+
+        Assert.StrictEqual(pageNumber, result);
+    }
+
+    [Theory]
+    [InlineData(1)]
+    [InlineData(27)]
+    public void TotalResults_ReadsFromSearchResult_ReturnsExpected(int numResults)
+    {
+        var resultsModel = new ResultsModel(_mockConfig.Object, Mock.Of<IOptions<ApplicationParameters>>(), _mockSiteService.Object)
+        {
+            SearchResult = new SearchResult
+            {
+                TotalResults = numResults
+            }
+        };
+
+        var result = resultsModel.TotalResults; 
+
+        Assert.StrictEqual(numResults, result);
+    }
+
+    [Theory]
+    [InlineData(1, 1, false)]
+    [InlineData(2, 3, true)]
+    [InlineData(27, 30, true)]
+    [InlineData(30, 30, false)]
+    public void ShowNextLink_ReturnsExpected_ForGivenPageNumber(int pageNumber, int numPages, bool showsLink)
+    {
+        var resultsModel = new ResultsModel(_mockConfig.Object, Mock.Of<IOptions<ApplicationParameters>>(), _mockSiteService.Object)
+        {
+            PageNumber = pageNumber,
+            SearchResult = new SearchResult
+            {
+                TotalResults = numPages * _config.ResultsPerPage
+            }
+        };
+
+        var result = resultsModel.ShowNextLink; 
+
+        Assert.StrictEqual(showsLink, result);
+    }
+
+    [Theory]
+    [InlineData(1, false)]
+    [InlineData(2, true)]
+    [InlineData(27, true)]
+    public void ShowPreviousLink_ReturnsExpected_ForGivenPageNumber(int pageNumber, bool showsLink)
+    {
+        var resultsModel = new ResultsModel(_mockConfig.Object, Mock.Of<IOptions<ApplicationParameters>>(), _mockSiteService.Object)
+        {
+            PageNumber = pageNumber
+        };
+
+        var result = resultsModel.ShowPreviousLink; 
+
+        Assert.StrictEqual(showsLink, result);
+    }
+
+    private List<SearchResultEntry> BuildResults(int currentPageResults)
+    {
+        var results = new List<SearchResultEntry>();
+        for (int i = 0; i < currentPageResults; i++)
+        {
+            results.Add(new SearchResultEntry {
+                SiteName = $"SiteName{i}"
+            });
+        }
+        return results;
     }
 }

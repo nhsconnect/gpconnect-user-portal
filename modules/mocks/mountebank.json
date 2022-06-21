@@ -70,44 +70,109 @@
         "responses": [
             {
                 "is": {
-                    "body": [
-                        {
-                            "id": "12341234-1234-1234-1234-123412341234",
-                            "name": "Test Setting 2",
-                            "odsCode": "ODS Code",
-                            "accessRecordHTMLEnabled": true,
-                            "structuredRecordEnabled": true,
-                            "appointmentManagementEnabled": true,
-                            "sendDocumentEnabled": true,
-                            "addressLine1": "The Hedgerows",
-                            "addressLine2": "",
-                            "town": "Bishop Stortford",
-                            "county": "Essex",
-                            "country": "United Kingdom",
-                            "postcode": "BA1 1DS",
-                            "useCase": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin varius, dui vitae vehicula cursus, turpis nunc pellentesque magna, nec faucibus urna ante eu velit. Suspendisse varius tempus neque mattis imperdiet.",
-                            "ccgIcbName": "CCG",
-                            "ccgIcbOdsCode": "CCG Code"
-                        },
-                        {
-                            "id": "12341234-1234-1234-1234-123412341235",
-                            "name": "Test Setting 1",
-                            "odsCode": "ODS Code",
-                            "accessRecordHTMLEnabled": true,
-                            "structuredRecordEnabled": true,
-                            "appointmentManagementEnabled": true,
-                            "sendDocumentEnabled": true,
-                            "addressLine1": "Royal Cresent",
-                            "addressLine2": "",
-                            "town": "Bath",
-                            "county": "Bath",
-                            "country": "United Kingdom",
-                            "postcode": "BA1 1DS",
-                            "useCase": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin varius, dui vitae vehicula cursus, turpis nunc pellentesque magna, nec faucibus urna ante eu velit. Suspendisse varius tempus neque mattis imperdiet.",
-                            "ccgIcbName": "CCG",
-                            "ccgIcbOdsCode": "CCG Code"
-                        }
-                    ],
+                    "body": {
+                        "totalResults": 2,
+                        "results":[
+                            {
+                                "id": "12341234-1234-1234-1234-123412341234",
+                                "name": "Test Setting 2",
+                                "odsCode": "ODS Code",
+                                "accessRecordHTMLEnabled": true,
+                                "structuredRecordEnabled": true,
+                                "appointmentManagementEnabled": true,
+                                "sendDocumentEnabled": true,
+                                "addressLine1": "The Hedgerows",
+                                "addressLine2": "",
+                                "town": "Bishop Stortford",
+                                "county": "Essex",
+                                "country": "United Kingdom",
+                                "postcode": "BA1 1DS",
+                                "useCase": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin varius, dui vitae vehicula cursus, turpis nunc pellentesque magna, nec faucibus urna ante eu velit. Suspendisse varius tempus neque mattis imperdiet.",
+                                "ccgIcbName": "CCG",
+                                "ccgIcbOdsCode": "CCG Code"
+                            },
+                            {
+                                "id": "12341234-1234-1234-1234-123412341235",
+                                "name": "Test Setting 1",
+                                "odsCode": "ODS Code",
+                                "accessRecordHTMLEnabled": true,
+                                "structuredRecordEnabled": true,
+                                "appointmentManagementEnabled": true,
+                                "sendDocumentEnabled": true,
+                                "addressLine1": "Royal Cresent",
+                                "addressLine2": "",
+                                "town": "Bath",
+                                "county": "Bath",
+                                "country": "United Kingdom",
+                                "postcode": "BA1 1DS",
+                                "useCase": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin varius, dui vitae vehicula cursus, turpis nunc pellentesque magna, nec faucibus urna ante eu velit. Suspendisse varius tempus neque mattis imperdiet.",
+                                "ccgIcbName": "CCG",
+                                "ccgIcbOdsCode": "CCG Code"
+                            }
+                        ]
+                    },
+                    "headers": {
+                        "Content-Type": "application/json"
+                    }
+                }
+            }
+        ]
+      },
+      {
+        "predicates": [
+            {
+                "equals": {
+                    "path": "/transparency-site",
+                    "query": {
+                        "provider_name": "multi-page"
+                    }
+                }
+            }
+        ],
+        "responses": [
+            {
+                "is": {
+                    "body": {
+                        "totalResults": 200,
+                        "results":[
+                            {
+                                "id": "12341234-1234-1234-1234-123412341234",
+                                "name": "Test Setting 2",
+                                "odsCode": "ODS Code",
+                                "accessRecordHTMLEnabled": true,
+                                "structuredRecordEnabled": true,
+                                "appointmentManagementEnabled": true,
+                                "sendDocumentEnabled": true,
+                                "addressLine1": "The Hedgerows",
+                                "addressLine2": "",
+                                "town": "Bishop Stortford",
+                                "county": "Essex",
+                                "country": "United Kingdom",
+                                "postcode": "BA1 1DS",
+                                "useCase": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin varius, dui vitae vehicula cursus, turpis nunc pellentesque magna, nec faucibus urna ante eu velit. Suspendisse varius tempus neque mattis imperdiet.",
+                                "ccgIcbName": "CCG",
+                                "ccgIcbOdsCode": "CCG Code"
+                            },
+                            {
+                                "id": "12341234-1234-1234-1234-123412341235",
+                                "name": "Test Setting 1",
+                                "odsCode": "ODS Code",
+                                "accessRecordHTMLEnabled": true,
+                                "structuredRecordEnabled": true,
+                                "appointmentManagementEnabled": true,
+                                "sendDocumentEnabled": true,
+                                "addressLine1": "Royal Cresent",
+                                "addressLine2": "",
+                                "town": "Bath",
+                                "county": "Bath",
+                                "country": "United Kingdom",
+                                "postcode": "BA1 1DS",
+                                "useCase": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin varius, dui vitae vehicula cursus, turpis nunc pellentesque magna, nec faucibus urna ante eu velit. Suspendisse varius tempus neque mattis imperdiet.",
+                                "ccgIcbName": "CCG",
+                                "ccgIcbOdsCode": "CCG Code"
+                            }
+                        ]
+                    },
                     "headers": {
                         "Content-Type": "application/json"
                     }
@@ -201,26 +266,29 @@
         "responses": [
             {
                 "is": {
-                    "body": [
-                        {
-                            "id": "12341234-1234-1234-1234-123412341234",
-                            "name": "Provider Name",
-                            "odsCode": "A1234",
-                            "accessRecordHTMLEnabled": true,
-                            "structuredRecordEnabled": true,
-                            "appointmentManagementEnabled": true,
-                            "sendDocumentEnabled": true,
-                            "addressLine1": "The Hedgerows",
-                            "addressLine2": "",
-                            "town": "Bishop Stortford",
-                            "county": "Essex",
-                            "country": "United Kingdom",
-                            "postcode": "BA1 1DS",
-                            "useCase": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin varius, dui vitae vehicula cursus, turpis nunc pellentesque magna, nec faucibus urna ante eu velit. Suspendisse varius tempus neque mattis imperdiet.",
-                            "ccgIcbName": "CCG Nerp",
-                            "ccgIcbOdsCode": "A9876"
-                        }
-                    ],
+                    "body": {
+                        "totalResults": 1,
+                        "results":[
+                            {
+                                "id": "12341234-1234-1234-1234-123412341234",
+                                "name": "Provider Name",
+                                "odsCode": "A1234",
+                                "accessRecordHTMLEnabled": true,
+                                "structuredRecordEnabled": true,
+                                "appointmentManagementEnabled": true,
+                                "sendDocumentEnabled": true,
+                                "addressLine1": "The Hedgerows",
+                                "addressLine2": "",
+                                "town": "Bishop Stortford",
+                                "county": "Essex",
+                                "country": "United Kingdom",
+                                "postcode": "BA1 1DS",
+                                "useCase": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin varius, dui vitae vehicula cursus, turpis nunc pellentesque magna, nec faucibus urna ante eu velit. Suspendisse varius tempus neque mattis imperdiet.",
+                                "ccgIcbName": "CCG Nerp",
+                                "ccgIcbOdsCode": "A9876"
+                            }
+                        ]
+                    },
                     "headers": {
                         "Content-Type": "application/json"
                     }
@@ -242,7 +310,10 @@
         "responses": [
           {
             "is": {
-              "body": [],
+              "body": {
+                "totalResults": 0,
+                "results":[]
+              },
               "headers": {
                 "Content-Type": "application/json"
               }
@@ -264,10 +335,13 @@
         "responses": [
           {
             "is": {
-              "body": [],
-              "headers": {
-                "Content-Type": "application/json"
-              }
+                "body": {
+                    "totalResults": 0,
+                    "results":[]
+                },
+                "headers": {
+                    "Content-Type": "application/json"
+                }
             }
           }
         ]

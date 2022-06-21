@@ -21,11 +21,11 @@ public class SiteService : ISiteService
         _options = new JsonSerializerSettings() { NullValueHandling = NullValueHandling.Ignore };
     }
 
-    public async Task<List<SearchResultEntry>> SearchSitesAsync(string query, SearchMode mode, int startingIndex, int numberResults)
+    public async Task<SearchResult> SearchSitesAsync(string query, SearchMode mode, int startingIndex, int numberResults)
     {
         try
         {
-            var result = default(List<SearchResultEntry>);
+            var result = default(SearchResult);
 
             var url = QueryHelpers.AddQueryString("transparency-site", mode.GetQueryStringParameter(), query);
 
@@ -39,7 +39,7 @@ public class SiteService : ISiteService
                     _logger.LogError(x.Exception, $"A serialization error occurred in trying to read the response from an API query");
                     throw x.Exception;
                 }
-                result = JsonConvert.DeserializeObject<List<SearchResultEntry>>(x.Result, _options);
+                result = JsonConvert.DeserializeObject<SearchResult>(x.Result, _options);
             });
 
             return result;

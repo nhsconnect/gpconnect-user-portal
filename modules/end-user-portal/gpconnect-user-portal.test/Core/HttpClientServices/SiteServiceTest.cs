@@ -30,7 +30,7 @@ public class SiteServiceTests
                 
                 HttpResponseMessage response = new HttpResponseMessage
                 {
-                    Content = new StringContent("[]"),
+                    Content = new StringContent("{\"totalResults\": 0, \"results\": []}"),
                     StatusCode = HttpStatusCode.OK
                 };
 
@@ -95,7 +95,7 @@ public class SiteServiceTests
     }
 
     [Fact]
-    public async Task SearchSitesAsync_HttpClientReturns200OK_ReturnsJsonReponseAsList()
+    public async Task SearchSitesAsync_HttpClientReturns200OK_ReturnsJsonReponseAsSearchResult()
     {
         _mockMessageHandler
             .Protected()
@@ -103,14 +103,14 @@ public class SiteServiceTests
             .Returns(() => (
                 Task.FromResult(new HttpResponseMessage
                 {
-                    Content = new StringContent("[{\"id\":\"12341234-1234-1234-1234-123412341234\"}]"),
+                    Content = new StringContent("{\"totalResults\": 1, \"results\": [{\"id\":\"12341234-1234-1234-1234-123412341234\"}]}"),
                     StatusCode = HttpStatusCode.OK
                 })
             ));
 
         var result = await _sut.SearchSitesAsync("Query", SearchMode.Name, 0, int.MaxValue);
 
-        Assert.StrictEqual(1, result.Count);
-        Assert.Equal("12341234-1234-1234-1234-123412341234", result[0].SiteDefinitionId);
+        Assert.StrictEqual(1, result.SearchResults.Count);
+        Assert.Equal("12341234-1234-1234-1234-123412341234", result.SearchResults[0].SiteDefinitionId);
     }
 }

@@ -35,40 +35,35 @@ public partial class ResultsModel : BaseModel
 
         try
         {
-            var searchResults = await _siteService.SearchSitesAsync(Query, Mode, (PageNumber - 1) * _config.Value.ResultsPerPage, _config.Value.ResultsPerPage);
+            SearchResult = await _siteService.SearchSitesAsync(Query, Mode, (PageNumber - 1) * _config.Value.ResultsPerPage, _config.Value.ResultsPerPage);
 
-            // Check Page Number not greater than NumPages
-            // var MaxPageNumber = (int)Math.Ceiling((decimal)searchResults.TotalResults / _config.Value.ResultsPerPage);
-            var MaxPageNumber = 10;
-            if (PageNumber > MaxPageNumber)
-            {
-                return RedirectToPage("./Results", new { query = Query, mode = Mode, pageNumber = MaxPageNumber});
-            }
-
-            if (searchResults.Count == 0)
+            if (SearchResult.TotalResults == 0)
             {
                 return RedirectToPage("./NoResults", new { query = Query, mode = Mode });
             }
 
-            if (searchResults.Count == 1)
+            if (SearchResult.TotalResults == 1)
             {
                 return RedirectToPage("./Detail", new { 
-                    id = searchResults[0].SiteDefinitionId, 
+                    id = SearchResult.SearchResults[0].SiteDefinitionId, 
                     query = Query, 
                     mode = Mode,
                     page = PageNumber
                 });
             }
 
-            searchResults.Sort((x, y) => x.SiteName.CompareTo(y.SiteName));
+            if (PageNumber > NumPages)
+            {
+                return RedirectToPage("./Results", new { query = Query, mode = Mode, pageNumber = NumPages});
+            }
 
-            SearchResult = new SearchResult() { SearchResults = searchResults };
+            SearchResult.SearchResults.Sort((x, y) => x.SiteName.CompareTo(y.SiteName));
+            return Page();
         }
         catch
         {
             throw;
         }
-        return Page();
     }
 
     public BackPartialModel BackPartial => new BackPartialModel
@@ -80,6 +75,7 @@ public partial class ResultsModel : BaseModel
     
     public int NumPages => (int)Math.Ceiling((decimal)SearchResult.TotalResults / _config.Value.ResultsPerPage);
     public int CurrentPageNumber => PageNumber;
+    public int TotalResults => SearchResult.TotalResults;
     public bool ShowNextLink => CurrentPageNumber < NumPages;
     public bool ShowPreviousLink => CurrentPageNumber > FIRST_PAGE;
     public string? NameQueryOrNull => Mode == SearchMode.Name ? Query : null;
