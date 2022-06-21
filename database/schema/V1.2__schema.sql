@@ -1,5 +1,3 @@
-DROP VIEW application.view_find_sites;
-
 CREATE VIEW application.view_find_sites AS
     select
 			a.site_definition_id,
