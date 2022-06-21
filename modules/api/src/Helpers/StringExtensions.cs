@@ -7,7 +7,7 @@ namespace GpConnect.NationalDataSharingPortal.Api.Helpers
 {
     public static class StringExtensions
     {
-        public static string Flatten(IEnumerable elems, string separator)
+        public static string? Flatten(IEnumerable elems, string separator)
         {
             if (elems == null)
             {

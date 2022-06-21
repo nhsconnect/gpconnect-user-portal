@@ -8,7 +8,6 @@ using Microsoft.Extensions.Logging;
 using Moq;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -75,9 +74,14 @@ public class TransparencySiteControllerTest
     {
         _mockValidator.Setup(v => v.IsValidRequest(It.IsAny<TransparencySiteRequest>())).Returns(true);
         _mockService.Setup(s => s.GetMatchingSitesAsync(It.IsAny<TransparencySiteRequest>())).ReturnsAsync(
-            new List<TransparencySite>
-            { 
-                new TransparencySite { Name = "Test"}
+            new RootTransparencySite
+            {
+                TransparencySiteCount = 2,
+                TransparencySites = new List<TransparencySite>()
+                {
+                    new TransparencySite() { Name = "Test 1" },
+                    new TransparencySite() { Name = "Test 2" }
+                }
             }
         );
 
@@ -87,10 +91,11 @@ public class TransparencySiteControllerTest
         Assert.IsType<OkObjectResult>(response.Result);
 
         var result = response.Result as OkObjectResult;
-        var value = result?.Value as IEnumerable<TransparencySite>;
+        var value = result?.Value as RootTransparencySite;
 
-        Assert.StrictEqual(1, value?.ToList().Count);
-        Assert.Equal("Test", value?.ToList()[0].Name);
+        Assert.StrictEqual(2, value.TransparencySiteCount);
+        Assert.StrictEqual(2, value.TransparencySites.Count);
+        Assert.Equal("Test 1", value?.TransparencySites[0].Name);
     }
 
     [Fact]
@@ -111,7 +116,7 @@ public class TransparencySiteControllerTest
         var response = await _sut.GetTransparencySite("test");
 
         Assert.IsType<BadRequestResult>(response);
-    }
+    }    
 
     [Fact]
     public async Task GetTransparencySite_WhenValidatorReturnsTrue_CallsService_WithExpectedParameters()

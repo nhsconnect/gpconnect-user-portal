@@ -17,28 +17,38 @@ public class TransparencySiteRequestValidatorTest
     }
 
     [Theory]
-    [InlineData("Value", "")]
-    [InlineData("", "Value")]
-    public void IsValidRequest_GivenValidInput_ReturnsTrue(string providerCode, string providerName)
+    [InlineData("Value", "", 1, 10)]
+    [InlineData("", "Value", 1, 2)]
+    public void IsValidRequest_GivenValidInput_ReturnsTrue(string providerCode, string providerName, int startPosition, int count)
     {
         var request = new TransparencySiteRequest {
             ProviderCode = providerCode,
-            ProviderName = providerName
+            ProviderName = providerName,
+            StartPosition = startPosition,
+            Count = count
         };
 
         Assert.True(_sut.IsValidRequest(request));
     }
 
     [Theory]
-    [InlineData("", "")]
-    [InlineData("Value", "Value")]
-    public void IsValidRequest_GivenInvalidInput_ReturnsFalse(string providerCode, string providerName)
+    [InlineData("", "", 1, 2)]
+    [InlineData("Value", "Value", 0, 2)]
+    [InlineData("", "Value", -1, 2)]
+    [InlineData("", "Value", 1, 0)]
+    [InlineData("Value", "", -1, -1)]
+    [InlineData("Value", "", 1, -1)]
+    public void IsValidRequest_GivenInvalidInput_ReturnsFalse(string providerCode, string providerName, int startPosition, int count)
     {
-        Assert.False(_sut.IsValidRequest(new TransparencySiteRequest
+        var request = new TransparencySiteRequest
         {
             ProviderCode = providerCode,
-            ProviderName = providerName
-        }));
+            ProviderName = providerName,
+            StartPosition = startPosition,
+            Count = count
+        };
+
+        Assert.False(_sut.IsValidRequest(request));
     }
 
     [Theory]
