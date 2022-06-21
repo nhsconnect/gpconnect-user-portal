@@ -71,6 +71,16 @@ paths:
           required: false
           schema: 
             type: string
+        - name: start
+          in: query
+          required: false
+          schema: 
+            type: integer
+        - name: count
+          in: query
+          required: false
+          schema: 
+            type: integer
       responses:
         '400': 
           description: Bad Request. No query terms where provided, exactly one must be provided
