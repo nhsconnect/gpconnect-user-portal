@@ -4,12 +4,10 @@ using OpenQA.Selenium.Support.UI;
 
 namespace GpConnect.DataSharing.User.Specs.PageObjects
 {
-    public class NotFoundPageObject
+    public class NotFoundPageObject : BasePageObject
     {
 
         private readonly IWebDriver _webDriver;
-        private TimeSpan DefaultWait = TimeSpan.FromSeconds(5);
-
 
         public NotFoundPageObject(IWebDriver webDriver)
         {
@@ -18,7 +16,7 @@ namespace GpConnect.DataSharing.User.Specs.PageObjects
 
         public void NavigateToNonExistentPage()
         {
-            _webDriver.Url = "https://localhost:5003/ThisPageDoesNotExist";
+            _webDriver.Url = URL("/ThisPageDoesNotExist");
         }
 
         public bool IsNotFoundPageViewed()

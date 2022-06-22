@@ -5,13 +5,11 @@ using OpenQA.Selenium.Support.UI;
 namespace GpConnect.DataSharing.Admin.Specs.PageObjects
 {
 
-  public class RootPageObject
+  public class RootPageObject : BasePageObject
   {
-    private const string AdminUrl = "https://localhost:5001/";
+    private const string PATH = "/";
 
     private readonly IWebDriver _webDriver;
-
-    private TimeSpan DefaultWait = TimeSpan.FromSeconds(5);
 
     public RootPageObject(IWebDriver webDriver)
     {
@@ -32,9 +30,9 @@ namespace GpConnect.DataSharing.Admin.Specs.PageObjects
 
     public void Open()
     {
-        if (_webDriver.Url != AdminUrl)
+        if (_webDriver.Url != URL(PATH))
         {
-            _webDriver.Url = AdminUrl;
+            _webDriver.Url = URL(PATH);
         }
     }
 

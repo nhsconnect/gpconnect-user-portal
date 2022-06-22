@@ -1,4 +1,8 @@
+using Xunit;
 using TechTalk.SpecFlow;
+
+using GpConnect.DataSharing.User.Specs.Drivers;
+using GpConnect.DataSharing.User.Specs.PageObjects;
 
 namespace GpConnect.DataSharing.User.Specs.Steps
 {
@@ -7,21 +11,18 @@ namespace GpConnect.DataSharing.User.Specs.Steps
     {
         private readonly ScenarioContext _scenarioContext;
 
-        public NoResultsStepDefinitions(ScenarioContext scenarioContext)
+        private readonly NoResultsPageObject _noResultsPage;
+
+        public NoResultsStepDefinitions(ScenarioContext scenarioContext, BrowserDriver browserDriver)
         {
             _scenarioContext = scenarioContext;
-        }
-
-        [Given(@"I have performed a search for records that don't exist")]
-        public void GivenIHavePerformedASearchForRecordsThatDontExist()
-        {
-            _scenarioContext.Pending();
+            _noResultsPage = new NoResultsPageObject(browserDriver.Current);
         }
 
         [Then(@"I am on the no results page")]
         public void ThenIAmOnTheNoResultsPage()
         {
-            _scenarioContext.Pending();
+            _noResultsPage.IsPageVisible();
         }
 
         // [Then(@"the original search parameter is shown")]
@@ -36,16 +37,23 @@ namespace GpConnect.DataSharing.User.Specs.Steps
             _scenarioContext.Pending();
         }
 
+        [Then(@"a no results message with the original search parameter is shown")]
+        public void ThenTheOriginalSearchParameterIsShown()
+        {
+            Assert.True(_noResultsPage.HasNoResultsBanner("Myxptlk"));
+        }
+
+
         [Then(@"there is a link to search again by name")]
         public void ThenThereIsALinkToSearchAgainByName()
         {
-            _scenarioContext.Pending();
+            Assert.True(_noResultsPage.ByNameSearchLink.Displayed);
         }
 
         [Then(@"there is a link to search again by ODS code")]
         public void ThenThereIsALinkToSearchAgainByODSCode()
         {
-            _scenarioContext.Pending();
+            Assert.True(_noResultsPage.OdsCodeSearchLink.Displayed);
         }
     }
 }

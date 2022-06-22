@@ -3,11 +3,9 @@ using OpenQA.Selenium.Support.UI;
 
 namespace GpConnect.DataSharing.User.Specs.PageObjects
 {
-    public class TransparencyLandingPageObject
+    public class TransparencyLandingPageObject : BasePageObject
     {
-        private const string URL = "https://localhost:5003/Search";
-        private TimeSpan DefaultWait = TimeSpan.FromSeconds(5);
-
+        private const string PATH = "/Search";
         private readonly IWebDriver _webDriver;
 
         public TransparencyLandingPageObject(IWebDriver webDriver)
@@ -18,12 +16,12 @@ namespace GpConnect.DataSharing.User.Specs.PageObjects
         public bool IsPageVisible()
         {
             var wait = new WebDriverWait(_webDriver, DefaultWait);
-            return wait.Until(driver => driver.Url == URL);
+            return wait.Until(driver => driver.Url == URL(PATH));
         }
 
         public void Open()
         {
-            _webDriver.Url = URL;
+            _webDriver.Url = URL(PATH);
         }
 
         private IWebElement StartButton =>

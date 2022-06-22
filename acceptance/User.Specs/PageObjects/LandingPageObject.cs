@@ -4,11 +4,9 @@ using OpenQA.Selenium.Support.UI;
 
 namespace GpConnect.DataSharing.User.Specs.PageObjects
 {
-    public class LandingPageObject
+    public class LandingPageObject : BasePageObject
     {
-        private const string URL = "https://localhost:5003/";
-        private TimeSpan DefaultWait = TimeSpan.FromSeconds(5);
-
+        private const string PATH = "/";
         private readonly IWebDriver _webDriver;
 
         public LandingPageObject(IWebDriver webDriver)
@@ -18,9 +16,9 @@ namespace GpConnect.DataSharing.User.Specs.PageObjects
 
         public void Open()
         {
-            if (_webDriver.Url != URL)
+            if (_webDriver.Url != URL(PATH))
             {
-                _webDriver.Url = URL;
+                _webDriver.Url = URL(PATH);
             }
         }
 
