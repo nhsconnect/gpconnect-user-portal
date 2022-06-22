@@ -7,7 +7,7 @@ namespace GpConnect.NationalDataSharingPortal.Api.Service.Interface;
 
 public interface ITransparencySiteService
 {
-    Task<RootTransparencySite> GetMatchingSitesAsync(TransparencySiteRequest request);
+    Task<TransparencySites> GetMatchingSitesAsync(TransparencySiteRequest request);
 
     Task<TransparencySite> GetSiteAsync(Guid id);
 }

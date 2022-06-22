@@ -23,7 +23,7 @@ public class TransparencySiteService : ITransparencySiteService
         _logger = logger;
     }
 
-    public async Task<RootTransparencySite> GetMatchingSitesAsync(TransparencySiteRequest request)
+    public async Task<TransparencySites> GetMatchingSitesAsync(TransparencySiteRequest request)
     {
         var query = "application.find_sites";
 
@@ -48,9 +48,9 @@ public class TransparencySiteService : ITransparencySiteService
         parameters.Add("_start_position", request.StartPosition, DbType.Int32, ParameterDirection.Input);
         parameters.Add("_number_to_return", request.Count, DbType.Int32, ParameterDirection.Input);
 
-        var transparencySites = await _dataService.ExecuteQuery<TransparencySite>(query, parameters);
-        var rootTransparencySites = new RootTransparencySite() { TransparencySites = transparencySites, TransparencySiteCount = transparencySiteCount };
-        return rootTransparencySites;
+        var transparencySite = await _dataService.ExecuteQuery<TransparencySite>(query, parameters);
+        var transparencySites = new TransparencySites() { Results = transparencySite, TotalResults = transparencySiteCount };
+        return transparencySites;
     }
 
     private async Task<int> GetTransparencySiteCount(DynamicParameters parameters)
