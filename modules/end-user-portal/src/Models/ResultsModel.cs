@@ -1,3 +1,4 @@
+using GpConnect.NationalDataSharingPortal.EndUserPortal.Helpers.Constants;
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Helpers.Enumerations;
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -14,7 +15,12 @@ public partial class ResultsModel : BaseModel
     [BindProperty(SupportsGet = true)]
     public SearchMode Mode { get; set; } = SearchMode.Name;
 
-    public string? NameQueryOrNull => Mode == SearchMode.Name ? Query : null;
+    [FromQuery(Name = "PageNumber")]
+    public int PageNumber { get; set; } = PageConstants.FIRST_PAGE;
 
+    public int NumPages => (int)Math.Ceiling((decimal)SearchResult.TotalResults / _config.Value.ResultsPerPage);
+
+    public string? NameQueryOrNull => Mode == SearchMode.Name ? Query : null;
+    
     public string? CodeQueryOrNull => Mode == SearchMode.Code ? Query : null;
 }

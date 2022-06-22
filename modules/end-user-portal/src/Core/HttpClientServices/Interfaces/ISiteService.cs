@@ -5,6 +5,6 @@ namespace GpConnect.NationalDataSharingPortal.EndUserPortal.Core.HttpClientServi
 
 public interface ISiteService
 {
-  Task<List<SearchResultEntry>> SearchSitesAsync(string query, SearchMode mode);
+  Task<SearchResult> SearchSitesAsync(string query, SearchMode mode, int offset, int resultsPerPage);
   Task<SearchResultEntry> SearchSiteAsync(string id);
 }

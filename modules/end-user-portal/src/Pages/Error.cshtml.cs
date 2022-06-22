@@ -1,4 +1,4 @@
-using GpConnect.NationalDataSharingPortal.EndUserPortal.Core;
+using GpConnect.NationalDataSharingPortal.EndUserPortal.Core.Config;
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Models;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;

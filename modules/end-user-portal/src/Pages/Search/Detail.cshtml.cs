@@ -1,4 +1,4 @@
-using GpConnect.NationalDataSharingPortal.EndUserPortal.Core;
+using GpConnect.NationalDataSharingPortal.EndUserPortal.Core.Config;
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Core.HttpClientServices.Interfaces;
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -38,6 +38,7 @@ public partial class DetailModel : BaseModel
     public BackPartialModel BackPartial => new BackPartialModel {
         Query = Query,
         Source = Source,
-        Mode = Mode
+        Mode = Mode,
+        ResultsPageNumber = ResultsPageNumber
     };
 }

@@ -1,4 +1,4 @@
-using GpConnect.NationalDataSharingPortal.EndUserPortal.Core;
+using GpConnect.NationalDataSharingPortal.EndUserPortal.Core.Config;
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Core.Logging;
 using NLog;
 using NLog.Web;

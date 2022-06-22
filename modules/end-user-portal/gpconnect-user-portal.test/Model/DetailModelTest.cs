@@ -1,4 +1,6 @@
-using GpConnect.NationalDataSharingPortal.EndUserPortal.Core;
+using System;
+using System.Threading.Tasks;
+using GpConnect.NationalDataSharingPortal.EndUserPortal.Core.Config;
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Core.HttpClientServices.Interfaces;
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Helpers.Enumerations;
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Models;
@@ -6,9 +8,6 @@ using GpConnect.NationalDataSharingPortal.EndUserPortal.Pages.Search;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Moq;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace GpConnect.NationalDataSharingPortal.EndUserPortal.Test.Pages.Search;
@@ -20,7 +19,23 @@ public class DetailModelTest
     {
         _mockSiteService = new Mock<ISiteService>();
 
-        _mockSiteService.Setup(mss => mss.SearchSitesAsync(It.IsAny<string>(), It.IsAny<SearchMode>())).ReturnsAsync(new List<SearchResultEntry>());
+        _mockSiteService.Setup(mss => mss.SearchSiteAsync(It.IsAny<string>())).ReturnsAsync(new SearchResultEntry());
+    }
+
+    [Fact]
+    public void OnGet_SearchSite_WhenQueryParameterIsNull_Throws()
+    {
+        _mockSiteService.Setup(mss => mss.SearchSiteAsync(It.IsAny<string>())).ThrowsAsync(new Exception("Boom!!!"));
+
+        var detailModel = new DetailModel(Mock.Of<IOptions<ApplicationParameters>>(), _mockSiteService.Object)
+        {
+            Query = null,
+            Mode = SearchMode.Name,
+            Source = DetailViewSource.Search
+        };
+
+        Assert.Null(detailModel.SearchResultEntry);
+        Assert.ThrowsAsync<Exception>(async () => await detailModel.OnGet("id"));
     }
 
     [Fact]
@@ -46,47 +61,18 @@ public class DetailModelTest
     }
 
     [Fact]
-    public async Task OnGet_CallsSearchSite_WithDifferentParameters()
+    public async Task OnGet_SearchSite_WhenSiteServiceReturnsNull_ReturnsNotFound()
     {
-        var queryExpected = "expected";
-        var querySupplied = "supplied";
-
-        var detailModel = new DetailModel(Mock.Of<IOptions<ApplicationParameters>>(), _mockSiteService.Object);
-
-        await detailModel.OnGet(querySupplied);
-
-        _mockSiteService.Verify(mss => mss.SearchSiteAsync($"{queryExpected}"), Times.Never);
-    }
-
-    [Fact]
-    public void OnGet_SearchSite_WhenQueryParameterIsNull_Throws()
-    {
-        _mockSiteService.Setup(mss => mss.SearchSiteAsync(It.IsAny<string>())).ThrowsAsync(new Exception("Boom!!!"));
+        _mockSiteService.Setup(mss => mss.SearchSiteAsync(It.IsAny<string>())).ReturnsAsync((SearchResultEntry)null);
 
         var detailModel = new DetailModel(Mock.Of<IOptions<ApplicationParameters>>(), _mockSiteService.Object)
         {
-            Query = null,
+            Query = "query",
             Mode = SearchMode.Name,
             Source = DetailViewSource.Search
         };
 
-        Assert.Null(detailModel.SearchResultEntry);
-        Assert.ThrowsAsync<Exception>(async () => await detailModel.OnGet("id"));
-    }
-
-    [Fact]
-    public async Task OnGet_SearchSite_WhenQueryParameterIsNull_ReturnsNotFound()
-    {
-        var queryExpected = "expected";
-        var querySupplied = "supplied";
-        var detailModel = new DetailModel(Mock.Of<IOptions<ApplicationParameters>>(), _mockSiteService.Object)
-        {
-            Query = queryExpected,
-            Mode = SearchMode.Name,
-            Source = DetailViewSource.Search
-        };
-
-        var result = await detailModel.OnGet(querySupplied);
+        var result = await detailModel.OnGet("id");
 
         Assert.Null(detailModel.SearchResultEntry);
         Assert.IsType<NotFoundResult>(result);

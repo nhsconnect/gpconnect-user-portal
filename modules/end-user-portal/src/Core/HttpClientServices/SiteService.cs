@@ -21,13 +21,19 @@ public class SiteService : ISiteService
         _options = new JsonSerializerSettings() { NullValueHandling = NullValueHandling.Ignore };
     }
 
-    public async Task<List<SearchResultEntry>> SearchSitesAsync(string query, SearchMode mode)
+    public async Task<SearchResult> SearchSitesAsync(string query, SearchMode mode, int startingIndex = 1, int requestedResultCount = int.MaxValue)
     {
         try
         {
-            var result = default(List<SearchResultEntry>);
+            var result = default(SearchResult);
 
-            var url = QueryHelpers.AddQueryString("transparency-site", mode.GetQueryStringParameter(), query);
+            var url = QueryHelpers.AddQueryString("transparency-site",
+                new Dictionary<string,string?> {
+                    { mode.GetQueryStringParameter(), query },
+                    { "start", startingIndex.ToString() },
+                    { "count", requestedResultCount.ToString() },    
+                } 
+            );
 
             var response = await _httpClient.GetAsync(url, HttpCompletionOption.ResponseHeadersRead);
             response.EnsureSuccessStatusCode();
@@ -39,7 +45,7 @@ public class SiteService : ISiteService
                     _logger.LogError(x.Exception, $"A serialization error occurred in trying to read the response from an API query");
                     throw x.Exception;
                 }
-                result = JsonConvert.DeserializeObject<List<SearchResultEntry>>(x.Result, _options);
+                result = JsonConvert.DeserializeObject<SearchResult>(x.Result, _options);
             });
 
             return result;
@@ -55,15 +61,10 @@ public class SiteService : ISiteService
     {
         try
         {
-            var cancellationTokenSource = new CancellationTokenSource();
-            var request = new HttpRequestMessage()
-            {
-                Method = HttpMethod.Get
-            };
             var result = default(SearchResultEntry);
 
             var url = $"transparency-site/{id}";
-            var response = await _httpClient.GetAsync(url, HttpCompletionOption.ResponseHeadersRead, cancellationTokenSource.Token);
+            var response = await _httpClient.GetAsync(url, HttpCompletionOption.ResponseHeadersRead);
             
             if (response.StatusCode == HttpStatusCode.NotFound) 
             {
@@ -72,7 +73,7 @@ public class SiteService : ISiteService
 
             response.EnsureSuccessStatusCode();
 
-            await response.Content.ReadAsStringAsync(cancellationTokenSource.Token).ContinueWith((Task<string> x) =>
+            await response.Content.ReadAsStringAsync().ContinueWith((Task<string> x) =>
             {
                 if (x.IsFaulted)
                 {

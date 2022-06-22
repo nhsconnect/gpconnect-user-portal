@@ -1,5 +1,6 @@
-using GpConnect.NationalDataSharingPortal.EndUserPortal.Core;
+using GpConnect.NationalDataSharingPortal.EndUserPortal.Core.Config;
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Core.HttpClientServices.Interfaces;
+using GpConnect.NationalDataSharingPortal.EndUserPortal.Helpers.Constants;
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Helpers.Enumerations;
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -10,10 +11,12 @@ namespace GpConnect.NationalDataSharingPortal.EndUserPortal.Pages.Search;
 public partial class ResultsModel : BaseModel
 {
     private readonly ISiteService _siteService;
+    private readonly IOptions<ResultPageConfig> _config;
 
-    public ResultsModel(IOptions<ApplicationParameters> applicationParameters, ISiteService siteService) : base(applicationParameters)
+    public ResultsModel(IOptions<ResultPageConfig> config, IOptions<ApplicationParameters> applicationParameters, ISiteService siteService) : base(applicationParameters)
     {
         _siteService = siteService;
+        _config = config;
     }
 
     public async Task<IActionResult> OnGet()
@@ -23,33 +26,41 @@ public partial class ResultsModel : BaseModel
             return RedirectToPage("./Name");
         }
 
+        if (PageNumber < PageConstants.FIRST_PAGE)
+        {
+            return RedirectToPage("./Results", new { query = Query, mode = Mode });
+        }
+
         try
         {
-            var searchResults = await _siteService.SearchSitesAsync(Query, Mode);
+            SearchResult = await _siteService.SearchSitesAsync(Query, Mode, ((PageNumber - 1) * _config.Value.ResultsPerPage) + 1, _config.Value.ResultsPerPage);
 
-            if (searchResults.Count == 0)
+            if (SearchResult.TotalResults == 0)
             {
                 return RedirectToPage("./NoResults", new { query = Query, mode = Mode });
             }
 
-            if (searchResults.Count == 1)
+            if (SearchResult.TotalResults == 1)
             {
                 return RedirectToPage("./Detail", new { 
-                    id = searchResults[0].SiteDefinitionId, 
+                    id = SearchResult.SearchResults[0].SiteDefinitionId, 
                     query = Query, 
-                    mode = Mode 
+                    mode = Mode,
+                    page = PageNumber
                 });
             }
 
-            searchResults.Sort((x, y) => x.SiteName.CompareTo(y.SiteName));
+            if (PageNumber > NumPages)
+            {
+                return RedirectToPage("./Results", new { query = Query, mode = Mode, pageNumber = NumPages});
+            }
 
-            SearchResult = new SearchResult() { SearchResults = searchResults };
+            return Page();
         }
         catch
         {
             throw;
         }
-        return Page();
     }
 
     public BackPartialModel BackPartial => new BackPartialModel
@@ -58,4 +69,12 @@ public partial class ResultsModel : BaseModel
         Source = DetailViewSource.Search,
         Mode = Mode
     };
+
+    public int CurrentPageNumber => PageNumber;
+
+    public int TotalResults => SearchResult.TotalResults;
+
+    public bool HasMoreResults => CurrentPageNumber < NumPages;
+
+    public bool HasPreviousResults => CurrentPageNumber > PageConstants.FIRST_PAGE;
 }

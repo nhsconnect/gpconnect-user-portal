@@ -30,11 +30,9 @@ public class SiteServiceTests
                 
                 HttpResponseMessage response = new HttpResponseMessage
                 {
-                    Content = new StringContent("[]"),
+                    Content = new StringContent("{\"totalResults\": 0, \"results\": []}"),
                     StatusCode = HttpStatusCode.OK
                 };
-
-                //...decide what to put in the response after looking at the contents of the request
 
                 return Task.FromResult(response);
             })
@@ -47,13 +45,13 @@ public class SiteServiceTests
     }
 
     [Theory]
-    [InlineData(SearchMode.Name, "provider_name")]
-    [InlineData(SearchMode.Code, "provider_code")]
-    public async Task SearchSitesAsync_CallsHttpClient_WithExpectedParameters(SearchMode mode, string expectedParameterName)
+    [InlineData(SearchMode.Name, "provider_name", 1, 30)]
+    [InlineData(SearchMode.Code, "provider_code", 2, 75)]
+    public async Task SearchSitesAsync_CallsHttpClient_WithExpectedParameters(SearchMode mode, string expectedParameterName, int expectedStart, int expectedLength)
     {
-        Uri expectedUri = new Uri($"{BASE_URI}/transparency-site?{expectedParameterName}=Query");
+        Uri expectedUri = new Uri($"{BASE_URI}/transparency-site?{expectedParameterName}=Query&start={expectedStart}&count={expectedLength}");
 
-        await _sut.SearchSitesAsync("Query", mode);
+        await _sut.SearchSitesAsync("Query", mode, expectedStart, expectedLength);
 
         _mockMessageHandler.Protected().Verify(
             "SendAsync",
@@ -74,7 +72,7 @@ public class SiteServiceTests
             .Setup<Task<HttpResponseMessage>>("SendAsync", ItExpr.IsAny<HttpRequestMessage>(), ItExpr.IsAny<CancellationToken>())
             .ThrowsAsync(new Exception("Boom!"));
 
-        Assert.ThrowsAsync<Exception>(async () => await _sut.SearchSitesAsync("Query", SearchMode.Name));
+        Assert.ThrowsAsync<Exception>(async () => await _sut.SearchSitesAsync("Query", SearchMode.Name, 0, int.MaxValue));
     }
 
     [Fact]
@@ -91,11 +89,11 @@ public class SiteServiceTests
                 })
             ));
 
-        Assert.ThrowsAsync<HttpRequestException>(async () => await _sut.SearchSitesAsync("Query", SearchMode.Name));
+        Assert.ThrowsAsync<HttpRequestException>(async () => await _sut.SearchSitesAsync("Query", SearchMode.Name, 0, int.MaxValue));
     }
 
     [Fact]
-    public async Task SearchSitesAsync_HttpClientReturns200OK_ReturnsJsonReponseAsList()
+    public async Task SearchSitesAsync_HttpClientReturns200OK_ReturnsJsonReponseAsSearchResult()
     {
         _mockMessageHandler
             .Protected()
@@ -103,14 +101,100 @@ public class SiteServiceTests
             .Returns(() => (
                 Task.FromResult(new HttpResponseMessage
                 {
-                    Content = new StringContent("[{\"id\":\"12341234-1234-1234-1234-123412341234\"}]"),
+                    Content = new StringContent("{\"totalResults\": 1, \"results\": [{\"id\":\"12341234-1234-1234-1234-123412341234\"}]}"),
                     StatusCode = HttpStatusCode.OK
                 })
             ));
 
-        var result = await _sut.SearchSitesAsync("Query", SearchMode.Name);
+        var result = await _sut.SearchSitesAsync("Query", SearchMode.Name, 0, int.MaxValue);
 
-        Assert.StrictEqual(1, result.Count);
-        Assert.Equal("12341234-1234-1234-1234-123412341234", result[0].SiteDefinitionId);
+        Assert.StrictEqual(1, result.SearchResults.Count);
+        Assert.Equal("12341234-1234-1234-1234-123412341234", result.SearchResults[0].SiteDefinitionId);
+    }
+
+    [Fact]
+    public async Task SearchSiteAsync_CallsHttpClient_WithExpectedParameters()
+    {
+        var expectedId = "id";
+
+        Uri expectedUri = new Uri($"{BASE_URI}/transparency-site/{expectedId}");
+
+        await _sut.SearchSiteAsync(expectedId);
+
+        _mockMessageHandler.Protected().Verify(
+            "SendAsync",
+            Times.Exactly(1), // we expected a single external request
+            ItExpr.Is<HttpRequestMessage>(req =>
+                req.Method == HttpMethod.Get  // we expected a GET request
+                && req.RequestUri == expectedUri // to this uri
+            ),
+            ItExpr.IsAny<CancellationToken>()
+        );
+    }
+
+    [Fact]
+    public void SearchSiteAsync_HttpClientThrows_Throws()
+    {
+        _mockMessageHandler
+            .Protected()
+            .Setup<Task<HttpResponseMessage>>("SendAsync", ItExpr.IsAny<HttpRequestMessage>(), ItExpr.IsAny<CancellationToken>())
+            .ThrowsAsync(new Exception("Boom!"));
+
+        Assert.ThrowsAsync<Exception>(async () => await _sut.SearchSiteAsync("Id"));
+    }
+
+    [Fact]
+    public async Task SearchSiteAsync_HttpClientReturns_NotFound_ReturnsNull()
+    {
+        _mockMessageHandler
+            .Protected()
+            .Setup<Task<HttpResponseMessage>>("SendAsync", ItExpr.IsAny<HttpRequestMessage>(), ItExpr.IsAny<CancellationToken>())
+            .Returns(() => (
+                Task.FromResult(new HttpResponseMessage
+                {
+                    Content = new StringContent(""),
+                    StatusCode = HttpStatusCode.NotFound
+                })
+            ));
+
+        var result = await _sut.SearchSiteAsync("Id");
+
+        Assert.Null(result);
+    }
+
+    [Fact]
+    public void SearchSiteAsync_HttpClientReturnsUnexpectedErrorCode_Throws()
+    {
+        _mockMessageHandler
+            .Protected()
+            .Setup<Task<HttpResponseMessage>>("SendAsync", ItExpr.IsAny<HttpRequestMessage>(), ItExpr.IsAny<CancellationToken>())
+            .Returns(() => (
+                Task.FromResult(new HttpResponseMessage
+                {
+                    Content = new StringContent(""),
+                    StatusCode = HttpStatusCode.Forbidden
+                })
+            ));
+
+        Assert.ThrowsAsync<Exception>(async () => await _sut.SearchSiteAsync("Id"));
+    }
+
+    [Fact]
+    public async Task SearchSiteAsync_HttpClientReturns200OK_ReturnsJsonReponseAsSearchResult()
+    {
+        _mockMessageHandler
+            .Protected()
+            .Setup<Task<HttpResponseMessage>>("SendAsync", ItExpr.IsAny<HttpRequestMessage>(), ItExpr.IsAny<CancellationToken>())
+            .Returns(() => (
+                Task.FromResult(new HttpResponseMessage
+                {
+                    Content = new StringContent("{\"id\":\"12341234-1234-1234-1234-123412341234\"}"),
+                    StatusCode = HttpStatusCode.OK
+                })
+            ));
+
+        var result = await _sut.SearchSiteAsync("Id");
+
+        Assert.Equal("12341234-1234-1234-1234-123412341234", result.SiteDefinitionId);
     }
 }

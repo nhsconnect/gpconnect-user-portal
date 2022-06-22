@@ -1,3 +1,4 @@
+using GpConnect.NationalDataSharingPortal.EndUserPortal.Core.Config;
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Core.HttpClientServices;
 
 namespace GpConnect.NationalDataSharingPortal.EndUserPortal.Core;
@@ -22,6 +23,7 @@ public static class ServiceCollectionExtensions
 
         services.AddOptions();
         services.Configure<ApplicationParameters>(configuration.GetSection("ApplicationParameters"));
+        services.Configure<ResultPageConfig>(configuration.GetSection("Results"));
 
         services.AddHsts(options =>
         {
