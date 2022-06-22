@@ -1,4 +1,4 @@
-namespace GpConnect.NationalDataSharingPortal.EndUserPortal.Models.Config
+namespace GpConnect.NationalDataSharingPortal.EndUserPortal.Core.Config
 {
     public class ResultPageConfig
     {

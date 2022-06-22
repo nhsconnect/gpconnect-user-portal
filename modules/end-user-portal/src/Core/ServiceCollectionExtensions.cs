@@ -1,5 +1,5 @@
+using GpConnect.NationalDataSharingPortal.EndUserPortal.Core.Config;
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Core.HttpClientServices;
-using GpConnect.NationalDataSharingPortal.EndUserPortal.Models.Config;
 
 namespace GpConnect.NationalDataSharingPortal.EndUserPortal.Core;
 

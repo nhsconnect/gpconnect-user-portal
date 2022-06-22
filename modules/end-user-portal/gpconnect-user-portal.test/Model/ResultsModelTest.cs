@@ -1,11 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using GpConnect.NationalDataSharingPortal.EndUserPortal.Core;
+using GpConnect.NationalDataSharingPortal.EndUserPortal.Core.Config;
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Core.HttpClientServices.Interfaces;
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Helpers.Enumerations;
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Models;
-using GpConnect.NationalDataSharingPortal.EndUserPortal.Models.Config;
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Pages.Search;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -119,6 +118,7 @@ public class ResultsModelTest
     {
         var requestedPageNumber = 3;
         var resultsPerPage = 100;
+        var expectedIndex = 201; // ((3 - 1) * 100) + 1
 
         _config.ResultsPerPage = resultsPerPage;
         var resultsModel = new ResultsModel(_mockConfig.Object, Mock.Of<IOptions<ApplicationParameters>>(), _mockSiteService.Object)
@@ -130,7 +130,7 @@ public class ResultsModelTest
 
         await resultsModel.OnGet();
 
-        _mockSiteService.Verify(mss => mss.SearchSitesAsync("Query", mode, (requestedPageNumber - 1) * resultsPerPage, resultsPerPage), Times.Once);
+        _mockSiteService.Verify(mss => mss.SearchSitesAsync("Query", mode, expectedIndex, resultsPerPage), Times.Once);
     }
 
     [Fact]
@@ -238,41 +238,6 @@ public class ResultsModelTest
         Assert.Equal(expectedPage, result?.RouteValues?.GetValueOrDefault("pageNumber"));
     }
 
-    [Fact]
-    public async Task OnGet_SearchSites_ReturnsMoreThanOneResult_SetsTheSearchResultsOnTheModel_InAlphabeticalOrder()
-    {
-        var unorderedList = new List<SearchResultEntry>
-        {
-            new SearchResultEntry
-            {
-                SiteName = "gp"
-            },
-            new SearchResultEntry
-            {
-                SiteName = "connect"
-            }
-        };
-
-        var response = new SearchResult
-        {
-            TotalResults = 2,
-            SearchResults = unorderedList
-        };
-
-        _mockSiteService.Setup(mss => mss.SearchSitesAsync(It.IsAny<string>(), It.IsAny<SearchMode>(), It.IsAny<int>(), It.IsAny<int>())).ReturnsAsync(response);
-
-        var resultsModel = new ResultsModel(_mockConfig.Object, Mock.Of<IOptions<ApplicationParameters>>(), _mockSiteService.Object)
-        {
-            Query = "Query",
-            Mode = SearchMode.Name
-        };
-
-        await resultsModel.OnGet();
-
-        Assert.Equal("connect", resultsModel.SearchResult.SearchResults[0].SiteName);
-        Assert.Equal("gp", resultsModel.SearchResult.SearchResults[1].SiteName);
-    }
-
     [Theory]
     [InlineData(31,30)]
     [InlineData(31,1)]
@@ -374,7 +339,7 @@ public class ResultsModelTest
     [InlineData(2, 3, true)]
     [InlineData(27, 30, true)]
     [InlineData(30, 30, false)]
-    public void ShowNextLink_ReturnsExpected_ForGivenPageNumber(int pageNumber, int numPages, bool showsLink)
+    public void HasMoreResults_ReturnsExpected_ForGivenPageNumber(int pageNumber, int numPages, bool expectedResult)
     {
         var resultsModel = new ResultsModel(_mockConfig.Object, Mock.Of<IOptions<ApplicationParameters>>(), _mockSiteService.Object)
         {
@@ -385,25 +350,25 @@ public class ResultsModelTest
             }
         };
 
-        var result = resultsModel.ShowNextLink; 
+        var result = resultsModel.HasMoreResults; 
 
-        Assert.StrictEqual(showsLink, result);
+        Assert.StrictEqual(expectedResult, result);
     }
 
     [Theory]
     [InlineData(1, false)]
     [InlineData(2, true)]
     [InlineData(27, true)]
-    public void ShowPreviousLink_ReturnsExpected_ForGivenPageNumber(int pageNumber, bool showsLink)
+    public void HasPreviousResults_ReturnsExpected_ForGivenPageNumber(int pageNumber, bool expectedResult)
     {
         var resultsModel = new ResultsModel(_mockConfig.Object, Mock.Of<IOptions<ApplicationParameters>>(), _mockSiteService.Object)
         {
             PageNumber = pageNumber
         };
 
-        var result = resultsModel.ShowPreviousLink; 
+        var result = resultsModel.HasPreviousResults; 
 
-        Assert.StrictEqual(showsLink, result);
+        Assert.StrictEqual(expectedResult, result);
     }
 
     private List<SearchResultEntry> BuildResults(int currentPageResults)

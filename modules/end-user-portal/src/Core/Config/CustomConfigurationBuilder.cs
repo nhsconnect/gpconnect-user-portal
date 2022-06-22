@@ -1,4 +1,4 @@
-namespace GpConnect.NationalDataSharingPortal.EndUserPortal.Core;
+namespace GpConnect.NationalDataSharingPortal.EndUserPortal.Core.Config;
 
 public static class CustomConfigurationBuilder
 {

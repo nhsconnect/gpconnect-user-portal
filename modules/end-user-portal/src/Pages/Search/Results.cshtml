@@ -19,7 +19,7 @@
                 <div class="nhsuk-card">
                     <div class="nhsuk-card__content">
                         <h3 class="nhsuk-card__heading">
-                            Found @Model.TotalResults clinical care settings mathing '@Model.Query'
+                            Found @Model.TotalResults clinical care settings matching '@Model.Query'
                         </h3>
                         <h4>Name and address</h4>
                         <dl class="nhsuk-summary-list">
@@ -41,11 +41,11 @@
                             }
                         </dl>
                     
-                        @if (Model.ShowPreviousLink || Model.ShowNextLink) 
+                        @if (Model.HasPreviousResults || Model.HasMoreResults) 
                         {
                             <nav class="nhsuk-pagination" role="navigation" aria-label="Pagination">
                                 <ul class="nhsuk-list nhsuk-pagination__list">
-                                    @if (Model.ShowPreviousLink) 
+                                    @if (Model.HasPreviousResults) 
                                     {
                                         <li class="nhsuk-pagination-item--previous">
                                             <a class="nhsuk-pagination__link nhsuk-pagination__link--prev" 
@@ -62,7 +62,7 @@
                                             </a>
                                         </li>
                                     }
-                                    @if (Model.ShowNextLink)
+                                    @if (Model.HasMoreResults)
                                     {
                                         <li class="nhsuk-pagination-item--next">
                                             <a class="nhsuk-pagination__link nhsuk-pagination__link--next" asp-route-mode=@Model.Mode asp-route-query=@Model.Query asp-route-pageNumber=@(Model.CurrentPageNumber+1)>
