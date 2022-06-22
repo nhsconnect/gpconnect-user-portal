@@ -1,7 +1,6 @@
 using GpConnect.NationalDataSharingPortal.Api.Dto.Request;
-using System;
-
 using GpConnect.NationalDataSharingPortal.Api.Validators.Interface;
+using System;
 
 namespace GpConnect.NationalDataSharingPortal.Api.Validators;
 
@@ -16,6 +15,16 @@ public class TransparencySiteRequestValidator: ITransparencySiteRequestValidator
     {
         bool isValid = false;
 
+        if (request.StartPosition < 1)
+        {
+            return isValid;
+        }
+
+        if (request.Count < 1)
+        {
+            return isValid;
+        }
+
         if (!string.IsNullOrWhiteSpace(request.ProviderCode))
         {
             isValid = true;
@@ -24,7 +33,7 @@ public class TransparencySiteRequestValidator: ITransparencySiteRequestValidator
         if (!string.IsNullOrWhiteSpace(request.ProviderName))
         {
             return !isValid;
-        }
+        }       
 
         return isValid;
     }

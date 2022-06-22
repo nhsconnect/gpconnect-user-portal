@@ -56,7 +56,7 @@ paths:
                   type: string
   /transparency-site:
     get:
-      summary: Returns a list of transparencySites
+      summary: Returns an object with a count of transparencySites and the list of transparencySites
       description: >-
         In order to allow Users to see why their data could be accessed by a site or CCG. 
         This method will return a list of matching transparency sites.
@@ -71,6 +71,16 @@ paths:
           required: false
           schema: 
             type: string
+        - name: start
+          in: query
+          required: false
+          schema: 
+            type: integer
+        - name: count
+          in: query
+          required: false
+          schema: 
+            type: integer
       responses:
         '400': 
           description: Bad Request. No query terms where provided, exactly one must be provided
@@ -79,9 +89,16 @@ paths:
           content:
             application/json:
               schema: 
-                type: array
-                items: 
-                  $ref: '#/components/schemas/transparencySite'
+                type: object
+                properties:
+                  transparencySiteCount:
+                    type: integer
+                    format: int64
+                    example: 27
+                  transparencySites:
+                    type: array
+                    items: 
+                      $ref: '#/components/schemas/transparencySite'
   /transparency-site/{provider_id}:
     get:
       summary: Returns a list of transparencySites
