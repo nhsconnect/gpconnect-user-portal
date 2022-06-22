@@ -96,28 +96,28 @@ public class TransparencySiteServiceTest
     [Fact]
     public async Task GetMatchingSitesAsync_ExecuteQuerySucceeds_Returns()
     {
-        var expected = new RootTransparencySite() { TransparencySiteCount = 1, TransparencySites = new List<TransparencySite>()};
+        var expected = new TransparencySites() { TotalResults = 1, Results = new List<TransparencySite>()};
         var list = Task.FromResult(new List<TransparencySite>());
 
         _mockDataService.Setup(d => d.ExecuteQuery<TransparencySite>(It.IsAny<string>(), It.IsAny<DynamicParameters>())).Returns(list);
 
         var sites = await _sut.GetMatchingSitesAsync(new TransparencySiteRequest());
 
-        var result = Task.FromResult(new RootTransparencySite() { TransparencySites = sites.TransparencySites, TransparencySiteCount = 1 });
+        var result = Task.FromResult(new TransparencySites() { Results = sites.Results, TotalResults = 1 });
         
-        Assert.Equal(expected.TransparencySites, result.Result.TransparencySites);
-        Assert.Equal(expected.TransparencySiteCount, result.Result.TransparencySiteCount);
+        Assert.Equal(expected.Results, result.Result.Results);
+        Assert.Equal(expected.TotalResults, result.Result.TotalResults);
     }
 
     public async Task GetMatchingSitesCountAsync_ExecuteQuerySucceeds_Returns()
     {
-        var expected = Task.FromResult(1);
+        var expectedResultCount = 1;
 
-        _mockDataService.Setup(d => d.ExecuteScalar(It.IsAny<string>(), It.IsAny<DynamicParameters>())).Returns(expected);
+        _mockDataService.Setup(d => d.ExecuteScalar(It.IsAny<string>(), It.IsAny<DynamicParameters>())).ReturnsAsync(expectedResultCount);
 
         var result = await _sut.GetMatchingSitesAsync(new TransparencySiteRequest());
 
-        Assert.StrictEqual(expected.Result, result.TransparencySiteCount);
+        Assert.StrictEqual(expectedResultCount, result.TotalResults);
     }
 
     [Fact]

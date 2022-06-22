@@ -74,10 +74,10 @@ public class TransparencySiteControllerTest
     {
         _mockValidator.Setup(v => v.IsValidRequest(It.IsAny<TransparencySiteRequest>())).Returns(true);
         _mockService.Setup(s => s.GetMatchingSitesAsync(It.IsAny<TransparencySiteRequest>())).ReturnsAsync(
-            new RootTransparencySite
+            new TransparencySites
             {
-                TransparencySiteCount = 2,
-                TransparencySites = new List<TransparencySite>()
+                TotalResults = 2,
+                Results = new List<TransparencySite>()
                 {
                     new TransparencySite() { Name = "Test 1" },
                     new TransparencySite() { Name = "Test 2" }
@@ -91,11 +91,11 @@ public class TransparencySiteControllerTest
         Assert.IsType<OkObjectResult>(response.Result);
 
         var result = response.Result as OkObjectResult;
-        var value = result?.Value as RootTransparencySite;
+        var value = result?.Value as TransparencySites;
 
-        Assert.StrictEqual(2, value.TransparencySiteCount);
-        Assert.StrictEqual(2, value.TransparencySites.Count);
-        Assert.Equal("Test 1", value?.TransparencySites[0].Name);
+        Assert.StrictEqual(2, value?.TotalResults);
+        Assert.StrictEqual(2, value?.Results.Count);
+        Assert.Equal("Test 1", value?.Results[0].Name);
     }
 
     [Fact]
