@@ -4,14 +4,12 @@ using OpenQA.Selenium.Support.UI;
 
 namespace GpConnect.DataSharing.Admin.Specs.PageObjects
 {
-    public class UsersPageObject
+    public class UsersPageObject : BasePageObject
     {
 
-        private const string UsersUrl = "https://localhost:5001/Users";
+        private const string PATH = "/Users";
 
         private readonly IWebDriver _webDriver;
-
-        private TimeSpan DefaultWait = TimeSpan.FromSeconds(5);
 
         public UsersPageObject(IWebDriver webDriver)
         {
@@ -23,9 +21,9 @@ namespace GpConnect.DataSharing.Admin.Specs.PageObjects
 
         public void Open()
         {
-            if (_webDriver.Url != UsersUrl)
+            if (_webDriver.Url != URL(PATH))
             {
-                _webDriver.Url = UsersUrl;
+                _webDriver.Url = URL(PATH);
             }
         }
 

@@ -6,11 +6,17 @@ namespace GpConnect.DataSharing.Admin.Specs.Drivers
     public class DataDriver : IDisposable
     {
 
+        private string CONNECTION_STRING;
+
+        public DataDriver()
+        {
+            var DB_HOST = Environment.GetEnvironmentVariable("DB_HOST") ?? "localhost";
+            CONNECTION_STRING = $"Host={DB_HOST};Database=postgres;Username=postgres;Include Error Detail=true";
+        }
+
         public void TruncateUsers()
         {
-            using var connection = new NpgsqlConnection(
-                "Host=localhost;Database=postgres;Username=postgres;Include Error Detail=true"
-            );
+            using var connection = new NpgsqlConnection(CONNECTION_STRING);
             connection.Open();
 
             using
@@ -23,9 +29,7 @@ namespace GpConnect.DataSharing.Admin.Specs.Drivers
 
         public void GrantUserAdmin(string userEmail)
         {
-            using var connection = new NpgsqlConnection(
-                "Host=localhost;Database=postgres;Username=postgres;Include Error Detail=true"
-            );
+            using var connection = new NpgsqlConnection(CONNECTION_STRING);
             connection.Open();
 
             using

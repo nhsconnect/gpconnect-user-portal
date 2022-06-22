@@ -1,0 +1,16 @@
+
+services:
+
+  api:
+    image: ndsp/api
+    build:
+      context: ./modules/api
+      dockerfile: ./Dockerfile
+      target: build
+
+  end-user-portal:
+    image: ndsp/end-user-portal
+    build:
+      context: ./modules/end-user-portal
+      dockerfile: ./Dockerfile
+      target: build

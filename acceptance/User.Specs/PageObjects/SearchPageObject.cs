@@ -4,11 +4,9 @@ using OpenQA.Selenium.Support.UI;
 
 namespace GpConnect.DataSharing.User.Specs.PageObjects
 {
-    public class SearchPageObject
+    public class SearchPageObject : BasePageObject
     {
-        private const string SearchUrl = "https://localhost:5003/Search";
-        private TimeSpan DefaultWait = TimeSpan.FromSeconds(5);
-
+        private const string PATH = "/Search";
         private readonly IWebDriver _webDriver;
 
         public SearchPageObject(IWebDriver webDriver)
@@ -18,9 +16,9 @@ namespace GpConnect.DataSharing.User.Specs.PageObjects
 
         public void Open()
         {
-            if (_webDriver.Url != SearchUrl)
+            if (_webDriver.Url != URL(PATH))
             {
-                _webDriver.Url = SearchUrl;
+                _webDriver.Url = URL(PATH);
             }
         }
 

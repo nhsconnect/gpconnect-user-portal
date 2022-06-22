@@ -47,6 +47,12 @@ namespace GpConnect.DataSharing.Admin.Specs.Steps
             Assert.True(_rootPageObject.IsAccessRestrictionMessageVisible());
         }
 
+        [Given("the Sign In element is shown")]
+        public void GivenSignInIsDisplayed()
+        {
+            Assert.True(_rootPageObject.IsSignInElementVisible());
+        }
+
         [Then("the Sign In element is shown")]
         public void ThenSignInIsDisplayed()
         {

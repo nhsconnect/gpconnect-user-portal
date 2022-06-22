@@ -1,4 +1,9 @@
+using Xunit;
+
 using TechTalk.SpecFlow;
+
+using GpConnect.DataSharing.User.Specs.Drivers;
+using GpConnect.DataSharing.User.Specs.PageObjects;
 
 namespace GpConnect.DataSharing.User.Specs.Steps
 {
@@ -6,21 +11,33 @@ namespace GpConnect.DataSharing.User.Specs.Steps
     public class SearchByNameStepDefinitions
     {
         private readonly ScenarioContext _scenarioContext;
+        private readonly SearchByNamePageObject _searchByNamePage;
 
-        public SearchByNameStepDefinitions(ScenarioContext scenarioContext)
+        public SearchByNameStepDefinitions(ScenarioContext scenarioContext, BrowserDriver browserDriver)
         {
             _scenarioContext = scenarioContext;
+            _searchByNamePage = new SearchByNamePageObject(browserDriver.Current);
         }
+
+        [Given(@"I have performed a search for records that don't exist")]
+        public void GivenIHavePerformedASearchForRecordsThatDontExist()
+        {
+            _searchByNamePage.Open();
+            Assert.True(_searchByNamePage.IsPageVisible());
+            _searchByNamePage.EnterSearchText("Myxptlk");
+            _searchByNamePage.ClickFind();
+        }
+
         [Given(@"I have opened the search by name page")]
         public void GivenIHaveOpenedTheSearchByNamePage()
         {
-            _scenarioContext.Pending();
+            _searchByNamePage.Open();
         }
 
         [Then(@"I remain on the search by name page")]
         public void ThenIRemainOnTheSearchByNamePage()
         {
-            _scenarioContext.Pending();
+            Assert.True(_searchByNamePage.IsPageVisible());
         }
 
         [When(@"I enter bad input into the search box")]
@@ -30,15 +47,15 @@ namespace GpConnect.DataSharing.User.Specs.Steps
         }
 
         [When(@"I enter ""(.*)"" in the search box")]
-        public void WhenIEnterInTheSearchBox(string legg0)
+        public void WhenIEnterInTheSearchBox(string input)
         {
-            _scenarioContext.Pending();
+            _searchByNamePage.EnterSearchText(input);
         }
 
         [When(@"I click the Find button")]
         public void WhenIClickTheFindButton()
         {
-            _scenarioContext.Pending();
+            _searchByNamePage.ClickFind();
         }
 
         [Then(@"I am taken to the results page")]

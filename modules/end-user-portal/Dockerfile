@@ -1,13 +1,16 @@
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 
 # Do the restore first so it's cached as a layer as long as the projects don't change
-COPY src/*.csproj src/
-
 WORKDIR /src
+
+COPY gpconnect-user-portal.test/*.csproj gpconnect-user-portal.test/
+COPY src/*.csproj ./src/
+COPY *.sln ./
+
 RUN dotnet restore
 
 # Now do the real build
-COPY src/ .
+COPY . .
 
 RUN dotnet publish -c Debug -o /app/publish
 
