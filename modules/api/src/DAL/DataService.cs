@@ -1,4 +1,4 @@
-﻿using Dapper;
+using Dapper;
 using GpConnect.NationalDataSharingPortal.Api.Dal.Interfaces;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -56,8 +56,23 @@ namespace GpConnect.NationalDataSharingPortal.Api.Dal
             try
             {
                 using NpgsqlConnection connection = new NpgsqlConnection(_connectionString);
-                var rowsProcessed = await connection.ExecuteAsync(query, parameters, commandType: CommandType.StoredProcedure);
+                var rowsProcessed = await connection.ExecuteAsync(query, parameters, commandType: CommandType.StoredProcedure);                
                 return rowsProcessed;
+            }
+            catch (Exception exc)
+            {
+                _logger?.LogError(exc, $"An error has occurred while attempting to execute the query {query}");
+                throw;
+            }
+        }
+
+        public async Task<int> ExecuteScalar(string query, DynamicParameters parameters)
+        {
+            try
+            {
+                using NpgsqlConnection connection = new NpgsqlConnection(_connectionString);
+                var singleValue = await connection.ExecuteScalarAsync<int>(query, parameters, commandType: CommandType.StoredProcedure);
+                return singleValue;
             }
             catch (Exception exc)
             {

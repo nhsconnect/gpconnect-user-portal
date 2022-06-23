@@ -29,37 +29,51 @@ public class TransparencySiteServiceTest
     }
 
     [Fact]
-    public void GetMatchingSitesAsync_WithNameQuery_CallsDataService_WithExpectedParameters()
+    public async Task GetMatchingSitesAsync_WithNameQuery_CallsDataService_WithExpectedParameters()
     {
-        _sut.GetMatchingSitesAsync(new TransparencySiteRequest
+        await _sut.GetMatchingSitesAsync(new TransparencySiteRequest
         {
             ProviderName = "Name"
         });
+
+        _mockDataService.Verify(m => m.ExecuteScalar(
+            "application.find_sites_count",
+            It.Is<DynamicParameters>(d => d.ParameterNames.AsList<string>().Contains("_site_name")
+                                        && d.Get<string>("_site_name") == "Name"
+                                    )
+        ));
 
         _mockDataService.Verify(m => m.ExecuteQuery<TransparencySite>(
             "application.find_sites",
             It.Is<DynamicParameters>(d => d.ParameterNames.AsList<string>().Contains("_site_name")
                                         && d.Get<string>("_site_name") == "Name"
-                                        && d.Get<int>("_site_definition_status_min") == 5
-                                        && d.Get<int>("_site_definition_status_max") == 5
+                                        && d.Get<int>("_start_position") == 1
+                                        && d.Get<int>("_number_to_return") == int.MaxValue
                                     )
         ));
     }
 
     [Fact]
-    public void GetMatchingSitesAsync_WithODSQuery_CallsDataService_WithExpectedParameters()
+    public async Task GetMatchingSitesAsync_WithODSQuery_CallsDataService_WithExpectedParameters()
     {
-        _sut.GetMatchingSitesAsync(new TransparencySiteRequest
+        await _sut.GetMatchingSitesAsync(new TransparencySiteRequest
         {
             ProviderCode = "Code"
         });
+
+        _mockDataService.Verify(m => m.ExecuteScalar(
+            "application.find_sites_count",
+            It.Is<DynamicParameters>(d => d.ParameterNames.AsList<string>().Contains("_site_ods_code")
+                                        && d.Get<string>("_site_ods_code") == "Code"
+                                    )
+        ));
 
         _mockDataService.Verify(m => m.ExecuteQuery<TransparencySite>(
            "application.find_sites",
            It.Is<DynamicParameters>(d => d.ParameterNames.AsList<string>().Contains("_site_ods_code")
                                        && d.Get<string>("_site_ods_code") == "Code"
-                                       && d.Get<int>("_site_definition_status_min") == 5
-                                       && d.Get<int>("_site_definition_status_max") == 5
+                                      && d.Get<int>("_start_position") == 1
+                                        && d.Get<int>("_number_to_return") == int.MaxValue
                                    )
        ));
     }
@@ -73,15 +87,37 @@ public class TransparencySiteServiceTest
     }
 
     [Fact]
-    public void GetMatchingSitesAsync_ExecuteQuerySucceeds_Returns()
+    public void GetMatchingSitesCountAsync_ExecuteQueryThrows_Throws()
     {
-        var expected = Task.FromResult<List<TransparencySite>>(new List<TransparencySite>());
+        _mockDataService.Setup(d => d.ExecuteScalar(It.IsAny<string>(), It.IsAny<DynamicParameters>())).Throws(new Exception());
+        Assert.ThrowsAsync<Exception>(async () => await _sut.GetMatchingSitesAsync(new TransparencySiteRequest()));
+    }    
 
-        _mockDataService.Setup(d => d.ExecuteQuery<TransparencySite>(It.IsAny<string>(), It.IsAny<DynamicParameters>())).Returns(expected);
+    [Fact]
+    public async Task GetMatchingSitesAsync_ExecuteQuerySucceeds_Returns()
+    {
+        var expected = new TransparencySites() { TotalResults = 1, Results = new List<TransparencySite>()};
+        var list = Task.FromResult(new List<TransparencySite>());
 
-        var result = _sut.GetMatchingSitesAsync(new TransparencySiteRequest());
+        _mockDataService.Setup(d => d.ExecuteQuery<TransparencySite>(It.IsAny<string>(), It.IsAny<DynamicParameters>())).Returns(list);
 
-        Assert.StrictEqual(expected, result);
+        var sites = await _sut.GetMatchingSitesAsync(new TransparencySiteRequest());
+
+        var result = Task.FromResult(new TransparencySites() { Results = sites.Results, TotalResults = 1 });
+        
+        Assert.Equal(expected.Results, result.Result.Results);
+        Assert.Equal(expected.TotalResults, result.Result.TotalResults);
+    }
+
+    public async Task GetMatchingSitesCountAsync_ExecuteQuerySucceeds_Returns()
+    {
+        var expectedResultCount = 1;
+
+        _mockDataService.Setup(d => d.ExecuteScalar(It.IsAny<string>(), It.IsAny<DynamicParameters>())).ReturnsAsync(expectedResultCount);
+
+        var result = await _sut.GetMatchingSitesAsync(new TransparencySiteRequest());
+
+        Assert.StrictEqual(expectedResultCount, result.TotalResults);
     }
 
     [Fact]
@@ -110,7 +146,7 @@ public class TransparencySiteServiceTest
     [Fact]
     public void GetSiteAsync_ExecuteQuerySucceeds_Returns()
     {
-        var expected = Task.FromResult<TransparencySite>(new TransparencySite());
+        var expected = Task.FromResult(new TransparencySite());
 
         _mockDataService.Setup(d => d.ExecuteQueryFirstOrDefault<TransparencySite>(It.IsAny<string>(), It.IsAny<DynamicParameters>())).Returns(expected);
 
