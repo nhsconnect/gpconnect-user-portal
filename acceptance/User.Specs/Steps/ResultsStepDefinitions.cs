@@ -11,7 +11,6 @@ namespace GpConnect.DataSharing.User.Specs.Steps
     {
         private readonly ScenarioContext _scenarioContext;
         private readonly ResultsPageObject _resultsPageObject;
-        private readonly BrowserDriver _browserDriver;
 
         public ResultsStepDefinitions(ScenarioContext scenarioContext, BrowserDriver browserDriver)
         {
