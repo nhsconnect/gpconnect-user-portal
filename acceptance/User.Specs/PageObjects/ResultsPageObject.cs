@@ -46,7 +46,7 @@ namespace GpConnect.DataSharing.User.Specs.PageObjects
 
         public void ClickResult(int index)
         {
-            Results[index - 1].Click();
+            Results[index - 1].FindElement(By.TagName("a")).Click();
         }
 
         private IWebElement ResultsHeader =>
