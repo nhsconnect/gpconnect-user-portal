@@ -43,7 +43,7 @@ namespace GpConnect.DataSharing.User.Specs.Steps
         [When(@"I enter bad input into the search box")]
         public void WhenIEnterBadInputIntoTheSearchBox()
         {
-            _scenarioContext.Pending();
+            _searchByNamePage.EnterSearchText("%");
         }
 
         [When(@"I enter ""(.*)"" in the search box")]
@@ -58,28 +58,23 @@ namespace GpConnect.DataSharing.User.Specs.Steps
             _searchByNamePage.ClickFind();
         }
 
-        [Then(@"I am taken to the results page")]
-        public void ThenIAmTakenToTheResultsPage()
-        {
-            _scenarioContext.Pending();
-        }
-
         [When(@"I click the link to the ODS search page")]
         public void WhenIClickTheLinkToTheODSSearchPage()
         {
-            _scenarioContext.Pending();
+            _searchByNamePage.OdsSearchLink.Click();
         }
 
         [Then(@"there is a link to the ODS search page")]
         public void ThenThereIsALinkToTheODSSearchPage()
         {
-            _scenarioContext.Pending();
+            Assert.True(_searchByNamePage.OdsSearchLink.Displayed);
         }
 
-        [Then(@"I am taken to the ODS search page")]
-        public void ThenIAmTakenToTheODSSearchPage()
+        [Then(@"a validation error is shown")]
+        public void ThenAValidationErrorIsShown()
         {
-            _scenarioContext.Pending();
+            Assert.True(_searchByNamePage.IsValidationErrorVisible());
         }
+
     }
 }

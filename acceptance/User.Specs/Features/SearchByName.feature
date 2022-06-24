@@ -8,25 +8,32 @@ Scenario: SearchByNameEmptyInput
   Then I remain on the search by name page
   And a validation error is shown
 
-Scenario: SearchByNameBadInput
-  Given I have opened the search by name page
-  When I enter bad input into the search box
-  And I click the Find button
-  Then I remain on the search by name page
-  And a validation error is shown
+# Scenario: SearchByNameBadInput
+#   Given I have opened the search by name page
+#   When I enter bad input into the search box
+#   And I click the Find button
+#   Then I remain on the search by name page
+#   And a validation error is shown
 
 Scenario: SearchByNameWithResults
   Given I have opened the search by name page
-  When I enter "Legg" in the search box
+  When I enter "NHS" in the search box
   And I click the Find button
   Then I am taken to the results page
-  And there is 1 result
+  And there are 2 results
+
+Scenario: SearchByNameWithSingleResult
+  Given I have opened the search by name page
+  When I enter "VEGETAL" in the search box
+  And I click the Find button
+  Then I am taken to the detail page
+  And "NHS VEGETAL" is the site name
 
 Scenario: SearchByNameNoResults
   Given I have opened the search by name page
   When I enter "Myxptlk" in the search box
   And I click the Find button
-  Then I am taken to the results page
+  Then I am taken to the no results page
   And there are 0 results
 
 Scenario: SearchByNameHasLinkToOdsSearch

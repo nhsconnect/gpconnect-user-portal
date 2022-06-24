@@ -12,6 +12,7 @@ RUN dotnet restore
 # Now do the real build
 COPY . .
 
+WORKDIR /src/src
 RUN dotnet publish -c Debug -o /app/publish
 
 FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS final
