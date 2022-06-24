@@ -2,8 +2,8 @@ using GpConnect.NationalDataSharingPortal.Api.Controllers;
 using GpConnect.NationalDataSharingPortal.Api.Dto.Request;
 using GpConnect.NationalDataSharingPortal.Api.Dto.Response;
 using GpConnect.NationalDataSharingPortal.Api.Service.Interface;
-using GpConnect.NationalDataSharingPortal.Api.Validators.Interface;
 using GpConnect.NationalDataSharingPortal.Api.Validators;
+using GpConnect.NationalDataSharingPortal.Api.Validators.Interface;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
@@ -30,6 +30,111 @@ public class CareSettingControllerTest
         _mockLogger = new Mock<ILogger<CareSettingController>>();
 
          _sut = new CareSettingController(_mockValidator.Object, _mockService.Object, _mockLogger.Object);
+    }
+
+    [Fact]
+    public void CanConstruct()
+    {
+        Assert.NotNull(_sut);
+    }
+
+    [Fact]
+    public void CannotConstructWithNullValidator()
+    {
+        Assert.Throws<ArgumentNullException>(() => new CareSettingController(default(ICareSettingRequestValidator), _mockService.Object, _mockLogger.Object));
+    }
+
+    [Fact]
+    public void CannotConstructWithNullService()
+    {
+        Assert.Throws<ArgumentNullException>(() => new CareSettingController(_mockValidator.Object, default(ICareSettingService), _mockLogger.Object));
+    }
+
+    [Fact]
+    public void CannotConstructWithNullLogger()
+    {
+        Assert.Throws<ArgumentNullException>(() => new CareSettingController(_mockValidator.Object, _mockService.Object, default(ILogger<CareSettingController>)));
+    }
+
+    [Fact]
+    public async Task Get_WithNoParameters_ReturnsGivenType()
+    {
+        var result = await _sut.Get();
+        Assert.IsType<ActionResult<IEnumerable<CareSetting>>>(result);
+    }
+
+    [Fact]
+    public async Task Get_WithSingleParameter_ReturnsGivenType()
+    {
+        var careSettingId = 1;
+        var result = await _sut.Get(careSettingId);
+        Assert.IsType<ActionResult<CareSetting>>(result);
+    }
+
+    [Fact]
+    public async Task Get_WithNullSingleParameter_DoesNotReturnAnException()
+    {
+        Assert.IsNotType<ArgumentNullException>(async () => await _sut.Get(default));
+    }
+
+    [Fact]
+    public async Task Put_WithIdAndCareSettingUpdateRequest_ReturnsGivenType()
+    {
+        _mockValidator.Setup(v => v.IsValidUpdate(It.IsAny<CareSettingUpdateRequest>())).ReturnsAsync(new BaseRequestValidator() { RequestValid = true, EntityFound = true });
+        var id = 333400887;
+        var careSettingUpdateRequest = new CareSettingUpdateRequest { CareSettingId = 1, CareSettingValue = "TestValue1" };
+        var result = await _sut.Put(id, careSettingUpdateRequest);
+        Assert.IsType<ActionResult<CareSettingUpdateRequest>>(result);
+    }
+
+    [Fact]
+    public async Task Put_WithNullIdAndCareSettingUpdateRequest_Throws()
+    {
+        var careSettingUpdateRequest = new CareSettingUpdateRequest { CareSettingId = 1, CareSettingValue = "TestValue1" };
+        await Assert.ThrowsAsync<NullReferenceException>(async () => await _sut.Put(default, careSettingUpdateRequest));
+    }
+
+    [Fact]
+    public async Task CannotCallPutWithIdAndCareSettingUpdateRequestWithNullCareSettingUpdateRequest()
+    {
+        await Assert.ThrowsAsync<NullReferenceException>(async () => await _sut.Put(default(int), default(CareSettingUpdateRequest)));
+    }
+
+    [Fact]
+    public async Task Put_WithIdAndCareSettingDisableRequest_ReturnsGivenType()
+    {
+        _mockValidator.Setup(v => v.IsValidDisable(It.IsAny<CareSettingDisableRequest>())).ReturnsAsync(new BaseRequestValidator() { RequestValid = true, EntityFound = true });
+        var id = 1419042889;
+        var careSettingDisableRequest = new CareSettingDisableRequest { CareSettingId = 1, CareSettingDisabled = false };
+        var result = await _sut.Put(id, careSettingDisableRequest);
+        Assert.IsType<ActionResult<CareSettingDisableRequest>>(result);
+    }
+
+    [Fact]
+    public async Task CannotCallPutWithIdAndCareSettingDisableRequestWithNullId()
+    {
+        var careSettingDisableRequest = new CareSettingDisableRequest { CareSettingId = 1, CareSettingDisabled = true };
+        await Assert.ThrowsAsync<NullReferenceException>(async () => await _sut.Put(default, careSettingDisableRequest));
+    }
+
+    [Fact]
+    public async Task CannotCallPutWithIdAndCareSettingDisableRequestWithNullCareSettingDisableRequest()
+    {
+        await Assert.ThrowsAsync<NullReferenceException>(async () => await _sut.Put(default(int), default(CareSettingDisableRequest)));
+    }
+
+    [Fact]
+    public async Task CanCallPost()
+    {
+        var careSettingAddRequest = new CareSettingAddRequest { CareSettingValue = "TestValue1" };
+        var result = await _sut.Post(careSettingAddRequest);
+        Assert.IsType<ActionResult<CareSetting>>(result);
+    }
+
+    [Fact]
+    public async Task CannotCallPostWithNullCareSettingAddRequest()
+    {
+        Assert.ThrowsAsync<ArgumentNullException>(async () => await _sut.Post(default(CareSettingAddRequest)));
     }
 
     [Fact]

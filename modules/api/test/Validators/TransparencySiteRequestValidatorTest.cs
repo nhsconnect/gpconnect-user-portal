@@ -1,10 +1,10 @@
 using GpConnect.NationalDataSharingPortal.Api.Dto.Request;
 using GpConnect.NationalDataSharingPortal.Api.Validators;
 using GpConnect.NationalDataSharingPortal.Api.Validators.Interface;
-
+using System;
 using Xunit;
 
-namespace gpconnect_user_portal.api.test.validators;
+namespace GpConnect.NationalDataSharingPortal.Api.Test.Validators;
 
 public class TransparencySiteRequestValidatorTest
 {
@@ -14,6 +14,36 @@ public class TransparencySiteRequestValidatorTest
     public TransparencySiteRequestValidatorTest()
     {
         _sut = new TransparencySiteRequestValidator();
+    }
+
+    [Fact]
+    public void CanConstruct()
+    {
+        Assert.NotNull(_sut);
+    }
+
+    [Fact]
+    public void CanCallIsValidId()
+    {
+        var id = Guid.NewGuid().ToString();
+        var result = _sut.IsValidId(id);
+        Assert.True(result);
+    }
+
+    [Theory]
+    [InlineData(null)]
+    [InlineData("")]
+    [InlineData("   ")]
+    public void CannotCallIsValidIdWithInvalidId(string value)
+    {
+        var result = _sut.IsValidId(value);
+        Assert.False(result);
+    }
+
+    [Fact]
+    public void CannotCallIsValidRequestWithNullRequest()
+    {
+        Assert.Throws<NullReferenceException>(() => _sut.IsValidRequest(default(TransparencySiteRequest)));
     }
 
     [Theory]

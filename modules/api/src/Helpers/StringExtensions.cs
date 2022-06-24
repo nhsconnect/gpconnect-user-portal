@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,29 +10,25 @@ namespace GpConnect.NationalDataSharingPortal.Api.Helpers
     {
         public static string? Flatten(IEnumerable elems, string separator)
         {
-            if (elems == null)
-            {
-                return null;
-            }
+            elems = elems ?? throw new ArgumentNullException(nameof(elems));
+            separator = separator ?? throw new ArgumentNullException(nameof(separator));
 
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
             foreach (object elem in elems)
             {
                 if (sb.Length > 0)
                 {
                     sb.Append(separator);
                 }
-
                 sb.Append(elem);
             }
-
             return sb.ToString();
         }
 
         public static string FirstCharToUpper(this string input, bool restToLower = false) =>
-            input switch
+            input?.Trim() switch
             {
-                null or "" => string.Empty,
+                null or "" => throw new ArgumentNullException(nameof(input)),
                 _ => input.First().ToString().ToUpper() + (restToLower ? input.Substring(1).ToLower() : input.Substring(1))
             };
 
@@ -41,29 +38,22 @@ namespace GpConnect.NationalDataSharingPortal.Api.Helpers
         }
 
         public static string SearchAndReplace(this string input, Dictionary<string, string> replacementValues) =>
-            input switch
+            input?.Trim() switch
             {
-                null or "" => string.Empty,
-                _ => replacementValues.Aggregate(input, (current, value) => current.Replace(value.Key, value.Value))
-            };
-
-        public static string ConvertToDelimitedList(this string input, string[] separators, string delimited) =>
-            input switch
-            {
-                null or "" => string.Empty,
-                _ => separators.Select(x => x.Replace(input, delimited)).ToString()
+                null or "" => throw new ArgumentNullException(nameof(input)),
+                _ => replacementValues == null ? throw new ArgumentNullException(nameof(replacementValues)) : replacementValues.Aggregate(input, (current, value) => current.Replace(value.Key, value.Value))
             };
 
         public static string FlattenStrings(params string[] strings)
         {
+            strings = strings ?? throw new ArgumentNullException(nameof(strings));
             return string.Join(", ", strings.Where(s => !string.IsNullOrEmpty(s)));
         }
 
         public static string Pluraliser(this string input, int countValue, string startTag = "", string endTag = "") =>
-            startTag + input switch
+            startTag + input?.Trim() switch
             {
-                null => string.Empty,
-                "" => string.Empty,
+                null or "" => throw new ArgumentNullException(nameof(input)),
                 _ => countValue == 1 ? string.Format(input, countValue, string.Empty) : countValue == 0 ? string.Empty : string.Format(input, countValue, "s")
             } + endTag;
     }

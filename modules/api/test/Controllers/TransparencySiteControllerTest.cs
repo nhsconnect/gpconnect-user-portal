@@ -18,14 +18,125 @@ public class TransparencySiteControllerTest
     private readonly TransparencySiteController _sut;
     private readonly Mock<ITransparencySiteRequestValidator> _mockValidator;
     private readonly Mock<ITransparencySiteService> _mockService;
+    private readonly Mock<ILogger<TransparencySiteController>> _mockLogger;
 
     // setup
     public TransparencySiteControllerTest()
     {
         _mockValidator = new Mock<ITransparencySiteRequestValidator>();
-        _mockService = new Mock<ITransparencySiteService>(); 
+        _mockService = new Mock<ITransparencySiteService>();
+        _mockLogger = new Mock<ILogger<TransparencySiteController>>();
 
-        _sut = new TransparencySiteController(_mockValidator.Object, _mockService.Object, (new Mock<ILogger<TransparencySiteController>>()).Object);
+        _sut = new TransparencySiteController(_mockValidator.Object, _mockService.Object, _mockLogger.Object);
+    }
+
+    [Fact]
+    public void CanConstruct()
+    {
+        Assert.NotNull(_sut);
+    }
+
+    [Fact]
+    public void CannotConstructWithNullValidator()
+    {
+        Assert.Throws<ArgumentNullException>(() => new TransparencySiteController(default(ITransparencySiteRequestValidator), _mockService.Object, _mockLogger.Object));
+    }
+
+    [Fact]
+    public void CannotConstructWithNullService()
+    {
+        Assert.Throws<ArgumentNullException>(() => new TransparencySiteController(_mockValidator.Object, default(ITransparencySiteService), _mockLogger.Object));
+    }
+
+    [Fact]
+    public void CannotConstructWithNullLogger()
+    {
+        Assert.Throws<ArgumentNullException>(() => new TransparencySiteController(_mockValidator.Object, _mockService.Object, default(ILogger<TransparencySiteController>)));
+    }
+
+    [Fact]
+    public async Task Get_WithInvalidProviderCodeSearchParameters_ReturnsGivenType()
+    {
+        var query = new TransparencySiteRequest { ProviderCode = default(string?), ProviderName = "Test1", StartPosition = 1, Count = 10 };
+        var result = await _sut.Get(query);
+        Assert.IsType<BadRequestResult>(result);
+    }
+
+    [Fact]
+    public async Task Get_WithInvalidProviderNameSearchParameters_ReturnsGivenType()
+    {
+        var query = new TransparencySiteRequest { ProviderCode = "Test1", ProviderName = default(string?), StartPosition = 1, Count = 10 };
+        var result = await _sut.Get(query);
+        Assert.IsType<BadRequestResult>(result);
+    }
+
+    [Fact]
+    public async Task Get_WithInvalidStartPositionSearchParameters_ReturnsGivenType()
+    {
+        var query = new TransparencySiteRequest { ProviderCode = "Test1", ProviderName = "Test1", StartPosition = default(int?), Count = 10 };
+        var result = await _sut.Get(query);
+        Assert.IsType<BadRequestResult>(result);
+    }
+
+    [Fact]
+    public async Task Get_WithInvalidNegativeStartPositionSearchParameters_ReturnsGivenType()
+    {
+        var query = new TransparencySiteRequest { ProviderCode = "Test1", ProviderName = "Test1", StartPosition = int.MinValue, Count = 10 };
+        var result = await _sut.Get(query);
+        Assert.IsType<BadRequestResult>(result);
+    }
+
+    [Fact]
+    public async Task Get_WithInvalidCountSearchParameters_ReturnsGivenType()
+    {
+        var query = new TransparencySiteRequest { ProviderCode = "Test1", ProviderName = "Test1", StartPosition = 1, Count = default(int?) };
+        var result = await _sut.Get(query);
+        Assert.IsType<BadRequestResult>(result);
+    }
+
+    [Fact]
+    public async Task Get_WithInvalidNegativeCountSearchParameters_ReturnsGivenType()
+    {
+        var query = new TransparencySiteRequest { ProviderCode = "Test1", ProviderName = "Test1", StartPosition = 1, Count = int.MinValue };
+        var result = await _sut.Get(query);
+        Assert.IsType<BadRequestResult>(result);
+    }
+
+    [Fact]
+    public async Task Get_WithValidSearchParameters_ReturnsGivenType()
+    {
+        _mockValidator.Setup(v => v.IsValidRequest(It.IsAny<TransparencySiteRequest>())).Returns(true);
+        var query = new TransparencySiteRequest { ProviderCode = "test", StartPosition = 1, Count = 10 };
+        var result = await _sut.Get(query);
+        Assert.IsType<OkObjectResult>(result);
+    }
+
+    [Fact]
+    public async Task Get_WithNullSingleParameter_DoesNotReturnAnException()
+    {
+        Assert.IsNotType<ArgumentNullException>(async () => await _sut.Get(default(TransparencySiteRequest)));
+    }
+
+    [Fact]
+    public async Task Get_WithInvalidGuid_ReturnsGivenType()
+    {
+        var id = "test1";
+        var result = await _sut.GetTransparencySite(id);
+        Assert.IsType<BadRequestResult>(result);
+    }
+
+    [Fact]
+    public async Task Get_WithEmptyGuid_ReturnsGivenType()
+    {
+        var result = await _sut.GetTransparencySite(default(Guid).ToString());
+        Assert.IsType<BadRequestResult>(result);
+    }
+
+    [Fact]
+    public async Task Get_WithNull_ReturnsGivenType()
+    {
+        var result = await _sut.GetTransparencySite(null);
+        Assert.IsType<BadRequestResult>(result);
     }
 
     [Fact]

@@ -4,6 +4,7 @@ using GpConnect.NationalDataSharingPortal.Api.Service.Interface;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -23,6 +24,31 @@ public class CcgControllerTest
         _mockService = new Mock<ICcgService>();
         _mockLogger = new Mock<ILogger<CcgController>>();
         _sut = new CcgController(_mockService.Object, _mockLogger.Object);
+    }
+
+    [Fact]
+    public void CanConstruct()
+    {
+        Assert.NotNull(_sut);
+    }
+
+    [Fact]
+    public void CannotConstructWithNullService()
+    {
+        Assert.Throws<ArgumentNullException>(() => new CcgController(default(ICcgService), _mockLogger.Object));
+    }
+
+    [Fact]
+    public void CannotConstructWithNullLogger()
+    {
+        Assert.Throws<ArgumentNullException>(() => new CcgController(_mockService.Object, default(ILogger<CcgController>)));
+    }
+
+    [Fact]
+    public async Task Get_WithNoParameters_ReturnsGivenType()
+    {
+        var result = await _sut.Get();
+        Assert.IsType<ActionResult<IEnumerable<Ccg>>>(result);
     }
 
     [Fact]
