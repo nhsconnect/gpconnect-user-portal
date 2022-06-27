@@ -5,7 +5,7 @@ namespace GpConnect.NationalDataSharingPortal.Api.Test.Dal;
 
 public class ConnectionStringsTests
 {
-    private ConnectionStrings _sut;
+    private readonly ConnectionStrings _sut;
 
     public ConnectionStringsTests()
     {
@@ -15,8 +15,7 @@ public class ConnectionStringsTests
     [Fact]
     public void CanConstruct()
     {
-        var instance = new ConnectionStrings();
-        Assert.NotNull(instance);
+        Assert.NotNull(_sut);
     }
 
     [Fact]

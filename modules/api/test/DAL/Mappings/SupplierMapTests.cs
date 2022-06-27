@@ -5,10 +5,16 @@ namespace GpConnect.NationalDataSharingPortal.Api.Test.Dal.Mappings;
 
 public class SupplierMapTests
 {
+    private readonly SupplierMap _sut;
+
+    public SupplierMapTests()
+    {
+        _sut = new SupplierMap();
+    }
+
     [Fact]
     public void CanConstruct()
     {
-        var instance = new SupplierMap();
-        Assert.NotNull(instance);
+        Assert.NotNull(_sut);
     }
 }

@@ -5,7 +5,7 @@ namespace GpConnect.NationalDataSharingPortal.Api.Test.Dto.Request;
 
 public class ProductDisableRequestTests
 {
-    private ProductDisableRequest _sut;
+    private readonly ProductDisableRequest _sut;
 
     public ProductDisableRequestTests()
     {

@@ -7,11 +7,17 @@ namespace GpConnect.NationalDataSharingPortal.Api.Test.Core;
 
 public class ContainerModuleTests
 {
+    private readonly ContainerModule _sut;
+
+    public ContainerModuleTests()
+    {
+        _sut = new ContainerModule();
+    }
+
     [Fact]
     public void CanConstruct()
     {
-        var instance = new ContainerModule();
-        Assert.NotNull(instance);
+        Assert.NotNull(_sut);
     }
     
     [Fact]

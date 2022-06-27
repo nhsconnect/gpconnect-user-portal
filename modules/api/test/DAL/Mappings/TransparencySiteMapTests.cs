@@ -5,10 +5,16 @@ namespace GpConnect.NationalDataSharingPortal.Api.Test.Dal.Mappings;
 
 public class TransparencySiteMapTests
 {
+    private readonly TransparencySiteMap _sut;
+
+    public TransparencySiteMapTests()
+    {
+        _sut = new TransparencySiteMap();
+    }
+
     [Fact]
     public void CanConstruct()
     {
-        var instance = new TransparencySiteMap();
-        Assert.NotNull(instance);
+        Assert.NotNull(_sut);
     }
 }

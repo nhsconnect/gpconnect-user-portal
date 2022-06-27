@@ -6,7 +6,7 @@ namespace GpConnect.NationalDataSharingPortal.Api.Test.Dto.Response;
 
 public class TransparencySitesTests
 {
-    private TransparencySites _sut;
+    private readonly TransparencySites _sut;
 
     public TransparencySitesTests()
     {

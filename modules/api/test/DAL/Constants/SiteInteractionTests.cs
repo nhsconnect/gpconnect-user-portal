@@ -5,7 +5,7 @@ namespace GpConnect.NationalDataSharingPortal.Api.Test.Dal.Constants;
 
 public class SiteInteractionTests
 {
-    private SiteInteraction _sut;
+    private readonly SiteInteraction _sut;
 
     public SiteInteractionTests()
     {

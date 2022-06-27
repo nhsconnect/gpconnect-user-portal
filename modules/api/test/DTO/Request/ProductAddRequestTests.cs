@@ -5,7 +5,7 @@ namespace GpConnect.NationalDataSharingPortal.Api.Test.Dto.Request;
 
 public class ProductAddRequestTests
 {
-    private ProductAddRequest _sut;
+    private readonly ProductAddRequest _sut;
 
     public ProductAddRequestTests()
     {

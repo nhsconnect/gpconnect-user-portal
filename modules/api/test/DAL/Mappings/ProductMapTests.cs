@@ -5,10 +5,16 @@ namespace GpConnect.NationalDataSharingPortal.Api.Test.Dal.Mappings;
 
 public class ProductMapTests
 {
+    private readonly ProductMap _sut;
+
+    public ProductMapTests()
+    {
+        _sut = new ProductMap();
+    }
+
     [Fact]
     public void CanConstruct()
     {
-        var instance = new ProductMap();
-        Assert.NotNull(instance);
+        Assert.NotNull(_sut);
     }
 }
