@@ -16,6 +16,7 @@ namespace GpConnect.NationalDataSharingPortal.EndUserPortal.Models
         }
 
         public string ProductName => _applicationParameters.Value.ProductName;
+        public string ProductNameAbbreviated => _applicationParameters.Value.ProductNameAbbreviated;
         public string ProductVersion => _applicationParameters.Value.ProductVersion;
         public HtmlString OwnerEmailAddress => _applicationParameters.Value.OwnerEmailAddress.CreateHtmlString(Helpers.Enumerations.LinkTypeEnums.MailTo);
         public HtmlString OwnerTelephone => _applicationParameters.Value.OwnerTelephone.CreateHtmlString(Helpers.Enumerations.LinkTypeEnums.Telephone);

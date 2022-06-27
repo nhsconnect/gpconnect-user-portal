@@ -170,6 +170,24 @@ namespace GpConnect.NationalDataSharingPortal.EndUserPortal.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Select the name of the software supplier.
+        /// </summary>
+        public static string SoftwareSupplierName {
+            get {
+                return ResourceManager.GetString("SoftwareSupplierName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select the GP Connect products.
+        /// </summary>
+        public static string SoftwareSupplierProduct {
+            get {
+                return ResourceManager.GetString("SoftwareSupplierProduct", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Use Case Description.
         /// </summary>
         public static string UseCaseDescription {

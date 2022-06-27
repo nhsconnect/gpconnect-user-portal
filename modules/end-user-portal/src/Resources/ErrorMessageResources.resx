@@ -123,4 +123,10 @@
   <data name="ProviderOdsCode" xml:space="preserve">
     <value>You must enter a value for ODS Code</value>
   </data>
+  <data name="SoftwareSupplierName" xml:space="preserve">
+    <value>You must select a value for Software Supplier Name</value>
+  </data>
+  <data name="SoftwareSupplierProduct" xml:space="preserve">
+    <value>You must select a value for GP Connect products</value>
+  </data>
 </root>

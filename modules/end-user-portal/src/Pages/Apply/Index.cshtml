@@ -1,0 +1,54 @@
+@page
+@model GpConnect.NationalDataSharingPortal.EndUserPortal.Pages.Search.IndexModel
+
+<div class="nhsuk-width-container">
+    <main class="nhsuk-main-wrapper" id="maincontent">
+        <div class="nhsuk-grid-row">
+            <div class="nhsuk-grid-column-full">
+                <h1 class="nhsuk-label-wrapper">
+                    <label class="nhsuk-label nhsuk-label--xl">
+                        Sign the National Data Sharing Agreement (NDSA)
+                    </label>
+                </h1>
+
+                <div class="nhsuk-grid-row">
+                    <div class="nhsuk-grid-column-full">
+                        <div class="nhsuk-card nhsuk-card--care nhsuk-card--care--non-urgent">
+                            <div class="nhsuk-card--care__heading-container">
+                                <h3 class="nhsuk-card--care__heading">
+                                    <span role="text"><span class="nhsuk-u-visually-hidden">Information: </span>Apply for the National Data Sharing Agreement</span>
+                                </h3>
+                                <span class="nhsuk-card--care__arrow" aria-hidden="true"></span>
+                            </div>
+                            <div class="nhsuk-card__content">
+                                <p class="nhsuk-card__description">The @Model.ProductName (@Model.ProductNameAbbreviated) is a way for health care providers to securely share GP Patient Records. The @Model.ProductNameAbbreviated passes data between GP Connect products, which are used in patient care.</p>
+                                <p class="nhsuk-card__description">This makes it easier and faster for patients to get health care services and gives them sight into how their data is being shared.</p>
+                                <p class="nhsuk-card__description">Providers must apply for a data sharing agreement in order to use the @Model.ProductNameAbbreviated or add a new GP Connect product. This agreement sets out data usage requirements to which @Model.ProductNameAbbreviated users must adhere.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="nhsuk-grid-row">
+                    <div class="nhsuk-grid-column-full">
+                        <div class="nhsuk-card">
+                            <div class="nhsuk-card__content">
+                                <h3 class="nhsuk-card__heading">You will need:</h3>
+                                <p class="nhsuk-card__description"><ol class="nhsuk-contents-list__list">
+                                    <li class="nhsuk-contents-list__item"><span>details of your GP Connect software</span></li>
+                                    <li class="nhsuk-contents-list__item"><span>details of your organisation</span></li>
+                                    <li class="nhsuk-contents-list__item"><span>authorisation from a signatory - this will be your organisation's Caldicott Guardian, Senior Information Risk Officer or Data Officer</span></li>
+                                    <li class="nhsuk-contents-list__item"><span>the reason your organisation uses the GP Connect software</span></li>
+                                </ol>
+                                <p class="nhsuk-card__description">If you have this information, it should take 10 to 15 minutes to complete this application.</p>
+                                <a class="nhsuk-button" href="~/Apply/SoftwareSupplier" draggable="false">Apply now</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>                
+                <partial name="Help" />
+                <partial name="Terms" />
+            </div>
+        </div>
+    </main>
+</div>

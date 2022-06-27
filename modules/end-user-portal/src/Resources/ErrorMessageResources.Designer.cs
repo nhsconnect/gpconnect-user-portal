@@ -78,5 +78,23 @@ namespace GpConnect.NationalDataSharingPortal.EndUserPortal.Resources {
                 return ResourceManager.GetString("ProviderOdsCode", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You must select a value for Software Supplier Name.
+        /// </summary>
+        public static string SoftwareSupplierName {
+            get {
+                return ResourceManager.GetString("SoftwareSupplierName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You must select a value for GP Connect products.
+        /// </summary>
+        public static string SoftwareSupplierProduct {
+            get {
+                return ResourceManager.GetString("SoftwareSupplierProduct", resourceCulture);
+            }
+        }
     }
 }
