@@ -153,6 +153,12 @@
   <data name="SitePostcode" xml:space="preserve">
     <value>Postcode</value>
   </data>
+  <data name="SoftwareSupplierName" xml:space="preserve">
+    <value>Select the name of the software supplier</value>
+  </data>
+  <data name="SoftwareSupplierProduct" xml:space="preserve">
+    <value>Select the GP Connect products</value>
+  </data>
   <data name="UseCaseDescription" xml:space="preserve">
     <value>Use Case Description</value>
   </data>
