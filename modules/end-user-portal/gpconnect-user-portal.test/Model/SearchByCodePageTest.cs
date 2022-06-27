@@ -19,6 +19,26 @@ public class SearchByCodePageTest
     }
 
     [Theory]
+    [InlineData("ProviderOdsCode", true)]
+    public void OnGet_ClearsProviderOdsCodeValidation_ReturnsPage(string validationKey, bool expectedModelStateIsValid)
+    {
+        var expectedOdsCode = "Test";
+
+        var searchModel = new SearchByCodeModel(_mockOptions.Object)
+        {
+            ProviderOdsCode = expectedOdsCode
+        };
+
+        searchModel.ModelState.AddModelError(validationKey, "My Error");
+        
+        var result = searchModel.OnGet();
+        
+        Assert.StrictEqual(0, searchModel.ModelState.ErrorCount);
+        Assert.Equal(expectedOdsCode, searchModel.ProviderOdsCode);
+        Assert.IsType<PageResult>(result);
+    }
+
+    [Theory]
     [InlineData("A20047")]
     [InlineData("A20047, B82132")]
     public void OnPost_IfValidSearchParameters_RedirectsToResultsPage(string providerOdsCode)

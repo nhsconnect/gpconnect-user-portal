@@ -14,7 +14,7 @@ public static class AttributeExtensions
         return GetAttr<DisplayParameterAttribute, T>(val)?.DisplayParameter ?? "";
     }
 
-    private static TAttr GetAttr<TAttr, T>(this T val) where TAttr : Attribute
+    private static TAttr GetAttr<TAttr, T>(T val) where TAttr : Attribute
     {
         return (TAttr)typeof(T)
             .GetField(val.ToString())
