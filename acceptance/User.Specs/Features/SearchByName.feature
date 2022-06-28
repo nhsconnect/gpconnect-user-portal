@@ -14,6 +14,7 @@ Scenario: SearchByNameEmptyInput
 #   And I click the Find button
 #   Then I remain on the search by name page
 #   And a validation error is shown
+#   TODO See [JIRA](https://nhsd-jira.digital.nhs.uk/browse/GCNDSP-325)
 
 Scenario: SearchByNameWithResults
   Given I have opened the search by name page
