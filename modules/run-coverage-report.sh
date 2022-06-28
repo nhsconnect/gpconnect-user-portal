@@ -30,6 +30,6 @@ REPORTS=${REPORTS}";./$INPUT_LOCATION/ui-report.xml"
 # REPORTS=${REPORTS}";./input/admin-report.xml"
 
 echo "Generate HTML Report"
-reportgenerator -reports:"${REPORTS}" -targetdir:"coveragereport" -reporttypes:Html -filefilters:"-*.cshtml" -classfilters:"-GpConnect.NationalDataSharingPortal.EndUserPortal.Resources.*;-GpConnect.NationalDataSharingPortal.EndUserPortal.Core.ApplicationBuilderExtensions;-GpConnect.NationalDataSharingPortal.EndUserPortal.Core.HttpClientServices.HttpClientExtensions;-GpConnect.NationalDataSharingPortal.EndUserPortal.Core.ServiceCollectionExtensions;-GpConnect.NationalDataSharingPortal.EndUserPortal.Program;-GpConnect.NationalDataSharingPortal.EndUserPortal.Startup"
+reportgenerator -reports:"${REPORTS}" -targetdir:"coveragereport" -reporttypes:Html -filefilters:"-*.cshtml" -classfilters:"-GpConnect.NationalDataSharingPortal.EndUserPortal.Resources.*;-GpConnect.NationalDataSharingPortal.EndUserPortal.Core.ApplicationBuilderExtensions;-GpConnect.NationalDataSharingPortal.EndUserPortal.Core.HttpClientServices.HttpClientExtensions;-GpConnect.NationalDataSharingPortal.EndUserPortal.Core.ServiceCollectionExtensions;-GpConnect.NationalDataSharingPortal.EndUserPortal.Program;-GpConnect.NationalDataSharingPortal.EndUserPortal.Startup;-GpConnect.NationalDataSharingPortal.Api.Program;-GpConnect.NationalDataSharingPortal.Api.Startup;-GpConnect.NationalDataSharingPortal.Api.Core.ApplicationBuilderExtensions"
 
 rm -rf $INPUT_LOCATION && open ./coveragereport/Index.html
