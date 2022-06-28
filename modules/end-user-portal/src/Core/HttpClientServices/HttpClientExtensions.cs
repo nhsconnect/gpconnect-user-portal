@@ -18,6 +18,8 @@ public static class HttpClientExtensions
     };
 
     services.AddHttpClient<ISiteService, SiteService>(httpClientConfig).AugmentHttpClientBuilder(env);
+
+    services.AddHttpClient<IOrganizationLookupService, OrganizationLookupService>(httpClientConfig).AugmentHttpClientBuilder(env);
   }
 
   private static IHttpClientBuilder AugmentHttpClientBuilder(this IHttpClientBuilder httpClientBuilder, IWebHostEnvironment env)
