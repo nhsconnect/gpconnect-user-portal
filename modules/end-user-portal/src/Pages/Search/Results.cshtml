@@ -1,5 +1,6 @@
 @page
 @using GpConnect.NationalDataSharingPortal.EndUserPortal.Helpers.Enumerations
+@using GpConnect.NationalDataSharingPortal.EndUserPortal.Helpers
 @model GpConnect.NationalDataSharingPortal.EndUserPortal.Pages.Search.ResultsModel
 
 <div class="nhsuk-width-container">
@@ -34,7 +35,7 @@
                                             asp-route-source=@DetailViewSource.Results
                                             asp-route-pageNumber=@Model.PageNumber
                                         >
-                                                @searchResult.FullAddress
+                                            @searchResult.SiteName, @searchResult.GetFullAddressAsString()
                                         </a>
                                     </dt>
                                 </div>
