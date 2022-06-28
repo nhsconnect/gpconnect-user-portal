@@ -4,6 +4,7 @@ using GpConnect.NationalDataSharingPortal.EndUserPortal.Helpers;
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Helpers.Enumerations;
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Models;
 using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 
 namespace GpConnect.NationalDataSharingPortal.EndUserPortal.Core.HttpClientServices;
@@ -14,11 +15,16 @@ public class SiteService : ISiteService
     private readonly HttpClient _httpClient;
     private readonly JsonSerializerSettings _options;
 
-    public SiteService(ILogger<SiteService> logger, HttpClient httpClient)
+    public SiteService(ILogger<SiteService> logger, HttpClient httpClient, IOptions<SiteServiceConfig> options)
     {
-        _logger = logger;
         _httpClient = httpClient;
-        _options = new JsonSerializerSettings() { NullValueHandling = NullValueHandling.Ignore };
+        _httpClient.BaseAddress = new UriBuilder(options.Value.BaseUrl).Uri;
+    
+        _logger = logger;
+        _options = new JsonSerializerSettings() 
+        { 
+            NullValueHandling = NullValueHandling.Ignore 
+        };
     }
 
     public async Task<SearchResult> SearchSitesAsync(string query, SearchMode mode, int startingIndex = 1, int requestedResultCount = int.MaxValue)
@@ -90,5 +96,10 @@ public class SiteService : ISiteService
             _logger.LogError(exc, $"An exception has occurred while attempting to execute an API query - {id}");
             throw;
         }
+    }
+
+    public class SiteServiceConfig
+    {
+        public string BaseUrl { get; set; } = "";
     }
 }

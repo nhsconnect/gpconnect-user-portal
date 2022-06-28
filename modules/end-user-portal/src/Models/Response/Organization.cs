@@ -1,3 +1,5 @@
+using Newtonsoft.Json;
+
 namespace GpConnect.NationalDataSharingPortal.EndUserPortal.Models.Response;
 
 public class Organization
@@ -5,11 +7,12 @@ public class Organization
   
     public class OrganizationAddress
     {
-      public List<string> Lines { get; set; }
-      public string City { get; set; }
-      public string District { get; set; }
-      public string PostalCode { get; set; }
-      public string Country { get; set; }
+        [JsonProperty("line")]
+        public List<string> Lines { get; set; }
+        public string City { get; set; }
+        public string District { get; set; }
+        public string PostalCode { get; set; }
+        public string Country { get; set; }
     }
 
     public string Id { get; set; }
