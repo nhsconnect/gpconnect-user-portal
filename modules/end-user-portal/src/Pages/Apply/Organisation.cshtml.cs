@@ -8,8 +8,11 @@ namespace GpConnect.NationalDataSharingPortal.EndUserPortal.Pages.Apply;
 
 public partial class OrganisationModel : BaseModel
 {
-    public OrganisationModel(IOptions<ApplicationParameters> applicationParameters) : base(applicationParameters)
-    {        
+    private readonly IOrganizationLookupService _orgLookupService;
+
+    public OrganisationModel(IOptions<ApplicationParameters> applicationParameters, IOrganizationLookupService orgLookupService) : base(applicationParameters)
+    {
+        _orgLookupService = orgLookupService;
     }
 
     public IActionResult OnGetAsync()
@@ -18,28 +21,14 @@ public partial class OrganisationModel : BaseModel
         return Page();
     }
     
-    public IActionResult OnPostFindOrganisationAsync()
+    public async Task<IActionResult> OnPostFindOrganisationAsync()
     {        
         if (!ModelState.IsValid)
         {
             return Page();
         }
-        OrganisationResult = GetOrganisationDetails(SiteOdsCode);
+        OrganisationResult = await _orgLookupService.GetOrganizationAsync(SiteOdsCode);
         return Page();
-    }
-
-    private OrganisationResult GetOrganisationDetails(string siteOdsCode)
-    {
-        var organisationResult = new OrganisationResult()
-        {
-            OdsCode = siteOdsCode,
-            Name = "TESTVALE SURGERY",
-            Address = new OrganisationAddress()
-            {
-                AddressLines = new List<string> { "12 SALISBURY ROAD", "TOTTON" }, City = "SOUTHAMPTON", County = "HAMPSHIRE", Country = "ENGLAND", Postcode = "SO40 3PY"
-            }
-        };
-        return organisationResult;
     }
 
     public IActionResult OnPostNextAsync()
@@ -48,6 +37,7 @@ public partial class OrganisationModel : BaseModel
         {
             return Page();
         }
+
         return Redirect("./Signatory");
     }
 

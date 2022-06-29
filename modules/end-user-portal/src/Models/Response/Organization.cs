@@ -10,8 +10,10 @@ public class Organization
         [JsonProperty("line")]
         public List<string> Lines { get; set; }
         public string City { get; set; }
-        public string District { get; set; }
-        public string PostalCode { get; set; }
+        [JsonProperty("district")]
+        public string County { get; set; }
+        [JsonProperty("postalcode")]
+        public string Postcode { get; set; }
         public string Country { get; set; }
     }
 

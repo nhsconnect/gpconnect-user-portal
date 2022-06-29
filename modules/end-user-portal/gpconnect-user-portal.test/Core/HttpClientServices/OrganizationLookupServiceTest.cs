@@ -167,8 +167,8 @@ public class OrganizationLookupServiceTests
         Assert.Equal("12 QUEENSTOWN ROAD", result.Address.Lines[0]);
         Assert.Equal("BATTERSEA", result.Address.Lines[1]);
         Assert.Equal("LONDON", result.Address.City);
-        Assert.Equal("GREATER LONDON", result.Address.District);
-        Assert.Equal("SW8 3RX", result.Address.PostalCode);
+        Assert.Equal("GREATER LONDON", result.Address.County);
+        Assert.Equal("SW8 3RX", result.Address.Postcode);
         Assert.Equal("ENGLAND", result.Address.Country);
     }
 }

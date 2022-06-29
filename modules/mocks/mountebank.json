@@ -491,6 +491,31 @@
         ]
       },
       {
+        "predicates": [
+            {
+                "equals": {
+                    "path": "/supplier"
+                }
+            }
+        ],
+        "responses": [
+            {
+                "is": {
+                    "statusCode": 200,
+                    "body": [{
+                        "SupplierId": 1,
+                        "SupplierValue": "Value",
+                        "SupplierName": "Bob's Medical",
+                        "SupplierDescription": "Best Software in Town, right Muck?"
+                    }],
+                    "headers": {
+                        "Content-Type": "application/json"
+                    }
+                }
+            }
+        ]
+      },
+      {
         "responses": [
             {
                 "is": {
