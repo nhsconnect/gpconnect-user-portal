@@ -144,11 +144,20 @@
   <data name="ProviderOdsCode" xml:space="preserve">
     <value>Enter the ODS (Organisation Data Service) Code</value>
   </data>
+  <data name="SignatoryEmail" xml:space="preserve">
+    <value>Signatory email address</value>
+  </data>
+  <data name="SignatoryName" xml:space="preserve">
+    <value>Signatory name</value>
+  </data>
+  <data name="SignatoryRole" xml:space="preserve">
+    <value>Signatory role</value>
+  </data>
   <data name="SiteName" xml:space="preserve">
     <value>Name</value>
   </data>
   <data name="SiteOdsCode" xml:space="preserve">
-    <value>Site ODS Code</value>
+    <value>Enter the ODS (Organisation Data Service) Code</value>
   </data>
   <data name="SitePostcode" xml:space="preserve">
     <value>Postcode</value>
@@ -160,6 +169,6 @@
     <value>Select the GP Connect products</value>
   </data>
   <data name="UseCaseDescription" xml:space="preserve">
-    <value>Use Case Description</value>
+    <value>Reason for applying (use case)</value>
   </data>
 </root>

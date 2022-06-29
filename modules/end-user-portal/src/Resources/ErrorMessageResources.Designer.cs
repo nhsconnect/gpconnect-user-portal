@@ -80,6 +80,42 @@ namespace GpConnect.NationalDataSharingPortal.EndUserPortal.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You must enter a value for signatory email address.
+        /// </summary>
+        public static string SignatoryEmail {
+            get {
+                return ResourceManager.GetString("SignatoryEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You must enter a value for signatory name.
+        /// </summary>
+        public static string SignatoryName {
+            get {
+                return ResourceManager.GetString("SignatoryName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You must enter a value for signatory role.
+        /// </summary>
+        public static string SignatoryRole {
+            get {
+                return ResourceManager.GetString("SignatoryRole", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You must enter a value for Site ODS Code.
+        /// </summary>
+        public static string SiteOdsCode {
+            get {
+                return ResourceManager.GetString("SiteOdsCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to You must select a value for Software Supplier Name.
         /// </summary>
         public static string SoftwareSupplierName {
@@ -94,6 +130,15 @@ namespace GpConnect.NationalDataSharingPortal.EndUserPortal.Resources {
         public static string SoftwareSupplierProduct {
             get {
                 return ResourceManager.GetString("SoftwareSupplierProduct", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You must enter a value for use case description.
+        /// </summary>
+        public static string UseCaseDescription {
+            get {
+                return ResourceManager.GetString("UseCaseDescription", resourceCulture);
             }
         }
     }
