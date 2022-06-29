@@ -45,6 +45,8 @@ public partial class SoftwareSupplierModel : BaseModel
         {
             return Page();
         }
+        TempData.Put("SelectedSoftwareSupplierName", SelectedSoftwareSupplierName);
+        TempData.Put("SelectedSoftwareSupplierProduct", SelectedSoftwareSupplierProduct);
         return Redirect("./Organisation");
     }
 
