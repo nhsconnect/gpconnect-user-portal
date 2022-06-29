@@ -22,6 +22,9 @@ Scenario: SearchByNameWithResults
   And I click the Find button
   Then I am taken to the results page
   And there are 2 results
+  When I click "Back"
+  Then I am taken to the search by name page
+  And the search box contains "NHS"
 
 Scenario: SearchByNameWithSingleResult
   Given I have opened the search by name page

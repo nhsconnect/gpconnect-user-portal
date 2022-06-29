@@ -19,3 +19,7 @@ Scenario: SomeResults
   And the results contain the postcode "LS2 5AP"
   When I click result 2
   Then I am taken to the detail page
+  When I click "Back"
+  Then I am taken to the results page
+  And the results contain the name "NHS VEGETAL"
+
