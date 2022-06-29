@@ -388,6 +388,109 @@
         ]
       },
       {
+        "predicates": [
+            {
+                "equals": {
+                    "path": "/STU3/Organization/FKG31"
+                }
+            }
+        ],
+        "responses": [
+            {
+                "is": {
+                    "statusCode": 200,
+                    "body": {
+                        "resourceType": "Organization",
+                        "id": "FKG31",
+                        "meta": {
+                            "lastUpdated": "2021-01-22T00:00:00+00:00",
+                            "profile": "https://fhir.nhs.uk/STU3/StructureDefinition/ODSAPI-Organization-1"
+                        },
+                        "extension": [
+                            {
+                                "url": "https://fhir.nhs.uk/STU3/StructureDefinition/Extension-ODSAPI-ActivePeriod-1",
+                                "valuePeriod": {
+                                    "extension": [
+                                        {
+                                            "url": "https://fhir.nhs.uk/STU3/StructureDefinition/Extension-ODSAPI-DateType-1",
+                                            "valueString": "Operational"
+                                        }
+                                    ],
+                                    "start": "1982-05-01"
+                                }
+                            },
+                            {
+                                "url": "https://fhir.nhs.uk/STU3/StructureDefinition/Extension-ODSAPI-OrganizationRole-1",
+                                "extension": [
+                                    {
+                                        "url": "role",
+                                        "valueCoding": {
+                                            "system": "https://directory.spineservices.nhs.uk/STU3/CodeSystem/ODSAPI-OrganizationRole-1",
+                                            "code": "182",
+                                            "display": "PHARMACY"
+                                        }
+                                    },
+                                    {
+                                        "url": "primaryRole",
+                                        "valueBoolean": true
+                                    },
+                                    {
+                                        "url": "activePeriod",
+                                        "valuePeriod": {
+                                            "extension": [
+                                                {
+                                                    "url": "https://fhir.nhs.uk/STU3/StructureDefinition/Extension-ODSAPI-DateType-1",
+                                                    "valueString": "Operational"
+                                                }
+                                            ],
+                                            "start": "1982-05-01"
+                                        }
+                                    },
+                                    {
+                                        "url": "status",
+                                        "valueString": "Active"
+                                    }
+                                ]
+                            }
+                        ],
+                        "identifier": {
+                            "system": "https://fhir.nhs.uk/Id/ods-organization-code",
+                            "value": "FKG31"
+                        },
+                        "active": true,
+                        "type": {
+                            "coding": {
+                                "system": "https://fhir.nhs.uk/STU3/CodeSystem/ODSAPI-OrganizationRecordClass-1",
+                                "code": "1",
+                                "display": "HSCOrg"
+                            }
+                        },
+                        "name": "QUEENS PHARMACY",
+                        "telecom": [
+                            {
+                                "system": "phone",
+                                "value": "020 77208606"
+                            }
+                        ],
+                        "address": {
+                            "line": [
+                                "12 QUEENSTOWN ROAD",
+                                "BATTERSEA"
+                            ],
+                            "city": "LONDON",
+                            "district": "GREATER LONDON",
+                            "postalCode": "SW8 3RX",
+                            "country": "ENGLAND"
+                        }
+                    },
+                    "headers": {
+                        "Content-Type": "application/json"
+                    }
+                }
+            }
+        ]
+      },
+      {
         "responses": [
             {
                 "is": {
