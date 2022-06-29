@@ -5,7 +5,7 @@ using GpConnect.DataSharing.User.Specs.Drivers;
 using GpConnect.DataSharing.User.Specs.PageObjects;
 
 
-namespace GpConnect.DataSharing.User.Specs.Steps;
+namespace GpConnect.DataSharing.User.Specs.Steps
 {
     [Binding]
     public class SearchByOdsCodeStepDefinitions
