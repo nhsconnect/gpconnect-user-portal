@@ -6,4 +6,5 @@ public class ButtonConstants
   public const string CLEAR = "Clear";
   public const string NEXT = "Next";
   public const string CHANGESUPPLIER = "Change Supplier";
+  public const string FINDORGANISATION = "Find Organisation";
 }
