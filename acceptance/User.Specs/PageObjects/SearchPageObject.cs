@@ -38,9 +38,20 @@ namespace GpConnect.DataSharing.User.Specs.PageObjects
         private IWebElement ErrorMessageSpan =>
             _webDriver.FindElement(By.CssSelector("span.nhsuk-error-message"));
 
+        private IWebElement BackLink =>
+            _webDriver.FindElement(By.LinkText("Back"));
+
+        public IWebElement SearchInput =>
+            _webDriver.FindElement(By.XPath("//input"));
+
         public void ClickSearchButton()
         {
             SearchButton.Click();
+        }
+
+        public void ClickBack()
+        {
+            BackLink.Click();
         }
 
         public bool IsErrorBannerVisible()

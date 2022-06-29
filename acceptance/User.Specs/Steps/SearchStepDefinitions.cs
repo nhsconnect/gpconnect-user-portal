@@ -17,40 +17,18 @@ namespace GpConnect.DataSharing.User.Specs.Steps
             _searchPageObject = new SearchPageObject(browserDriver.Current);
         }
 
-        [Given("I have opened the search page")]
-        public void WhenIHaveOpenedTheSearchPage() {
-            _searchPageObject.Open();
+        [When(@"I click ""Back""")]
+        public void WhenIClick()
+        {
+            _searchPageObject.ClickBack();
         }
 
-        [When("I click the search button")]
-        public void WhenIClickTheSearchButton()
+        [Then(@"the search box contains ""(.*)""")]
+        public void ThenTheSearchBoxContains(string searchInput)
         {
-            _searchPageObject.ClickSearchButton();
+            Assert.Equal(searchInput, _searchPageObject.SearchInput.GetAttribute("value"));
         }
 
-        [Then("A form level validation error is shown")]
-        public void ThenAValidationErrorIsShown()
-        {
-            Assert.True(_searchPageObject.IsErrorBannerVisible());
-        }
-
-        [Given(@"I enter ""(.*)"" into the ODS Code input")]
-        public void GivenIEnterIntoTheOdsCodeInput(string input)
-        {
-            _searchPageObject.EnterOdsCode(input);
-        }
-
-        [Given(@"I enter ""(.*)"" into the Provider Name input")]
-        public void GivenIEnterIntoTheProviderNameInput(string input)
-        {
-            _searchPageObject.EnterProviderName(input);
-        }
-
-        [Then("no results are returned")]
-        public void ThenNoResultsAreReturned()
-        {
-            Assert.True(_searchPageObject.IsNoResultsVisible());
-        }
 
     }
 }
