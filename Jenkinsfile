@@ -20,7 +20,6 @@ pipeline {
       steps {
         sh 'make serve'
         sh 'make acceptance-test'
-        sh 'docker compose down'
       }
     }
 
@@ -29,6 +28,11 @@ pipeline {
         echo 'Deploying...'
       }
     }
+  }
 
+  post {
+    always {
+      sh 'docker compose down'
+    }
   }
 }
