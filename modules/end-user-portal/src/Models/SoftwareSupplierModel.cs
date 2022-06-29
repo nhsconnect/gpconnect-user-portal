@@ -11,7 +11,6 @@ public partial class SoftwareSupplierModel : BaseModel
     [Display(Name = "SoftwareSupplierName", ResourceType = typeof(DataFieldNameResources))]
     [BindProperty(SupportsGet = true)]
     [Required(ErrorMessageResourceName = "SoftwareSupplierName", ErrorMessageResourceType = typeof(ErrorMessageResources))]
-    [TempData]
     public string SelectedSoftwareSupplierName { get; set; } = "";
 
     public List<SoftwareSupplierResult> SoftwareSupplierNameList { get; set; } = new List<SoftwareSupplierResult>();
@@ -20,7 +19,6 @@ public partial class SoftwareSupplierModel : BaseModel
 
     [Display(Name = "SoftwareSupplierProduct", ResourceType = typeof(DataFieldNameResources))]
     [BindProperty(SupportsGet = true)]
-    [TempData]
     public string? SelectedSoftwareSupplierProduct { get; set; }
 
     public List<SoftwareSupplierProductResult> SoftwareSupplierProductList { get; set; } = new List<SoftwareSupplierProductResult>();

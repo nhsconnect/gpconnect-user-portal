@@ -5,10 +5,13 @@ namespace GpConnect.NationalDataSharingPortal.EndUserPortal.Helpers;
 
 public static class TempDataExtensions
 {
-    public static void Put<T>(this ITempDataDictionary tempData, string key, T value) where T : class
+    public static void Put<T>(this ITempDataDictionary tempData, string key, T? value) where T : class
     {
-        tempData[key] = JsonConvert.SerializeObject(value);
-        tempData.Keep(key);
+        if (value != null)
+        {
+            tempData[key] = JsonConvert.SerializeObject(value);
+            tempData.Keep(key);
+        }
     }
 
     public static void Remove(this ITempDataDictionary tempData, string key)
