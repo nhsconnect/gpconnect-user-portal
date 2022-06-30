@@ -1,6 +1,7 @@
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Core.Config;
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Core.HttpClientServices;
-using static GpConnect.NationalDataSharingPortal.EndUserPortal.Core.HttpClientServices.OrganizationLookupService;
+using Microsoft.AspNetCore.Mvc;
+using static GpConnect.NationalDataSharingPortal.EndUserPortal.Core.HttpClientServices.OrganisationLookupService;
 using static GpConnect.NationalDataSharingPortal.EndUserPortal.Core.HttpClientServices.SiteService;
 
 namespace GpConnect.NationalDataSharingPortal.EndUserPortal.Core;
@@ -11,8 +12,8 @@ public static class ServiceCollectionExtensions
     {
         services.AddSession(s =>
         {
-            s.Cookie.Name = ".GpConnect.NationalDataSharingPortal.EndUserPortal.Session";
-            s.IdleTimeout = new TimeSpan(0, 30, 0);
+            s.Cookie.Name = ".GpConnect.NationalDataSharingPortal.Session";
+            s.IdleTimeout = TimeSpan.FromMinutes(30);
             s.Cookie.HttpOnly = false;
             s.Cookie.IsEssential = true;
         });
@@ -23,11 +24,17 @@ public static class ServiceCollectionExtensions
             options.MinimumSameSitePolicy = SameSiteMode.None;
         });
 
+        services.Configure<CookieTempDataProviderOptions>(options =>
+        {
+            options.Cookie.Name = ".GpConnect.NationalDataSharingPortal.TempDataCookie";
+            options.Cookie.Expiration = TimeSpan.FromSeconds(60);
+        });
+
         services.AddOptions();
         services.Configure<ApplicationParameters>(configuration.GetSection("ApplicationParameters"));
         services.Configure<ResultPageConfig>(configuration.GetSection("Results"));
         services.Configure<SiteServiceConfig>(configuration.GetSection("SiteApi"));
-        services.Configure<OrganizationLookupServiceConfig>(configuration.GetSection("OrganizationApi"));
+        services.Configure<OrganisationLookupServiceConfig>(configuration.GetSection("OrganisationApi"));
 
         services.AddHsts(options =>
         {

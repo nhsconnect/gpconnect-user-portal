@@ -1,5 +1,5 @@
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Core.Config;
-using GpConnect.NationalDataSharingPortal.EndUserPortal.Helpers;
+using GpConnect.NationalDataSharingPortal.EndUserPortal.Core.Data.Interfaces;
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -8,24 +8,36 @@ namespace GpConnect.NationalDataSharingPortal.EndUserPortal.Pages.Apply;
 
 public partial class UseCaseModel : BaseModel
 {
-    public UseCaseModel(IOptions<ApplicationParameters> applicationParameters) : base(applicationParameters)
+    private readonly ITempDataProviderService _tempDataProviderService;
+
+    public UseCaseModel(IOptions<ApplicationParameters> applicationParameters, ITempDataProviderService tempDataProviderService) : base(applicationParameters)
     {
+        _tempDataProviderService = tempDataProviderService;
     }
 
     public IActionResult OnGetAsync()
     {
         ClearModelState();
-        UseCaseDescription = TempData.Get<string>("UseCaseDescription");
+        PrepopulateUseCaseDetails();
         return Page();
     }
-    
+
+    private void PrepopulateUseCaseDetails()
+    {
+        UseCaseDescription = _tempDataProviderService.GetItem<string>("UseCaseDescription") ?? string.Empty;
+    }
+
     public IActionResult OnPost()
     {
         if (!ModelState.IsValid)
         {
             return Page();
         }
-        TempData.Put("UseCaseDescription", UseCaseDescription);
+        if (!_tempDataProviderService.HasItems)
+        {
+            return Redirect("./Timeout");
+        }
+        _tempDataProviderService.PutItem("UseCaseDescription", UseCaseDescription);
         return Redirect("./Agreement");
     }
 

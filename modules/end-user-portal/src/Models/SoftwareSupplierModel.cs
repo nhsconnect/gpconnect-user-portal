@@ -1,4 +1,3 @@
-using GpConnect.NationalDataSharingPortal.EndUserPortal.Helpers;
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Models;
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Resources;
 using Microsoft.AspNetCore.Mvc;
@@ -13,12 +12,14 @@ public partial class SoftwareSupplierModel : BaseModel
     [Required(ErrorMessageResourceName = "SoftwareSupplierName", ErrorMessageResourceType = typeof(ErrorMessageResources))]
     public int SelectedSoftwareSupplierNameId { get; set; }
 
-    public SoftwareSupplierResult SelectedSoftwareSupplier => TempData.Get<List<SoftwareSupplierResult>>("SoftwareSupplierNameList")?.FirstOrDefault(x => x.SoftwareSupplierId == SelectedSoftwareSupplierNameId);
+    public SoftwareSupplierResult SelectedSoftwareSupplier => _tempDataProviderService.GetItem<List<SoftwareSupplierResult>>("SoftwareSupplierNameList")?.FirstOrDefault(x => x.SoftwareSupplierId == SelectedSoftwareSupplierNameId);
+
+    public List<SoftwareSupplierResult> SoftwareSupplierResultList => _tempDataProviderService.GetItem<List<SoftwareSupplierResult>>("SoftwareSupplierNameList");
+
+    public bool IsSelectedSoftwareSupplier => _tempDataProviderService.GetItem<SoftwareSupplierResult>("SelectedSoftwareSupplierName") != null;
 
     public bool DisplaySoftwareSupplierProducts { get; set; } = false;
 
     [BindProperty(SupportsGet = true)]
     public List<SoftwareSupplierProductResult> SoftwareSupplierProductList { get; set; } = new List<SoftwareSupplierProductResult>();
-
-    //public IEnumerable<SoftwareSupplierProductResult> SelectedSoftwareSupplierProducts => SoftwareSupplierProductList);
 }

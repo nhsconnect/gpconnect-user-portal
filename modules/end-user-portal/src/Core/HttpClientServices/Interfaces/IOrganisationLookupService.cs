@@ -2,8 +2,7 @@ using GpConnect.NationalDataSharingPortal.EndUserPortal.Models.Response;
 
 namespace GpConnect.NationalDataSharingPortal.EndUserPortal.Core.HttpClientServices.Interfaces;
 
-
-public interface IOrganizationLookupService
+public interface IOrganisationLookupService
 {
-    Task<Organization> GetOrganizationAsync(string odsCode);
+    Task<OrganisationResult> GetOrganisationAsync(string odsCode);
 }

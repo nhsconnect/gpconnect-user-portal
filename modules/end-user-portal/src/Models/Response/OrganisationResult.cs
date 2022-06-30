@@ -1,6 +1,6 @@
 using Newtonsoft.Json;
 
-namespace GpConnect.NationalDataSharingPortal.EndUserPortal.Models;
+namespace GpConnect.NationalDataSharingPortal.EndUserPortal.Models.Response;
 
 public class OrganisationResult
 {

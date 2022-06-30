@@ -1,7 +1,7 @@
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Core.Config;
+using GpConnect.NationalDataSharingPortal.EndUserPortal.Core.Data.Interfaces;
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Core.HttpClientServices.Interfaces;
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Models;
-using GpConnect.NationalDataSharingPortal.EndUserPortal.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 
@@ -10,32 +10,37 @@ namespace GpConnect.NationalDataSharingPortal.EndUserPortal.Pages.Apply;
 public partial class SoftwareSupplierModel : BaseModel
 {
     private readonly ISupplierService _supplierService;
+    private readonly ITempDataProviderService _tempDataProviderService;
 
-    public SoftwareSupplierModel(IOptions<ApplicationParameters> applicationParameters, ISupplierService supplierService) : base(applicationParameters)
+    public SoftwareSupplierModel(IOptions<ApplicationParameters> applicationParameters, ISupplierService supplierService, ITempDataProviderService tempDataProviderService) : base(applicationParameters)
     {
         _supplierService = supplierService;
+        _tempDataProviderService = tempDataProviderService;
     }
 
     public async Task<IActionResult> OnGetAsync()
     {
         ClearModelState();
-        await GetSoftwareSupplierNameList();
         PrepopulateSoftwareSupplier();
+        await GetSoftwareSupplierNameList();        
         return Page();
     }
 
     private void PrepopulateSoftwareSupplier()
     {
-        var selectedSoftwareSupplierNameId = TempData.Get<SoftwareSupplierResult>("SelectedSoftwareSupplierName");
-        SelectedSoftwareSupplierNameId = selectedSoftwareSupplierNameId.SoftwareSupplierId;
-        SoftwareSupplierProductList = TempData.Get<List<SoftwareSupplierProductResult>>("SelectedSoftwareSupplierProduct");
-        DisplaySoftwareSupplierProducts = SoftwareSupplierProductList != null;
+        if (IsSelectedSoftwareSupplier)
+        {
+            var selectedSoftwareSupplierNameId = _tempDataProviderService.GetItem<SoftwareSupplierResult>("SelectedSoftwareSupplierName");
+            SelectedSoftwareSupplierNameId = selectedSoftwareSupplierNameId.SoftwareSupplierId;
+            SoftwareSupplierProductList = _tempDataProviderService.GetItem<List<SoftwareSupplierProductResult>>("SelectedSoftwareSupplierProduct");
+            DisplaySoftwareSupplierProducts = SoftwareSupplierProductList != null;
+        }
     }
 
     protected async Task GetSoftwareSupplierNameList()
     {
-        var suppliers = await _supplierService.GetSoftwareSuppliersAsync();        
-        TempData.Put("SoftwareSupplierNameList", suppliers);
+        var suppliers = await _supplierService.GetSoftwareSuppliersAsync();
+        _tempDataProviderService.PutItem("SoftwareSupplierNameList", suppliers);
     }
 
     public IActionResult OnPostCheckSupplierProductsAsync()
@@ -43,6 +48,10 @@ public partial class SoftwareSupplierModel : BaseModel
         if (!ModelState.IsValid)
         {
             return Page();
+        }
+        if (!_tempDataProviderService.HasItems)
+        {
+            return Redirect("./Timeout");
         }
         DisplaySoftwareSupplierProducts = true;
         return LoadSoftwareSupplierProducts(SelectedSoftwareSupplierNameId);
@@ -54,8 +63,15 @@ public partial class SoftwareSupplierModel : BaseModel
         {
             return Page();
         }
-        TempData.Put("SelectedSoftwareSupplierName", SelectedSoftwareSupplier);
-        TempData.Put("SelectedSoftwareSupplierProduct", SoftwareSupplierProductList);
+
+        if(!_tempDataProviderService.HasItems)
+        {
+            return Redirect("./Timeout");
+        }
+
+        _tempDataProviderService.PutItem("SelectedSoftwareSupplierName", SelectedSoftwareSupplier);
+        _tempDataProviderService.PutItem("SelectedSoftwareSupplierProduct", SoftwareSupplierProductList);
+
         return Redirect("./Organisation");
     }
 
@@ -67,7 +83,7 @@ public partial class SoftwareSupplierModel : BaseModel
             new SoftwareSupplierProductResult() { SoftwareSupplierProductId = 3, SoftwareSupplierProduct = "Appointment Management" },
             new SoftwareSupplierProductResult() { SoftwareSupplierProductId = 4, SoftwareSupplierProduct = "Send Document" }
         };
-        TempData.Put("SoftwareSupplierProductList", supplierProducts);
+        _tempDataProviderService.PutItem("SoftwareSupplierProductList", supplierProducts);
         SoftwareSupplierProductList = supplierProducts;
         return Page();
     }

@@ -34,7 +34,7 @@
                                             <span asp-validation-for="@Model.SelectedSoftwareSupplierNameId" class="nhsuk-error-message"></span>
                                         }
                                         <select class="nhsuk-select @(softwareSupplierNameInvalid ? "nhsuk-select--error": string.Empty)"
-                                          asp-items="@(new SelectList((System.Collections.IEnumerable)TempData.Get<List<SoftwareSupplierResult>>("SoftwareSupplierNameList"), "SoftwareSupplierId", "SoftwareSupplierName"))"
+                                          asp-items="@(new SelectList((System.Collections.IEnumerable)Model.SoftwareSupplierResultList, "SoftwareSupplierId", "SoftwareSupplierName"))"
                                           asp-for="@Model.SelectedSoftwareSupplierNameId" aria-describedby="input-hint-softwaresuppliername">
                                             <option value=""></option>
                                         </select>

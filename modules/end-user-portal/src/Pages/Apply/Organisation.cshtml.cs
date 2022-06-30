@@ -1,6 +1,8 @@
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Core.Config;
-using GpConnect.NationalDataSharingPortal.EndUserPortal.Helpers;
+using GpConnect.NationalDataSharingPortal.EndUserPortal.Core.Data.Interfaces;
+using GpConnect.NationalDataSharingPortal.EndUserPortal.Core.HttpClientServices.Interfaces;
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Models;
+using GpConnect.NationalDataSharingPortal.EndUserPortal.Models.Response;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 
@@ -8,9 +10,13 @@ namespace GpConnect.NationalDataSharingPortal.EndUserPortal.Pages.Apply;
 
 public partial class OrganisationModel : BaseModel
 {
-    public OrganisationModel(IOptions<ApplicationParameters> applicationParameters) : base(applicationParameters)
+    private readonly ITempDataProviderService _tempDataProviderService;
+    private readonly IOrganisationLookupService _organisationLookupService;
+
+    public OrganisationModel(IOptions<ApplicationParameters> applicationParameters, IOrganisationLookupService organisationLookupService, ITempDataProviderService tempDataProviderService) : base(applicationParameters)
     {
-        _orgLookupService = orgLookupService;
+        _tempDataProviderService = tempDataProviderService;
+        _organisationLookupService = organisationLookupService;
     }
 
     public IActionResult OnGetAsync()
@@ -22,37 +28,37 @@ public partial class OrganisationModel : BaseModel
 
     private void PrepopulateOrganisationDetails()
     {
-        if (TempData.Get<OrganisationResult>("Organisation") != null)
+        if (_tempDataProviderService.GetItem<OrganisationResult>("Organisation") != null)
         {
-            OrganisationResult = TempData.Get<OrganisationResult>("Organisation");
+            OrganisationResult = _tempDataProviderService.GetItem<OrganisationResult>("Organisation");
             SiteOdsCode = OrganisationResult.OdsCode;
             OrganisationFound = true;
         }
     }
 
-    public IActionResult OnPostFindOrganisationAsync()
-    {        
+    public async Task<IActionResult> OnPostFindOrganisationAsync()
+    {
         if (!ModelState.IsValid)
         {
             return Page();
         }
-        OrganisationResult = GetOrganisationDetails(SiteOdsCode);
+        if (!_tempDataProviderService.HasItems)
+        {
+            return Redirect("./Timeout");
+        }
+        var organisationResult = await GetOrganisationDetails(SiteOdsCode);
+        if (organisationResult != null)
+        {
+            OrganisationFound = true;
+            OrganisationResult = organisationResult;
+            _tempDataProviderService.PutItem("Organisation", organisationResult);
+        }
         return Page();
     }
 
-    private OrganisationResult GetOrganisationDetails(string siteOdsCode)
+    private async Task<OrganisationResult?> GetOrganisationDetails(string siteOdsCode)
     {
-        var organisationResult = new OrganisationResult()
-        {
-            OdsCode = siteOdsCode,
-            Name = "TESTVALE SURGERY",
-            Address = new OrganisationAddress()
-            {
-                AddressLines = new List<string> { "12 SALISBURY ROAD", "TOTTON" }, City = "SOUTHAMPTON", County = "HAMPSHIRE", Country = "ENGLAND", Postcode = "SO40 3PY"
-            }
-        };
-        OrganisationFound = true;
-        TempData.Put("Organisation", organisationResult);
+        var organisationResult = await _organisationLookupService.GetOrganisationAsync(siteOdsCode);
         return organisationResult;
     }
 
@@ -62,7 +68,10 @@ public partial class OrganisationModel : BaseModel
         {
             return Page();
         }
-
+        if (!_tempDataProviderService.HasItems)
+        {
+            return Redirect("./Timeout");
+        }
         return Redirect("./Signatory");
     }
 
