@@ -14,12 +14,12 @@ public static class HttpClientExtensions
     {
       options.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/fhir+json"));
       options.DefaultRequestHeaders.CacheControl = new CacheControlHeaderValue { NoCache = true };
-      options.BaseAddress = ValidBaseAddress(configuration["API_BASEADDRESS"]);
     };
 
     services.AddHttpClient<ISiteService, SiteService>(httpClientConfig).AugmentHttpClientBuilder(env);
     services.AddHttpClient<ISupplierService, SupplierService>(httpClientConfig).AugmentHttpClientBuilder(env);
-    }
+    services.AddHttpClient<IOrganizationLookupService, OrganizationLookupService>(httpClientConfig).AugmentHttpClientBuilder(env);
+  }
 
   private static IHttpClientBuilder AugmentHttpClientBuilder(this IHttpClientBuilder httpClientBuilder, IWebHostEnvironment env)
   {
@@ -40,18 +40,5 @@ public static class HttpClientExtensions
     var httpClientHandler = new HttpClientHandler();
     httpClientHandler.SslProtocols = SslProtocols.Tls13 | SslProtocols.Tls12 | SslProtocols.Tls11 | SslProtocols.Tls;
     return httpClientHandler;
-  }
-
-  private static Uri ValidBaseAddress(string baseAddress)
-  {
-    try
-    {
-      var uriBuilder = new UriBuilder(baseAddress);
-      return uriBuilder.Uri;
-    }
-    catch(ArgumentException ex)
-    {
-      throw ex;
-    }    
   }
 }

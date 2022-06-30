@@ -1,5 +1,6 @@
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Core.HttpClientServices.Interfaces;
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Models;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 
 namespace GpConnect.NationalDataSharingPortal.EndUserPortal.Core.HttpClientServices;
@@ -10,10 +11,11 @@ public class SupplierService : ISupplierService
     private readonly HttpClient _httpClient;
     private readonly JsonSerializerSettings _options;
 
-    public SupplierService(ILogger<SupplierService> logger, HttpClient httpClient)
+    public SupplierService(ILogger<SupplierService> logger, HttpClient httpClient, IOptions<SiteService.SiteServiceConfig> options)
     {
         _logger = logger;
         _httpClient = httpClient;
+        _httpClient.BaseAddress = new UriBuilder(options.Value.BaseUrl).Uri;
         _options = new JsonSerializerSettings() { NullValueHandling = NullValueHandling.Ignore };
     }
 

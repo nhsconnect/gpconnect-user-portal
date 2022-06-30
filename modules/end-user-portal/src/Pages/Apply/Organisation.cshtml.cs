@@ -9,7 +9,8 @@ namespace GpConnect.NationalDataSharingPortal.EndUserPortal.Pages.Apply;
 public partial class OrganisationModel : BaseModel
 {
     public OrganisationModel(IOptions<ApplicationParameters> applicationParameters) : base(applicationParameters)
-    {        
+    {
+        _orgLookupService = orgLookupService;
     }
 
     public IActionResult OnGetAsync()
@@ -48,6 +49,7 @@ public partial class OrganisationModel : BaseModel
         {
             return Page();
         }
+
         return Redirect("./Signatory");
     }
 

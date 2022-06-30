@@ -1,4 +1,3 @@
-using GpConnect.NationalDataSharingPortal.EndUserPortal.Helpers.Enumerations;
 using Microsoft.AspNetCore.Html;
 using System.Text;
 using System.Web;
