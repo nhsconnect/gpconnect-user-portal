@@ -1,5 +1,6 @@
 
-APP_SERVICES :=	end-user-portal admin-portal api
+# admin portal
+APP_SERVICES :=	end-user-portal api
 TEST_SERVICES := $(APP_SERVICES) auth-server mock-api database
 
 migrate:

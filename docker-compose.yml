@@ -90,7 +90,6 @@ services:
       ASPNETCORE_Kestrel__Certificates__Default__Path: /https/aspnetapp.pfx
       ConnectionStrings__DefaultConnection: Host=database;Database=postgres;Username=postgres;Include Error Detail=true;
 
-
   user-portal:
     image: ndsp/user-portal
     build:
@@ -119,6 +118,7 @@ services:
       dockerfile: ./Dockerfile
     depends_on:
       - api
+      - mock-api
     ports:
       - target: 443
         published: 5003
@@ -130,32 +130,32 @@ services:
       ASPNETCORE_Kestrel__Certificates__Default__Password: ndsa
       ASPNETCORE_Kestrel__Certificates__Default__Path: /https/aspnetapp.pfx
       SiteApi__BaseUrl: http://api:5002
-      SupplierApi__BaseUrl: http://api:5002
-      OrganizationApi__BaseUrl: http://api:5002
+      SupplierApi__BaseUrl: http://mock-api:5555
+      OrganizationApi__BaseUrl: http://mock-api:5555
       # API_BASEADDRESS: http://mock-api:5555
 
-  admin-portal:
-    image: ndsp/admin-portal
-    build:
-      context: ./source/
-      dockerfile: ./admin.Dockerfile
-    working_dir: /app
-    depends_on:
-      - auth-server
-      - database
-    ports:
-      - target: 443
-        published: 5001
-    volumes:
-      - ./cert:/https:ro
-    environment:
-      DOTNET_HOSTBUILDER__RELOADCONFIGONCHANGE: "false"
-      ASPNETCORE_ENVIRONMENT: Development
-      ASPNETCORE_URLS: https://+:443
-      ASPNETCORE_Kestrel__Certificates__Default__Password: ndsa
-      ASPNETCORE_Kestrel__Certificates__Default__Path: /https/aspnetapp.pfx
-      ConnectionStrings__GPConnectEndUserPortal: Host=database;Database=postgres;Username=postgres;Include Error Detail=true;
-      Sso__RequireHttpsMetadata: false
+  # admin-portal:
+  #   image: ndsp/admin-portal
+  #   build:
+  #     context: ./source/
+  #     dockerfile: ./admin.Dockerfile
+  #   working_dir: /app
+  #   depends_on:
+  #     - auth-server
+  #     - database
+  #   ports:
+  #     - target: 443
+  #       published: 5001
+  #   volumes:
+  #     - ./cert:/https:ro
+  #   environment:
+  #     DOTNET_HOSTBUILDER__RELOADCONFIGONCHANGE: "false"
+  #     ASPNETCORE_ENVIRONMENT: Development
+  #     ASPNETCORE_URLS: https://+:443
+  #     ASPNETCORE_Kestrel__Certificates__Default__Password: ndsa
+  #     ASPNETCORE_Kestrel__Certificates__Default__Path: /https/aspnetapp.pfx
+  #     ConnectionStrings__GPConnectEndUserPortal: Host=database;Database=postgres;Username=postgres;Include Error Detail=true;
+  #     Sso__RequireHttpsMetadata: false
 
   database:
     image: postgres:14
