@@ -1,4 +1,7 @@
+using GpConnect.NationalDataSharingPortal.EndUserPortal.Resources;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations;
 
 namespace GpConnect.NationalDataSharingPortal.EndUserPortal.Models;
 
@@ -9,4 +12,8 @@ public class SoftwareSupplierProductResult
 
     [JsonProperty("supplierProductValue")]
     public string SoftwareSupplierProduct { get; set; } = "";
+
+    [Display(Name = "SoftwareSupplierProduct", ResourceType = typeof(DataFieldNameResources))]
+    [BindProperty(SupportsGet = true)]
+    public bool Selected { get; set; }
 }

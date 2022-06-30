@@ -1,4 +1,5 @@
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Core.Config;
+using GpConnect.NationalDataSharingPortal.EndUserPortal.Helpers;
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -23,6 +24,9 @@ public partial class SignatoryModel : BaseModel
         {
             return Page();
         }
+        TempData.Put("SignatoryName", SignatoryName);
+        TempData.Put("SignatoryRole", SignatoryRole);
+        TempData.Put("SignatoryEmail", SignatoryEmail);
         return Redirect("./UseCase");
     }
 

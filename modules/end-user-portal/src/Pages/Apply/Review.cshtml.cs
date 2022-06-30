@@ -11,14 +11,8 @@ public partial class ReviewModel : BaseModel
     {
     }
 
-    public void OnGetAsync()
+    public void OnGet()
     {
-        GetSignupData();
-    }
-
-    private void GetSignupData()
-    {
-        throw new NotImplementedException();
     }
 
     public IActionResult OnPost()

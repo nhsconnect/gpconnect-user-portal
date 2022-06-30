@@ -5,7 +5,7 @@ namespace GpConnect.NationalDataSharingPortal.EndUserPortal.Helpers;
 
 public static class TempDataExtensions
 {
-    public static void Put<T>(this ITempDataDictionary tempData, string key, T? value) where T : class
+    public static void Put<T>(this ITempDataDictionary tempData, string key, T value) where T : class
     {
         if (value != null)
         {
@@ -16,7 +16,7 @@ public static class TempDataExtensions
 
     public static void Remove(this ITempDataDictionary tempData, string key)
     {
-        tempData.Remove(key);
+        tempData.Remove(key);        
     }
 
     public static T? Get<T>(this ITempDataDictionary tempData, string key) where T : class

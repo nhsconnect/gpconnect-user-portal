@@ -1,4 +1,5 @@
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Core.Config;
+using GpConnect.NationalDataSharingPortal.EndUserPortal.Helpers;
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -14,6 +15,7 @@ public partial class UseCaseModel : BaseModel
     public IActionResult OnGetAsync()
     {
         ClearModelState();
+        UseCaseDescription = TempData.Get<string>("UseCaseDescription");
         return Page();
     }
     
@@ -23,6 +25,7 @@ public partial class UseCaseModel : BaseModel
         {
             return Page();
         }
+        TempData.Put("UseCaseDescription", UseCaseDescription);
         return Redirect("./Agreement");
     }
 

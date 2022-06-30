@@ -13,7 +13,7 @@ public partial class OrganisationModel : BaseModel
     [Required(ErrorMessageResourceName = "SiteOdsCode", ErrorMessageResourceType = typeof(ErrorMessageResources))]
     public string SiteOdsCode { get; set; } = "";
 
-    public OrganisationResult OrganisationResult { get; set; }
+    public bool OrganisationFound { get; set; } = false;
 
-    public bool OrganisationFound => OrganisationResult != null;
+    public OrganisationResult OrganisationResult { get; set; } = new OrganisationResult();
 }

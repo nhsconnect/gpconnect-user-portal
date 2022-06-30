@@ -1,5 +1,5 @@
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Core.Config;
-using GpConnect.NationalDataSharingPortal.EndUserPortal.Core.HttpClientServices.Interfaces;
+using GpConnect.NationalDataSharingPortal.EndUserPortal.Helpers;
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -16,9 +16,20 @@ public partial class OrganisationModel : BaseModel
     public IActionResult OnGetAsync()
     {
         ClearModelState();
+        PrepopulateOrganisationDetails();
         return Page();
     }
-    
+
+    private void PrepopulateOrganisationDetails()
+    {
+        if (TempData.Get<OrganisationResult>("Organisation") != null)
+        {
+            OrganisationResult = TempData.Get<OrganisationResult>("Organisation");
+            SiteOdsCode = OrganisationResult.OdsCode;
+            OrganisationFound = true;
+        }
+    }
+
     public IActionResult OnPostFindOrganisationAsync()
     {        
         if (!ModelState.IsValid)
@@ -40,6 +51,8 @@ public partial class OrganisationModel : BaseModel
                 AddressLines = new List<string> { "12 SALISBURY ROAD", "TOTTON" }, City = "SOUTHAMPTON", County = "HAMPSHIRE", Country = "ENGLAND", Postcode = "SO40 3PY"
             }
         };
+        OrganisationFound = true;
+        TempData.Put("Organisation", organisationResult);
         return organisationResult;
     }
 

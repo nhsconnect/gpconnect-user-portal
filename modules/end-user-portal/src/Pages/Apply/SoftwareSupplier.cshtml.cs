@@ -20,12 +20,21 @@ public partial class SoftwareSupplierModel : BaseModel
     {
         ClearModelState();
         await GetSoftwareSupplierNameList();
+        PrepopulateSoftwareSupplier();
         return Page();
+    }
+
+    private void PrepopulateSoftwareSupplier()
+    {
+        var selectedSoftwareSupplierNameId = TempData.Get<SoftwareSupplierResult>("SelectedSoftwareSupplierName");
+        SelectedSoftwareSupplierNameId = selectedSoftwareSupplierNameId.SoftwareSupplierId;
+        SoftwareSupplierProductList = TempData.Get<List<SoftwareSupplierProductResult>>("SelectedSoftwareSupplierProduct");
+        DisplaySoftwareSupplierProducts = SoftwareSupplierProductList != null;
     }
 
     protected async Task GetSoftwareSupplierNameList()
     {
-        var suppliers = await _supplierService.GetSoftwareSuppliersAsync();
+        var suppliers = await _supplierService.GetSoftwareSuppliersAsync();        
         TempData.Put("SoftwareSupplierNameList", suppliers);
     }
 
@@ -36,7 +45,7 @@ public partial class SoftwareSupplierModel : BaseModel
             return Page();
         }
         DisplaySoftwareSupplierProducts = true;
-        return LoadSoftwareSupplierProducts(SelectedSoftwareSupplierName);
+        return LoadSoftwareSupplierProducts(SelectedSoftwareSupplierNameId);
     }
 
     public IActionResult OnPostNextAsync()
@@ -45,24 +54,26 @@ public partial class SoftwareSupplierModel : BaseModel
         {
             return Page();
         }
-        TempData.Put("SelectedSoftwareSupplierName", SelectedSoftwareSupplierName);
-        TempData.Put("SelectedSoftwareSupplierProduct", SelectedSoftwareSupplierProduct);
+        TempData.Put("SelectedSoftwareSupplierName", SelectedSoftwareSupplier);
+        TempData.Put("SelectedSoftwareSupplierProduct", SoftwareSupplierProductList);
         return Redirect("./Organisation");
     }
 
-    private IActionResult LoadSoftwareSupplierProducts(string selectedSoftwareSupplierName)
+    private IActionResult LoadSoftwareSupplierProducts(int selectedSoftwareSupplier)
     {
-        SoftwareSupplierProductList = new List<SoftwareSupplierProductResult>() {
+        var supplierProducts = new List<SoftwareSupplierProductResult>() {
             new SoftwareSupplierProductResult() { SoftwareSupplierProductId = 1, SoftwareSupplierProduct = "Access Record: HTML" },
             new SoftwareSupplierProductResult() { SoftwareSupplierProductId = 2, SoftwareSupplierProduct = "Access Record: Structured" },
             new SoftwareSupplierProductResult() { SoftwareSupplierProductId = 3, SoftwareSupplierProduct = "Appointment Management" },
             new SoftwareSupplierProductResult() { SoftwareSupplierProductId = 4, SoftwareSupplierProduct = "Send Document" }
         };
+        TempData.Put("SoftwareSupplierProductList", supplierProducts);
+        SoftwareSupplierProductList = supplierProducts;
         return Page();
     }
 
     private void ClearModelState()
     {
-        ModelState.ClearValidationState("SelectedSoftwareSupplierName");
+        ModelState.ClearValidationState("SelectedSoftwareSupplierNameId");
     }
 }
