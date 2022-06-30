@@ -40,6 +40,11 @@ public partial class ResultsModel : BaseModel
                 return RedirectToPage("./NoResults", new { query = Query, mode = Mode });
             }
 
+            if (PageNumber > NumPages)
+            {
+                return RedirectToPage("./Results", new { query = Query, mode = Mode, pageNumber = NumPages});
+            }
+
             if (SearchResult.TotalResults == 1)
             {
                 return RedirectToPage("./Detail", new { 
@@ -48,11 +53,6 @@ public partial class ResultsModel : BaseModel
                     mode = Mode,
                     page = PageNumber
                 });
-            }
-
-            if (PageNumber > NumPages)
-            {
-                return RedirectToPage("./Results", new { query = Query, mode = Mode, pageNumber = NumPages});
             }
 
             return Page();

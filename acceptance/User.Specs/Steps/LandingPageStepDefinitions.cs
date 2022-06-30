@@ -20,8 +20,6 @@ namespace GpConnect.DataSharing.User.Specs.Steps
             _transparencyLandingPageObject = new TransparencyLandingPageObject(browserDriver.Current);
         }
 
-        private readonly string URL = "https://localhost:5003";
-
         [Given(@"I have opened the landing page")]
         public void GivenIHaveOpenedTheLandingPage()
         {

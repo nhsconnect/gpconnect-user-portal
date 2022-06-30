@@ -1,7 +1,6 @@
 @page
-@model GpConnect.NationalDataSharingPortal.EndUserPortal.Pages.Search.IndexModel
-@{
-}
+@using GpConnect.NationalDataSharingPortal.EndUserPortal.Helpers;
+@model GpConnect.NationalDataSharingPortal.EndUserPortal.Models.BaseModel;
 
 <div class="nhsuk-width-container">
     <main class="nhsuk-main-wrapper" id="maincontent">
@@ -35,8 +34,25 @@
                         </div>
                     </div>
                 </div>
-                <partial name="Help" />                
-                <partial name="Terms" />
+                <div class="nhsuk-grid-row">
+                    <div class="nhsuk-grid-column-full">
+                        <div class="nhsuk-card">
+                            <div class="nhsuk-card__content">
+                                <h3 class="nhsuk-card__heading">If you need help finding how an organisation shares patient records, contact the @Model.ProductName administrator.</h3>
+                                <p class="nhsuk-card__description">Email: @Model.OwnerEmailAddress.AsMailHyperlink()<br />Telephone: @Model.OwnerTelephone.AsPhoneHyperlink()<br />Monday to Friday, 9am to 5pm<br />Find out more about call charges.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="nhsuk-grid-row">
+                    <div class="nhsuk-grid-column-full">
+                        <div class="nhsuk-card">
+                            <div class="nhsuk-card__content">
+                                <p class="nhsuk-card__description">By using this service you are agreeing to our terms of use and privacy policy.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </main>

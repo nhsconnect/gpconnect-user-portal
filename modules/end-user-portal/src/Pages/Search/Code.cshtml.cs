@@ -18,20 +18,13 @@ public partial class SearchByCodeModel : BaseModel
         return Page();
     }
 
-    public IActionResult OnPostSearchAsync()
+    public IActionResult OnPost()
     {
         if (!ModelState.IsValid)
         {
             return Page();
         }
         return RedirectToPage("./Results", new { query = ProviderOdsCode, mode = SearchMode.Code });
-    }
-
-    public IActionResult OnPostClear()
-    {
-        ProviderOdsCode = null;
-        ModelState.Clear();
-        return Page();
     }
 
     private void ClearModelState()

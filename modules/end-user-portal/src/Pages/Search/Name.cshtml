@@ -26,7 +26,7 @@
                                 <input id="@Model.ProviderName" class="nhsuk-input@(providerNameInvalid ? " nhsuk-input--error": string.Empty)" novalidate
                                        asp-for="@Model.ProviderName" aria-describedby="input-hint-providername" value="@Model.ProviderName" type="search">
                             </div>
-                            <button class="nhsuk-button" asp-page-handler="Search" type="submit">@ButtonConstants.FIND</button>
+                            <button class="nhsuk-button" type="submit">@ButtonConstants.FIND</button>
                         </div>
                     </div>
                 </div>

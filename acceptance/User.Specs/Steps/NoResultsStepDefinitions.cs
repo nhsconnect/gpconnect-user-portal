@@ -19,7 +19,7 @@ namespace GpConnect.DataSharing.User.Specs.Steps
             _noResultsPage = new NoResultsPageObject(browserDriver.Current);
         }
 
-        [Then(@"I am on the no results page")]
+        [Then(@"I am taken to the no results page")]
         public void ThenIAmOnTheNoResultsPage()
         {
             _noResultsPage.IsPageVisible();
@@ -30,12 +30,6 @@ namespace GpConnect.DataSharing.User.Specs.Steps
         // {
         //     _scenarioContext.Pending();
         // }
-
-        [Then(@"there are no results")]
-        public void ThenThereAreNoResults(string ignore, int resultCount)
-        {
-            _scenarioContext.Pending();
-        }
 
         [Then(@"a no results message with the original search parameter is shown")]
         public void ThenTheOriginalSearchParameterIsShown()

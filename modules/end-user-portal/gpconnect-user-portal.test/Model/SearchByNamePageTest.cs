@@ -1,6 +1,7 @@
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Core.Config;
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Pages.Search;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Options;
 using Moq;
@@ -17,6 +18,26 @@ public class SearchByNamePageTest
         _mockOptions = new Mock<IOptions<ApplicationParameters>>();
     }
 
+    [Fact]
+    public void OnGet_ClearsProviderNameValidation_LeavesUserInput_ReturnsPage()
+    {
+        var validationKey = "ProviderName";
+        var expectedName = "Test";
+
+        var searchModel = new SearchByNameModel(_mockOptions.Object)
+        {
+            ProviderName = expectedName
+        };
+
+        searchModel.ModelState.AddModelError(validationKey, "My Error");
+        
+        var result = searchModel.OnGet();
+        
+        Assert.StrictEqual(ModelValidationState.Unvalidated, searchModel.ModelState.GetFieldValidationState(validationKey));
+        Assert.Equal(expectedName, searchModel.ProviderName);
+        Assert.IsType<PageResult>(result);
+    }
+
     [Theory]
     [InlineData("Medical")]
     [InlineData("Practice, Surgery")]
@@ -27,7 +48,7 @@ public class SearchByNamePageTest
             ProviderName = providerName
         };
 
-        var result = searchModel.OnPostSearchAsync();        
+        var result = searchModel.OnPost();        
         Assert.IsType<RedirectToPageResult>(result);
     }
 
@@ -43,7 +64,7 @@ public class SearchByNamePageTest
 
         searchModel.ModelState.AddModelError("ProviderName", "You must enter a value for Provider Name");
 
-        var result = searchModel.OnPostSearchAsync();
+        var result = searchModel.OnPost();
         Assert.IsType<PageResult>(result);
         Assert.True(searchModel.ModelState.ErrorCount > 0);
     }
