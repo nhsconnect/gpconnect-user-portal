@@ -35,6 +35,23 @@ public class SearchResultEntry
     [JsonProperty("postcode")]
     public string SitePostcode { get; set; } = "";
 
+
+    public string FullAddress => GetFullAddressAsString();
+
+    private string GetFullAddressAsString()
+    {
+        var addressLines = new List<string> {
+                SiteAddressLine1,
+                SiteAddressLine2,
+                SiteAddressTown,
+                SiteAddressCounty,
+                SitePostcode,
+                SiteAddressCountry
+            };
+
+        return string.Join(", ", addressLines.Where(s => !string.IsNullOrEmpty(s)));
+    }
+
     [JsonProperty("ccgIcbOdsCode")]
     [Display(Name = "CcgIcbOdsCode", ResourceType = typeof(DataFieldNameResources))]
     public string CcgIcbOdsCode { get; set; } = "";

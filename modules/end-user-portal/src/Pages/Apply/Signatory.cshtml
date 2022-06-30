@@ -58,7 +58,7 @@
                                         {
                                             <span asp-validation-for="@Model.SignatoryEmail" class="nhsuk-error-message"></span>
                                         }
-                                        <input class="nhsuk-input @(signatoryEmailInvalid ? "nhsuk-input--error": string.Empty)" id="input-signatoryemail" asp-for="@Model.SignatoryEmail" type="search" aria-describedby="input-hint-signatoryemail">
+                                        <input class="nhsuk-input @(signatoryEmailInvalid ? "nhsuk-input--error": string.Empty)" id="input-signatoryemail" asp-for="@Model.SignatoryEmail" type="email" aria-describedby="input-hint-signatoryemail">
                                     </div>
                                     <button class="nhsuk-button" type="submit">@ButtonConstants.NEXT</button>
                                 </div>
