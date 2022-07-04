@@ -3,12 +3,12 @@ using OpenQA.Selenium.Support.UI;
 
 namespace GpConnect.DataSharing.User.Specs.PageObjects
 {
-    public class ApplicationSoftwareSupplierPageObject : BasePageObject
+    public class SoftwareSupplierPageObject : BasePageObject
     {
         private const string PATH = "/Apply/SoftwareSupplier";
         private readonly IWebDriver _webDriver;
 
-        public ApplicationSoftwareSupplierPageObject(IWebDriver webDriver)
+        public SoftwareSupplierPageObject(IWebDriver webDriver)
         {
             _webDriver = webDriver;
         }
@@ -16,7 +16,7 @@ namespace GpConnect.DataSharing.User.Specs.PageObjects
         public bool IsPageVisible()
         {
             var wait = new WebDriverWait(_webDriver, DefaultWait);
-            return wait.Until(driver => driver.Url == URL(PATH));
+            return wait.Until(driver => driver.Url.StartsWith(URL(PATH)));
         }
 
         public void Open()
@@ -38,6 +38,24 @@ namespace GpConnect.DataSharing.User.Specs.PageObjects
         public void ClickFind()
         {
             FindButton.Click();
+        }
+
+        private IWebElement SupplierList =>
+            _webDriver.FindElement(By.Id("SelectedSoftwareSupplierName"));
+
+        public void SelectSupplier(string supplierName)
+        {
+            new SelectElement(SupplierList).SelectByText(supplierName);
+        }
+
+        private IWebElement ProductInputHint =>
+            _webDriver
+                .FindElement(By.Id("input-hint-softwaresupplierproduct"));
+
+
+        public Boolean IsGpConnectProductPanelVisible()
+        {
+            return ProductInputHint.Displayed;
         }
 
     }

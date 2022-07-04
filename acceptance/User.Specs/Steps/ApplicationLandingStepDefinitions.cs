@@ -13,13 +13,13 @@ namespace GpConnect.DataSharing.User.Specs.Steps
 
         private readonly ScenarioContext _scenarioContext;
         private readonly ApplicationLandingPageObject _applicationLandingPage;
-        private readonly SearchByNamePageObject _searchByNamePage;
+        private readonly SoftwareSupplierPageObject _softwareSupplierPage;
 
         public ApplicationLandingStepDefinitions(ScenarioContext scenarioContext, BrowserDriver browserDriver)
         {
             _scenarioContext = scenarioContext;
             _applicationLandingPage = new ApplicationLandingPageObject(browserDriver.Current);
-            _searchByNamePage = new SearchByNamePageObject(browserDriver.Current);
+            _softwareSupplierPage = new SoftwareSupplierPageObject(browserDriver.Current);
         }
 
         [Given(@"I have opened the application landing page")]
@@ -34,28 +34,28 @@ namespace GpConnect.DataSharing.User.Specs.Steps
             Assert.True(_applicationLandingPage.IsStartButtonVisible());
         }
 
-        [Then(@"the support email address is present")]
-        public void ThenTheAdministratorsEmailAddressIsPresent()
-        {
-            Assert.True(_applicationLandingPage.SupportEmail.Displayed);
-        }
+        // [Then(@"the support email address is present")]
+        // public void ThenTheAdministratorsEmailAddressIsPresent()
+        // {
+        //     Assert.True(_applicationLandingPage.SupportEmail.Displayed);
+        // }
 
-        [Then(@"the support telephone number is present")]
-        public void ThenTheSupportTelephoneNumberIsPresent()
-        {
-            Assert.True(_applicationLandingPage.SupportPhone.Displayed);
-        }
+        // [Then(@"the support telephone number is present")]
+        // public void ThenTheSupportTelephoneNumberIsPresent()
+        // {
+        //     Assert.True(_applicationLandingPage.SupportPhone.Displayed);
+        // }
 
-        [When(@"I click the start now button")]
-        public void WhenIClickTheStartNowButton()
-        {
-            _applicationLandingPage.ClickStart();
-        }
+        // [When(@"I click the start now button")]
+        // public void WhenIClickTheStartNowButton()
+        // {
+        //     _applicationLandingPage.
+        // }
 
         [Then(@"I am taken to the software supplier page")]
-        public void ThenIAmTakenToTheSearchByNamePage()
+        public void ThenIAmTakenToTheSoftwareSupplierPage()
         {
-            Assert.True(_searchByNamePage.IsPageVisible());
+            Assert.True(_softwareSupplierPage.IsPageVisible());
         }
     }
 }

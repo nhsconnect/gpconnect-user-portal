@@ -5,7 +5,7 @@ namespace GpConnect.DataSharing.User.Specs.PageObjects
 {
     public class ApplicationLandingPageObject : BasePageObject
     {
-        private const string PATH = "/Search";
+        private const string PATH = "/Apply";
         private readonly IWebDriver _webDriver;
 
         public ApplicationLandingPageObject(IWebDriver webDriver)
@@ -25,7 +25,7 @@ namespace GpConnect.DataSharing.User.Specs.PageObjects
         }
 
         private IWebElement StartButton =>
-            _webDriver.FindElement(By.PartialLinkText("Start"));
+            _webDriver.FindElement(By.PartialLinkText("Apply now"));
 
         public bool IsStartButtonVisible()
         {
@@ -33,9 +33,9 @@ namespace GpConnect.DataSharing.User.Specs.PageObjects
             return wait.Until(driver => StartButton.Displayed);
         }
 
-        public void ClickStart(){
-            StartButton.Click();
-        }
+        // public void ClickStart(){
+        //     StartButton.Click();
+        // }
 
         public IWebElement SupportEmail =>
             _webDriver.FindElement(By.PartialLinkText("@nhs.net"));

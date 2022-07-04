@@ -7,7 +7,7 @@ Scenario: ApplicationLandingPage
   Then A button to start the application is present
   And the support email address is present
   And the support telephone number is present
-  When I click the start now button
+  When I click the "Apply now" link
   Then I am taken to the software supplier page
 
 # Scenario: ApplicationLandingPage-NoCompletedPreviousPages
