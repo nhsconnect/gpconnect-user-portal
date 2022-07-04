@@ -68,7 +68,7 @@ services:
     entrypoint:
       - mb
       - --configfile
-      - /config/mountebank.json
+      - /config/application.json
 
   api:
     image: ndsp/api
