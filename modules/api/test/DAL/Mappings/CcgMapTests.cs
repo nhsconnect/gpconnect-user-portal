@@ -13,7 +13,7 @@ public class CcgMapTests
     }
 
     [Fact]
-    public void CanConstruct()
+    public void CallConstructor_WithExpectedParameters_ReturnsNotNull()
     {
         Assert.NotNull(_sut);
     }

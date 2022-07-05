@@ -22,19 +22,19 @@ public class UserServiceTest
     }
 
     [Fact]
-    public void CanConstruct()
+    public void CallConstructor_WithExpectedParameters_ReturnsNotNull()
     {
         Assert.NotNull(_sut);
     }
 
     [Fact]
-    public void CannotConstructWithNullDataService()
+    public void Constructor_WithNullDataService_ThrowsArgumentNullException()
     {
         Assert.Throws<ArgumentNullException>(() => new UserService(default(IDataService)));
     }
 
     [Fact]
-    public async Task CanCallGetSuppliers()
+    public async Task Get_Users_ReturnsListOfUsers()
     {
         var list = Task.FromResult(new List<User>());
         _mockDataService.Setup(d => d.ExecuteQuery<User>(It.IsAny<string>(), It.IsAny<DynamicParameters>())).Returns(list);

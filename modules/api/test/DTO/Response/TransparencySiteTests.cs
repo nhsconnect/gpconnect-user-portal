@@ -14,13 +14,13 @@ public class TransparencySiteTests
     }
 
     [Fact]
-    public void CanConstruct()
+    public void CallConstructor_WithExpectedParameters_ReturnsNotNull()
     {
         Assert.NotNull(_sut);
     }
 
     [Fact]
-    public void CanSetAndGetId()
+    public void PropertyId_WithProvidedValues_CanSetAndGet()
     {
         var testValue = default(Guid);
         _sut.Id = testValue;
@@ -28,7 +28,7 @@ public class TransparencySiteTests
     }
 
     [Fact]
-    public void CanSetAndGetOdsCode()
+    public void PropertyOdsCode_WithProvidedValues_CanSetAndGet()
     {
         var testValue = "TestValue1";
         _sut.OdsCode = testValue;
@@ -36,7 +36,7 @@ public class TransparencySiteTests
     }
 
     [Fact]
-    public void CanSetAndGetName()
+    public void PropertyName_WithProvidedValues_CanSetAndGet()
     {
         var testValue = "TestValue1";
         _sut.Name = testValue;
@@ -44,7 +44,7 @@ public class TransparencySiteTests
     }
 
     [Fact]
-    public void CanSetAndGetAddressLine1()
+    public void PropertyAddressLine1_WithProvidedValues_CanSetAndGet()
     {
         var testValue = "TestValue1";
         _sut.AddressLine1 = testValue;
@@ -52,7 +52,7 @@ public class TransparencySiteTests
     }
 
     [Fact]
-    public void CanSetAndGetAddressLine2()
+    public void PropertyAddressLine2_WithProvidedValues_CanSetAndGet()
     {
         var testValue = "TestValue1";
         _sut.AddressLine2 = testValue;
@@ -60,7 +60,7 @@ public class TransparencySiteTests
     }
 
     [Fact]
-    public void CanSetAndGetTown()
+    public void PropertyTown_WithProvidedValues_CanSetAndGet()
     {
         var testValue = "TestValue1";
         _sut.Town = testValue;
@@ -68,7 +68,7 @@ public class TransparencySiteTests
     }
 
     [Fact]
-    public void CanSetAndGetCounty()
+    public void PropertyCounty_WithProvidedValues_CanSetAndGet()
     {
         var testValue = "TestValue1";
         _sut.County = testValue;
@@ -76,7 +76,7 @@ public class TransparencySiteTests
     }
 
     [Fact]
-    public void CanSetAndGetCountry()
+    public void PropertyCountry_WithProvidedValues_CanSetAndGet()
     {
         var testValue = "TestValue1";
         _sut.Country = testValue;
@@ -84,7 +84,7 @@ public class TransparencySiteTests
     }
 
     [Fact]
-    public void CanSetAndGetPostcode()
+    public void PropertyPostcode_WithProvidedValues_CanSetAndGet()
     {
         var testValue = "TestValue1";
         _sut.Postcode = testValue;
@@ -92,7 +92,7 @@ public class TransparencySiteTests
     }
 
     [Fact]
-    public void CanSetAndGetAccessRecordHTMLEnabled()
+    public void PropertyAccessRecordHTMLEnabled_WithProvidedValues_CanSetAndGet()
     {
         var testValue = true;
         _sut.AccessRecordHTMLEnabled = testValue;
@@ -100,7 +100,7 @@ public class TransparencySiteTests
     }
 
     [Fact]
-    public void CanSetAndGetStructuredRecordEnabled()
+    public void PropertyStructuredRecordEnabled_WithProvidedValues_CanSetAndGet()
     {
         var testValue = false;
         _sut.StructuredRecordEnabled = testValue;
@@ -108,7 +108,7 @@ public class TransparencySiteTests
     }
 
     [Fact]
-    public void CanSetAndGetAppointmentManagementEnabled()
+    public void PropertyAppointmentManagementEnabled_WithProvidedValues_CanSetAndGet()
     {
         var testValue = false;
         _sut.AppointmentManagementEnabled = testValue;
@@ -116,7 +116,7 @@ public class TransparencySiteTests
     }
 
     [Fact]
-    public void CanSetAndGetSendDocumentEnabled()
+    public void PropertySendDocumentEnabled_WithProvidedValues_CanSetAndGet()
     {
         var testValue = false;
         _sut.SendDocumentEnabled = testValue;
@@ -124,7 +124,7 @@ public class TransparencySiteTests
     }
 
     [Fact]
-    public void CanSetAndGetCcgIcbName()
+    public void PropertyCcgIcbName_WithProvidedValues_CanSetAndGet()
     {
         var testValue = "TestValue1";
         _sut.CcgIcbName = testValue;
@@ -132,7 +132,7 @@ public class TransparencySiteTests
     }
 
     [Fact]
-    public void CanSetAndGetCcgIcbOdsCode()
+    public void PropertyCcgIcbOdsCode_WithProvidedValues_CanSetAndGet()
     {
         var testValue = "TestValue1";
         _sut.CcgIcbOdsCode = testValue;
@@ -140,7 +140,7 @@ public class TransparencySiteTests
     }
 
     [Fact]
-    public void CanSetAndGetUseCase()
+    public void PropertyUseCase_WithProvidedValues_CanSetAndGet()
     {
         var testValue = "TestValue1";
         _sut.UseCase = testValue;

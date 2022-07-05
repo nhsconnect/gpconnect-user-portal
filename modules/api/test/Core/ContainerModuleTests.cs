@@ -15,13 +15,13 @@ public class ContainerModuleTests
     }
 
     [Fact]
-    public void CanConstruct()
+    public void CallConstructor_WithExpectedParameters_ReturnsNotNull()
     {
         Assert.NotNull(_sut);
     }
-    
+
     [Fact]
-    public static void CanCallConfigureModuleForServices()
+    public static void CallConfigureModuleServicesInstance_WithValidParameters_ReturnsConfigureModuleForServicesInstance()
     {
         using (var mock = AutoMock.GetLoose())
         {

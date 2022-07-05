@@ -14,13 +14,13 @@ public class UserTests
     }
 
     [Fact]
-    public void CanConstruct()
+    public void CallConstructor_WithExpectedParameters_ReturnsNotNull()
     {
         Assert.NotNull(_sut);
     }
 
     [Fact]
-    public void CanSetAndGetUserId()
+    public void PropertyUserId_WithProvidedValues_CanSetAndGet()
     {
         var testValue = 1;
         _sut.UserId = testValue;
@@ -28,7 +28,7 @@ public class UserTests
     }
 
     [Fact]
-    public void CanSetAndGetEmailAddress()
+    public void PropertyEmailAddress_WithProvidedValues_CanSetAndGet()
     {
         var testValue = "TestValue1";
         _sut.EmailAddress = testValue;
@@ -36,7 +36,7 @@ public class UserTests
     }
 
     [Fact]
-    public void CanSetAndGetLastLogonDate()
+    public void PropertyLastLogonDate_WithProvidedValues_CanSetAndGet()
     {
         var testValue = default(DateTime?);
         _sut.LastLogonDate = testValue;
@@ -44,7 +44,7 @@ public class UserTests
     }
 
     [Fact]
-    public void CanSetAndGetIsAdmin()
+    public void PropertyIsAdmin_WithProvidedValues_CanSetAndGet()
     {
         var testValue = false;
         _sut.IsAdmin = testValue;

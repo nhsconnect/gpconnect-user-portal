@@ -25,19 +25,19 @@ public class DataServiceTests
     }
 
     [Fact]
-    public void CanConstruct()
+    public void CallConstructor_WithExpectedParameters_ReturnsNotNull()
     {
         Assert.NotNull(_sut);
     }
 
     [Fact]
-    public void CannotConstructWithNullOptionsAccessor()
+    public void Constructor_WithNullOptionsAccessor_ThrowsArgumentNullException()
     {
         Assert.Throws<ArgumentNullException>(() => new DataService(default(IOptions<ConnectionStrings>), _mockLogger.Object));
     }
 
     [Fact]
-    public void CannotConstructWithNullLogger()
+    public void Constructor_WithNullLogger_ThrowsArgumentNullException()
     {
         Assert.Throws<ArgumentNullException>(() => new DataService(_mockOptionsAccessor.Object, default(ILogger<DataService>)));
     }
@@ -46,7 +46,7 @@ public class DataServiceTests
     [InlineData(null)]
     [InlineData("")]
     [InlineData("   ")]
-    public async Task CannotCallExecuteQueryWithTAndStringAndNullableOfDynamicParametersWithInvalidQuery(string value)
+    public async Task CallExecuteQuery_WithTAndStringAndNullableDynamicParameters_ThrowsArgumentNullException(string value)
     {
         await Assert.ThrowsAsync<ArgumentNullException>(() => _sut.ExecuteQuery<T>(value, default(DynamicParameters?)));
     }
@@ -55,7 +55,7 @@ public class DataServiceTests
     [InlineData(null)]
     [InlineData("")]
     [InlineData("   ")]
-    public async Task CannotCallExecuteQueryWithStringAndDynamicParametersWithInvalidQuery(string value)
+    public async Task CallExecuteQuery_WithStringAndNullDynamicParameters_ThrowsArgumentNullException(string value)
     {
         await Assert.ThrowsAsync<ArgumentNullException>(() => _sut.ExecuteQuery(value, default(DynamicParameters)));
     }    
@@ -64,7 +64,7 @@ public class DataServiceTests
     [InlineData(null)]
     [InlineData("")]
     [InlineData("   ")]
-    public async Task CannotCallExecuteQueryFirstOrDefaultWithInvalidQuery(string value)
+    public async Task CallExecuteQueryFirstOrDefault_WithTAndStringAndNullableDynamicParameters_ThrowsArgumentNullException(string value)
     {
         await Assert.ThrowsAsync<ArgumentNullException>(() => _sut.ExecuteQueryFirstOrDefault<T>(value, default(DynamicParameters?)));
     }
@@ -73,7 +73,7 @@ public class DataServiceTests
     [InlineData(null)]
     [InlineData("")]
     [InlineData("   ")]
-    public async Task CannotCallExecuteScalarWithInvalidQuery(string value)
+    public async Task CallExecuteScalar_WithStringAndNullDynamicParameters_ThrowsArgumentNullException(string value)
     {
         await Assert.ThrowsAsync<ArgumentNullException>(() => _sut.ExecuteScalar(value, default(DynamicParameters)));
     }
@@ -82,7 +82,7 @@ public class DataServiceTests
     [InlineData(null)]
     [InlineData("")]
     [InlineData("   ")]
-    public async Task CannotCallExecuteTextQueryWithInvalidQuery(string value)
+    public async Task CallExecuteTextQuery_WithTAndString_ThrowsArgumentNullException(string value)
     {
         await Assert.ThrowsAsync<ArgumentNullException>(() => _sut.ExecuteTextQuery<T>(value));
     }

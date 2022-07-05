@@ -20,19 +20,19 @@ public class ProductRequestValidatorTests
     }
 
     [Fact]
-    public void CanConstruct()
+    public void CallConstructor_WithExpectedParameters_ReturnsNotNull()
     {
         Assert.NotNull(_sut);
     }
 
     [Fact]
-    public void CannotConstructWithNullProductService()
+    public void Constructor_WithNullProductService_ThrowsArgumentNullException()
     {
         Assert.Throws<ArgumentNullException>(() => new ProductRequestValidator(default(IProductService)));
     }
 
     [Fact]
-    public async Task CanCallIsValidUpdate()
+    public async Task Call_IsValidUpdate_ReturnsBoolean()
     {
         var request = new ProductUpdateRequest { ProductId = 1, ProductValue = "TestValue1" };
         var result = await _sut.IsValidUpdate(request);
@@ -40,13 +40,13 @@ public class ProductRequestValidatorTests
     }
 
     [Fact]
-    public async Task CannotCallIsValidUpdateWithNullRequest()
+    public async Task Call_IsValidUpdateWithNullProductUpdateRequest_ThrowsNullReferenceException()
     {
         await Assert.ThrowsAsync<NullReferenceException>(() => _sut.IsValidUpdate(default(ProductUpdateRequest)));
     }
 
     [Fact]
-    public async Task CanCallIsValidDisable()
+    public async Task Call_IsValidDisable_ReturnsBoolean()
     {
         var request = new ProductDisableRequest { ProductId = 1, ProductDisabled = true };
         var result = await _sut.IsValidDisable(request);
@@ -54,13 +54,13 @@ public class ProductRequestValidatorTests
     }
 
     [Fact]
-    public async Task CannotCallIsValidDisableWithNullRequest()
+    public async Task Call_IsValidDisableWithNullProductDisableRequest_ThrowsNullReferenceException()
     {
         await Assert.ThrowsAsync<NullReferenceException>(() => _sut.IsValidDisable(default(ProductDisableRequest)));
     }
 
     [Fact]
-    public void CanCallIsValidAdd()
+    public void Call_IsValidAdd_ReturnsBoolean()
     {
         var request = new ProductAddRequest { ProductValue = "TestValue1" };
         var result = _sut.IsValidAdd(request);
@@ -68,7 +68,7 @@ public class ProductRequestValidatorTests
     }
 
     [Fact]
-    public void CannotCallIsValidAddWithNullRequest()
+    public void Call_IsValidAddWithNullProductAddRequest_ThrowsNullReferenceException()
     {
         Assert.Throws<NullReferenceException>(() => _sut.IsValidAdd(default(ProductAddRequest)));
     }

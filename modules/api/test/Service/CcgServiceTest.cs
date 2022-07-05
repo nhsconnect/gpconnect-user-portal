@@ -1,6 +1,5 @@
 using Dapper;
 using GpConnect.NationalDataSharingPortal.Api.Dal.Interfaces;
-using GpConnect.NationalDataSharingPortal.Api.Dto.Request;
 using GpConnect.NationalDataSharingPortal.Api.Dto.Response;
 using GpConnect.NationalDataSharingPortal.Api.Service;
 using Moq;
@@ -23,19 +22,19 @@ public class CcgServiceTest
     }
 
     [Fact]
-    public void CanConstruct()
+    public void CallConstructor_WithExpectedParameters_ReturnsNotNull()
     {
         Assert.NotNull(_sut);
     }
 
     [Fact]
-    public void CannotConstructWithNullDataService()
+    public void Constructor_WithNullDataService_ThrowsArgumentNullException()
     {
         Assert.Throws<ArgumentNullException>(() => new CareSettingService(default(IDataService)));
     }
 
     [Fact]
-    public async Task CanCallGetCcgs()
+    public async Task Get_GetCcgs_ReturnsListOfCcgs()
     {
         var list = Task.FromResult(new List<Ccg>());
         _mockDataService.Setup(d => d.ExecuteQuery<Ccg>(It.IsAny<string>(), It.IsAny<DynamicParameters>())).Returns(list);

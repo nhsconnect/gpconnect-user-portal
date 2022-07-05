@@ -9,7 +9,7 @@ namespace GpConnect.NationalDataSharingPortal.Api.Test.Helpers;
 public static class StringExtensionsTests
 {
     [Fact]
-    public static void CanCallFlatten()
+    public static void Flatten_GivenValidInput_ReturnsFlattenedString()
     {
         var elems = new List<string>() { "Hello", "World" };
         var separator = ",";
@@ -18,7 +18,7 @@ public static class StringExtensionsTests
     }
 
     [Fact]
-    public static void CannotCallFlattenWithNullElems()
+    public static void Flatten_GivenNullElements_ThrowsArgumentNullException()
     {
         Assert.Throws<ArgumentNullException>(() => StringExtensions.Flatten(default(IEnumerable), ","));
     }
@@ -27,13 +27,13 @@ public static class StringExtensionsTests
     [InlineData(null)]
     [InlineData("")]
     [InlineData("   ")]
-    public static void CannotCallFlattenWithInvalidSeparator(string value)
+    public static void Flatten_GivenInvalidSeparator_ThrowsArgumentNullException(string value)
     {
         Assert.Throws<ArgumentNullException>(() => StringExtensions.Flatten(default(IEnumerable), value));
     }
 
     [Fact]
-    public static void CanCallFirstCharToUpper()
+    public static void FirstCharToUpper_GivenValidInput_ReturnsFirstCharToUpperString()
     {
         var input = "testValue1";
         var restToLower = false;
@@ -45,13 +45,13 @@ public static class StringExtensionsTests
     [InlineData(null)]
     [InlineData("")]
     [InlineData("   ")]
-    public static void CannotCallFirstCharToUpperWithInvalidInput(string value)
+    public static void FirstCharToUpper_GivenInvalidInput_ThrowsArgumentNullException(string value)
     {
         Assert.Throws<ArgumentNullException>(() => value.FirstCharToUpper(true));
     }
 
     [Fact]
-    public static void CanCallCoalesce()
+    public static void Coalesce_GivenValidInput_ReturnsCoalescedtring()
     {
         var strings = new[] { "TestValue1", "TestValue2", "TestValue3" };
         var result = StringExtensions.Coalesce(strings);
@@ -59,13 +59,13 @@ public static class StringExtensionsTests
     }
 
     [Fact]
-    public static void CannotCallCoalesceWithNullStrings()
+    public static void Coalesce_GivenNullStrings_ThrowsArgumentNullException()
     {
         Assert.Throws<ArgumentNullException>(() => StringExtensions.Coalesce(default(string[])));
     }
 
     [Fact]
-    public static void CanCallSearchAndReplace()
+    public static void SearchAndReplace_GivenValidInput_ReturnsReplacedString()
     {
         var input = "TestValue1";
         var replacementValues = new Dictionary<string, string>() { { "a", "b" } };
@@ -74,7 +74,7 @@ public static class StringExtensionsTests
     }
 
     [Fact]
-    public static void CannotCallSearchAndReplaceWithNullReplacementValues()
+    public static void SearchAndReplace_GivenNullReplacementStrings_ThrowsArgumentNullException()
     {
         Assert.Throws<ArgumentNullException>(() => "TestValue1".SearchAndReplace(default(Dictionary<string, string>)));
     }
@@ -83,27 +83,13 @@ public static class StringExtensionsTests
     [InlineData(null)]
     [InlineData("")]
     [InlineData("   ")]
-    public static void CannotCallSearchAndReplaceWithInvalidInput(string value)
+    public static void SearchAndReplace_GivenInvalidInput_ThrowsArgumentNullException(string value)
     {
         Assert.Throws<ArgumentNullException>(() => value.SearchAndReplace(default(Dictionary<string, string>)));
     }
-
+        
     [Fact]
-    public static void CanCallFlattenStrings()
-    {
-        var strings = new[] { "TestValue1", "TestValue2", "TestValue3" };
-        var result = StringExtensions.FlattenStrings(strings);
-        Assert.Equal(result, "TestValue1, TestValue2, TestValue3");
-    }
-
-    [Fact]
-    public static void CannotCallFlattenStringsWithNullStrings()
-    {
-        Assert.Throws<ArgumentNullException>(() => StringExtensions.FlattenStrings(default(string[])));
-    }
-
-    [Fact]
-    public static void CanCallPluraliser()
+    public static void Pluraliser_GivenValidInput_ReturnsPluralisedString()
     {
         var input = "Picture";
         var countValue = 8;
@@ -117,7 +103,7 @@ public static class StringExtensionsTests
     [InlineData(null)]
     [InlineData("")]
     [InlineData("   ")]
-    public static void CannotCallPluraliserWithInvalidInput(string value)
+    public static void Pluraliser_GivenInvalidInput_ThrowsArgumentNullException(string value)
     {
         Assert.Throws<ArgumentNullException>(() => value.Pluraliser(1, "TestValue1", "TestValue2"));
     }

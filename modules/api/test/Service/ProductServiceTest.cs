@@ -23,19 +23,19 @@ public class ProductServiceTest
     }
 
     [Fact]
-    public void CanConstruct()
+    public void CallConstructor_WithExpectedParameters_ReturnsNotNull()
     {
         Assert.NotNull(_sut);
     }
 
     [Fact]
-    public void CannotConstructWithNullDataService()
+    public void Constructor_WithNullDataService_ThrowsArgumentNullException()
     {
         Assert.Throws<ArgumentNullException>(() => new ProductService(default(IDataService)));
     }
 
     [Fact]
-    public async Task CanCallGetProducts()
+    public async Task Get_Products_ReturnsProducts()
     {
         var list = Task.FromResult(new List<Product>());
         _mockDataService.Setup(d => d.ExecuteQuery<Product>(It.IsAny<string>(), It.IsAny<DynamicParameters>())).Returns(list);
@@ -45,7 +45,7 @@ public class ProductServiceTest
     }
 
     [Fact]
-    public async Task CanCallGetProduct()
+    public async Task Get_Product_ReturnsProduct()
     {
         var single = Task.FromResult(new Product());
         _mockDataService.Setup(d => d.ExecuteQueryFirstOrDefault<Product>(It.IsAny<string>(), It.IsAny<DynamicParameters>())).Returns(single);
@@ -56,7 +56,7 @@ public class ProductServiceTest
     }
 
     [Fact]
-    public async Task CanCallAddProduct()
+    public async Task Call_ProductAddRequest_ReturnsProduct()
     {
         var single = Task.FromResult(new Product());
         _mockDataService.Setup(d => d.ExecuteQueryFirstOrDefault<Product>(It.IsAny<string>(), It.IsAny<DynamicParameters>())).Returns(single);
@@ -67,19 +67,19 @@ public class ProductServiceTest
     }
 
     [Fact]
-    public async Task CannotCallAddProductWithNullProductAddRequest()
+    public async Task Call_WithNullProductAddRequest_ThrowsNullReferenceException()
     {
         await Assert.ThrowsAsync<NullReferenceException>(() => _sut.AddProduct(default(ProductAddRequest)));
     }
 
     [Fact]
-    public async Task CannotCallDisableProductWithNullProductDisableRequest()
+    public async Task Call_WithNullProductDisableRequest_ThrowsNullReferenceException()
     {
         await Assert.ThrowsAsync<NullReferenceException>(() => _sut.DisableProduct(default(ProductDisableRequest)));
     }
 
     [Fact]
-    public async Task CannotCallUpdateProductWithNullProductUpdateRequest()
+    public async Task Call_WithNullProductUpdateRequest_ThrowsNullReferenceException()
     {
         await Assert.ThrowsAsync<NullReferenceException>(() => _sut.UpdateProduct(default(ProductUpdateRequest)));
     }

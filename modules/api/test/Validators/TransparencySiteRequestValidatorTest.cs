@@ -17,13 +17,13 @@ public class TransparencySiteRequestValidatorTest
     }
 
     [Fact]
-    public void CanConstruct()
+    public void CallConstructor_WithExpectedParameters_ReturnsNotNull()
     {
         Assert.NotNull(_sut);
     }
 
     [Fact]
-    public void CanCallIsValidId()
+    public void Call_IsValidId_ReturnsBoolean()
     {
         var id = Guid.NewGuid().ToString();
         var result = _sut.IsValidId(id);
@@ -34,14 +34,14 @@ public class TransparencySiteRequestValidatorTest
     [InlineData(null)]
     [InlineData("")]
     [InlineData("   ")]
-    public void CannotCallIsValidIdWithInvalidId(string value)
+    public void Call_IsValidIdWithInvalidInput_ReturnsBoolean(string value)
     {
         var result = _sut.IsValidId(value);
         Assert.False(result);
     }
 
     [Fact]
-    public void CannotCallIsValidRequestWithNullRequest()
+    public void Call_IsValidRequestWithNullTransparencySiteRequest_ThrowsNullReferenceException()
     {
         Assert.Throws<NullReferenceException>(() => _sut.IsValidRequest(default(TransparencySiteRequest)));
     }

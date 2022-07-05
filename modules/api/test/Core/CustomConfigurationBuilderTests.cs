@@ -9,7 +9,7 @@ namespace GpConnect.NationalDataSharingPortal.Api.Test.Core;
 public static class CustomConfigurationBuilderTests
 {
     [Fact]
-    public static void CannotCallAddCustomConfigurationWithNullParameters()
+    public static void CreatingCustomConfigurationBuilderInstance_WithNullParameters_ThrowsArgumentNullException()
     {
         Assert.Throws<ArgumentNullException>(() => CustomConfigurationBuilder.AddCustomConfiguration(default(HostBuilderContext), default(IConfigurationBuilder)));
     }

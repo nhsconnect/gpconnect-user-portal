@@ -13,13 +13,13 @@ public class ProductTests
     }
 
     [Fact]
-    public void CanConstruct()
+    public void CallConstructor_WithExpectedParameters_ReturnsNotNull()
     {
         Assert.NotNull(_sut);
     }
 
     [Fact]
-    public void CanSetAndGetProductId()
+    public void PropertyProductId_WithProvidedValues_CanSetAndGet()
     {
         var testValue = 1621644064;
         _sut.ProductId = testValue;
@@ -27,7 +27,7 @@ public class ProductTests
     }
 
     [Fact]
-    public void CanSetAndGetProductValue()
+    public void PropertyProductValue_WithProvidedValues_CanSetAndGet()
     {
         var testValue = "TestValue1";
         _sut.ProductValue = testValue;
@@ -35,7 +35,7 @@ public class ProductTests
     }
 
     [Fact]
-    public void CanSetAndGetProductName()
+    public void PropertyProductName_WithProvidedValues_CanSetAndGet()
     {
         var testValue = "TestValue1";
         _sut.ProductName = testValue;
@@ -43,7 +43,7 @@ public class ProductTests
     }
 
     [Fact]
-    public void CanSetAndGetProductDescription()
+    public void PropertyProductDescription_WithProvidedValues_CanSetAndGet()
     {
         var testValue = "TestValue1";
         _sut.ProductDescription = testValue;

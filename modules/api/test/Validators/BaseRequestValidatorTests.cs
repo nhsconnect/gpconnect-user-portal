@@ -13,14 +13,13 @@ public class BaseRequestValidatorTests
     }
 
     [Fact]
-    public void CanConstruct()
+    public void CallConstructor_WithExpectedParameters_ReturnsNotNull()
     {
-        var instance = new BaseRequestValidator();
-        Assert.NotNull(instance);
+        Assert.NotNull(_sut);
     }
 
     [Fact]
-    public void CanSetAndGetEntityFound()
+    public void PropertyEntityFound_WithProvidedValues_CanSetAndGet()
     {
         var testValue = true;
         _sut.EntityFound = testValue;
@@ -28,7 +27,7 @@ public class BaseRequestValidatorTests
     }
 
     [Fact]
-    public void CanSetAndGetRequestValid()
+    public void PropertyRequestValid_WithProvidedValues_CanSetAndGet()
     {
         var testValue = true;
         _sut.RequestValid = testValue;

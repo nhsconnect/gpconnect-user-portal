@@ -27,19 +27,19 @@ public class CcgControllerTest
     }
 
     [Fact]
-    public void CanConstruct()
+    public void CallConstructor_WithExpectedParameters_ReturnsNotNull()
     {
         Assert.NotNull(_sut);
     }
 
     [Fact]
-    public void CannotConstructWithNullService()
+    public void Constructor_WithNullService_ThrowsArgumentNullException()
     {
         Assert.Throws<ArgumentNullException>(() => new CcgController(default(ICcgService), _mockLogger.Object));
     }
 
     [Fact]
-    public void CannotConstructWithNullLogger()
+    public void Constructor_WithNullLogger_ThrowsArgumentNullException()
     {
         Assert.Throws<ArgumentNullException>(() => new CcgController(_mockService.Object, default(ILogger<CcgController>)));
     }
@@ -52,7 +52,7 @@ public class CcgControllerTest
     }
 
     [Fact]
-    public async Task Get_WhenServiceReturns_ReturnsOkResponseAsync()
+    public async Task Get_WithValidParameters_ReturnsOkResponse()
     {
         _mockService.Setup(x => x.GetCcgs()).ReturnsAsync(new List<Ccg>
             {

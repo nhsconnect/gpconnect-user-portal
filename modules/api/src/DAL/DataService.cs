@@ -101,16 +101,10 @@ namespace GpConnect.NationalDataSharingPortal.Api.Dal
             }
         }
 
-
-
         private string CheckQuery(string query)
         {
-            if (query == null)
+            if (string.IsNullOrEmpty(query?.Trim()))
                 throw new ArgumentNullException(nameof(query));
-
-            if (query.Trim() == string.Empty)
-                throw new ArgumentNullException(nameof(query));
-
             return query;
         }
     }

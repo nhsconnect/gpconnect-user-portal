@@ -13,13 +13,13 @@ public class ConnectionStringsTests
     }
 
     [Fact]
-    public void CanConstruct()
+    public void CallConstructor_WithExpectedParameters_ReturnsNotNull()
     {
         Assert.NotNull(_sut);
     }
 
     [Fact]
-    public void CanSetAndGetDefaultConnection()
+    public void CanSetAndGet_PropertyDefaultConnection_WithProvidedValues()
     {
         var testValue = "DatabaseConnectionString";
         _sut.DefaultConnection = testValue;

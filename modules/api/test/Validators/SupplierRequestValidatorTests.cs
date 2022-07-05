@@ -20,19 +20,19 @@ public class SupplierRequestValidatorTests
     }
 
     [Fact]
-    public void CanConstruct()
+    public void CallConstructor_WithExpectedParameters_ReturnsNotNull()
     {
         Assert.NotNull(_sut);
     }
 
     [Fact]
-    public void CannotConstructWithNullSupplierService()
+    public void Constructor_WithNullSupplierService_ThrowsArgumentNullException()
     {
         Assert.Throws<ArgumentNullException>(() => new SupplierRequestValidator(default(ISupplierService)));
     }
 
     [Fact]
-    public async Task CanCallIsValidUpdate()
+    public async Task Call_IsValidUpdate_ReturnsBoolean()
     {
         var request = new SupplierUpdateRequest { SupplierId = 1, SupplierValue = "TestValue1" };
         var result = await _sut.IsValidUpdate(request);
@@ -40,13 +40,13 @@ public class SupplierRequestValidatorTests
     }
 
     [Fact]
-    public async Task CannotCallIsValidUpdateWithNullRequest()
+    public async Task Call_IsValidUpdateWithNullSupplierUpdateRequest_ThrowsNullReferenceException()
     {
         await Assert.ThrowsAsync<NullReferenceException>(() => _sut.IsValidUpdate(default(SupplierUpdateRequest)));
     }
 
     [Fact]
-    public async Task CanCallIsValidDisable()
+    public async Task Call_IsValidDisable_ReturnsBoolean()
     {
         var request = new SupplierDisableRequest { SupplierId = 1, SupplierDisabled = true };
         var result = await _sut.IsValidDisable(request);
@@ -54,13 +54,13 @@ public class SupplierRequestValidatorTests
     }
 
     [Fact]
-    public async Task CannotCallIsValidDisableWithNullRequest()
+    public async Task Call_IsValidDisableWithNullSupplierDisableRequest_ThrowsNullReferenceException()
     {
         await Assert.ThrowsAsync<NullReferenceException>(() => _sut.IsValidDisable(default(SupplierDisableRequest)));
     }
 
     [Fact]
-    public void CanCallIsValidAdd()
+    public void Call_IsValidAdd_ReturnsBoolean()
     {
         var request = new SupplierAddRequest { SupplierValue = "TestValue1" };
         var result = _sut.IsValidAdd(request);
@@ -68,7 +68,7 @@ public class SupplierRequestValidatorTests
     }
 
     [Fact]
-    public void CannotCallIsValidAddWithNullRequest()
+    public void Call_IsValidAddWithNullSupplierAddRequest_ThrowsNullReferenceException()
     {
         Assert.Throws<NullReferenceException>(() => _sut.IsValidAdd(default(SupplierAddRequest)));
     }

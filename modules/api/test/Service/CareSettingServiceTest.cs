@@ -23,19 +23,19 @@ public class CareSettingServiceTest
     }
 
     [Fact]
-    public void CanConstruct()
+    public void CallConstructor_WithExpectedParameters_ReturnsNotNull()
     {
         Assert.NotNull(_sut);
     }
 
     [Fact]
-    public void CannotConstructWithNullDataService()
+    public void Constructor_WithNullDataService_ThrowsArgumentNullException()
     {
         Assert.Throws<ArgumentNullException>(() => new CareSettingService(default(IDataService)));
     }
 
     [Fact]
-    public async Task CanCallGetCareSettings()
+    public async Task Get_CareSettings_ReturnsListOfCareSettings()
     {
         var list = Task.FromResult(new List<CareSetting>());
         _mockDataService.Setup(d => d.ExecuteQuery<CareSetting>(It.IsAny<string>(), It.IsAny<DynamicParameters>())).Returns(list);
@@ -45,7 +45,7 @@ public class CareSettingServiceTest
     }
 
     [Fact]
-    public async Task CanCallGetCareSetting()
+    public async Task Get_CareSetting_ReturnsCareSetting()
     {
         var single = Task.FromResult(new CareSetting());
         _mockDataService.Setup(d => d.ExecuteQueryFirstOrDefault<CareSetting>(It.IsAny<string>(), It.IsAny<DynamicParameters>())).Returns(single);
@@ -56,7 +56,7 @@ public class CareSettingServiceTest
     }
 
     [Fact]
-    public async Task CanCallAddCareSetting()
+    public async Task Call_CareSettingAddRequest_ReturnsCareSetting()
     {
         var single = Task.FromResult(new CareSetting());
         _mockDataService.Setup(d => d.ExecuteQueryFirstOrDefault<CareSetting>(It.IsAny<string>(), It.IsAny<DynamicParameters>())).Returns(single);
@@ -67,19 +67,19 @@ public class CareSettingServiceTest
     }
 
     [Fact]
-    public async Task CannotCallAddCareSettingWithNullCareSettingAddRequest()
+    public async Task Call_WithNullCareSettingAddRequest_ThrowsNullReferenceException()
     {
         await Assert.ThrowsAsync<NullReferenceException>(() => _sut.AddCareSetting(default(CareSettingAddRequest)));
     }
 
     [Fact]
-    public async Task CannotCallDisableCareSettingWithNullCareSettingDisableRequest()
+    public async Task Call_WithNullCareSettingDisableRequest_ThrowsNullReferenceException()
     {
         await Assert.ThrowsAsync<NullReferenceException>(() => _sut.DisableCareSetting(default(CareSettingDisableRequest)));
     }
 
     [Fact]
-    public async Task CannotCallUpdateCareSettingWithNullCareSettingUpdateRequest()
+    public async Task Call_WithNullCareSettingUpdateRequest_ThrowsNullReferenceException()
     {
         await Assert.ThrowsAsync<NullReferenceException>(() => _sut.UpdateCareSetting(default(CareSettingUpdateRequest)));
     }

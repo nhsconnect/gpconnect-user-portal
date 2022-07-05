@@ -33,25 +33,25 @@ public class SupplierControllerTest
     }
 
     [Fact]
-    public void CanConstruct()
+    public void CallConstructor_WithExpectedParameters_ReturnsNotNull()
     {
         Assert.NotNull(_sut);
     }
 
     [Fact]
-    public void CannotConstructWithNullValidator()
+    public void Constructor_WithNullValidator_ThrowsArgumentNullException()
     {
         Assert.Throws<ArgumentNullException>(() => new SupplierController(default(ISupplierRequestValidator), _mockService.Object, _mockLogger.Object));
     }
 
     [Fact]
-    public void CannotConstructWithNullService()
+    public void Constructor_WithNullService_ThrowsArgumentNullException()
     {
         Assert.Throws<ArgumentNullException>(() => new SupplierController(_mockValidator.Object, default(ISupplierService), _mockLogger.Object));
     }
 
     [Fact]
-    public void CannotConstructWithNullLogger()
+    public void Constructor_WithNullLogger_ThrowsArgumentNullException()
     {
         Assert.Throws<ArgumentNullException>(() => new SupplierController(_mockValidator.Object, _mockService.Object, default(ILogger<SupplierController>)));
     }
@@ -88,14 +88,14 @@ public class SupplierControllerTest
     }
 
     [Fact]
-    public async Task Put_WithNullIdAndSupplierUpdateRequest_Throws()
+    public async Task Put_WithNullIdAndSupplierUpdateRequest_ThrowsNullReferenceException()
     {
         var supplierUpdateRequest = new SupplierUpdateRequest { SupplierId = 1, SupplierValue = "TestValue1" };
         await Assert.ThrowsAsync<NullReferenceException>(async () => await _sut.Put(default, supplierUpdateRequest));
     }
 
     [Fact]
-    public async Task CannotCallPutWithIdAndSupplierUpdateRequestWithNullSupplierUpdateRequest()
+    public async Task Put_WithNullIdAndNullSupplierUpdateRequest_ThrowsNullReferenceException()
     {
         await Assert.ThrowsAsync<NullReferenceException>(async () => await _sut.Put(default(int), default(SupplierUpdateRequest)));
     }
@@ -111,20 +111,20 @@ public class SupplierControllerTest
     }
 
     [Fact]
-    public async Task CannotCallPutWithIdAndSupplierDisableRequestWithNullId()
+    public async Task Put_WithNullIdAndSupplierDisableRequest_ThrowsNullReferenceException()
     {
         var supplierDisableRequest = new SupplierDisableRequest { SupplierId = 1, SupplierDisabled = false };
         await Assert.ThrowsAsync<NullReferenceException>(async () => await _sut.Put(default, supplierDisableRequest));
     }
 
     [Fact]
-    public async Task CannotCallPutWithIdAndSupplierDisableRequestWithNullSupplierDisableRequest()
+    public async Task Put_WithNullIdAndNullSupplierDisableRequest_ThrowsNullReferenceException()
     {
         await Assert.ThrowsAsync<NullReferenceException>(async () => await _sut.Put(default(int), default(SupplierDisableRequest)));
     }
 
     [Fact]
-    public async Task CanCallPost()
+    public async Task Post_WithValidParameters_ReturnsActionResult()
     {
         var supplierAddRequest = new SupplierAddRequest { SupplierValue = "TestValue1" };
         var result = await _sut.Post(supplierAddRequest);
@@ -132,7 +132,7 @@ public class SupplierControllerTest
     }
 
     [Fact]
-    public async Task CannotCallPostWithNullProductAddRequest()
+    public async Task Post_WithNullSupplierAddRequest_ThrowsArgumentNullException()
     {
         Assert.ThrowsAsync<ArgumentNullException>(async () => await _sut.Post(default(SupplierAddRequest)));
     }

@@ -13,13 +13,13 @@ public class ProductDisableRequestTests
     }
 
     [Fact]
-    public void CanConstruct()
+    public void CallConstructor_WithExpectedParameters_ReturnsNotNull()
     {
         Assert.NotNull(_sut);
     }
 
     [Fact]
-    public void CanSetAndGetProductId()
+    public void PropertyProductId_WithProvidedValues_CanSetAndGet()
     {
         var testValue = 1;
         _sut.ProductId = testValue;
@@ -27,7 +27,7 @@ public class ProductDisableRequestTests
     }
 
     [Fact]
-    public void CanSetAndGetProductDisabled()
+    public void PropertyProductDisabled_WithProvidedValues_CanSetAndGet()
     {
         var testValue = true;
         _sut.ProductDisabled = testValue;

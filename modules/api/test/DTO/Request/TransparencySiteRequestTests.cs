@@ -13,13 +13,13 @@ public class TransparencySiteRequestTests
     }
 
     [Fact]
-    public void CanConstruct()
+    public void CallConstructor_WithExpectedParameters_ReturnsNotNull()
     {
         Assert.NotNull(_sut);
     }
 
     [Fact]
-    public void CanSetAndGetProviderCode()
+    public void PropertyProviderCode_WithProvidedValues_CanSetAndGet()
     {
         var testValue = default(string?);
         _sut.ProviderCode = testValue;
@@ -27,7 +27,7 @@ public class TransparencySiteRequestTests
     }
 
     [Fact]
-    public void CanSetAndGetProviderName()
+    public void PropertyProviderName_WithProvidedValues_CanSetAndGet()
     {
         var testValue = default(string?);
         _sut.ProviderName = testValue;
@@ -35,7 +35,7 @@ public class TransparencySiteRequestTests
     }
 
     [Fact]
-    public void CanSetAndGetStartPosition()
+    public void PropertyStartPosition_WithProvidedValues_CanSetAndGet()
     {
         var testValue = 92608808;
         _sut.StartPosition = testValue;
@@ -43,7 +43,7 @@ public class TransparencySiteRequestTests
     }
 
     [Fact]
-    public void CanSetAndGetCount()
+    public void PropertyCount_WithProvidedValues_CanSetAndGet()
     {
         var testValue = 1042382841;
         _sut.Count = testValue;

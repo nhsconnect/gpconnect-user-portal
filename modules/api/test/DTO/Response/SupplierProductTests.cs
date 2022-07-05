@@ -13,13 +13,13 @@ public class SupplierProductTests
     }
 
     [Fact]
-    public void CanConstruct()
+    public void CallConstructor_WithExpectedParameters_ReturnsNotNull()
     {
         Assert.NotNull(_sut);
     }
 
     [Fact]
-    public void CanSetAndGetSupplierId()
+    public void PropertySupplierId_WithProvidedValues_CanSetAndGet()
     {
         var testValue = 1;
         _sut.SupplierId = testValue;
@@ -27,7 +27,7 @@ public class SupplierProductTests
     }
 
     [Fact]
-    public void CanSetAndGetSupplierProductId()
+    public void PropertySupplierProductId_WithProvidedValues_CanSetAndGet()
     {
         var testValue = 1;
         _sut.SupplierProductId = testValue;
@@ -35,7 +35,7 @@ public class SupplierProductTests
     }
 
     [Fact]
-    public void CanSetAndGetSupplierName()
+    public void PropertySupplierName_WithProvidedValues_CanSetAndGet()
     {
         var testValue = "TestValue1";
         _sut.SupplierName = testValue;
@@ -43,7 +43,7 @@ public class SupplierProductTests
     }
 
     [Fact]
-    public void CanSetAndGetSupplierProductName()
+    public void PropertySupplierProductName_WithProvidedValues_CanSetAndGet()
     {
         var testValue = "TestValue1";
         _sut.SupplierProductName = testValue;

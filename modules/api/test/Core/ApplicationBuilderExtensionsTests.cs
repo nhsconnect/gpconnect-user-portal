@@ -17,7 +17,7 @@ namespace GpConnect.NationalDataSharingPortal.Api.Test.Core;
 public static class ApplicationBuilderExtensionsTests
 {
     [Fact]
-    public static void CanCallConfigureApplicationBuilderServices()
+    public static void CreatingApplicationBuilderServicesInstance_WithExpectedParameters_ReturnsApplicationBuilderServicesInstance()
     {
         Mock<IConfigurationSection> configurationSectionStub = new Mock<IConfigurationSection>();
         Mock<IWebHostEnvironment> webHostEnvironmentStub = new Mock<IWebHostEnvironment>();
@@ -50,7 +50,7 @@ public static class ApplicationBuilderExtensionsTests
     }
 
     [Fact]
-    public static void CannotCallConfigureApplicationBuilderServicesWithNullParameters()
+    public static void CreatingApplicationBuilderServicesInstance_WithNullParameters_ThrowsArgumentNullException()
     {
         Assert.Throws<ArgumentNullException>(() => default(IApplicationBuilder).ConfigureApplicationBuilderServices(default(IWebHostEnvironment)));
     }

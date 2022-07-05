@@ -13,13 +13,13 @@ public class ProductAddRequestTests
     }
 
     [Fact]
-    public void CanConstruct()
+    public void CallConstructor_WithExpectedParameters_ReturnsNotNull()
     {
         Assert.NotNull(_sut);
     }
 
     [Fact]
-    public void CanSetAndGetProductValue()
+    public void PropertyProductValue_WithProvidedValues_CanSetAndGet()
     {
         var testValue = "TestValue1";
         _sut.ProductValue = testValue;

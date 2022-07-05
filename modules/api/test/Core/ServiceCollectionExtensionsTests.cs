@@ -10,7 +10,7 @@ namespace GpConnect.NationalDataSharingPortal.Api.Test.Core;
 public static class ServiceCollectionExtensionsTests
 {
     [Fact]
-    public static void CannotCallConfigureApplicationServicesWithNullParameters()
+    public static void CreatingConfigureApplicationServicesInstance_WithNullParameters_ThrowsArgumentNullException()
     {
         Assert.Throws<ArgumentNullException>(() => default(IServiceCollection).ConfigureApplicationServices(default(IConfiguration), default(IWebHostEnvironment)));
     }

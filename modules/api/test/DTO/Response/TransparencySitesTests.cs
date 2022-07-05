@@ -14,14 +14,14 @@ public class TransparencySitesTests
     }
 
     [Fact]
-    public void CanConstruct()
+    public void CallConstructor_WithExpectedParameters_ReturnsNotNull()
     {
         var instance = new TransparencySites();
         Assert.NotNull(instance);
     }
 
     [Fact]
-    public void CanSetAndGetTotalResults()
+    public void PropertyTotalResults_WithProvidedValues_CanSetAndGet()
     {
         var testValue = 1;
         _sut.TotalResults = testValue;
@@ -29,7 +29,7 @@ public class TransparencySitesTests
     }
 
     [Fact]
-    public void CanSetAndGetResults()
+    public void PropertyResults_WithProvidedValues_CanSetAndGet()
     {
         var testValue = default(List<TransparencySite>);
         _sut.Results = testValue;

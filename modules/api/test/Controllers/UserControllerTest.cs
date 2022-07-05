@@ -28,32 +28,32 @@ public class UserControllerTest
     }
 
     [Fact]
-    public void CanConstruct()
+    public void CallConstructor_WithExpectedParameters_ReturnsNotNull()
     {
         Assert.NotNull(_sut);
     }
 
     [Fact]
-    public void CannotConstructWithNullService()
+    public void Constructor_WithNullService_ThrowsArgumentNullException()
     {
         Assert.Throws<ArgumentNullException>(() => new UserController(default(IUserService), _mockLogger.Object));
     }
 
     [Fact]
-    public void CannotConstructWithNullLogger()
+    public void Constructor_WithNullLogger_ThrowsArgumentNullException()
     {
         Assert.Throws<ArgumentNullException>(() => new UserController(_mockService.Object, default(ILogger<UserController>)));
     }
 
     [Fact]
-    public async Task Get_WithNoParameters_ReturnsGivenType()
+    public async Task Get_WithNoParameters_ReturnsListOfUsers()
     {
         var result = await _sut.Get();
         Assert.IsType<ActionResult<IEnumerable<User>>>(result);
     }
 
     [Fact]
-    public async Task Get_WhenServiceReturns_ReturnsOkResponseAsync()
+    public async Task Get_WithValidParameters_ReturnsOk()
     {
         _mockService.Setup(x => x.GetUsers()).ReturnsAsync(new List<User>
             {

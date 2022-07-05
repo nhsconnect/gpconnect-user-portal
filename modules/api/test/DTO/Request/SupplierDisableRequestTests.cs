@@ -13,13 +13,13 @@ public class SupplierDisableRequestTests
     }
 
     [Fact]
-    public void CanConstruct()
+    public void CallConstructor_WithExpectedParameters_ReturnsNotNull()
     {
         Assert.NotNull(_sut);
     }
 
     [Fact]
-    public void CanSetAndGetSupplierId()
+    public void PropertySupplierId_WithProvidedValues_CanSetAndGet()
     {
         var testValue = 1;
         _sut.SupplierId = testValue;
@@ -27,7 +27,7 @@ public class SupplierDisableRequestTests
     }
 
     [Fact]
-    public void CanSetAndGetSupplierDisabled()
+    public void PropertySupplierDisabled_WithProvidedValues_CanSetAndGet()
     {
         var testValue = false;
         _sut.SupplierDisabled = testValue;

@@ -20,19 +20,19 @@ public class CareSettingRequestValidatorTests
     }
 
     [Fact]
-    public void CanConstruct()
+    public void CallConstructor_WithExpectedParameters_ReturnsNotNull()
     {
         Assert.NotNull(_sut);
     }
 
     [Fact]
-    public void CannotConstructWithNullCareSettingService()
+    public void Constructor_WithNullCareSettingService_ThrowsArgumentNullException()
     {
         Assert.Throws<ArgumentNullException>(() => new CareSettingRequestValidator(default(ICareSettingService)));
     }
 
     [Fact]
-    public async Task CanCallIsValidUpdate()
+    public async Task Call_IsValidUpdate_ReturnsBoolean()
     {
         var request = new CareSettingUpdateRequest { CareSettingId = 1, CareSettingValue = "TestValue1" };
         var result = await _sut.IsValidUpdate(request);
@@ -40,13 +40,13 @@ public class CareSettingRequestValidatorTests
     }
 
     [Fact]
-    public async Task CannotCallIsValidUpdateWithNullRequest()
+    public async Task Call_IsValidUpdateWithNullCareSettingUpdateRequest_ThrowsNullReferenceException()
     {
         await Assert.ThrowsAsync<NullReferenceException>(() => _sut.IsValidUpdate(default(CareSettingUpdateRequest)));
     }
 
     [Fact]
-    public async Task CanCallIsValidDisable()
+    public async Task Call_IsValidDisable_ReturnsBoolean()
     {
         var request = new CareSettingDisableRequest { CareSettingId = 1, CareSettingDisabled = false };
         var result = await _sut.IsValidDisable(request);
@@ -54,13 +54,13 @@ public class CareSettingRequestValidatorTests
     }
 
     [Fact]
-    public async Task CannotCallIsValidDisableWithNullRequest()
+    public async Task Call_IsValidDisableWithNullCareSettingDisableRequest_ThrowsNullReferenceException()
     {
         await Assert.ThrowsAsync<NullReferenceException>(() => _sut.IsValidDisable(default(CareSettingDisableRequest)));
     }
 
     [Fact]
-    public void CanCallIsValidAdd()
+    public void Call_IsValidAdd_ReturnsBoolean()
     {
         var request = new CareSettingAddRequest { CareSettingValue = "TestValue1" };
         var result = _sut.IsValidAdd(request);
@@ -68,7 +68,7 @@ public class CareSettingRequestValidatorTests
     }
 
     [Fact]
-    public void CannotCallIsValidAddWithNullRequest()
+    public void Call_IsValidAddWithNullCareSettingAddRequest_ThrowsNullReferenceException()
     {
         Assert.Throws<NullReferenceException>(() => _sut.IsValidAdd(default(CareSettingAddRequest)));
     }

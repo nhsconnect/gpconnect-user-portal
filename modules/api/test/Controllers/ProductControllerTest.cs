@@ -33,25 +33,25 @@ public class ProductControllerTest
     }
 
     [Fact]
-    public void CanConstruct()
+    public void CallConstructor_WithExpectedParameters_ReturnsNotNull()
     {
         Assert.NotNull(_sut);
     }
 
     [Fact]
-    public void CannotConstructWithNullValidator()
+    public void Constructor_WithNullValidator_ThrowsArgumentNullException()
     {
         Assert.Throws<ArgumentNullException>(() => new ProductController(default(IProductRequestValidator), _mockService.Object, _mockLogger.Object));
     }
 
     [Fact]
-    public void CannotConstructWithNullService()
+    public void Constructor_WithNullService_ThrowsArgumentNullException()
     {
         Assert.Throws<ArgumentNullException>(() => new ProductController(_mockValidator.Object, default(IProductService), _mockLogger.Object));
     }
 
     [Fact]
-    public void CannotConstructWithNullLogger()
+    public void Constructor_WithNullLogger_ThrowsArgumentNullException()
     {
         Assert.Throws<ArgumentNullException>(() => new ProductController(_mockValidator.Object, _mockService.Object, default(ILogger<ProductController>)));
     }
@@ -88,14 +88,14 @@ public class ProductControllerTest
     }
 
     [Fact]
-    public async Task Put_WithNullIdAndProductUpdateRequest_Throws()
+    public async Task Put_WithNullIdAndProductUpdateRequest_ThrowsNullReferenceException()
     {
         var productUpdateRequest = new ProductUpdateRequest { ProductId = 1, ProductValue = "TestValue1" };
         await Assert.ThrowsAsync<NullReferenceException>(async () => await _sut.Put(default, productUpdateRequest));
     }
 
     [Fact]
-    public async Task CannotCallPutWithIdAndProductUpdateRequestWithNullProductUpdateRequest()
+    public async Task Put_WithNullIdAndNullProductUpdateRequest_ThrowsNullReferenceException()
     {
         await Assert.ThrowsAsync<NullReferenceException>(async () => await _sut.Put(default(int), default(ProductUpdateRequest)));
     }
@@ -111,20 +111,20 @@ public class ProductControllerTest
     }
 
     [Fact]
-    public async Task CannotCallPutWithIdAndProductDisableRequestWithNullId()
+    public async Task Put_WithNullIdAndProductDisableRequest_ThrowsNullReferenceException()
     {
         var productDisableRequest = new ProductDisableRequest { ProductId = 1, ProductDisabled = false };
         await Assert.ThrowsAsync<NullReferenceException>(async () => await _sut.Put(default, productDisableRequest));
     }
 
     [Fact]
-    public async Task CannotCallPutWithIdAndProductDisableRequestWithNullProductDisableRequest()
+    public async Task Put_WithNullIdAndNullProductDisableRequest_ThrowsNullReferenceException()
     {
         await Assert.ThrowsAsync<NullReferenceException>(async () => await _sut.Put(default(int), default(ProductDisableRequest)));
     }
 
     [Fact]
-    public async Task CanCallPost()
+    public async Task Post_WithValidParameters_ReturnsActionResult()
     {
         var productAddRequest = new ProductAddRequest { ProductValue = "TestValue1" };
         var result = await _sut.Post(productAddRequest);
@@ -132,7 +132,7 @@ public class ProductControllerTest
     }
 
     [Fact]
-    public async Task CannotCallPostWithNullProductAddRequest()
+    public async Task Post_WithNullProductAddRequest_ThrowsArgumentNullException()
     {
         Assert.ThrowsAsync<ArgumentNullException>(async () => await _sut.Post(default(ProductAddRequest)));
     }

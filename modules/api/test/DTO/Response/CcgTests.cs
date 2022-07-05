@@ -13,13 +13,13 @@ public class CcgTests
     }
 
     [Fact]
-    public void CanConstruct()
+    public void CallConstructor_WithExpectedParameters_ReturnsNotNull()
     {
         Assert.NotNull(_sut);
     }
 
     [Fact]
-    public void CanSetAndGetCcgId()
+    public void PropertyCcgId_WithProvidedValues_CanSetAndGet()
     {
         var testValue = 1;
         _sut.CcgId = testValue;
@@ -27,7 +27,7 @@ public class CcgTests
     }
 
     [Fact]
-    public void CanSetAndGetCcgLinkedId()
+    public void PropertyCcgLinkedId_WithProvidedValues_CanSetAndGet()
     {
         var testValue = 1;
         _sut.CcgLinkedId = testValue;
@@ -35,7 +35,7 @@ public class CcgTests
     }
 
     [Fact]
-    public void CanSetAndGetCcgOdsCode()
+    public void PropertyCcgOdsCode_WithProvidedValues_CanSetAndGet()
     {
         var testValue = "TestValue1";
         _sut.CcgOdsCode = testValue;
@@ -43,7 +43,7 @@ public class CcgTests
     }
 
     [Fact]
-    public void CanSetAndGetCcgName()
+    public void PropertyCcgName_WithProvidedValues_CanSetAndGet()
     {
         var testValue = "TestValue1";
         _sut.CcgName = testValue;

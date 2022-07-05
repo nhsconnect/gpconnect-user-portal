@@ -13,13 +13,13 @@ public class CareSettingUpdateRequestTests
     }
 
     [Fact]
-    public void CanConstruct()
+    public void CallConstructor_WithExpectedParameters_ReturnsNotNull()
     {
         Assert.NotNull(_sut);
     }
 
     [Fact]
-    public void CanSetAndGetCareSettingId()
+    public void PropertyCareSettingId_WithProvidedValues_CanSetAndGet()
     {
         var testValue = 1;
         _sut.CareSettingId = testValue;
@@ -27,7 +27,7 @@ public class CareSettingUpdateRequestTests
     }
 
     [Fact]
-    public void CanSetAndGetCareSettingValue()
+    public void PropertyCareSettingValue_WithProvidedValues_CanSetAndGet()
     {
         var testValue = "TestValue1";
         _sut.CareSettingValue = testValue;

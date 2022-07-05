@@ -23,19 +23,19 @@ public class SupplierServiceTest
     }
 
     [Fact]
-    public void CanConstruct()
+    public void CallConstructor_WithExpectedParameters_ReturnsNotNull()
     {
         Assert.NotNull(_sut);
     }
 
     [Fact]
-    public void CannotConstructWithNullDataService()
+    public void Constructor_WithNullDataService_ThrowsArgumentNullException()
     {
         Assert.Throws<ArgumentNullException>(() => new SupplierService(default(IDataService)));
     }
 
     [Fact]
-    public async Task CanCallGetSuppliers()
+    public async Task Get_Suppliers_ReturnsListOfSuppliers()
     {
         var list = Task.FromResult(new List<Supplier>());
         _mockDataService.Setup(d => d.ExecuteQuery<Supplier>(It.IsAny<string>(), It.IsAny<DynamicParameters>())).Returns(list);
@@ -45,7 +45,7 @@ public class SupplierServiceTest
     }
 
     [Fact]
-    public async Task CanCallGetSupplier()
+    public async Task Get_Supplier_ReturnsSupplier()
     {
         var single = Task.FromResult(new Supplier());
         _mockDataService.Setup(d => d.ExecuteQueryFirstOrDefault<Supplier>(It.IsAny<string>(), It.IsAny<DynamicParameters>())).Returns(single);
@@ -56,7 +56,7 @@ public class SupplierServiceTest
     }
 
     [Fact]
-    public async Task CanCallAddSupplier()
+    public async Task Call_SupplierAddRequest_ReturnsSupplier()
     {
         var single = Task.FromResult(new Supplier());
         _mockDataService.Setup(d => d.ExecuteQueryFirstOrDefault<Supplier>(It.IsAny<string>(), It.IsAny<DynamicParameters>())).Returns(single);
@@ -67,19 +67,19 @@ public class SupplierServiceTest
     }
 
     [Fact]
-    public async Task CannotCallAddSupplierWithNullSupplierAddRequest()
+    public async Task Call_WithNullSupplierAddRequest_ThrowsNullReferenceException()
     {
         await Assert.ThrowsAsync<NullReferenceException>(() => _sut.AddSupplier(default(SupplierAddRequest)));
     }
 
     [Fact]
-    public async Task CannotCallDisableProductWithNullProductDisableRequest()
+    public async Task Call_WithNullSupplierDisableRequest_ThrowsNullReferenceException()
     {
         await Assert.ThrowsAsync<NullReferenceException>(() => _sut.DisableSupplier(default(SupplierDisableRequest)));
     }
 
     [Fact]
-    public async Task CannotCallUpdateProductWithNullProductUpdateRequest()
+    public async Task Call_WithNullSupplierUpdateRequest_ThrowsNullReferenceException()
     {
         await Assert.ThrowsAsync<NullReferenceException>(() => _sut.UpdateSupplier(default(SupplierUpdateRequest)));
     }
