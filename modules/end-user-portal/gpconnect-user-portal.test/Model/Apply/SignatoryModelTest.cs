@@ -24,6 +24,8 @@ public class SignatoryModelTest
     [Fact]
     public void OnPost_IfValidEntry_RedirectsToNextPage()
     {
+        _mockTempDataProviderService.Setup(mtd => mtd.HasItems).Returns(true);
+
         var signatoryModel = new SignatoryModel(_mockOptions.Object, _mockTempDataProviderService.Object)
         {
             SignatoryName = "Name",
@@ -33,6 +35,7 @@ public class SignatoryModelTest
 
         var result = signatoryModel.OnPost();
         Assert.IsType<RedirectToPageResult>(result);
+        Assert.Contains("UseCase", ((RedirectToPageResult)result).PageName);
     }
     
     [Fact]
@@ -43,6 +46,7 @@ public class SignatoryModelTest
         var signatoryModel = new SignatoryModel(_mockOptions.Object, _mockTempDataProviderService.Object);
         var result = signatoryModel.OnPost();
         Assert.IsType<RedirectToPageResult>(result);
+        Assert.Contains("Timeout", ((RedirectToPageResult)result).PageName);
     }
 
     [Fact]

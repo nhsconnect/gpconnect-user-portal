@@ -22,6 +22,7 @@ public partial class OrganisationModel : BaseModel
     public IActionResult OnGetAsync()
     {
         ClearModelState();
+        if (!_tempDataProviderService.HasItems) return RedirectToPage("./Timeout");
         PrepopulateOrganisationDetails();
         return Page();
     }
@@ -42,10 +43,9 @@ public partial class OrganisationModel : BaseModel
         {
             return Page();
         }
-        if (!_tempDataProviderService.HasItems)
-        {
-            return RedirectToPage("./Timeout");
-        }
+
+        if (!_tempDataProviderService.HasItems) return RedirectToPage("./Timeout");
+
         var organisationResult = await GetOrganisationDetails(SiteOdsCode);
         if (organisationResult != null)
         {
@@ -68,10 +68,9 @@ public partial class OrganisationModel : BaseModel
         {
             return Page();
         }
-        if (!_tempDataProviderService.HasItems)
-        {
-            return RedirectToPage("./Timeout");
-        }
+
+        if (!_tempDataProviderService.HasItems) return RedirectToPage("./Timeout");
+
         return RedirectToPage("./Signatory");
     }
 

@@ -1,4 +1,3 @@
-using Autofac.Extensions.DependencyInjection;
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Core.Config;
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Core.Logging;
 using NLog;
@@ -35,8 +34,7 @@ public class Program
             .ConfigureWebHostDefaults(webBuilder =>
             {
                 webBuilder.UseStartup<Startup>();
-            }).UseServiceProviderFactory(new AutofacServiceProviderFactory())
-            .ConfigureAppConfiguration(CustomConfigurationBuilder.AddCustomConfiguration)
+            }).ConfigureAppConfiguration(CustomConfigurationBuilder.AddCustomConfiguration)
             .ConfigureLogging((builderContext, logging) =>
             {
                 LoggingConfigurationBuilder.AddLoggingConfiguration(builderContext, logging);

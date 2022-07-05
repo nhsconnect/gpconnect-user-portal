@@ -80,6 +80,15 @@ namespace GpConnect.NationalDataSharingPortal.EndUserPortal.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Select the GP Connect products.
+        /// </summary>
+        public static string GpConnectInteractionForSupplier {
+            get {
+                return ResourceManager.GetString("GpConnectInteractionForSupplier", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Appointment Management.
         /// </summary>
         public static string HasAppointmentManagement {
@@ -202,15 +211,6 @@ namespace GpConnect.NationalDataSharingPortal.EndUserPortal.Resources {
         public static string SoftwareSupplierName {
             get {
                 return ResourceManager.GetString("SoftwareSupplierName", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Select the GP Connect products.
-        /// </summary>
-        public static string SoftwareSupplierProduct {
-            get {
-                return ResourceManager.GetString("SoftwareSupplierProduct", resourceCulture);
             }
         }
         

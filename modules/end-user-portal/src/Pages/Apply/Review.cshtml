@@ -39,9 +39,9 @@
                                 <div class="nhsuk-summary-list__row">
                                     <dt class="nhsuk-summary-list__key">GP Connect product(s):</dt>
                                     <dd class="nhsuk-summary-list__value">
-                                        @foreach (var softwareSupplierProduct in Model.SupplierProducts)
+                                        @foreach (var gpConnectInteractionForSupplier in Model.GpConnectInteractionForSupplier)
                                                 {
-                                            <div>@softwareSupplierProduct.SoftwareSupplierProduct</div>
+                                            <div>@gpConnectInteractionForSupplier.GpConnectInteractionForSupplierValue</div>
                                                 }
                                     </dd>
                                 </div>

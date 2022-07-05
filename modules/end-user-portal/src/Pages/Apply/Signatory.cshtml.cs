@@ -18,6 +18,7 @@ public partial class SignatoryModel : BaseModel
     public IActionResult OnGetAsync()
     {
         ClearModelState();
+        if (!_tempDataProviderService.HasItems) return RedirectToPage("./Timeout");
         PrepopulateSignatoryDetails();
         return Page();
     }
@@ -35,10 +36,9 @@ public partial class SignatoryModel : BaseModel
         {
             return Page();
         }
-        if (!_tempDataProviderService.HasItems)
-        {
-            return RedirectToPage("./Timeout");
-        }
+
+        if (!_tempDataProviderService.HasItems) return RedirectToPage("./Timeout");
+
         _tempDataProviderService.PutItem("SignatoryName", SignatoryName);
         _tempDataProviderService.PutItem("SignatoryRole", SignatoryRole);
         _tempDataProviderService.PutItem("SignatoryEmail", SignatoryEmail);

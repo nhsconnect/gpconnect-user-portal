@@ -27,14 +27,18 @@ public class ReviewModelTest
         var reviewModel = new ReviewModel(_mockOptions.Object, _mockTempDataProviderService.Object);
         var result = reviewModel.OnPost();
         Assert.IsType<RedirectToPageResult>(result);
+        Assert.Contains("Timeout", ((RedirectToPageResult)result).PageName);
     }
 
     [Fact]
-    public void OnPost_IfTempDataHasEntries_RedirectsToNextPage()
+    public void OnPost_IfTempDataHasEntries_RedirectsToConfirmationPage()
     {
+        _mockTempDataProviderService.Setup(mtd => mtd.HasItems).Returns(true);
+
         var reviewModel = new ReviewModel(_mockOptions.Object, _mockTempDataProviderService.Object);
         var result = reviewModel.OnPost();
         Assert.IsType<RedirectToPageResult>(result);
+        Assert.Contains("Confirmation", ((RedirectToPageResult)result).PageName);
     }
 
     [Fact]
@@ -44,5 +48,6 @@ public class ReviewModelTest
         var reviewModel = new ReviewModel(_mockOptions.Object, _mockTempDataProviderService.Object);
         var result = reviewModel.OnPost();
         Assert.IsType<RedirectToPageResult>(result);
+        Assert.Contains("Timeout", ((RedirectToPageResult)result).PageName);
     }
 }

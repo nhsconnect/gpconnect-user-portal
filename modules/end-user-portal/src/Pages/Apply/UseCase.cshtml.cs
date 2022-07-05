@@ -18,6 +18,7 @@ public partial class UseCaseModel : BaseModel
     public IActionResult OnGetAsync()
     {
         ClearModelState();
+        if (!_tempDataProviderService.HasItems) return RedirectToPage("./Timeout");
         PrepopulateUseCaseDetails();
         return Page();
     }
@@ -33,10 +34,9 @@ public partial class UseCaseModel : BaseModel
         {
             return Page();
         }
-        if (!_tempDataProviderService.HasItems)
-        {
-            return RedirectToPage("./Timeout");
-        }
+
+        if (!_tempDataProviderService.HasItems) return RedirectToPage("./Timeout");
+
         _tempDataProviderService.PutItem("UseCaseDescription", UseCaseDescription);
         return RedirectToPage("./Agreement");
     }

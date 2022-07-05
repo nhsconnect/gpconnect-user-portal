@@ -4,7 +4,6 @@ using GpConnect.NationalDataSharingPortal.EndUserPortal.Core.HttpClientServices.
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Models;
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Resources;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Options;
 
 namespace GpConnect.NationalDataSharingPortal.EndUserPortal.Pages.Apply;
@@ -34,8 +33,8 @@ public partial class SoftwareSupplierModel : BaseModel
         {
             var selectedSoftwareSupplierNameId = _tempDataProviderService.GetItem<SoftwareSupplierResult>("SelectedSoftwareSupplierName");
             SelectedSoftwareSupplierNameId = selectedSoftwareSupplierNameId.SoftwareSupplierId;
-            SoftwareSupplierProductList = _tempDataProviderService.GetItem<List<SoftwareSupplierProductResult>>("SelectedSoftwareSupplierProduct");
-            DisplaySoftwareSupplierProducts = SoftwareSupplierProductList != null;
+            GpConnectInteractionForSupplierList = _tempDataProviderService.GetItem<List<GpConnectInteractionForSupplier>>("SelectedGpConnectInteractionForSupplier");
+            DisplayGpConnectInteractionForSupplierList = GpConnectInteractionForSupplierList != null;
         }
     }
 
@@ -45,16 +44,18 @@ public partial class SoftwareSupplierModel : BaseModel
         _tempDataProviderService.PutItem("SoftwareSupplierNameList", suppliers);
     }
 
-    public IActionResult OnPostCheckSupplierProductsAsync()
+    public IActionResult OnPostCheckGpConnectInteractionForSupplierListAsync()
     {        
         if (!ModelState.IsValid)
         {
             return Page();
         }
-        CheckTempData();        
-        DisplaySoftwareSupplierProducts = true;
-        LoadSoftwareSupplierProducts(SelectedSoftwareSupplierNameId);
-        SoftwareSupplierProductList = _tempDataProviderService.GetItem<List<SoftwareSupplierProductResult>>("SoftwareSupplierProductList");
+
+        if (!_tempDataProviderService.HasItems) return RedirectToPage("./Timeout");
+
+        DisplayGpConnectInteractionForSupplierList = true;
+        LoadGpConnectInteractionForSupplier(SelectedSoftwareSupplierNameId);
+        GpConnectInteractionForSupplierList = _tempDataProviderService.GetItem<List<GpConnectInteractionForSupplier>>("GpConnectInteractionForSupplierList");
         return Page();
     }
 
@@ -63,51 +64,42 @@ public partial class SoftwareSupplierModel : BaseModel
         CheckSoftwareSupplierProductSelection();
         if (!ModelState.IsValid)
         {
-            DisplaySoftwareSupplierProducts = true;
+            DisplayGpConnectInteractionForSupplierList = true;
             return Page();
         }
 
-        CheckTempData();
+        if (!_tempDataProviderService.HasItems) return RedirectToPage("./Timeout");
 
         _tempDataProviderService.PutItem("SelectedSoftwareSupplierName", SelectedSoftwareSupplier);
-        _tempDataProviderService.PutItem("SelectedSoftwareSupplierProduct", SoftwareSupplierProductList);       
+        _tempDataProviderService.PutItem("SelectedGpConnectInteractionForSupplier", GpConnectInteractionForSupplierList);       
 
         return RedirectToPage("./Organisation");
     }
 
     private void CheckSoftwareSupplierProductSelection()
     {
-        if(!SoftwareSupplierProductList.Any(x => x.Selected))
+        if(!GpConnectInteractionForSupplierList.Any(x => x.Selected))
         {
-            ModelState.AddModelError("HasSelectedSoftwareSupplierProducts", ErrorMessageResources.SoftwareSupplierName);
+            ModelState.AddModelError("HasSelectedGpConnectInteractionForSupplier", ErrorMessageResources.GpConnectInteractionForSupplier);
         }
     }
 
-    private IActionResult LoadSoftwareSupplierProducts(int selectedSoftwareSupplier)
+    private IActionResult LoadGpConnectInteractionForSupplier(int selectedSoftwareSupplier)
     {
-        var supplierProducts = new List<SoftwareSupplierProductResult>() {
-            new SoftwareSupplierProductResult() { SoftwareSupplierProductId = 1, SoftwareSupplierProduct = "Access Record: HTML" },
-            new SoftwareSupplierProductResult() { SoftwareSupplierProductId = 2, SoftwareSupplierProduct = "Access Record: Structured" },
-            new SoftwareSupplierProductResult() { SoftwareSupplierProductId = 3, SoftwareSupplierProduct = "Appointment Management" },
-            new SoftwareSupplierProductResult() { SoftwareSupplierProductId = 4, SoftwareSupplierProduct = "Send Document" }
+        var gpConnectInteractionsForSupplier = new List<GpConnectInteractionForSupplier>() {
+            new GpConnectInteractionForSupplier() { GpConnectInteractionForSupplierId = 1, GpConnectInteractionForSupplierValue = "Access Record: HTML" },
+            new GpConnectInteractionForSupplier() { GpConnectInteractionForSupplierId = 2, GpConnectInteractionForSupplierValue = "Access Record: Structured" },
+            new GpConnectInteractionForSupplier() { GpConnectInteractionForSupplierId = 3, GpConnectInteractionForSupplierValue = "Appointment Management" },
+            new GpConnectInteractionForSupplier() { GpConnectInteractionForSupplierId = 4, GpConnectInteractionForSupplierValue = "Send Document" }
         };
 
-        SoftwareSupplierProductList = supplierProducts;
-        _tempDataProviderService.PutItem("SoftwareSupplierProductList", supplierProducts);
+        GpConnectInteractionForSupplierList = gpConnectInteractionsForSupplier;
+        _tempDataProviderService.PutItem("GpConnectInteractionForSupplierList", gpConnectInteractionsForSupplier);
         return Page();
     }
 
     private void ClearModelState()
     {
         ModelState.ClearValidationState("SelectedSoftwareSupplierNameId");
-    }
-
-    private IActionResult? CheckTempData()
-    {
-        if (!_tempDataProviderService.HasItems)
-        {
-            return RedirectToPage("./Timeout");
-        }
-        return null;
     }
 }

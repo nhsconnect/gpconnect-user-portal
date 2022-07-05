@@ -15,9 +15,9 @@ public class IndexModel : BaseModel
         _tempDataProviderService = tempDataProviderService;
     }
 
-    public IActionResult OnGetAsync()
+    public IActionResult OnPost()
     {
         _tempDataProviderService.RemoveAll();
-        return Page();
+        return RedirectToPage("./SoftwareSupplier");
     }
 }

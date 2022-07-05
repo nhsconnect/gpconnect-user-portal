@@ -1,4 +1,6 @@
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Core.Config;
+using GpConnect.NationalDataSharingPortal.EndUserPortal.Core.Data;
+using GpConnect.NationalDataSharingPortal.EndUserPortal.Core.Data.Interfaces;
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Core.HttpClientServices;
 using Microsoft.AspNetCore.Mvc;
 using static GpConnect.NationalDataSharingPortal.EndUserPortal.Core.HttpClientServices.OrganisationLookupService;
@@ -65,7 +67,13 @@ public static class ServiceCollectionExtensions
         });
 
         services.AddHttpClientServices(configuration, env);
+        AddDependentServices(services);
 
         return services;
+    }
+
+    private static void AddDependentServices(IServiceCollection services)
+    {
+        services.AddScoped<ITempDataProviderService, TempDataProviderService>();
     }
 }

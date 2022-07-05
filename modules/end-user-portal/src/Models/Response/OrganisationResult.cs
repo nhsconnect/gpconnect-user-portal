@@ -36,12 +36,12 @@ public class OrganisationAddress
     private string GetFullAddressAsString()
     {
         var addressLines = new List<string> {
-                string.Join(", ", AddressLines.Where(s => !string.IsNullOrEmpty(s))),
-                City,
-                County,
-                Postcode,
-                Country
-            };
+            string.Join(", ", AddressLines),
+            City,
+            County,
+            Postcode,
+            Country
+        };
 
         return string.Join(", ", addressLines.Where(s => !string.IsNullOrEmpty(s)));
     }

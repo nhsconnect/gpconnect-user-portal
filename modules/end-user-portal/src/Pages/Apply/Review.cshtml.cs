@@ -17,19 +17,13 @@ public partial class ReviewModel : BaseModel
 
     public IActionResult OnGet()
     {
-        if (!_tempDataProviderService.HasItems)
-        {
-            return RedirectToPage("./Timeout");
-        }
+        if (!_tempDataProviderService.HasItems) return RedirectToPage("./Timeout");
         return Page();
     }
 
     public IActionResult OnPost()
     {
-        if (!_tempDataProviderService.HasItems)
-        {
-            return RedirectToPage("./Timeout");
-        }
+        if (!_tempDataProviderService.HasItems) return RedirectToPage("./Timeout");
         _tempDataProviderService.RemoveAll();
         return RedirectToPage("./Confirmation");
     }

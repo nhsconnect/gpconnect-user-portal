@@ -24,6 +24,7 @@ public class UseCaseModelTest
     [Fact]
     public void OnPost_IfValidEntry_RedirectsToNextPage()
     {
+        _mockTempDataProviderService.Setup(mtd => mtd.HasItems).Returns(true);
         var useCaseModel = new UseCaseModel(_mockOptions.Object, _mockTempDataProviderService.Object)
         {
             UseCaseDescription = "Use Case"
@@ -31,6 +32,7 @@ public class UseCaseModelTest
 
         var result = useCaseModel.OnPost();
         Assert.IsType<RedirectToPageResult>(result);
+        Assert.Contains("Agreement", ((RedirectToPageResult)result).PageName);
     }
     
     [Fact]
@@ -41,6 +43,7 @@ public class UseCaseModelTest
         var useCaseModel = new UseCaseModel(_mockOptions.Object, _mockTempDataProviderService.Object);
         var result = useCaseModel.OnPost();
         Assert.IsType<RedirectToPageResult>(result);
+        Assert.Contains("Timeout", ((RedirectToPageResult)result).PageName);
     }
 
     [Fact]

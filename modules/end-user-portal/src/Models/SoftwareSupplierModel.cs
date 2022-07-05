@@ -19,11 +19,11 @@ public partial class SoftwareSupplierModel : BaseModel
     public bool IsSelectedSoftwareSupplier => _tempDataProviderService.GetItem<SoftwareSupplierResult>("SelectedSoftwareSupplierName") != null;
 
     [BindProperty(SupportsGet = true)]
-    public bool DisplaySoftwareSupplierProducts { get; set; }
+    public bool DisplayGpConnectInteractionForSupplierList { get; set; }
 
     [BindProperty(SupportsGet = true)]
-    public List<SoftwareSupplierProductResult> SoftwareSupplierProductList { get; set; }
+    public List<GpConnectInteractionForSupplier> GpConnectInteractionForSupplierList { get; set; }
 
-    [Display(Name = "SoftwareSupplierProduct", ResourceType = typeof(DataFieldNameResources))]
-    public bool HasSelectedSoftwareSupplierProducts { get; set; }
+    [Display(Name = "GpConnectInteractionForSupplier", ResourceType = typeof(DataFieldNameResources))]
+    public bool HasSelectedGpConnectInteractionForSupplier { get; set; }
 }
