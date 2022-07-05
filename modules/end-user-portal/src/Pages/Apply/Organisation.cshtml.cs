@@ -1,6 +1,7 @@
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Core.Config;
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Core.Data.Interfaces;
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Core.HttpClientServices.Interfaces;
+using GpConnect.NationalDataSharingPortal.EndUserPortal.Helpers.Constants;
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Models;
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Models.Response;
 using Microsoft.AspNetCore.Mvc;
@@ -29,9 +30,9 @@ public partial class OrganisationModel : BaseModel
 
     private void PrepopulateOrganisationDetails()
     {
-        if (_tempDataProviderService.GetItem<OrganisationResult>("Organisation") != null)
+        if (_tempDataProviderService.GetItem<OrganisationResult>(TempDataConstants.ORGANISATION) != null)
         {
-            OrganisationResult = _tempDataProviderService.GetItem<OrganisationResult>("Organisation");
+            OrganisationResult = _tempDataProviderService.GetItem<OrganisationResult>(TempDataConstants.ORGANISATION);
             SiteOdsCode = OrganisationResult.OdsCode;
             OrganisationFound = true;
         }
@@ -51,7 +52,7 @@ public partial class OrganisationModel : BaseModel
         {
             OrganisationFound = true;
             OrganisationResult = organisationResult;
-            _tempDataProviderService.PutItem("Organisation", organisationResult);
+            _tempDataProviderService.PutItem(TempDataConstants.ORGANISATION, organisationResult);
         }
         return Page();
     }

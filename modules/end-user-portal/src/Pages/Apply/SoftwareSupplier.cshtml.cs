@@ -1,6 +1,7 @@
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Core.Config;
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Core.Data.Interfaces;
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Core.HttpClientServices.Interfaces;
+using GpConnect.NationalDataSharingPortal.EndUserPortal.Helpers.Constants;
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Models;
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Resources;
 using Microsoft.AspNetCore.Mvc;
@@ -31,9 +32,9 @@ public partial class SoftwareSupplierModel : BaseModel
     {
         if (IsSelectedSoftwareSupplier)
         {
-            var selectedSoftwareSupplierNameId = _tempDataProviderService.GetItem<SoftwareSupplierResult>("SelectedSoftwareSupplierName");
+            var selectedSoftwareSupplierNameId = _tempDataProviderService.GetItem<SoftwareSupplierResult>(TempDataConstants.SELECTEDSOFTWARESUPPLIERNAME);
             SelectedSoftwareSupplierNameId = selectedSoftwareSupplierNameId.SoftwareSupplierId;
-            GpConnectInteractionForSupplierList = _tempDataProviderService.GetItem<List<GpConnectInteractionForSupplier>>("SelectedGpConnectInteractionForSupplier");
+            GpConnectInteractionForSupplierList = _tempDataProviderService.GetItem<List<GpConnectInteractionForSupplier>>(TempDataConstants.SELECTEDGPCONNECTINTERACTIONFORSUPPLIER);
             DisplayGpConnectInteractionForSupplierList = GpConnectInteractionForSupplierList != null;
         }
     }
@@ -41,7 +42,7 @@ public partial class SoftwareSupplierModel : BaseModel
     protected async Task GetSoftwareSupplierNameList()
     {
         var suppliers = await _supplierService.GetSoftwareSuppliersAsync();
-        _tempDataProviderService.PutItem("SoftwareSupplierNameList", suppliers);
+        _tempDataProviderService.PutItem(TempDataConstants.SOFTWARESUPPLIERNAMELIST, suppliers);
     }
 
     public IActionResult OnPostCheckGpConnectInteractionForSupplierListAsync()
@@ -55,7 +56,7 @@ public partial class SoftwareSupplierModel : BaseModel
 
         DisplayGpConnectInteractionForSupplierList = true;
         LoadGpConnectInteractionForSupplier(SelectedSoftwareSupplierNameId);
-        GpConnectInteractionForSupplierList = _tempDataProviderService.GetItem<List<GpConnectInteractionForSupplier>>("GpConnectInteractionForSupplierList");
+        GpConnectInteractionForSupplierList = _tempDataProviderService.GetItem<List<GpConnectInteractionForSupplier>>(TempDataConstants.GPCONNECTINTERACTIONFORSUPPLIERLIST);
         return Page();
     }
 
@@ -70,8 +71,8 @@ public partial class SoftwareSupplierModel : BaseModel
 
         if (!_tempDataProviderService.HasItems) return RedirectToPage("./Timeout");
 
-        _tempDataProviderService.PutItem("SelectedSoftwareSupplierName", SelectedSoftwareSupplier);
-        _tempDataProviderService.PutItem("SelectedGpConnectInteractionForSupplier", GpConnectInteractionForSupplierList);       
+        _tempDataProviderService.PutItem(TempDataConstants.SELECTEDSOFTWARESUPPLIERNAME, SelectedSoftwareSupplier);
+        _tempDataProviderService.PutItem(TempDataConstants.SELECTEDGPCONNECTINTERACTIONFORSUPPLIER, GpConnectInteractionForSupplierList);       
 
         return RedirectToPage("./Organisation");
     }
@@ -80,7 +81,7 @@ public partial class SoftwareSupplierModel : BaseModel
     {
         if(!GpConnectInteractionForSupplierList.Any(x => x.Selected))
         {
-            ModelState.AddModelError("HasSelectedGpConnectInteractionForSupplier", ErrorMessageResources.GpConnectInteractionForSupplier);
+            ModelState.AddModelError(TempDataConstants.HASSELECTEDGPCONNECTINTERACTIONFORSUPPLIER, ErrorMessageResources.GpConnectInteractionForSupplier);
         }
     }
 
@@ -94,7 +95,7 @@ public partial class SoftwareSupplierModel : BaseModel
         };
 
         GpConnectInteractionForSupplierList = gpConnectInteractionsForSupplier;
-        _tempDataProviderService.PutItem("GpConnectInteractionForSupplierList", gpConnectInteractionsForSupplier);
+        _tempDataProviderService.PutItem(TempDataConstants.GPCONNECTINTERACTIONFORSUPPLIERLIST, gpConnectInteractionsForSupplier);
         return Page();
     }
 

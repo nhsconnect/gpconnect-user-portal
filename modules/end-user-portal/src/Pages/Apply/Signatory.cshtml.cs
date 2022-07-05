@@ -1,5 +1,6 @@
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Core.Config;
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Core.Data.Interfaces;
+using GpConnect.NationalDataSharingPortal.EndUserPortal.Helpers.Constants;
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -25,9 +26,9 @@ public partial class SignatoryModel : BaseModel
 
     private void PrepopulateSignatoryDetails()
     {
-        SignatoryName = _tempDataProviderService.GetItem<string>("SignatoryName") ?? string.Empty;
-        SignatoryRole = _tempDataProviderService.GetItem<string>("SignatoryRole") ?? string.Empty;
-        SignatoryEmail = _tempDataProviderService.GetItem<string>("SignatoryEmail") ?? string.Empty;
+        SignatoryName = _tempDataProviderService.GetItem<string>(TempDataConstants.SIGNATORYNAME) ?? string.Empty;
+        SignatoryRole = _tempDataProviderService.GetItem<string>(TempDataConstants.SIGNATORYROLE) ?? string.Empty;
+        SignatoryEmail = _tempDataProviderService.GetItem<string>(TempDataConstants.SIGNATORYEMAIL) ?? string.Empty;
     }
 
     public IActionResult OnPost()
@@ -39,9 +40,9 @@ public partial class SignatoryModel : BaseModel
 
         if (!_tempDataProviderService.HasItems) return RedirectToPage("./Timeout");
 
-        _tempDataProviderService.PutItem("SignatoryName", SignatoryName);
-        _tempDataProviderService.PutItem("SignatoryRole", SignatoryRole);
-        _tempDataProviderService.PutItem("SignatoryEmail", SignatoryEmail);
+        _tempDataProviderService.PutItem(TempDataConstants.SIGNATORYNAME, SignatoryName);
+        _tempDataProviderService.PutItem(TempDataConstants.SIGNATORYROLE, SignatoryRole);
+        _tempDataProviderService.PutItem(TempDataConstants.SIGNATORYEMAIL, SignatoryEmail);
         return RedirectToPage("./UseCase");
     }
 
