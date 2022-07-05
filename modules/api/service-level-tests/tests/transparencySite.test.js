@@ -67,19 +67,40 @@ describe('Transparency Site', () => {
             })
 
             it('contains expected postcode', () => {
-                expect(result.postcode).toBe('BA1 1DS');
+                expect(result.postcode).toBe('LS1 4AP');
             })
+
+            it('contains expected addressLine1', () => {
+                expect(result.addressLine1).toBe('THE LEEDS GOVERNMENT HUB');
+            })
+
+            it('contains expected addressLine2', () => {
+                expect(result.addressLine2).toBe('7-8 WELLINGTON PLACE');
+            })
+
+            it('contains expected town', () => {
+                expect(result.town).toBe('LEEDS');
+            })
+
+            it('contains expected county', () => {
+                expect(result.county).toBe('TestCounty');
+            })
+
+            it('contains expected country', () => {
+                expect(result.country).toBe('ENGLAND');
+            })
+
 
             it('contains expected useCase', () => {
                 expect(result.useCase).toBe('My Use Case');
             })
 
             it('contains expected CCG name', () => {
-                expect(result.ccgIcbName).toBe('CCG Name');
+                expect(result.ccgIcbName).toBe('NHS SOLIHULL CCG');
             })
 
             it('contains expected CCG ODS Code', () => {
-                expect(result.ccgIcbOdsCode).toBe('CCG Code');
+                expect(result.ccgIcbOdsCode).toBe('05P');
             })
         });
 
@@ -94,6 +115,20 @@ describe('Transparency Site', () => {
             })
         });
 
+        describe('with an invalid start parameter', () => {
+            it('returns 400', (done, err) => {
+                request.get('/transparency-site?provider_name=b&start=0')
+                    .expect(BAD_REQUEST_STATUS_CODE, done);
+            })
+        });
+
+        describe('with an invalid count parameter', () => {
+            it('returns 400', (done, err) => {
+                request.get('/transparency-site?provider_name=b&count=0')
+                    .expect(BAD_REQUEST_STATUS_CODE, done);
+            })
+        });
+
         describe('with too many search fields', () => {
             it('returns 400', (done, err) => {
                 request.get('/transparency-site?provider_code=a&provider_name=b')
@@ -102,15 +137,30 @@ describe('Transparency Site', () => {
         });
     });
 
+    describe('Page is higher than totalResults', () => {
+        it ('returns no results and the total count', async () => {
+            var { body : { totalResults, results } } = 
+                await request.get('/transparency-site?provider_name=NHS DIGITAL&start=2');
+
+            expect(totalResults).toBe(1);
+            expect(results).toEqual([]);
+        })
+    })
+
     describe('When results are returned to the user', () => {
         describe('each record matches the API schema', () => {
-            var status, result; 
+            var status, result, count; 
 
             beforeAll(async () => {
                 var response = await request.get('/transparency-site?provider_name=NHS DIGITAL');
-                result = response.body[0];
+                result = response.body.results[0];
+                count = response.body.totalResults;
                 status = response.status;
             });
+
+            it('totalResults is one', () => {
+                expect(count).toBe(1);
+            })
 
             it('contains expected id', () => {
                 expect(result.id).toBe('011c9fb1-827b-4f0c-8fb3-72575a0108d7');
@@ -145,7 +195,27 @@ describe('Transparency Site', () => {
             })
 
             it('contains expected postcode', () => {
-                expect(result.postcode).toBe('BA1 1DS');
+                expect(result.postcode).toBe('LS1 4AP');
+            })
+            
+            it('contains expected addressLine1', () => {
+                expect(result.addressLine1).toBe('THE LEEDS GOVERNMENT HUB');
+            })
+
+            it('contains expected addressLine2', () => {
+                expect(result.addressLine2).toBe('7-8 WELLINGTON PLACE');
+            })
+
+            it('contains expected town', () => {
+                expect(result.town).toBe('LEEDS');
+            })
+
+            it('contains expected county', () => {
+                expect(result.county).toBe('TestCounty');
+            })
+
+            it('contains expected country', () => {
+                expect(result.country).toBe('ENGLAND');
             })
 
             it('contains expected useCase', () => {
@@ -153,11 +223,11 @@ describe('Transparency Site', () => {
             })
 
             it('contains expected CCG name', () => {
-                expect(result.ccgIcbName).toBe('CCG Name');
+                expect(result.ccgIcbName).toBe('NHS SOLIHULL CCG');
             })
 
             it('contains expected CCG ODS Code', () => {
-                expect(result.ccgIcbOdsCode).toBe('CCG Code');
+                expect(result.ccgIcbOdsCode).toBe('05P');
             })
         });
     });

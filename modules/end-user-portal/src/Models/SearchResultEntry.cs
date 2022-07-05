@@ -1,4 +1,3 @@
-using GpConnect.NationalDataSharingPortal.EndUserPortal.Helpers;
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Resources;
 using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations;
@@ -36,11 +35,6 @@ public class SearchResultEntry
     [JsonProperty("postcode")]
     public string SitePostcode { get; set; } = "";
 
-    public string FullAddressOnly => AddressBuilder.GetFullAddress(new List<string>() { SiteAddressLine1, SiteAddressLine2 }, SiteAddressTown, SiteAddressCounty, SitePostcode, SiteAddressCountry);
-    public string FullAddress => AddressBuilder.GetFullAddress(new List<string>() { SiteName, SiteAddressLine1, SiteAddressLine2 }, SiteAddressTown, SiteAddressCounty, SitePostcode, SiteAddressCountry);
-
-    [JsonIgnore]
-    
     [JsonProperty("ccgIcbOdsCode")]
     [Display(Name = "CcgIcbOdsCode", ResourceType = typeof(DataFieldNameResources))]
     public string CcgIcbOdsCode { get; set; } = "";
@@ -68,4 +62,5 @@ public class SearchResultEntry
     [JsonProperty("sendDocumentEnabled")]
     [Display(Name = "HasSendDocument", ResourceType = typeof(DataFieldNameResources))]
     public bool HasSendDocument { get; set; }    
+
 }

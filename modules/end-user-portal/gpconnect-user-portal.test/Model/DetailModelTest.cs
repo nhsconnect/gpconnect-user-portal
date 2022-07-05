@@ -77,4 +77,45 @@ public class DetailModelTest
         Assert.Null(detailModel.SearchResultEntry);
         Assert.IsType<NotFoundResult>(result);
     }
+
+    [Theory]
+    [InlineData("query", SearchMode.Code)]
+    [InlineData("some-query", SearchMode.Name)]
+    public void BackPartial_GivenSourceIsSearch_ReadsExpectedParameters_ReturnsModel(string query, SearchMode mode)
+    {
+        var resultsModel = new DetailModel(Mock.Of<IOptions<ApplicationParameters>>(), _mockSiteService.Object)
+        {
+            Source = DetailViewSource.Search,
+            Query = query,
+            Mode = mode
+        };
+
+        var result = resultsModel.BackPartial; 
+
+        Assert.Equal(query, result.Query);
+        Assert.StrictEqual(mode, result.Mode);
+        Assert.StrictEqual(DetailViewSource.Search, result.Source);
+    }
+
+    [Theory]
+    [InlineData("query", SearchMode.Code, 1)]
+    [InlineData("some-query", SearchMode.Name, 5)]
+    public void BackPartial_GivenSourceIsResults_ReadsExpectedParameters_ReturnsModel(string query, SearchMode mode, int pageNumber)
+    {
+        var resultsModel = new DetailModel(Mock.Of<IOptions<ApplicationParameters>>(), _mockSiteService.Object)
+        {
+            Source = DetailViewSource.Results,
+            Query = query,
+            Mode = mode,
+            ResultsPageNumber = pageNumber
+        };
+
+        var result = resultsModel.BackPartial; 
+
+        Assert.Equal(query, result.Query);
+        Assert.StrictEqual(mode, result.Mode);
+        Assert.StrictEqual(DetailViewSource.Results, result.Source);
+        Assert.StrictEqual(pageNumber, result.ResultsPageNumber);
+    }
+
 }

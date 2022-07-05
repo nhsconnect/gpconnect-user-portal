@@ -18,20 +18,13 @@ public partial class SearchByNameModel : BaseModel
         return Page();
     }
 
-    public IActionResult OnPostSearchAsync()
+    public IActionResult OnPost()
     {
         if (!ModelState.IsValid)
         {
             return Page();
         }
         return RedirectToPage("./Results", new { query = ProviderName, mode = SearchMode.Name });
-    }
-
-    public IActionResult OnPostClear()
-    {
-        ProviderName = null;
-        ModelState.Clear();
-        return Page();
     }
 
     private void ClearModelState()

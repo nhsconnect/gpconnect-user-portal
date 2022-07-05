@@ -3,12 +3,12 @@ using OpenQA.Selenium.Support.UI;
 
 namespace GpConnect.DataSharing.User.Specs.PageObjects
 {
-    public class SearchByNamePageObject : BasePageObject
+    public class OdsSearchPageObject : BasePageObject
     {
-        private const string PATH = "/Search/Name";
+        private const string PATH = "/Search/Code";
         private readonly IWebDriver _webDriver;
 
-        public SearchByNamePageObject(IWebDriver webDriver)
+        public OdsSearchPageObject(IWebDriver webDriver)
         {
             _webDriver = webDriver;
         }
@@ -24,12 +24,12 @@ namespace GpConnect.DataSharing.User.Specs.PageObjects
             _webDriver.Url = URL(PATH);
         }
 
-        private IWebElement ProviderNameInput =>
-            _webDriver.FindElement(By.XPath("//input[@name='ProviderName']"));
+        private IWebElement SearchBox =>
+            _webDriver.FindElement(By.Name("ProviderOdsCode"));
 
         public void EnterSearchText(string input)
         {
-            ProviderNameInput.SendKeys(input);
+            SearchBox.SendKeys(input);
         }
 
         private IWebElement FindButton =>
@@ -40,14 +40,6 @@ namespace GpConnect.DataSharing.User.Specs.PageObjects
             FindButton.Click();
         }
 
-        private IWebElement ValidationError => _webDriver.FindElement(By.ClassName("field-validation-error"));
-
-        public bool IsValidationErrorVisible()
-        {
-            var wait = new WebDriverWait(_webDriver, DefaultWait);
-            return wait.Until(driver => ValidationError.Displayed);
-        }
-
-        public IWebElement OdsSearchLink => _webDriver.FindElement(By.PartialLinkText("ODS code"));
     }
 }
+
