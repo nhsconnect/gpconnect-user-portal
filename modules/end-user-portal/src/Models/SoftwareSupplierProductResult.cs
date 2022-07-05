@@ -14,6 +14,5 @@ public class SoftwareSupplierProductResult
     public string SoftwareSupplierProduct { get; set; } = "";
 
     [Display(Name = "SoftwareSupplierProduct", ResourceType = typeof(DataFieldNameResources))]
-    [BindProperty(SupportsGet = true)]
     public bool Selected { get; set; }
 }

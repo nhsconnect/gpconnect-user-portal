@@ -35,10 +35,10 @@ public partial class UseCaseModel : BaseModel
         }
         if (!_tempDataProviderService.HasItems)
         {
-            return Redirect("./Timeout");
+            return RedirectToPage("./Timeout");
         }
         _tempDataProviderService.PutItem("UseCaseDescription", UseCaseDescription);
-        return Redirect("./Agreement");
+        return RedirectToPage("./Agreement");
     }
 
     private void ClearModelState()

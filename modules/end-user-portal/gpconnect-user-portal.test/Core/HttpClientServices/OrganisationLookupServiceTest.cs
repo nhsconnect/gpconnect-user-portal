@@ -65,7 +65,7 @@ public class OrganisationLookupServiceTests
     }
 
     [Fact]
-    public async Task GetOrganizationDetailsAsync_CallsHttpClient_WithExpectedParameters()
+    public async Task GetOrganisationDetailsAsync_CallsHttpClient_WithExpectedParameters()
     {
         var odsCode = "TEST1";
         var expectedUri = $"{BASE_URI}/STU3/Organization/{odsCode}";
@@ -85,7 +85,7 @@ public class OrganisationLookupServiceTests
     }
 
     [Fact]
-    public async Task GetOrganizationDetailsAsync_HttpClientThrows_LogsAndThrows()
+    public async Task GetOrganisationDetailsAsync_HttpClientThrows_LogsAndThrows()
     {
         _mockMessageHandler
             .Protected().Setup<Task<HttpResponseMessage>>("SendAsync", ItExpr.IsAny<HttpRequestMessage>(), ItExpr.IsAny<CancellationToken>())
@@ -96,7 +96,7 @@ public class OrganisationLookupServiceTests
     }
 
     [Fact]
-    public async Task GetOrganizationDetailsAsync_HttpClientGetReturnsNotFound_LogsAndReturnsNull()
+    public async Task GetOrganisationDetailsAsync_HttpClientGetReturnsNotFound_LogsAndReturnsNull()
     {
         _mockMessageHandler
             .Protected().Setup<Task<HttpResponseMessage>>("SendAsync", ItExpr.IsAny<HttpRequestMessage>(), ItExpr.IsAny<CancellationToken>())
@@ -117,7 +117,7 @@ public class OrganisationLookupServiceTests
     }
 
     [Fact]
-    public async Task GetOrganizationDetailsAsync_HttpClientGetReturnsNon200Response_LogsAndThrows()
+    public async Task GetOrganisationDetailsAsync_HttpClientGetReturnsNon200Response_LogsAndThrows()
     {
         _mockMessageHandler
             .Protected().Setup<Task<HttpResponseMessage>>("SendAsync", ItExpr.IsAny<HttpRequestMessage>(), ItExpr.IsAny<CancellationToken>())
@@ -136,7 +136,7 @@ public class OrganisationLookupServiceTests
     }
 
     [Fact]
-    public async Task GetOrganizationDetailsAsync_DeserialiserCannotParseResponse_Throws()
+    public async Task GetOrganisationDetailsAsync_DeserialiserCannotParseResponse_Throws()
     {
         _mockMessageHandler
             .Protected()
@@ -156,7 +156,7 @@ public class OrganisationLookupServiceTests
     }
 
     [Fact]
-    public async Task GetOrganizationDetailsAsync_HttpClientGetReturns200Response_ReturnsDeserializedResponse()
+    public async Task GetOrganisationDetailsAsync_HttpClientGetReturns200Response_ReturnsDeserializedResponse()
     {
         var result = await _sut.GetOrganisationAsync("test");
 
@@ -170,6 +170,6 @@ public class OrganisationLookupServiceTests
         Assert.Equal("GREATER LONDON", result.Address.County);
         Assert.Equal("SW8 3RX", result.Address.Postcode);
         Assert.Equal("ENGLAND", result.Address.Country);
-        Assert.Equal("QUEENS PHARMACY, 12 QUEENSTOWN ROAD, BATTERSEA, LONDON, GREATER LONDON, SW8 3RX, ENGLAND", result.Address.FullAddress);
+        Assert.Equal("12 QUEENSTOWN ROAD, BATTERSEA, LONDON, GREATER LONDON, SW8 3RX, ENGLAND", result.Address.FullAddress);
     }
 }

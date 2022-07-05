@@ -44,7 +44,7 @@ public partial class OrganisationModel : BaseModel
         }
         if (!_tempDataProviderService.HasItems)
         {
-            return Redirect("./Timeout");
+            return RedirectToPage("./Timeout");
         }
         var organisationResult = await GetOrganisationDetails(SiteOdsCode);
         if (organisationResult != null)
@@ -70,9 +70,9 @@ public partial class OrganisationModel : BaseModel
         }
         if (!_tempDataProviderService.HasItems)
         {
-            return Redirect("./Timeout");
+            return RedirectToPage("./Timeout");
         }
-        return Redirect("./Signatory");
+        return RedirectToPage("./Signatory");
     }
 
     private void ClearModelState()

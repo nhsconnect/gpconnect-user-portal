@@ -19,7 +19,7 @@ public partial class ReviewModel : BaseModel
     {
         if (!_tempDataProviderService.HasItems)
         {
-            return Redirect("./Timeout");
+            return RedirectToPage("./Timeout");
         }
         return Page();
     }
@@ -28,9 +28,9 @@ public partial class ReviewModel : BaseModel
     {
         if (!_tempDataProviderService.HasItems)
         {
-            return Redirect("./Timeout");
+            return RedirectToPage("./Timeout");
         }
         _tempDataProviderService.RemoveAll();
-        return Redirect("./Confirmation");
+        return RedirectToPage("./Confirmation");
     }
 }

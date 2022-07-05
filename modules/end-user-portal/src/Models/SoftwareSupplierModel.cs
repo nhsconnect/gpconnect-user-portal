@@ -9,7 +9,7 @@ public partial class SoftwareSupplierModel : BaseModel
 {
     [Display(Name = "SoftwareSupplierName", ResourceType = typeof(DataFieldNameResources))]
     [BindProperty(SupportsGet = true)]
-    [Required(ErrorMessageResourceName = "SoftwareSupplierName", ErrorMessageResourceType = typeof(ErrorMessageResources))]
+    [Range(1, int.MaxValue, ErrorMessageResourceName = "SoftwareSupplierName", ErrorMessageResourceType = typeof(ErrorMessageResources))]
     public int SelectedSoftwareSupplierNameId { get; set; }
 
     public SoftwareSupplierResult SelectedSoftwareSupplier => _tempDataProviderService.GetItem<List<SoftwareSupplierResult>>("SoftwareSupplierNameList")?.FirstOrDefault(x => x.SoftwareSupplierId == SelectedSoftwareSupplierNameId);
@@ -18,8 +18,12 @@ public partial class SoftwareSupplierModel : BaseModel
 
     public bool IsSelectedSoftwareSupplier => _tempDataProviderService.GetItem<SoftwareSupplierResult>("SelectedSoftwareSupplierName") != null;
 
-    public bool DisplaySoftwareSupplierProducts { get; set; } = false;
+    [BindProperty(SupportsGet = true)]
+    public bool DisplaySoftwareSupplierProducts { get; set; }
 
     [BindProperty(SupportsGet = true)]
-    public List<SoftwareSupplierProductResult> SoftwareSupplierProductList { get; set; } = new List<SoftwareSupplierProductResult>();
+    public List<SoftwareSupplierProductResult> SoftwareSupplierProductList { get; set; }
+
+    [Display(Name = "SoftwareSupplierProduct", ResourceType = typeof(DataFieldNameResources))]
+    public bool HasSelectedSoftwareSupplierProducts { get; set; }
 }

@@ -32,7 +32,11 @@ public class TempDataProviderService : ITempDataProviderService
 
     public void PutItem<T>(string key, T value) where T : class
     {
-        _tempDataDictionary[key] = JsonConvert.SerializeObject(value);
+        if(GetItem<T>(key) != null)
+        {
+            RemoveItem(key);
+        }
+        _tempDataDictionary.Add(key, JsonConvert.SerializeObject(value));
         _tempDataDictionary.Keep(key);
     }
 

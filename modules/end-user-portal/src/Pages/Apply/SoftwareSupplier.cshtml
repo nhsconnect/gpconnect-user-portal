@@ -5,8 +5,8 @@
 @using Microsoft.AspNetCore.Mvc.ModelBinding
 @model GpConnect.NationalDataSharingPortal.EndUserPortal.Pages.Apply.SoftwareSupplierModel
 @{
-    var softwareSupplierNameInvalid = Model.ModelState["SelectedSoftwareSupplier"]?.ValidationState == ModelValidationState.Invalid;
-    var softwareSupplierProductInvalid = Model.ModelState["SelectedSoftwareSupplierProduct"]?.ValidationState == ModelValidationState.Invalid;
+    var softwareSupplierNameInvalid = Model.ModelState["SelectedSoftwareSupplierNameId"]?.ValidationState == ModelValidationState.Invalid;
+    var softwareSupplierProductInvalid = Model.ModelState["HasSelectedSoftwareSupplierProducts"]?.ValidationState == ModelValidationState.Invalid;
 }
 
 <div class="nhsuk-width-container">
@@ -34,9 +34,9 @@
                                             <span asp-validation-for="@Model.SelectedSoftwareSupplierNameId" class="nhsuk-error-message"></span>
                                         }
                                         <select class="nhsuk-select @(softwareSupplierNameInvalid ? "nhsuk-select--error": string.Empty)"
-                                          asp-items="@(new SelectList((System.Collections.IEnumerable)Model.SoftwareSupplierResultList, "SoftwareSupplierId", "SoftwareSupplierName"))"
-                                          asp-for="@Model.SelectedSoftwareSupplierNameId" aria-describedby="input-hint-softwaresuppliername">
-                                            <option value=""></option>
+                                                asp-items="@(new SelectList((System.Collections.IEnumerable)Model.SoftwareSupplierResultList, "SoftwareSupplierId", "SoftwareSupplierName"))"
+                                                asp-for="@Model.SelectedSoftwareSupplierNameId" aria-describedby="input-hint-softwaresuppliername">
+                                            <option value="0"></option>
                                         </select>
                                     </div>
                                     <button class="nhsuk-button" asp-page-handler="CheckSupplierProducts" type="submit">
@@ -60,7 +60,7 @@
                                 <div class="nhsuk-card nhsuk-card--feature">
                                     <div class="nhsuk-card__content nhsuk-card__content--feature">
                                         <h2 class="nhsuk-card__heading nhsuk-card__heading--feature nhsuk-heading-m">
-                                            GP Connect Products
+                                            @Html.DisplayNameFor(m => m.HasSelectedSoftwareSupplierProducts)
                                         </h2>
                                         <div class="nhsuk-form-group @(softwareSupplierProductInvalid ? "nhsuk-form-group--error": string.Empty)">
                                             <div class="nhsuk-hint" id="input-hint-softwaresupplierproduct">
@@ -69,14 +69,12 @@
                                             <fieldset class="nhsuk-fieldset">
                                                 @if (softwareSupplierProductInvalid)
                                                 {
-                                                    <span class="nhsuk-error-message" id="input-error-softwaresupplierproduct">
-                                                        <span class="nhsuk-u-visually-hidden">Error:</span> Please select an option
-                                                    </span>
+                                                    <span asp-validation-for="@Model.HasSelectedSoftwareSupplierProducts" class="nhsuk-error-message"></span>
                                                 }
                                                 <div class="nhsuk-checkboxes">
                                                     @for (var i = 0; i < Model.SoftwareSupplierProductList.Count(); i++)
                                                     {
-                                                        <div class="nhsuk-checkboxes__item">
+                                                        <div class="nhsuk-checkboxes__item">                                                            
                                                             <input type="hidden" asp-for="@Model.SoftwareSupplierProductList[i].SoftwareSupplierProductId" />
                                                             <input type="hidden" asp-for="@Model.SoftwareSupplierProductList[i].SoftwareSupplierProduct" />
                                                             <input type="checkbox" class="nhsuk-checkboxes__input" asp-for="@Model.SoftwareSupplierProductList[i].Selected">
@@ -84,6 +82,7 @@
                                                         </div>
                                                     }
                                                 </div>
+                                                @*<input type="hidden" asp-for="@Model.HasSelectedSoftwareSupplierProducts" />*@
                                             </fieldset>
                                         </div>
                                         <button class="nhsuk-button" asp-page-handler="Next" type="submit">@ButtonConstants.NEXT</button>

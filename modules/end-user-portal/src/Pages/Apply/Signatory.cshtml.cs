@@ -37,12 +37,12 @@ public partial class SignatoryModel : BaseModel
         }
         if (!_tempDataProviderService.HasItems)
         {
-            return Redirect("./Timeout");
+            return RedirectToPage("./Timeout");
         }
         _tempDataProviderService.PutItem("SignatoryName", SignatoryName);
         _tempDataProviderService.PutItem("SignatoryRole", SignatoryRole);
         _tempDataProviderService.PutItem("SignatoryEmail", SignatoryEmail);
-        return Redirect("./UseCase");
+        return RedirectToPage("./UseCase");
     }
 
     private void ClearModelState()

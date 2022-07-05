@@ -2,7 +2,7 @@ using GpConnect.NationalDataSharingPortal.EndUserPortal.Helpers.Enumerations;
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Pages.Search;
 using Xunit;
 
-namespace GpConnect.NationalDataSharingPortal.EndUserPortal.Test.Pages.Search;
+namespace GpConnect.NationalDataSharingPortal.EndUserPortal.Test.Pages;
 public class BackPartialModelTest
 {
     public BackPartialModelTest()

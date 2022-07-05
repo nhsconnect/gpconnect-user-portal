@@ -1,15 +1,14 @@
-
-using System;
-using System.Net;
-using System.Net.Http;
-using System.Threading;
-using System.Threading.Tasks;
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Core.HttpClientServices;
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Helpers.Enumerations;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Moq;
 using Moq.Protected;
+using System;
+using System.Net;
+using System.Net.Http;
+using System.Threading;
+using System.Threading.Tasks;
 using Xunit;
 using static GpConnect.NationalDataSharingPortal.EndUserPortal.Core.HttpClientServices.SiteService;
 
