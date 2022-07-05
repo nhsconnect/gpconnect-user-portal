@@ -3,12 +3,12 @@ using OpenQA.Selenium.Support.UI;
 
 namespace GpConnect.DataSharing.User.Specs.PageObjects
 {
-    public class TransparencyLandingPageObject : BasePageObject
+    public class TransparencyLandingPageObject : LandingPageObject
     {
         private const string PATH = "/Search";
         private readonly IWebDriver _webDriver;
 
-        public TransparencyLandingPageObject(IWebDriver webDriver)
+        public TransparencyLandingPageObject(IWebDriver webDriver) : base(webDriver)
         {
             _webDriver = webDriver;
         }
@@ -37,10 +37,5 @@ namespace GpConnect.DataSharing.User.Specs.PageObjects
             StartButton.Click();
         }
 
-        public IWebElement SupportEmail =>
-            _webDriver.FindElement(By.PartialLinkText("@nhs.net"));
-
-        public IWebElement SupportPhone =>
-            _webDriver.FindElement(By.PartialLinkText("020 "));
     }
 }

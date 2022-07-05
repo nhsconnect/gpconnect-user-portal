@@ -10,26 +10,26 @@ namespace GpConnect.DataSharing.User.Specs.Steps
     public class LandingPageStepDefinitions
     {
         private readonly ScenarioContext _scenarioContext;
-        private readonly LandingPageObject _landingPageObject;
+        private readonly LandingPageObject _landingPage;
         private readonly TransparencyLandingPageObject _transparencyLandingPageObject;
 
         public LandingPageStepDefinitions(ScenarioContext scenarioContext, BrowserDriver browserDriver)
         {
             _scenarioContext = scenarioContext;
-            _landingPageObject = new LandingPageObject(browserDriver.Current);
+            _landingPage = new LandingPageObject(browserDriver.Current);
             _transparencyLandingPageObject = new TransparencyLandingPageObject(browserDriver.Current);
         }
 
         [Given(@"I have opened the landing page")]
         public void GivenIHaveOpenedTheLandingPage()
         {
-            _landingPageObject.Open();
+            _landingPage.Open();
         }
 
         [Then(@"A link to the transparency route is present")]
         public void ThenALinkToTheTransparencyRouteIsPresent()
         {
-            Assert.True(_landingPageObject.IsSearchLinkVisible());
+            Assert.True(_landingPage.IsSearchLinkVisible());
         }
 
         [Then(@"A link to the sharing agreement route is present")]
@@ -41,7 +41,7 @@ namespace GpConnect.DataSharing.User.Specs.Steps
         [When(@"I click the link to the transparency route")]
         public void WhenIClickTheLinkToTheTransparencyRoute()
         {
-            _landingPageObject.ClickSearchLink();
+            _landingPage.ClickSearchLink();
         }
 
         [Then(@"I am taken to the transparency landing page")]
@@ -49,5 +49,18 @@ namespace GpConnect.DataSharing.User.Specs.Steps
         {
 
         }
+
+        [Then(@"the support telephone number is present")]
+        public void ThenTheSupportTelephoneNumberIsPresent()
+        {
+            Assert.True(_landingPage.SupportPhone.Displayed);
+        }
+
+        [Then(@"the support email address is present")]
+        public void ThenTheAdministratorsEmailAddressIsPresent()
+        {
+            Assert.True(_landingPage.SupportEmail.Displayed);
+        }
+
     }
 }

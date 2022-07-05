@@ -1,0 +1,72 @@
+@page
+@using GpConnect.NationalDataSharingPortal.EndUserPortal.Helpers.Constants
+@using GpConnect.NationalDataSharingPortal.EndUserPortal.Helpers
+@using GpConnect.NationalDataSharingPortal.EndUserPortal.Models
+@using Microsoft.AspNetCore.Mvc.ModelBinding
+@model GpConnect.NationalDataSharingPortal.EndUserPortal.Pages.Apply.SignatoryModel
+@{
+    var signatoryNameInvalid = Model.ModelState["SignatoryName"]?.ValidationState == ModelValidationState.Invalid;
+    var signatoryRoleInvalid = Model.ModelState["SignatoryRole"]?.ValidationState == ModelValidationState.Invalid;
+    var signatoryEmailInvalid = Model.ModelState["SignatoryEmail"]?.ValidationState == ModelValidationState.Invalid;
+}
+
+<div class="nhsuk-width-container">
+    <main class="nhsuk-main-wrapper" id="maincontent">
+        <div class="nhsuk-grid-row">
+            <div class="nhsuk-grid-column-full">
+                <h1 class="nhsuk-label-wrapper">
+                    <label class="nhsuk-label nhsuk-label--xl">Apply for the National Data Sharing Agreement</label>
+                </h1>
+                <form method="post" id="signatory-input-form">
+                    <div class="nhsuk-grid-row">
+                        <div class="nhsuk-grid-column-full">
+                            <div class="nhsuk-card nhsuk-card--feature">
+                                <div class="nhsuk-card__content nhsuk-card__content--feature">
+                                    <h2 class="nhsuk-card__heading nhsuk-card__heading--feature nhsuk-heading-m">
+                                        Enter the details of the signatory
+                                    </h2>
+                                    <label class="nhsuk-label">This agreement must be authorised by someone at your organisation with one of the following roles:</label>
+                                    <ol class="nhsuk-contents-list__list">
+                                        <li class="nhsuk-contents-list__item"><span>Caldicott Guardian</span></li>
+                                        <li class="nhsuk-contents-list__item"><span>Senior Information Risk Officer</span></li>
+                                        <li class="nhsuk-contents-list__item"><span>Data Officer</span></li>
+                                    </ol>
+                                    <div class="nhsuk-form-group @(signatoryNameInvalid ? "nhsuk-form-group--error": string.Empty)">
+                                        <label class="nhsuk-label" asp-for="@Model.SignatoryName"></label>
+                                        <div class="nhsuk-hint" id="input-hint-signatoryname">Enter the name of the signatory.</div>
+                                        @if (signatoryNameInvalid)
+                                        {
+                                            <span asp-validation-for="@Model.SignatoryName" class="nhsuk-error-message"></span>
+                                        }
+                                        <input class="nhsuk-input @(signatoryNameInvalid ? "nhsuk-input--error": string.Empty)" id="input-signatoryname" asp-for="@Model.SignatoryName" type="search" aria-describedby="input-hint-signatoryname">
+                                    </div>
+
+                                    <div class="nhsuk-form-group @(signatoryRoleInvalid ? "nhsuk-form-group--error": string.Empty)">
+                                        <label class="nhsuk-label" asp-for="@Model.SignatoryRole"></label>
+                                        <div class="nhsuk-hint" id="input-hint-signatoryrole">Enter the role of the signatory.</div>
+                                        @if (signatoryRoleInvalid)
+                                        {
+                                            <span asp-validation-for="@Model.SignatoryRole" class="nhsuk-error-message"></span>
+                                        }
+                                        <input class="nhsuk-input @(signatoryRoleInvalid ? "nhsuk-input--error": string.Empty)" id="input-signatoryrole" asp-for="@Model.SignatoryRole" type="search" aria-describedby="input-hint-signatoryrole">
+                                    </div>
+
+                                    <div class="nhsuk-form-group @(signatoryEmailInvalid ? "nhsuk-form-group--error": string.Empty)">
+                                        <label class="nhsuk-label" asp-for="@Model.SignatoryEmail"></label>
+                                        <div class="nhsuk-hint" id="input-hint-signatoryemail">Enter the email address of the signatory.</div>
+                                        @if (signatoryEmailInvalid)
+                                        {
+                                            <span asp-validation-for="@Model.SignatoryEmail" class="nhsuk-error-message"></span>
+                                        }
+                                        <input class="nhsuk-input @(signatoryEmailInvalid ? "nhsuk-input--error": string.Empty)" id="input-signatoryemail" asp-for="@Model.SignatoryEmail" type="search" aria-describedby="input-hint-signatoryemail">
+                                    </div>
+                                    <button class="nhsuk-button" type="submit">@ButtonConstants.NEXT</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+</div>

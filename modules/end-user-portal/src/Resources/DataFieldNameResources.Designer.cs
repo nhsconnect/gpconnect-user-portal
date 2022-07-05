@@ -143,6 +143,33 @@ namespace GpConnect.NationalDataSharingPortal.EndUserPortal.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Signatory email address.
+        /// </summary>
+        public static string SignatoryEmail {
+            get {
+                return ResourceManager.GetString("SignatoryEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Signatory name.
+        /// </summary>
+        public static string SignatoryName {
+            get {
+                return ResourceManager.GetString("SignatoryName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Signatory role.
+        /// </summary>
+        public static string SignatoryRole {
+            get {
+                return ResourceManager.GetString("SignatoryRole", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Name.
         /// </summary>
         public static string SiteName {
@@ -152,7 +179,7 @@ namespace GpConnect.NationalDataSharingPortal.EndUserPortal.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Site ODS Code.
+        ///   Looks up a localized string similar to Enter the ODS (Organisation Data Service) Code.
         /// </summary>
         public static string SiteOdsCode {
             get {
@@ -170,7 +197,25 @@ namespace GpConnect.NationalDataSharingPortal.EndUserPortal.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Use Case Description.
+        ///   Looks up a localized string similar to Select the name of the software supplier.
+        /// </summary>
+        public static string SoftwareSupplierName {
+            get {
+                return ResourceManager.GetString("SoftwareSupplierName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select the GP Connect products.
+        /// </summary>
+        public static string SoftwareSupplierProduct {
+            get {
+                return ResourceManager.GetString("SoftwareSupplierProduct", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reason for applying (use case).
         /// </summary>
         public static string UseCaseDescription {
             get {
