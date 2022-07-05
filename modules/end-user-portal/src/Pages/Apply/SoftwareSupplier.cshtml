@@ -5,8 +5,8 @@
 @using Microsoft.AspNetCore.Mvc.ModelBinding
 @model GpConnect.NationalDataSharingPortal.EndUserPortal.Pages.Apply.SoftwareSupplierModel
 @{
-    var softwareSupplierNameInvalid = Model.ModelState["SelectedSoftwareSupplierName"]?.ValidationState == ModelValidationState.Invalid;
-    var softwareSupplierProductInvalid = Model.ModelState["SelectedSoftwareSupplierProduct"]?.ValidationState == ModelValidationState.Invalid;
+    var softwareSupplierNameInvalid = Model.ModelState["SelectedSoftwareSupplierNameId"]?.ValidationState == ModelValidationState.Invalid;
+    var softwareSupplierProductInvalid = Model.ModelState["HasSelectedSoftwareSupplierProducts"]?.ValidationState == ModelValidationState.Invalid;
 }
 
 <div class="nhsuk-width-container">
@@ -22,7 +22,7 @@
                             <div class="nhsuk-card nhsuk-card--feature">
                                 <div class="nhsuk-card__content nhsuk-card__content--feature">
                                     <h2 class="nhsuk-card__heading nhsuk-card__heading--feature nhsuk-heading-m">
-                                        @Html.DisplayNameFor(m => m.SelectedSoftwareSupplierName)
+                                        @Html.DisplayNameFor(m => m.SelectedSoftwareSupplierNameId)
                                     </h2>
                                     <div class="nhsuk-form-group @(softwareSupplierNameInvalid ? "nhsuk-form-group--error": string.Empty)">
                                         <div class="nhsuk-hint" id="input-hint-softwaresuppliername">
@@ -31,21 +31,23 @@
                                         </div>
                                         @if (softwareSupplierNameInvalid)
                                         {
-                                            <span asp-validation-for="@Model.SelectedSoftwareSupplierName" class="nhsuk-error-message"></span>
+                                            <span asp-validation-for="@Model.SelectedSoftwareSupplierNameId" class="nhsuk-error-message"></span>
                                         }
-                                        <select class="nhsuk-select @(softwareSupplierNameInvalid ? "nhsuk-select--error": string.Empty)" asp-items="@(new SelectList((System.Collections.IEnumerable)TempData.Get<List<SoftwareSupplierResult>>("SoftwareSupplierNameList"), "SoftwareSupplierId", "SoftwareSupplierName"))" asp-for="@Model.SelectedSoftwareSupplierName" aria-describedby="input-hint-softwaresuppliername">
-                                            <option value=""></option>
+                                        <select class="nhsuk-select @(softwareSupplierNameInvalid ? "nhsuk-select--error": string.Empty)"
+                                                asp-items="@(new SelectList((System.Collections.IEnumerable)Model.SoftwareSupplierResultList, "SoftwareSupplierId", "SoftwareSupplierName"))"
+                                                asp-for="@Model.SelectedSoftwareSupplierNameId" aria-describedby="input-hint-softwaresuppliername">
+                                            <option value="0"></option>
                                         </select>
                                     </div>
                                     <button class="nhsuk-button" asp-page-handler="CheckSupplierProducts" type="submit">
-                                    @if (!Model.DisplaySoftwareSupplierProducts)
-                                    {
-                                        @ButtonConstants.NEXT
-                                    }
-                                    else
-                                    {
-                                        @ButtonConstants.CHANGESUPPLIER
-                                    }
+                                        @if (!Model.DisplaySoftwareSupplierProducts)
+                                        {
+                                            @ButtonConstants.NEXT
+                                        }
+                                        else
+                                        {
+                                            @ButtonConstants.CHANGESUPPLIER
+                                        }
                                     </button>
                                 </div>
                             </div>
@@ -58,26 +60,29 @@
                                 <div class="nhsuk-card nhsuk-card--feature">
                                     <div class="nhsuk-card__content nhsuk-card__content--feature">
                                         <h2 class="nhsuk-card__heading nhsuk-card__heading--feature nhsuk-heading-m">
-                                            @Html.DisplayNameFor(m => m.SelectedSoftwareSupplierProduct)
+                                            @Html.DisplayNameFor(m => m.HasSelectedSoftwareSupplierProducts)
                                         </h2>
                                         <div class="nhsuk-form-group @(softwareSupplierProductInvalid ? "nhsuk-form-group--error": string.Empty)">
                                             <div class="nhsuk-hint" id="input-hint-softwaresupplierproduct">
                                                 <p>Please tell us which GP Connect products you use.</p>
                                             </div>
-                                            @if (softwareSupplierProductInvalid)
-                                            {
-                                                <span asp-validation-for="@Model.SelectedSoftwareSupplierProduct" class="nhsuk-error-message"></span>
-                                            }
                                             <fieldset class="nhsuk-fieldset">
+                                                @if (softwareSupplierProductInvalid)
+                                                {
+                                                    <span asp-validation-for="@Model.HasSelectedSoftwareSupplierProducts" class="nhsuk-error-message"></span>
+                                                }
                                                 <div class="nhsuk-checkboxes">
-                                                    @foreach (var softwareSupplierProduct in Model.SoftwareSupplierProductList)
+                                                    @for (var i = 0; i < Model.SoftwareSupplierProductList.Count(); i++)
                                                     {
-                                                        <div class="nhsuk-checkboxes__item">
-                                                            <input class="nhsuk-checkboxes__input" asp-for="@Model.SelectedSoftwareSupplierProduct" type="checkbox" aria-describedby="nhsuk-access-record-html-hint">
-                                                            <label class="nhsuk-label nhsuk-checkboxes__label" for="nhsuk-access-record-html">@softwareSupplierProduct.SoftwareSupplierProduct</label>
+                                                        <div class="nhsuk-checkboxes__item">                                                            
+                                                            <input type="hidden" asp-for="@Model.SoftwareSupplierProductList[i].SoftwareSupplierProductId" />
+                                                            <input type="hidden" asp-for="@Model.SoftwareSupplierProductList[i].SoftwareSupplierProduct" />
+                                                            <input type="checkbox" class="nhsuk-checkboxes__input" asp-for="@Model.SoftwareSupplierProductList[i].Selected">
+                                                            <label class="nhsuk-label nhsuk-checkboxes__label" asp-for="@Model.SoftwareSupplierProductList[i].Selected">@Model.SoftwareSupplierProductList[i].SoftwareSupplierProduct</label>
                                                         </div>
                                                     }
                                                 </div>
+                                                @*<input type="hidden" asp-for="@Model.HasSelectedSoftwareSupplierProducts" />*@
                                             </fieldset>
                                         </div>
                                         <button class="nhsuk-button" asp-page-handler="Next" type="submit">@ButtonConstants.NEXT</button>

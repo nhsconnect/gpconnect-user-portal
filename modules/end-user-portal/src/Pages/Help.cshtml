@@ -5,7 +5,7 @@
         <div class="nhsuk-card">
             <div class="nhsuk-card__content">
                 <h3 class="nhsuk-card__heading">If you need help, contact the @Model.ProductName administrator.</h3>
-                <p class="nhsuk-card__description">Email: @(((string)Model.OwnerEmailAddress).AsMailHyperlink())<br />Telephone: @(((string)Model.OwnerTelephone).AsPhoneHyperlink())<br />Monday to Friday, 9am to 5pm<br />Find out more about call charges.</p>
+                <p class="nhsuk-card__description">@Model.ProductName&nbsp;<a href="mailto:@Model.OwnerEmailAddress">@Model.OwnerEmailAddress</a><br />Telephone: <a href="tel:@Model.OwnerTelephone">@Model.OwnerTelephone</a><br />Monday to Friday, 9am to 5pm<br />Find out more about call charges.</p>
             </div>
         </div>
     </div>

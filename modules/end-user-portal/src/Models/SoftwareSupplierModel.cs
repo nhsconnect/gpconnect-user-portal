@@ -1,4 +1,3 @@
-
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Models;
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Resources;
 using Microsoft.AspNetCore.Mvc;
@@ -10,16 +9,21 @@ public partial class SoftwareSupplierModel : BaseModel
 {
     [Display(Name = "SoftwareSupplierName", ResourceType = typeof(DataFieldNameResources))]
     [BindProperty(SupportsGet = true)]
-    [Required(ErrorMessageResourceName = "SoftwareSupplierName", ErrorMessageResourceType = typeof(ErrorMessageResources))]
-    public string SelectedSoftwareSupplierName { get; set; } = "";
+    [Range(1, int.MaxValue, ErrorMessageResourceName = "SoftwareSupplierName", ErrorMessageResourceType = typeof(ErrorMessageResources))]
+    public int SelectedSoftwareSupplierNameId { get; set; }
 
-    public List<SoftwareSupplierResult> SoftwareSupplierNameList { get; set; } = new List<SoftwareSupplierResult>();
+    public SoftwareSupplierResult SelectedSoftwareSupplier => _tempDataProviderService.GetItem<List<SoftwareSupplierResult>>("SoftwareSupplierNameList")?.FirstOrDefault(x => x.SoftwareSupplierId == SelectedSoftwareSupplierNameId);
 
-    public bool DisplaySoftwareSupplierProducts { get; set; } = false;
+    public List<SoftwareSupplierResult> SoftwareSupplierResultList => _tempDataProviderService.GetItem<List<SoftwareSupplierResult>>("SoftwareSupplierNameList");
+
+    public bool IsSelectedSoftwareSupplier => _tempDataProviderService.GetItem<SoftwareSupplierResult>("SelectedSoftwareSupplierName") != null;
+
+    [BindProperty(SupportsGet = true)]
+    public bool DisplaySoftwareSupplierProducts { get; set; }
+
+    [BindProperty(SupportsGet = true)]
+    public List<SoftwareSupplierProductResult> SoftwareSupplierProductList { get; set; }
 
     [Display(Name = "SoftwareSupplierProduct", ResourceType = typeof(DataFieldNameResources))]
-    [BindProperty(SupportsGet = true)]
-    public string? SelectedSoftwareSupplierProduct { get; set; }
-
-    public List<SoftwareSupplierProductResult> SoftwareSupplierProductList { get; set; } = new List<SoftwareSupplierProductResult>();
+    public bool HasSelectedSoftwareSupplierProducts { get; set; }
 }

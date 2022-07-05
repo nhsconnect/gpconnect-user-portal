@@ -1,4 +1,5 @@
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Core.Config;
+using GpConnect.NationalDataSharingPortal.EndUserPortal.Core.Data.Interfaces;
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -7,22 +8,29 @@ namespace GpConnect.NationalDataSharingPortal.EndUserPortal.Pages.Apply;
 
 public partial class ReviewModel : BaseModel
 {
-    public ReviewModel(IOptions<ApplicationParameters> applicationParameters) : base(applicationParameters)
+    private readonly ITempDataProviderService _tempDataProviderService;
+
+    public ReviewModel(IOptions<ApplicationParameters> applicationParameters, ITempDataProviderService tempDataProviderService) : base(applicationParameters)
     {
+        _tempDataProviderService = tempDataProviderService;
     }
 
-    public void OnGetAsync()
+    public IActionResult OnGet()
     {
-        GetSignupData();
-    }
-
-    private void GetSignupData()
-    {
-        throw new NotImplementedException();
+        if (!_tempDataProviderService.HasItems)
+        {
+            return RedirectToPage("./Timeout");
+        }
+        return Page();
     }
 
     public IActionResult OnPost()
     {
-        return Redirect("./Confirmation");
+        if (!_tempDataProviderService.HasItems)
+        {
+            return RedirectToPage("./Timeout");
+        }
+        _tempDataProviderService.RemoveAll();
+        return RedirectToPage("./Confirmation");
     }
 }

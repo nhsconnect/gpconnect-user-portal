@@ -1,6 +1,4 @@
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Core.Config;
-using GpConnect.NationalDataSharingPortal.EndUserPortal.Helpers;
-using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Options;
 

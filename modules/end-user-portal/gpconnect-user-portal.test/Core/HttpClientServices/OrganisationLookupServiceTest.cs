@@ -1,20 +1,20 @@
-using System;
-using System.Net;
-using System.Net.Http;
-using System.Threading;
-using System.Threading.Tasks;
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Core.HttpClientServices;
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Core.HttpClientServices.Interfaces;
 using Microsoft.Extensions.Options;
 using Moq;
 using Moq.Protected;
 using Newtonsoft.Json;
+using System;
+using System.Net;
+using System.Net.Http;
+using System.Threading;
+using System.Threading.Tasks;
 using Xunit;
-using static GpConnect.NationalDataSharingPortal.EndUserPortal.Core.HttpClientServices.OrganizationLookupService;
+using static GpConnect.NationalDataSharingPortal.EndUserPortal.Core.HttpClientServices.OrganisationLookupService;
 
 namespace GpConnect.NationalDataSharingPortal.EndUserPortal.Test.Core.HttpClientServices;
 
-public class OrganizationLookupServiceTests
+public class OrganisationLookupServiceTests
 {
     private static string BASE_URI = "http://not-my-address.com";
     
@@ -33,11 +33,11 @@ public class OrganizationLookupServiceTests
         }
     }";
     
-    private readonly Mock<IOptions<OrganizationLookupServiceConfig>> _mockOptions;
+    private readonly Mock<IOptions<OrganisationLookupServiceConfig>> _mockOptions;
     private readonly Mock<HttpMessageHandler> _mockMessageHandler;
-    private readonly IOrganizationLookupService _sut;
+    private readonly IOrganisationLookupService _sut;
 
-    public OrganizationLookupServiceTests()
+    public OrganisationLookupServiceTests()
     {
         _mockMessageHandler = new Mock<HttpMessageHandler>(MockBehavior.Strict);
         _mockMessageHandler
@@ -55,22 +55,22 @@ public class OrganizationLookupServiceTests
             })
             .Verifiable();
         
-        _mockOptions = new Mock<IOptions<OrganizationLookupServiceConfig>>();
-        _mockOptions.SetupGet(o => o.Value).Returns(new OrganizationLookupServiceConfig
+        _mockOptions = new Mock<IOptions<OrganisationLookupServiceConfig>>();
+        _mockOptions.SetupGet(o => o.Value).Returns(new OrganisationLookupServiceConfig
         {
             BaseUrl = BASE_URI
         });
 
-        _sut = new OrganizationLookupService(new HttpClient(_mockMessageHandler.Object), _mockOptions.Object);
+        _sut = new OrganisationLookupService(new HttpClient(_mockMessageHandler.Object), _mockOptions.Object);
     }
 
     [Fact]
-    public async Task GetOrganizationDetailsAsync_CallsHttpClient_WithExpectedParameters()
+    public async Task GetOrganisationDetailsAsync_CallsHttpClient_WithExpectedParameters()
     {
         var odsCode = "TEST1";
         var expectedUri = $"{BASE_URI}/STU3/Organization/{odsCode}";
 
-        await _sut.GetOrganizationAsync(odsCode);
+        await _sut.GetOrganisationAsync(odsCode);
 
         _mockMessageHandler
             .Protected().Verify(
@@ -85,18 +85,18 @@ public class OrganizationLookupServiceTests
     }
 
     [Fact]
-    public async Task GetOrganizationDetailsAsync_HttpClientThrows_LogsAndThrows()
+    public async Task GetOrganisationDetailsAsync_HttpClientThrows_LogsAndThrows()
     {
         _mockMessageHandler
             .Protected().Setup<Task<HttpResponseMessage>>("SendAsync", ItExpr.IsAny<HttpRequestMessage>(), ItExpr.IsAny<CancellationToken>())
             .Throws(new Exception("Boom!!!"));
         
         // _mockLogger.Verify();
-        await Assert.ThrowsAsync<Exception>(async () => await _sut.GetOrganizationAsync("test"));
+        await Assert.ThrowsAsync<Exception>(async () => await _sut.GetOrganisationAsync("test"));
     }
 
     [Fact]
-    public async Task GetOrganizationDetailsAsync_HttpClientGetReturnsNotFound_LogsAndReturnsNull()
+    public async Task GetOrganisationDetailsAsync_HttpClientGetReturnsNotFound_LogsAndReturnsNull()
     {
         _mockMessageHandler
             .Protected().Setup<Task<HttpResponseMessage>>("SendAsync", ItExpr.IsAny<HttpRequestMessage>(), ItExpr.IsAny<CancellationToken>())
@@ -111,13 +111,13 @@ public class OrganizationLookupServiceTests
                 return Task.FromResult(response);
             });
         
-        var result = await _sut.GetOrganizationAsync("test");
+        var result = await _sut.GetOrganisationAsync("test");
 
         Assert.Null(result);
     }
 
     [Fact]
-    public async Task GetOrganizationDetailsAsync_HttpClientGetReturnsNon200Response_LogsAndThrows()
+    public async Task GetOrganisationDetailsAsync_HttpClientGetReturnsNon200Response_LogsAndThrows()
     {
         _mockMessageHandler
             .Protected().Setup<Task<HttpResponseMessage>>("SendAsync", ItExpr.IsAny<HttpRequestMessage>(), ItExpr.IsAny<CancellationToken>())
@@ -132,11 +132,11 @@ public class OrganizationLookupServiceTests
                 return Task.FromResult(response);
             });
         
-        await Assert.ThrowsAsync<HttpRequestException>(async () => await _sut.GetOrganizationAsync("test"));
+        await Assert.ThrowsAsync<HttpRequestException>(async () => await _sut.GetOrganisationAsync("test"));
     }
 
     [Fact]
-    public async Task GetOrganizationDetailsAsync_DeserialiserCannotParseResponse_Throws()
+    public async Task GetOrganisationDetailsAsync_DeserialiserCannotParseResponse_Throws()
     {
         _mockMessageHandler
             .Protected()
@@ -152,23 +152,24 @@ public class OrganizationLookupServiceTests
                 return Task.FromResult(response);
             });
 
-        await Assert.ThrowsAsync<JsonSerializationException>(async () => await _sut.GetOrganizationAsync("test"));
+        await Assert.ThrowsAsync<JsonSerializationException>(async () => await _sut.GetOrganisationAsync("test"));
     }
 
     [Fact]
-    public async Task GetOrganizationDetailsAsync_HttpClientGetReturns200Response_ReturnsDeserializedResponse()
+    public async Task GetOrganisationDetailsAsync_HttpClientGetReturns200Response_ReturnsDeserializedResponse()
     {
-        var result = await _sut.GetOrganizationAsync("test");
+        var result = await _sut.GetOrganisationAsync("test");
 
         Assert.NotNull(result);
-        Assert.Equal("FKG31", result.Id);
+        Assert.Equal("FKG31", result.OdsCode);
         Assert.Equal("QUEENS PHARMACY", result.Name);
-        Assert.Equal(2, result.Address.Lines.Count);
-        Assert.Equal("12 QUEENSTOWN ROAD", result.Address.Lines[0]);
-        Assert.Equal("BATTERSEA", result.Address.Lines[1]);
+        Assert.Equal(2, result.Address.AddressLines.Count);
+        Assert.Equal("12 QUEENSTOWN ROAD", result.Address.AddressLines[0]);
+        Assert.Equal("BATTERSEA", result.Address.AddressLines[1]);
         Assert.Equal("LONDON", result.Address.City);
         Assert.Equal("GREATER LONDON", result.Address.County);
         Assert.Equal("SW8 3RX", result.Address.Postcode);
         Assert.Equal("ENGLAND", result.Address.Country);
+        Assert.Equal("12 QUEENSTOWN ROAD, BATTERSEA, LONDON, GREATER LONDON, SW8 3RX, ENGLAND", result.Address.FullAddress);
     }
 }

@@ -5,7 +5,9 @@ using GpConnect.NationalDataSharingPortal.EndUserPortal.Core.HttpClientServices.
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Helpers.Enumerations;
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Models;
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Pages.Search;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.Extensions.Options;
 using Moq;
 using Xunit;
@@ -18,7 +20,6 @@ public class DetailModelTest
     public DetailModelTest()
     {
         _mockSiteService = new Mock<ISiteService>();
-
         _mockSiteService.Setup(mss => mss.SearchSiteAsync(It.IsAny<string>())).ReturnsAsync(new SearchResultEntry());
     }
 
