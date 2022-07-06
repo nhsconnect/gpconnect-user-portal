@@ -123,6 +123,9 @@
   <data name="CcgIcbOdsCode" xml:space="preserve">
     <value>CCG/ICB Code</value>
   </data>
+  <data name="GpConnectInteractionForSupplier" xml:space="preserve">
+    <value>Select the GP Connect products</value>
+  </data>
   <data name="HasAppointmentManagement" xml:space="preserve">
     <value>Appointment Management</value>
   </data>
@@ -164,9 +167,6 @@
   </data>
   <data name="SoftwareSupplierName" xml:space="preserve">
     <value>Select the name of the software supplier</value>
-  </data>
-  <data name="SoftwareSupplierProduct" xml:space="preserve">
-    <value>Select the GP Connect products</value>
   </data>
   <data name="UseCaseDescription" xml:space="preserve">
     <value>Reason for applying (use case)</value>

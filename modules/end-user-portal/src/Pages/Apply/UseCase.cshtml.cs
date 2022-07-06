@@ -1,5 +1,6 @@
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Core.Config;
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Core.Data.Interfaces;
+using GpConnect.NationalDataSharingPortal.EndUserPortal.Helpers.Constants;
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -18,13 +19,14 @@ public partial class UseCaseModel : BaseModel
     public IActionResult OnGetAsync()
     {
         ClearModelState();
+        if (!_tempDataProviderService.HasItems) return RedirectToPage("./Timeout");
         PrepopulateUseCaseDetails();
         return Page();
     }
 
     private void PrepopulateUseCaseDetails()
     {
-        UseCaseDescription = _tempDataProviderService.GetItem<string>("UseCaseDescription") ?? string.Empty;
+        UseCaseDescription = _tempDataProviderService.GetItem<string>(TempDataConstants.USECASEDESCRIPTION) ?? string.Empty;
     }
 
     public IActionResult OnPost()
@@ -33,11 +35,10 @@ public partial class UseCaseModel : BaseModel
         {
             return Page();
         }
-        if (!_tempDataProviderService.HasItems)
-        {
-            return RedirectToPage("./Timeout");
-        }
-        _tempDataProviderService.PutItem("UseCaseDescription", UseCaseDescription);
+
+        if (!_tempDataProviderService.HasItems) return RedirectToPage("./Timeout");
+
+        _tempDataProviderService.PutItem(TempDataConstants.USECASEDESCRIPTION, UseCaseDescription);
         return RedirectToPage("./Agreement");
     }
 

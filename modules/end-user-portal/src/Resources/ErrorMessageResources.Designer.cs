@@ -62,6 +62,15 @@ namespace GpConnect.NationalDataSharingPortal.EndUserPortal.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You must select at least one GP Connect product.
+        /// </summary>
+        public static string GpConnectInteractionForSupplier {
+            get {
+                return ResourceManager.GetString("GpConnectInteractionForSupplier", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to You must enter a value for Clinical Care Organisation Name.
         /// </summary>
         public static string ProviderName {
@@ -121,15 +130,6 @@ namespace GpConnect.NationalDataSharingPortal.EndUserPortal.Resources {
         public static string SoftwareSupplierName {
             get {
                 return ResourceManager.GetString("SoftwareSupplierName", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to You must select a value for GP Connect products.
-        /// </summary>
-        public static string SoftwareSupplierProduct {
-            get {
-                return ResourceManager.GetString("SoftwareSupplierProduct", resourceCulture);
             }
         }
         
