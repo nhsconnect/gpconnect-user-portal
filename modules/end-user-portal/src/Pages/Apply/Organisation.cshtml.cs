@@ -59,8 +59,7 @@ public partial class OrganisationModel : BaseModel
 
     private async Task<OrganisationResult?> GetOrganisationDetails(string siteOdsCode)
     {
-        var organisationResult = await _organisationLookupService.GetOrganisationAsync(siteOdsCode);
-        return organisationResult;
+        return await _organisationLookupService.GetOrganisationAsync(siteOdsCode);
     }
 
     public IActionResult OnPostNextAsync()

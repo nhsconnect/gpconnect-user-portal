@@ -39,7 +39,7 @@ public partial class SoftwareSupplierModel : BaseModel
         }
     }
 
-    protected async Task GetSoftwareSupplierNameList()
+    public async Task GetSoftwareSupplierNameList()
     {
         var suppliers = await _supplierService.GetSoftwareSuppliersAsync();
         _tempDataProviderService.PutItem(TempDataConstants.SOFTWARESUPPLIERNAMELIST, suppliers);

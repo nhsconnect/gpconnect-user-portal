@@ -1,13 +1,16 @@
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Core.Config;
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Core.Data.Interfaces;
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Core.HttpClientServices.Interfaces;
+using GpConnect.NationalDataSharingPortal.EndUserPortal.Helpers.Constants;
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Models;
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Pages.Apply;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Options;
 using Moq;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace GpConnect.NationalDataSharingPortal.EndUserPortal.Test.Pages.Apply;
@@ -165,7 +168,24 @@ public class SoftwareSupplierModelTest
         softwareSupplierModel.ModelState.AddModelError("SelectedSoftwareSupplier", "You must select a value for Software Supplier Name");
 
         var result = softwareSupplierModel.OnPostCheckGpConnectInteractionForSupplierListAsync();
+
+        Assert.StrictEqual(ModelValidationState.Invalid, softwareSupplierModel.ModelState.GetFieldValidationState("SelectedSoftwareSupplier"));
         Assert.IsType<PageResult>(result);
         Assert.True(softwareSupplierModel.ModelState.ErrorCount > 0);
+    }
+
+    [Fact]
+    public async Task OnPost_TempDataPopulated_WithExpectedValues()
+    {
+        var softwareSupplierResult = new SoftwareSupplierResult() { SoftwareSupplierId = 1, SoftwareSupplierName = "Example Software Supplier Name" };
+        var softwareSupplierList = new List<SoftwareSupplierResult>() { softwareSupplierResult };
+
+        _mockSupplierService.Setup(mss => mss.GetSoftwareSuppliersAsync()).Returns(Task.FromResult(softwareSupplierList));
+        _mockTempDataProviderService.Setup(mtdps => mtdps.GetItem<List<SoftwareSupplierResult>>(TempDataConstants.SOFTWARESUPPLIERNAMELIST)).Returns(softwareSupplierList);
+        
+        var softwareSupplierModel = new SoftwareSupplierModel(_mockOptions.Object, _mockSupplierService.Object, _mockTempDataProviderService.Object) { SelectedSoftwareSupplierNameId = 1 };
+
+        await softwareSupplierModel.GetSoftwareSupplierNameList();
+        _mockTempDataProviderService.Verify(mtdps => mtdps.PutItem(TempDataConstants.SOFTWARESUPPLIERNAMELIST, softwareSupplierList), Times.Once);
     }
 }

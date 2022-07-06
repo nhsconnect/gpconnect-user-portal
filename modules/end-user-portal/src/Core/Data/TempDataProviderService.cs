@@ -32,7 +32,7 @@ public class TempDataProviderService : ITempDataProviderService
 
     public void PutItem<T>(string key, T value) where T : class
     {
-        if(GetItem<T>(key) != null)
+        if (GetItem<T>(key) != null)
         {
             RemoveItem(key);
         }
