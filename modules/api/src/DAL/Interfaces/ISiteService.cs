@@ -8,5 +8,5 @@ public interface ISiteService
 {
     public Task<SiteDefinition> CreateSiteDefinitionAsync(string odsCode);
     
-    Task CreateSiteAttributeAsync(Guid uniqueId, string name, string value);
+    Task CreateSiteAttributesAsync(Guid uniqueId, string site_attribute_data);
 }
