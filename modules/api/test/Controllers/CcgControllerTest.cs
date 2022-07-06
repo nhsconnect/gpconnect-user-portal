@@ -4,6 +4,7 @@ using GpConnect.NationalDataSharingPortal.Api.Service.Interface;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -26,7 +27,32 @@ public class CcgControllerTest
     }
 
     [Fact]
-    public async Task Get_WhenServiceReturns_ReturnsOkResponseAsync()
+    public void CallConstructor_WithExpectedParameters_ReturnsNotNull()
+    {
+        Assert.NotNull(_sut);
+    }
+
+    [Fact]
+    public void Constructor_WithNullService_ThrowsArgumentNullException()
+    {
+        Assert.Throws<ArgumentNullException>(() => new CcgController(default(ICcgService), _mockLogger.Object));
+    }
+
+    [Fact]
+    public void Constructor_WithNullLogger_ThrowsArgumentNullException()
+    {
+        Assert.Throws<ArgumentNullException>(() => new CcgController(_mockService.Object, default(ILogger<CcgController>)));
+    }
+
+    [Fact]
+    public async Task Get_WithNoParameters_ReturnsGivenType()
+    {
+        var result = await _sut.Get();
+        Assert.IsType<ActionResult<IEnumerable<Ccg>>>(result);
+    }
+
+    [Fact]
+    public async Task Get_WithValidParameters_ReturnsOkResponse()
     {
         _mockService.Setup(x => x.GetCcgs()).ReturnsAsync(new List<Ccg>
             {

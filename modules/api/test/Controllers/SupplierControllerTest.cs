@@ -33,6 +33,111 @@ public class SupplierControllerTest
     }
 
     [Fact]
+    public void CallConstructor_WithExpectedParameters_ReturnsNotNull()
+    {
+        Assert.NotNull(_sut);
+    }
+
+    [Fact]
+    public void Constructor_WithNullValidator_ThrowsArgumentNullException()
+    {
+        Assert.Throws<ArgumentNullException>(() => new SupplierController(default(ISupplierRequestValidator), _mockService.Object, _mockLogger.Object));
+    }
+
+    [Fact]
+    public void Constructor_WithNullService_ThrowsArgumentNullException()
+    {
+        Assert.Throws<ArgumentNullException>(() => new SupplierController(_mockValidator.Object, default(ISupplierService), _mockLogger.Object));
+    }
+
+    [Fact]
+    public void Constructor_WithNullLogger_ThrowsArgumentNullException()
+    {
+        Assert.Throws<ArgumentNullException>(() => new SupplierController(_mockValidator.Object, _mockService.Object, default(ILogger<SupplierController>)));
+    }
+
+    [Fact]
+    public async Task Get_WithNoParameters_ReturnsGivenType()
+    {
+        var result = await _sut.Get();
+        Assert.IsType<ActionResult<IEnumerable<Supplier>>>(result);
+    }
+
+    [Fact]
+    public async Task Get_WithSingleParameter_ReturnsGivenType()
+    {
+        var supplierId = 1;
+        var result = await _sut.Get(supplierId);
+        Assert.IsType<ActionResult<Supplier>>(result);
+    }
+
+    [Fact]
+    public async Task Get_WithNullSingleParameter_DoesNotReturnAnException()
+    {
+        Assert.IsNotType<ArgumentNullException>(async () => await _sut.Get(default));
+    }
+
+    [Fact]
+    public async Task Put_WithIdAndSupplierUpdateRequest_ReturnsGivenType()
+    {
+        _mockValidator.Setup(v => v.IsValidUpdate(It.IsAny<SupplierUpdateRequest>())).ReturnsAsync(new BaseRequestValidator() { RequestValid = true, EntityFound = true });
+        var id = 333400887;
+        var supplierUpdateRequest = new SupplierUpdateRequest { SupplierId = 1, SupplierValue = "TestValue1" };
+        var result = await _sut.Put(id, supplierUpdateRequest);
+        Assert.IsType<ActionResult<SupplierUpdateRequest>>(result);
+    }
+
+    [Fact]
+    public async Task Put_WithNullIdAndSupplierUpdateRequest_ThrowsNullReferenceException()
+    {
+        var supplierUpdateRequest = new SupplierUpdateRequest { SupplierId = 1, SupplierValue = "TestValue1" };
+        await Assert.ThrowsAsync<NullReferenceException>(async () => await _sut.Put(default, supplierUpdateRequest));
+    }
+
+    [Fact]
+    public async Task Put_WithNullIdAndNullSupplierUpdateRequest_ThrowsNullReferenceException()
+    {
+        await Assert.ThrowsAsync<NullReferenceException>(async () => await _sut.Put(default(int), default(SupplierUpdateRequest)));
+    }
+
+    [Fact]
+    public async Task Put_WithIdAndSupplierDisableRequest_ReturnsGivenType()
+    {
+        _mockValidator.Setup(v => v.IsValidDisable(It.IsAny<SupplierDisableRequest>())).ReturnsAsync(new BaseRequestValidator() { RequestValid = true, EntityFound = true });
+        var id = 1419042889;
+        var supplierDisableRequest = new SupplierDisableRequest { SupplierId = 1, SupplierDisabled = false };
+        var result = await _sut.Put(id, supplierDisableRequest);
+        Assert.IsType<ActionResult<SupplierDisableRequest>>(result);
+    }
+
+    [Fact]
+    public async Task Put_WithNullIdAndSupplierDisableRequest_ThrowsNullReferenceException()
+    {
+        var supplierDisableRequest = new SupplierDisableRequest { SupplierId = 1, SupplierDisabled = false };
+        await Assert.ThrowsAsync<NullReferenceException>(async () => await _sut.Put(default, supplierDisableRequest));
+    }
+
+    [Fact]
+    public async Task Put_WithNullIdAndNullSupplierDisableRequest_ThrowsNullReferenceException()
+    {
+        await Assert.ThrowsAsync<NullReferenceException>(async () => await _sut.Put(default(int), default(SupplierDisableRequest)));
+    }
+
+    [Fact]
+    public async Task Post_WithValidParameters_ReturnsActionResult()
+    {
+        var supplierAddRequest = new SupplierAddRequest { SupplierValue = "TestValue1" };
+        var result = await _sut.Post(supplierAddRequest);
+        Assert.IsType<ActionResult<Supplier>>(result);
+    }
+
+    [Fact]
+    public async Task Post_WithNullSupplierAddRequest_ThrowsArgumentNullException()
+    {
+        Assert.ThrowsAsync<ArgumentNullException>(async () => await _sut.Post(default(SupplierAddRequest)));
+    }
+
+    [Fact]
     public async Task GetList_WhenServiceReturns_ReturnsOkResponseAsync()
     {
         _mockService.Setup(x => x.GetSuppliers()).ReturnsAsync(new List<Supplier>

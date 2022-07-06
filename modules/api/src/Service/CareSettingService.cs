@@ -3,6 +3,8 @@ using GpConnect.NationalDataSharingPortal.Api.Dal.Interfaces;
 using GpConnect.NationalDataSharingPortal.Api.Dto.Request;
 using GpConnect.NationalDataSharingPortal.Api.Dto.Response;
 using GpConnect.NationalDataSharingPortal.Api.Service.Interface;
+using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Threading.Tasks;
@@ -15,7 +17,7 @@ public class CareSettingService : ICareSettingService
 
     public CareSettingService(IDataService dataService)
     {
-        _dataService = dataService;
+        _dataService = dataService ?? throw new ArgumentNullException(nameof(dataService));
     }
 
     public async Task<IEnumerable<CareSetting>> GetCareSettings()
