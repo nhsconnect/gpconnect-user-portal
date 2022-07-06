@@ -3,6 +3,7 @@ using GpConnect.NationalDataSharingPortal.EndUserPortal.Core.Data;
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Core.Data.Interfaces;
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Core.HttpClientServices;
 using Microsoft.AspNetCore.Mvc;
+using static GpConnect.NationalDataSharingPortal.EndUserPortal.Core.HttpClientServices.Interfaces.AgreementService;
 using static GpConnect.NationalDataSharingPortal.EndUserPortal.Core.HttpClientServices.OrganisationLookupService;
 using static GpConnect.NationalDataSharingPortal.EndUserPortal.Core.HttpClientServices.SiteService;
 
@@ -36,6 +37,7 @@ public static class ServiceCollectionExtensions
         services.Configure<ApplicationParameters>(configuration.GetSection("ApplicationParameters"));
         services.Configure<ResultPageConfig>(configuration.GetSection("Results"));
         services.Configure<SiteServiceConfig>(configuration.GetSection("SiteApi"));
+        services.Configure<AgreementServiceConfig>(configuration.GetSection("AgreementApi"));
         services.Configure<OrganisationLookupServiceConfig>(configuration.GetSection("OrganisationApi"));
 
         services.AddHsts(options =>
