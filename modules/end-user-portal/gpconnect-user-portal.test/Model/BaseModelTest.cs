@@ -14,7 +14,6 @@ public class BaseModelTest
     public BaseModelTest()
     {
         configObject = new ApplicationParameters();
-
         _mockConfig = new Mock<IOptions<ApplicationParameters>>();
         _mockConfig.SetupGet(c => c.Value).Returns(configObject);
     }
@@ -29,8 +28,7 @@ public class BaseModelTest
         var baseModel = new BaseModel(_mockConfig.Object);
         var result = baseModel.ProductName;
 
-        _mockConfig.Verify(c => c.Value, Times.Once);
-
+        _mockConfig.Verify(c => c.Value, Times.Once);        
         Assert.Equal(ExpectedProductName, result);
     }
 

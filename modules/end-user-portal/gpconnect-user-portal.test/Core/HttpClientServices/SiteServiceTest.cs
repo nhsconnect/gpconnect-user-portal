@@ -1,22 +1,23 @@
-
+using GpConnect.NationalDataSharingPortal.EndUserPortal.Core.HttpClientServices;
+using GpConnect.NationalDataSharingPortal.EndUserPortal.Helpers.Enumerations;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using Moq;
+using Moq.Protected;
 using System;
 using System.Net;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
-using GpConnect.NationalDataSharingPortal.EndUserPortal.Core.HttpClientServices;
-using GpConnect.NationalDataSharingPortal.EndUserPortal.Helpers.Enumerations;
-using Microsoft.Extensions.Logging;
-using Moq;
-using Moq.Protected;
 using Xunit;
+using static GpConnect.NationalDataSharingPortal.EndUserPortal.Core.HttpClientServices.SiteService;
 
 namespace GpConnect.NationalDataSharingPortal.EndUserPortal.Test.Core.HttpClientServices;
 
 public class SiteServiceTests 
 {
     private static string BASE_URI = "http://not-my-address.com";
-
+    private Mock<IOptions<SiteServiceConfig>> _mockOptions;
     private readonly Mock<HttpMessageHandler> _mockMessageHandler;
     private readonly SiteService _sut;
 
@@ -38,10 +39,13 @@ public class SiteServiceTests
             })
             .Verifiable();
         
-        _sut = new SiteService(Mock.Of<ILogger<SiteService>>(), new HttpClient(_mockMessageHandler.Object)
+        _mockOptions = new Mock<IOptions<SiteServiceConfig>>();
+        _mockOptions.SetupGet(o => o.Value).Returns(new SiteServiceConfig
         {
-            BaseAddress = new Uri(BASE_URI)
+            BaseUrl = BASE_URI
         });
+
+        _sut = new SiteService(Mock.Of<ILogger<SiteService>>(), new HttpClient(_mockMessageHandler.Object), _mockOptions.Object);
     }
 
     [Theory]

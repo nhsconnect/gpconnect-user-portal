@@ -6,8 +6,10 @@ using GpConnect.NationalDataSharingPortal.EndUserPortal.Core.HttpClientServices.
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Helpers.Enumerations;
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Models;
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Pages.Search;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.Extensions.Options;
 using Moq;
 using Xunit;
@@ -17,7 +19,7 @@ public class ResultsModelTest
 {
     private readonly Mock<ISiteService> _mockSiteService;
     private readonly Mock<IOptions<ResultPageConfig>> _mockConfig;
-    
+
     private readonly ResultPageConfig _config;
 
     public ResultsModelTest()

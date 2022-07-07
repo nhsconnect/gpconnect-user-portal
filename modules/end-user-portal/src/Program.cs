@@ -34,8 +34,7 @@ public class Program
             .ConfigureWebHostDefaults(webBuilder =>
             {
                 webBuilder.UseStartup<Startup>();
-            })
-            .ConfigureAppConfiguration(CustomConfigurationBuilder.AddCustomConfiguration)
+            }).ConfigureAppConfiguration(CustomConfigurationBuilder.AddCustomConfiguration)
             .ConfigureLogging((builderContext, logging) =>
             {
                 LoggingConfigurationBuilder.AddLoggingConfiguration(builderContext, logging);

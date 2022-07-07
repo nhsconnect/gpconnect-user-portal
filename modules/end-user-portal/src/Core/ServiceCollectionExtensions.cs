@@ -1,5 +1,10 @@
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Core.Config;
+using GpConnect.NationalDataSharingPortal.EndUserPortal.Core.Data;
+using GpConnect.NationalDataSharingPortal.EndUserPortal.Core.Data.Interfaces;
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Core.HttpClientServices;
+using Microsoft.AspNetCore.Mvc;
+using static GpConnect.NationalDataSharingPortal.EndUserPortal.Core.HttpClientServices.OrganisationLookupService;
+using static GpConnect.NationalDataSharingPortal.EndUserPortal.Core.HttpClientServices.SiteService;
 
 namespace GpConnect.NationalDataSharingPortal.EndUserPortal.Core;
 
@@ -9,8 +14,8 @@ public static class ServiceCollectionExtensions
     {
         services.AddSession(s =>
         {
-            s.Cookie.Name = ".GpConnect.NationalDataSharingPortal.EndUserPortal.Session";
-            s.IdleTimeout = new TimeSpan(0, 30, 0);
+            s.Cookie.Name = ".GpConnect.NationalDataSharingPortal.Session";
+            s.IdleTimeout = TimeSpan.FromMinutes(30);
             s.Cookie.HttpOnly = false;
             s.Cookie.IsEssential = true;
         });
@@ -21,9 +26,17 @@ public static class ServiceCollectionExtensions
             options.MinimumSameSitePolicy = SameSiteMode.None;
         });
 
+        services.Configure<CookieTempDataProviderOptions>(options =>
+        {
+            options.Cookie.Name = ".GpConnect.NationalDataSharingPortal.TempDataCookie";
+            options.Cookie.Expiration = TimeSpan.FromMinutes(30);
+        });
+
         services.AddOptions();
         services.Configure<ApplicationParameters>(configuration.GetSection("ApplicationParameters"));
         services.Configure<ResultPageConfig>(configuration.GetSection("Results"));
+        services.Configure<SiteServiceConfig>(configuration.GetSection("SiteApi"));
+        services.Configure<OrganisationLookupServiceConfig>(configuration.GetSection("OrganisationApi"));
 
         services.AddHsts(options =>
         {
@@ -54,7 +67,13 @@ public static class ServiceCollectionExtensions
         });
 
         services.AddHttpClientServices(configuration, env);
+        AddDependentServices(services);
 
         return services;
+    }
+
+    private static void AddDependentServices(IServiceCollection services)
+    {
+        services.AddScoped<ITempDataProviderService, TempDataProviderService>();
     }
 }
