@@ -16,14 +16,13 @@ public class SiteService: ISiteService
         _dataService = dataService;
     }
 
-    public async Task CreateSiteAttributeAsync(Guid uniqueId, string name, string value)
+    public async Task CreateSiteAttributesAsync(Guid uniqueId, string site_attribute_data)
     {
         var siteAttributeParams = new DynamicParameters();
         siteAttributeParams.Add("_site_unique_identifier", uniqueId, DbType.Guid);
-        siteAttributeParams.Add("_site_attribute_name", name, DbType.String);
-        siteAttributeParams.Add("_site_attribute_value", value);
+        siteAttributeParams.Add("_site_attributes", site_attribute_data, DbType.String);
         
-        await _dataService.ExecuteQuery("application.add_site_attribute", siteAttributeParams);
+        await _dataService.ExecuteQuery("application.add_site_attributes", siteAttributeParams);
     }
 
     public async Task<SiteDefinition> CreateSiteDefinitionAsync(string odsCode) 
