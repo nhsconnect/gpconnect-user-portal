@@ -9,8 +9,10 @@
   "license": "ISC",
   "dependencies": {
     "@types/jest": "^28.1.1",
+    "@types/pg": "^8.6.5",
     "@types/supertest": "^2.0.12",
     "jest": "^28.1.1",
+    "pg": "^8.7.3",
     "supertest": "^6.2.3"
   }
 }
