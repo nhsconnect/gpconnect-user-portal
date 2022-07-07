@@ -3,6 +3,7 @@ using GpConnect.NationalDataSharingPortal.Api.Service.Interface;
 using System.Threading.Tasks;
 
 using GpConnect.NationalDataSharingPortal.Api.Validators.Interface;
+using System;
 
 namespace GpConnect.NationalDataSharingPortal.Api.Validators;
 
@@ -12,7 +13,7 @@ public class ProductRequestValidator : IProductRequestValidator
 
     public ProductRequestValidator(IProductService productService)
     {
-        _productService = productService;
+        _productService = productService ?? throw new ArgumentNullException(nameof(productService));
     }
 
     public async Task<BaseRequestValidator> IsValidUpdate(ProductUpdateRequest request) 

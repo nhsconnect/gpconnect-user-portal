@@ -2,6 +2,7 @@ using GpConnect.NationalDataSharingPortal.Api.Dto.Response;
 using GpConnect.NationalDataSharingPortal.Api.Service.Interface;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -16,8 +17,8 @@ public class CcgController : ControllerBase
 
     public CcgController(ICcgService service, ILogger<CcgController> logger)
     {
-        _logger = logger;
-        _service = service;
+        _logger = logger ?? throw new ArgumentNullException();
+        _service = service ?? throw new ArgumentNullException();
     }
 
     [HttpGet(Name = "GetCcgs")]
