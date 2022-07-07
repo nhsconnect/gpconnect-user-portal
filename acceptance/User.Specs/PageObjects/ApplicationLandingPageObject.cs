@@ -8,7 +8,7 @@ namespace GpConnect.DataSharing.User.Specs.PageObjects
         private const string PATH = "/Apply";
         private readonly IWebDriver _webDriver;
 
-        public ApplicationLandingPageObject(IWebDriver webDriver)
+        public ApplicationLandingPageObject(IWebDriver webDriver) : base(webDriver)
         {
             _webDriver = webDriver;
         }
@@ -24,13 +24,10 @@ namespace GpConnect.DataSharing.User.Specs.PageObjects
             _webDriver.Url = URL(PATH);
         }
 
-        private IWebElement StartButton =>
-            _webDriver.FindElement(By.PartialLinkText("Apply now"));
-
         public bool IsStartButtonVisible()
         {
             var wait = new WebDriverWait(_webDriver, DefaultWait);
-            return wait.Until(driver => StartButton.Displayed);
+            return wait.Until(driver => IsButtonVisible("Apply Now"));
         }
 
         // public void ClickStart(){

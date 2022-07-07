@@ -29,5 +29,11 @@ namespace GpConnect.DataSharing.User.Specs.Steps
             _basePage.ClickLink(name);
         }
 
+        [Then("there are cookies")]
+        public void ThenThereAreCookies()
+        {
+            _basePage.IsThereCookies();
+        }
+
     }
 }

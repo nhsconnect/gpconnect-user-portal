@@ -8,7 +8,7 @@ namespace GpConnect.DataSharing.User.Specs.PageObjects
         private const string PATH = "/Apply/SoftwareSupplier";
         private readonly IWebDriver _webDriver;
 
-        public SoftwareSupplierPageObject(IWebDriver webDriver)
+        public SoftwareSupplierPageObject(IWebDriver webDriver) : base(webDriver)
         {
             _webDriver = webDriver;
         }
@@ -41,7 +41,7 @@ namespace GpConnect.DataSharing.User.Specs.PageObjects
         }
 
         private IWebElement SupplierList =>
-            _webDriver.FindElement(By.Id("SelectedSoftwareSupplierName"));
+            _webDriver.FindElement(By.Id("SelectedSoftwareSupplierNameId"));
 
         public void SelectSupplier(string supplierName)
         {

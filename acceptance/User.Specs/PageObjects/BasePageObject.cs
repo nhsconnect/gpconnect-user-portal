@@ -37,5 +37,23 @@ namespace GpConnect.DataSharing.User.Specs.PageObjects
                 By.XPath($"//button[contains(text(), '{name}')]")
             ).Click();
         }
+        public bool IsButtonVisible(string labelText)
+        {
+            return _webDriver.FindElement(
+                By.XPath($"//button[contains(text(), '{labelText}')]")
+            ).Displayed;
+        }
+
+        public bool IsLabelVisible(string labelText)
+        {
+            return _webDriver.FindElement(
+                By.XPath($"//label[contains(text(), '{labelText}')]")
+            ).Displayed;
+        }
+
+        public bool IsThereCookies()
+        {
+            return _webDriver.Manage().Cookies.AllCookies.Count > 0;
+        }
     }
 }

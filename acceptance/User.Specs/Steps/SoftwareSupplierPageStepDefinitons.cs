@@ -27,5 +27,11 @@ namespace GpConnect.DataSharing.User.Specs.Steps
         {
             Assert.True(_softwareSupplierPage.IsGpConnectProductPanelVisible());
         }
+
+        [Then(@"the ""(.*)"" label is shown")]
+        public void ThenTheNamedLabelIsShown(string labelText)
+        {
+            Assert.True(_softwareSupplierPage.IsLabelVisible(labelText));
+        }
     }
 }

@@ -145,7 +145,7 @@ services:
       ASPNETCORE_Kestrel__Certificates__Default__Path: /https/aspnetapp.pfx
       SiteApi__BaseUrl: http://api:5002
       SupplierApi__BaseUrl: http://mock-api:5555
-      OrganizationApi__BaseUrl: http://mock-api:5555
+      OrganisationApi__BaseUrl: http://mock-ods:5556
       # API_BASEADDRESS: http://mock-api:5555
 
   admin-portal:
