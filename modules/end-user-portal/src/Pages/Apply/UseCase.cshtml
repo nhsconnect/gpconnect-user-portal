@@ -1,0 +1,46 @@
+@page
+@using GpConnect.NationalDataSharingPortal.EndUserPortal.Helpers.Constants
+@using GpConnect.NationalDataSharingPortal.EndUserPortal.Helpers
+@using GpConnect.NationalDataSharingPortal.EndUserPortal.Models
+@using Microsoft.AspNetCore.Mvc.ModelBinding
+@model GpConnect.NationalDataSharingPortal.EndUserPortal.Pages.Apply.UseCaseModel
+@{
+    var useCaseDescriptionInvalid = Model.ModelState["UseCaseDescription"]?.ValidationState == ModelValidationState.Invalid;
+}
+
+<div class="nhsuk-width-container">
+    <main class="nhsuk-main-wrapper" id="maincontent">
+        <div class="nhsuk-grid-row">
+            <div class="nhsuk-grid-column-full">
+                <h1 class="nhsuk-label-wrapper">
+                    <label class="nhsuk-label nhsuk-label--xl">Apply for the National Data Sharing Agreement</label>
+                </h1>
+                <form method="post" id="usecase-input-form">
+                    <div class="nhsuk-grid-row">
+                        <div class="nhsuk-grid-column-full">
+                            <div class="nhsuk-card nhsuk-card--feature">
+                                <div class="nhsuk-card__content nhsuk-card__content--feature">
+                                    <h2 class="nhsuk-card__heading nhsuk-card__heading--feature nhsuk-heading-m">
+                                        @Html.DisplayNameFor(m => m.UseCaseDescription)
+                                    </h2>
+                                    <div class="nhsuk-form-group @(useCaseDescriptionInvalid ? "nhsuk-form-group--error": string.Empty)">
+                                        <div class="nhsuk-hint" id="input-hint-usecasedescription">
+                                            <p>Please give a brief reason for your organisation needing to share data. For example, "To enable nurses to carry out more effective continuous health care assessments".</p>
+                                            <p>When patients look up where their data has been shared, they will see this information.</p>
+                                        </div>
+                                        @if (useCaseDescriptionInvalid)
+                                        {
+                                            <span asp-validation-for="@Model.UseCaseDescription" class="nhsuk-error-message"></span>
+                                        }
+                                        <textarea class="nhsuk-textarea" id="input-usecasedescription" asp-for="@Model.UseCaseDescription" rows="5" aria-describedby="input-hint-usecasedescription"></textarea>
+                                    </div>
+                                    <button class="nhsuk-button" type="submit">@ButtonConstants.NEXT</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+</div>

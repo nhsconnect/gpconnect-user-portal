@@ -1,6 +1,6 @@
 namespace GpConnect.NationalDataSharingPortal.Api.Dal.Enumerations;
 public enum SiteStatus
 {
-  APPLIED = 2,
+  AWAITING_REVIEW = 2,
   LIVE = 5
 }

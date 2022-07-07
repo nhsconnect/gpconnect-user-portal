@@ -1,0 +1,97 @@
+@page
+@using GpConnect.NationalDataSharingPortal.EndUserPortal.Helpers.Constants
+@using GpConnect.NationalDataSharingPortal.EndUserPortal.Helpers
+@using GpConnect.NationalDataSharingPortal.EndUserPortal.Models
+@using Microsoft.AspNetCore.Mvc.ModelBinding
+@model GpConnect.NationalDataSharingPortal.EndUserPortal.Pages.Apply.SoftwareSupplierModel
+@{
+    var softwareSupplierNameInvalid = Model.ModelState["SelectedSoftwareSupplierNameId"]?.ValidationState == ModelValidationState.Invalid;
+    var gpConnectInteractionForSupplierInvalid = Model.ModelState["HasSelectedGpConnectInteractionForSupplier"]?.ValidationState == ModelValidationState.Invalid;
+}
+
+<div class="nhsuk-width-container">
+    <main class="nhsuk-main-wrapper" id="maincontent">
+        <div class="nhsuk-grid-row">
+            <div class="nhsuk-grid-column-full">
+                <h1 class="nhsuk-label-wrapper">
+                    <label class="nhsuk-label nhsuk-label--xl">Apply for the National Data Sharing Agreement</label>
+                </h1>
+                <form method="post" id="software-supplier-input-form">
+                    <div class="nhsuk-grid-row">
+                        <div class="nhsuk-grid-column-full">
+                            <div class="nhsuk-card nhsuk-card--feature">
+                                <div class="nhsuk-card__content nhsuk-card__content--feature">
+                                    <h2 class="nhsuk-card__heading nhsuk-card__heading--feature nhsuk-heading-m">
+                                        @Html.DisplayNameFor(m => m.SelectedSoftwareSupplierNameId)
+                                    </h2>
+                                    <div class="nhsuk-form-group @(softwareSupplierNameInvalid ? "nhsuk-form-group--error": string.Empty)">
+                                        <div class="nhsuk-hint" id="input-hint-softwaresuppliername">
+                                            <p>Please tell us which software supplier provides your GP Connect products.</p>
+                                            <p>If you are not sure which supplier you use, ask a member of your IT staff.</p>
+                                        </div>
+                                        @if (softwareSupplierNameInvalid)
+                                        {
+                                            <span asp-validation-for="@Model.SelectedSoftwareSupplierNameId" class="nhsuk-error-message"></span>
+                                        }
+                                        <select class="nhsuk-select @(softwareSupplierNameInvalid ? "nhsuk-select--error": string.Empty)"
+                                                asp-items="@(new SelectList((System.Collections.IEnumerable)Model.SoftwareSupplierResultList, "SoftwareSupplierId", "SoftwareSupplierName"))"
+                                                asp-for="@Model.SelectedSoftwareSupplierNameId" aria-describedby="input-hint-softwaresuppliername">
+                                            <option value="0"></option>
+                                        </select>
+                                    </div>
+                                    <button class="nhsuk-button" asp-page-handler="CheckGpConnectInteractionForSupplierList" type="submit">
+                                        @if (!Model.DisplayGpConnectInteractionForSupplierList)
+                                        {
+                                            @ButtonConstants.NEXT
+                                        }
+                                        else
+                                        {
+                                            @ButtonConstants.CHANGESUPPLIER
+                                        }
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @if (Model.DisplayGpConnectInteractionForSupplierList)
+                    {
+                        <div class="nhsuk-grid-row">
+                            <div class="nhsuk-grid-column-full">
+                                <div class="nhsuk-card nhsuk-card--feature">
+                                    <div class="nhsuk-card__content nhsuk-card__content--feature">
+                                        <h2 class="nhsuk-card__heading nhsuk-card__heading--feature nhsuk-heading-m">
+                                            @Html.DisplayNameFor(m => m.HasSelectedGpConnectInteractionForSupplier)
+                                        </h2>
+                                        <div class="nhsuk-form-group @(gpConnectInteractionForSupplierInvalid ? "nhsuk-form-group--error": string.Empty)">
+                                            <div class="nhsuk-hint" id="input-hint-softwaresupplierproduct">
+                                                <p>Please tell us which GP Connect products you use.</p>
+                                            </div>
+                                            <fieldset class="nhsuk-fieldset">
+                                                @if (gpConnectInteractionForSupplierInvalid)
+                                                {
+                                                    <span asp-validation-for="@Model.HasSelectedGpConnectInteractionForSupplier" class="nhsuk-error-message"></span>
+                                                }
+                                                <div class="nhsuk-checkboxes">
+                                                    @for (var i = 0; i < Model.GpConnectInteractionForSupplierList.Count(); i++)
+                                                    {
+                                                        <div class="nhsuk-checkboxes__item">                                                            
+                                                            <input type="hidden" asp-for="@Model.GpConnectInteractionForSupplierList[i].GpConnectInteractionForSupplierId" />
+                                                            <input type="hidden" asp-for="@Model.GpConnectInteractionForSupplierList[i].GpConnectInteractionForSupplierValue" />
+                                                            <input type="checkbox" class="nhsuk-checkboxes__input" asp-for="@Model.GpConnectInteractionForSupplierList[i].Selected">
+                                                            <label class="nhsuk-label nhsuk-checkboxes__label" asp-for="@Model.GpConnectInteractionForSupplierList[i].Selected">@Model.GpConnectInteractionForSupplierList[i].GpConnectInteractionForSupplierValue</label>
+                                                        </div>
+                                                    }
+                                                </div>
+                                            </fieldset>
+                                        </div>
+                                        <button class="nhsuk-button" asp-page-handler="Next" type="submit">@ButtonConstants.NEXT</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </form>
+            </div>
+        </div>
+    </main>
+</div>

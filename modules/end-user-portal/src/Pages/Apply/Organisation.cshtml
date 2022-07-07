@@ -1,0 +1,73 @@
+@page
+@using GpConnect.NationalDataSharingPortal.EndUserPortal.Helpers.Constants
+@using GpConnect.NationalDataSharingPortal.EndUserPortal.Helpers
+@using GpConnect.NationalDataSharingPortal.EndUserPortal.Models
+@using Microsoft.AspNetCore.Mvc.ModelBinding
+@model GpConnect.NationalDataSharingPortal.EndUserPortal.Pages.Apply.OrganisationModel
+@{
+    var odsCodeInvalid = Model.ModelState["SiteOdsCode"]?.ValidationState == ModelValidationState.Invalid;
+}
+
+<div class="nhsuk-width-container">
+    <main class="nhsuk-main-wrapper" id="maincontent">
+        <div class="nhsuk-grid-row">
+            <div class="nhsuk-grid-column-full">
+                <h1 class="nhsuk-label-wrapper">
+                    <label class="nhsuk-label nhsuk-label--xl">Apply for the National Data Sharing Agreement</label>
+                </h1>
+                <form method="post" id="organisation-input-form">
+                    <div class="nhsuk-grid-row">
+                        <div class="nhsuk-grid-column-full">
+                            <div class="nhsuk-card nhsuk-card--feature">
+                                <div class="nhsuk-card__content nhsuk-card__content--feature">
+                                    <h2 class="nhsuk-card__heading nhsuk-card__heading--feature nhsuk-heading-m">
+                                        @Html.DisplayNameFor(m => m.SiteOdsCode)
+                                    </h2>
+                                    <div class="nhsuk-form-group @(odsCodeInvalid ? "nhsuk-form-group--error": string.Empty)">
+                                        <div class="nhsuk-hint" id="input-hint-siteodscode">
+                                            <p>We will use your ODS code to lookup your organisation.</p>
+                                            <p>If you do you not know your ODS code, you can <a target="_blank" href="https://odsportal.digital.nhs.uk/Organisation/Search">look it up on the ODS Portal</a></p>
+                                        </div>
+                                        @if (odsCodeInvalid)
+                                        {
+                                            <span asp-validation-for="@Model.SiteOdsCode" class="nhsuk-error-message"></span>
+                                        }
+                                        <input class="nhsuk-input @(odsCodeInvalid ? "nhsuk-input--error": string.Empty)" id="input-siteodscode" asp-for="@Model.SiteOdsCode" type="search" aria-describedby="input-hint-siteodscode">
+                                    </div>
+                                    <button class="nhsuk-button nhsuk-button--secondary" asp-page-handler="FindOrganisation" type="submit">@ButtonConstants.FINDORGANISATION</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @if (Model.OrganisationFound)
+                    {
+                        <div class="nhsuk-grid-row">
+                            <div class="nhsuk-grid-column-full">
+                                <dl class="nhsuk-summary-list">
+                                    <div class="nhsuk-summary-list__row">
+                                    <dt class="nhsuk-summary-list__key">
+                                        Organisation name
+                                    </dt>
+                                    <dd class="nhsuk-summary-list__value">
+                                            @Model.OrganisationResult.Name
+                                    </dd>
+                            </div>
+                            <div class="nhsuk-summary-list__row">
+                                <dt class="nhsuk-summary-list__key">
+                                    Organisation address
+                                </dt>
+                                <dd class="nhsuk-summary-list__value">
+                                  @Model.OrganisationResult.Address.FullAddress
+                                </dd>
+                            </div>
+                            </dl>
+                            <div class="nhsuk-hint">If this is not your organisation, please check the ODS code and try again.</div>
+                        </div>
+                </div>
+                <button class="nhsuk-button" asp-page-handler="Next" type="submit">@ButtonConstants.NEXT</button>
+                    }
+            </form>
+        </div>
+</div>
+    </main>
+</div>

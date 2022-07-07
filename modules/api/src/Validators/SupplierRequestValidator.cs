@@ -3,6 +3,7 @@ using GpConnect.NationalDataSharingPortal.Api.Service.Interface;
 using System.Threading.Tasks;
 
 using GpConnect.NationalDataSharingPortal.Api.Validators.Interface;
+using System;
 
 namespace GpConnect.NationalDataSharingPortal.Api.Validators;
 
@@ -12,7 +13,7 @@ public class SupplierRequestValidator : ISupplierRequestValidator
 
     public SupplierRequestValidator(ISupplierService supplierService)
     {
-        _supplierService = supplierService;
+        _supplierService = supplierService ?? throw new ArgumentNullException(nameof(supplierService));
     }
 
     public async Task<BaseRequestValidator> IsValidUpdate(SupplierUpdateRequest request) 

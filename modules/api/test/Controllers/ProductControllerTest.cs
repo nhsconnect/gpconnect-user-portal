@@ -33,6 +33,111 @@ public class ProductControllerTest
     }
 
     [Fact]
+    public void CallConstructor_WithExpectedParameters_ReturnsNotNull()
+    {
+        Assert.NotNull(_sut);
+    }
+
+    [Fact]
+    public void Constructor_WithNullValidator_ThrowsArgumentNullException()
+    {
+        Assert.Throws<ArgumentNullException>(() => new ProductController(default(IProductRequestValidator), _mockService.Object, _mockLogger.Object));
+    }
+
+    [Fact]
+    public void Constructor_WithNullService_ThrowsArgumentNullException()
+    {
+        Assert.Throws<ArgumentNullException>(() => new ProductController(_mockValidator.Object, default(IProductService), _mockLogger.Object));
+    }
+
+    [Fact]
+    public void Constructor_WithNullLogger_ThrowsArgumentNullException()
+    {
+        Assert.Throws<ArgumentNullException>(() => new ProductController(_mockValidator.Object, _mockService.Object, default(ILogger<ProductController>)));
+    }
+
+    [Fact]
+    public async Task Get_WithNoParameters_ReturnsGivenType()
+    {
+        var result = await _sut.Get();
+        Assert.IsType<ActionResult<IEnumerable<Product>>>(result);
+    }
+
+    [Fact]
+    public async Task Get_WithSingleParameter_ReturnsGivenType()
+    {
+        var productId = 1;
+        var result = await _sut.Get(productId);
+        Assert.IsType<ActionResult<Product>>(result);
+    }
+
+    [Fact]
+    public async Task Get_WithNullSingleParameter_DoesNotReturnAnException()
+    {
+        Assert.IsNotType<ArgumentNullException>(async () => await _sut.Get(default));
+    }
+
+    [Fact]
+    public async Task Put_WithIdAndProductUpdateRequest_ReturnsGivenType()
+    {
+        _mockValidator.Setup(v => v.IsValidUpdate(It.IsAny<ProductUpdateRequest>())).ReturnsAsync(new BaseRequestValidator() { RequestValid = true, EntityFound = true });
+        var id = 333400887;
+        var productUpdateRequest = new ProductUpdateRequest { ProductId = 1, ProductValue = "TestValue1" };
+        var result = await _sut.Put(id, productUpdateRequest);
+        Assert.IsType<ActionResult<ProductUpdateRequest>>(result);
+    }
+
+    [Fact]
+    public async Task Put_WithNullIdAndProductUpdateRequest_ThrowsNullReferenceException()
+    {
+        var productUpdateRequest = new ProductUpdateRequest { ProductId = 1, ProductValue = "TestValue1" };
+        await Assert.ThrowsAsync<NullReferenceException>(async () => await _sut.Put(default, productUpdateRequest));
+    }
+
+    [Fact]
+    public async Task Put_WithNullIdAndNullProductUpdateRequest_ThrowsNullReferenceException()
+    {
+        await Assert.ThrowsAsync<NullReferenceException>(async () => await _sut.Put(default(int), default(ProductUpdateRequest)));
+    }
+
+    [Fact]
+    public async Task Put_WithIdAndProductDisableRequest_ReturnsGivenType()
+    {
+        _mockValidator.Setup(v => v.IsValidDisable(It.IsAny<ProductDisableRequest>())).ReturnsAsync(new BaseRequestValidator() { RequestValid = true, EntityFound = true });
+        var id = 1419042889;
+        var productDisableRequest = new ProductDisableRequest { ProductId = 1, ProductDisabled = false };
+        var result = await _sut.Put(id, productDisableRequest);
+        Assert.IsType<ActionResult<ProductDisableRequest>>(result);
+    }
+
+    [Fact]
+    public async Task Put_WithNullIdAndProductDisableRequest_ThrowsNullReferenceException()
+    {
+        var productDisableRequest = new ProductDisableRequest { ProductId = 1, ProductDisabled = false };
+        await Assert.ThrowsAsync<NullReferenceException>(async () => await _sut.Put(default, productDisableRequest));
+    }
+
+    [Fact]
+    public async Task Put_WithNullIdAndNullProductDisableRequest_ThrowsNullReferenceException()
+    {
+        await Assert.ThrowsAsync<NullReferenceException>(async () => await _sut.Put(default(int), default(ProductDisableRequest)));
+    }
+
+    [Fact]
+    public async Task Post_WithValidParameters_ReturnsActionResult()
+    {
+        var productAddRequest = new ProductAddRequest { ProductValue = "TestValue1" };
+        var result = await _sut.Post(productAddRequest);
+        Assert.IsType<ActionResult<SupplierProduct>>(result);
+    }
+
+    [Fact]
+    public async Task Post_WithNullProductAddRequest_ThrowsArgumentNullException()
+    {
+        Assert.ThrowsAsync<ArgumentNullException>(async () => await _sut.Post(default(ProductAddRequest)));
+    }
+
+    [Fact]
     public async Task GetList_WhenServiceReturns_ReturnsOkResponseAsync()
     {
         _mockService.Setup(x => x.GetProducts()).ReturnsAsync(new List<Product>

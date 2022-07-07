@@ -29,6 +29,46 @@ public class TransparencySiteServiceTest
     }
 
     [Fact]
+    public void CallConstructor_WithExpectedParameters_ReturnsNotNull()
+    {
+        Assert.NotNull(_sut);
+    }
+
+    [Fact]
+    public void Constructor_WithNullDataService_ThrowsArgumentNullException()
+    {
+        Assert.Throws<ArgumentNullException>(() => new TransparencySiteService(default(IDataService), _mockLogger.Object));
+    }
+
+    [Fact]
+    public void Constructor_WithNullLogger_ThrowsArgumentNullException()
+    {
+        Assert.Throws<ArgumentNullException>(() => new TransparencySiteService(_mockDataService.Object, default(ILogger<TransparencySiteService>)));
+    }
+
+    [Fact]
+    public async Task Get_GetMatchingSites_ReturnsListOfSites()
+    {
+        var request = new TransparencySiteRequest { ProviderCode = default(string?), ProviderName = default(string?), StartPosition = 1, Count = 10 };
+        var result = await _sut.GetMatchingSitesAsync(request);
+        Assert.NotNull(result);
+    }
+
+    [Fact]
+    public async Task Call_WithNullTransparencySiteRequest_ThrowsNullReferenceException()
+    {
+        await Assert.ThrowsAsync<NullReferenceException>(() => _sut.GetMatchingSitesAsync(default(TransparencySiteRequest)));
+    }
+
+    [Fact]
+    public void Get_Site_ReturnsSite()
+    {
+        var id = default(Guid);
+        var result = _sut.GetSiteAsync(id);
+        Assert.NotNull(result);
+    }
+
+    [Fact]
     public async Task GetMatchingSitesAsync_WithNameQuery_CallsDataService_WithExpectedParameters()
     {
         await _sut.GetMatchingSitesAsync(new TransparencySiteRequest

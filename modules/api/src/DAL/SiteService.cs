@@ -21,7 +21,7 @@ public class SiteService: ISiteService
         var siteAttributeParams = new DynamicParameters();
         siteAttributeParams.Add("_site_unique_identifier", uniqueId, DbType.Guid);
         siteAttributeParams.Add("_site_attributes", site_attribute_data, DbType.String);
-
+        
         await _dataService.ExecuteQuery("application.add_site_attributes", siteAttributeParams);
     }
 

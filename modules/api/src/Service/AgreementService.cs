@@ -1,3 +1,8 @@
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using System.Threading.Tasks;
+using GpConnect.NationalDataSharingPortal.Api.Dal.Extensions;
 using GpConnect.NationalDataSharingPortal.Api.Dal.Interfaces;
 using GpConnect.NationalDataSharingPortal.Api.Dto.Request;
 using GpConnect.NationalDataSharingPortal.Api.Service.Interface;
@@ -19,7 +24,7 @@ public class AgreementService: IAgreementService
     public async Task CreateAgreementAsync(AgreementInformation acceptanceInformation)
     {
         var siteDefinition = await _siteService.CreateSiteDefinitionAsync(acceptanceInformation.Organisation.OdsCode);
-
+        
         var siteAttributes = new List<SiteAttributeAddRequest> {
             new SiteAttributeAddRequest { Name = "OdsCode", Value = acceptanceInformation.Organisation.OdsCode },
             new SiteAttributeAddRequest { Name = "SiteName", Value = acceptanceInformation.Organisation.Name },
@@ -38,7 +43,7 @@ public class AgreementService: IAgreementService
             new SiteAttributeAddRequest { Name = "SignatoryName", Value = acceptanceInformation.Signatory.Name },
             new SiteAttributeAddRequest { Name = "SignatoryEmail", Value = acceptanceInformation.Signatory.Email },
             new SiteAttributeAddRequest { Name = "SignatoryPosition", Value = acceptanceInformation.Signatory.Position }
-        };       
+        };
 
         var site_attribute_data = JsonConvert.SerializeObject(siteAttributes);
         await _siteService.CreateSiteAttributesAsync(siteDefinition.UniqueId, site_attribute_data);

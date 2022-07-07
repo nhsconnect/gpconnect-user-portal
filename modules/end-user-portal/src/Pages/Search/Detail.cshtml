@@ -1,7 +1,6 @@
 @page
 @model GpConnect.NationalDataSharingPortal.EndUserPortal.Pages.Search.DetailModel
 @using GpConnect.NationalDataSharingPortal.EndUserPortal.Helpers.Enumerations
-@using static GpConnect.NationalDataSharingPortal.EndUserPortal.Helpers.AddressStringBuilder;
 
 <div class="nhsuk-width-container">
     <main class="nhsuk-main-wrapper" id="maincontent">
@@ -25,7 +24,7 @@
                                 <label class="nhsuk-label nhsuk-label--m">
                                     @Model.SearchResultEntry.SiteName
                                 </label>
-                                <p>@Model.SearchResultEntry.GetFullAddressAsString()</p>
+                                <p>@Model.SearchResultEntry.FullAddress</p>
                             </div>
                         </div>
                     </div>
