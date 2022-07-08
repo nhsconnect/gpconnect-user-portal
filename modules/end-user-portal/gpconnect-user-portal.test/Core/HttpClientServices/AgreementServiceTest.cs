@@ -15,7 +15,7 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
-using static GpConnect.NationalDataSharingPortal.EndUserPortal.Core.HttpClientServices.Interfaces.AgreementService;
+using static GpConnect.NationalDataSharingPortal.EndUserPortal.Core.HttpClientServices.AgreementService;
 
 namespace GpConnect.NationalDataSharingPortal.EndUserPortal.Test.Core.HttpClientServices;
 

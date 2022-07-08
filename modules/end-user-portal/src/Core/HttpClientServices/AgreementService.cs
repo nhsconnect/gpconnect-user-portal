@@ -1,12 +1,12 @@
 using System.Net.Http.Headers;
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Builders.Interfaces;
+using GpConnect.NationalDataSharingPortal.EndUserPortal.Core.HttpClientServices.Interfaces;
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Models;
-using GpConnect.NationalDataSharingPortal.EndUserPortal.Models.Request;
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Models.Response;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 
-namespace GpConnect.NationalDataSharingPortal.EndUserPortal.Core.HttpClientServices.Interfaces;
+namespace GpConnect.NationalDataSharingPortal.EndUserPortal.Core.HttpClientServices;
 
 public class AgreementService: IAgreementService 
 {
