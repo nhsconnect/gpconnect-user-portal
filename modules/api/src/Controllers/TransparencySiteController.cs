@@ -18,9 +18,9 @@ public class TransparencySiteController : ControllerBase
 
     public TransparencySiteController(ITransparencySiteRequestValidator validator, ITransparencySiteService service, ILogger<TransparencySiteController> logger)
     {
-        _logger = logger;
-        _validator = validator;
-        _service = service;
+        _logger = logger ?? throw new ArgumentNullException();
+        _validator = validator ?? throw new ArgumentNullException();
+        _service = service ?? throw new ArgumentNullException();
     }
 
     [HttpGet(Name = "GetMatchingSites")]

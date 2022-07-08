@@ -3,6 +3,7 @@ using GpConnect.NationalDataSharingPortal.Api.Service.Interface;
 using System.Threading.Tasks;
 
 using GpConnect.NationalDataSharingPortal.Api.Validators.Interface;
+using System;
 
 namespace GpConnect.NationalDataSharingPortal.Api.Validators;
 
@@ -12,7 +13,7 @@ public class CareSettingRequestValidator : ICareSettingRequestValidator
 
     public CareSettingRequestValidator(ICareSettingService careSettingService)
     {
-        _careSettingService = careSettingService;
+        _careSettingService = careSettingService ?? throw new ArgumentNullException(nameof(careSettingService));
     }
 
     public async Task<BaseRequestValidator> IsValidUpdate(CareSettingUpdateRequest request) 

@@ -9,31 +9,31 @@ servers:
   - url: http://staging-api.example.com
     description: Optional server description, e.g. Internal staging server for testing
 paths:
-  /site:
-    get:
-      summary: Returns a list of users.
-      description: Optional extended description in CommonMark or HTML.
-      responses:
-        '200':    # status code
-          description: A JSON array of user names
-          content:
-            application/json:
-              schema: 
-                type: array
-                items: 
-                  type: string
-    post:
-      summary: Returns a list of users.
-      description: Optional extended description in CommonMark or HTML.
-      responses:
-        '200':    # status code
-          description: A JSON array of user names
-          content:
-            application/json:
-              schema: 
-                type: array
-                items: 
-                  type: string
+  # /site:
+  #   get:
+  #     summary: Returns a list of users.
+  #     description: Optional extended description in CommonMark or HTML.
+  #     responses:
+  #       '200':    # status code
+  #         description: A JSON array of user names
+  #         content:
+  #           application/json:
+  #             schema: 
+  #               type: array
+  #               items: 
+  #                 type: string
+  #   post:
+  #     summary: Returns a list of users.
+  #     description: Optional extended description in CommonMark or HTML.
+  #     responses:
+  #       '200':    # status code
+  #         description: A JSON array of user names
+  #         content:
+  #           application/json:
+  #             schema: 
+  #               type: array
+  #               items: 
+                  # type: string
   /site/{ods_code}:
     parameters:
       - name: ods_code
@@ -123,240 +123,245 @@ paths:
             application/json:
               schema: 
                 $ref: '#/components/schemas/transparencySite'
-  /ccg:
-    get:
-      summary: Returns a list of users.
-      description: Optional extended description in CommonMark or HTML.
-      responses:
-        '200':    # status code
-          description: A JSON array of user names
-          content:
-            application/json:
-              schema: 
-                type: array
-                items: 
-                  type: string
-    post:
-      summary: Returns a list of users.
-      description: Optional extended description in CommonMark or HTML.
-      responses:
-        '200':    # status code
-          description: A JSON array of user names
-          content:
-            application/json:
-              schema: 
-                type: array
-                items: 
-                  type: string
-    put:
-      summary: Returns a list of users.
-      description: Optional extended description in CommonMark or HTML.
-      responses:
-        '200':    # status code
-          description: A JSON array of user names
-          content:
-            application/json:
-              schema: 
-                type: array
-                items: 
-                  type: string
-  /care-setting:
-    get:
-      summary: Returns a list of users.
-      description: Optional extended description in CommonMark or HTML.
-      responses:
-        '200':    # status code
-          description: A JSON array of user names
-          content:
-            application/json:
-              schema: 
-                type: array
-                items: 
-                  type: string
-    post:
-      summary: Returns a list of users.
-      description: Optional extended description in CommonMark or HTML.
-      responses:
-        '200':    # status code
-          description: A JSON array of user names
-          content:
-            application/json:
-              schema: 
-                type: array
-                items: 
-                  type: string
-  /user:
-    get:
-      summary: Returns a list of users.
-      description: Optional extended description in CommonMark or HTML.
-      responses:
-        '200':    # status code
-          description: A JSON array of user names
-          content:
-            application/json:
-              schema: 
-                type: array
-                items: 
-                  type: string
-      tags:
-        - User
-    post:
-      summary: Returns a list of users.
-      description: Optional extended description in CommonMark or HTML.
-      responses:
-        '200':    # status code
-          description: A JSON array of user names
-          content:
-            application/json:
-              schema: 
-                type: array
-                items: 
-                  type: string
-      tags:
-        - User
-    put:
-      summary: Returns a list of users.
-      description: Optional extended description in CommonMark or HTML.
-      responses:
-        '200':    # status code
-          description: A JSON array of user names
-          content:
-            application/json:
-              schema: 
-                type: array
-                items: 
-                  type: string
-  /product:
-    get:
-      summary: Returns a list of users.
-      description: Optional extended description in CommonMark or HTML.
-      responses:
-        '200':    # status code
-          description: A JSON array of user names
-          content:
-            application/json:
-              schema: 
-                type: array
-                items: 
-                  type: string
-    post:
-      summary: Returns a list of users.
-      description: Optional extended description in CommonMark or HTML.
-      responses:
-        '200':    # status code
-          description: A JSON array of user names
-          content:
-            application/json:
-              schema: 
-                type: array
-                items: 
-                  type: string
-  /supplier:
-    get:
-      summary: Returns a list of users.
-      description: Optional extended description in CommonMark or HTML.
-      responses:
-        '200':    # status code
-          description: A JSON array of user names
-          content:
-            application/json:
-              schema: 
-                type: array
-                items: 
-                  type: string
-    post:
-      summary: Returns a list of users.
-      description: Optional extended description in CommonMark or HTML.
-      responses:
-        '200':    # status code
-          description: A JSON array of user names
-          content:
-            application/json:
-              schema: 
-                type: array
-                items: 
-                  type: string
-    put:
-      summary: Returns a list of users.
-      description: Optional extended description in CommonMark or HTML.
-      responses:
-        '200':    # status code
-          description: A JSON array of user names
-          content:
-            application/json:
-              schema: 
-                type: array
-                items: 
-                  type: string
-  /supplier/{id}/product:
-    parameters:
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: string
-        description: The user ID
-    get:
-      summary: Returns a list of users.
-      description: Optional extended description in CommonMark or HTML.
-      responses:
-        '200':    # status code
-          description: A JSON array of user names
-          content:
-            application/json:
-              schema: 
-                type: array
-                items: 
-                  type: string
-    post:
-      summary: Returns a list of users.
-      description: Optional extended description in CommonMark or HTML.
-      responses:
-        '200':    # status code
-          description: A JSON array of user names
-          content:
-            application/json:
-              schema: 
-                type: array
-                items: 
-                  type: string
+  # /ccg:
+  #   get:
+  #     summary: Returns a list of users.
+  #     description: Optional extended description in CommonMark or HTML.
+  #     responses:
+  #       '200':    # status code
+  #         description: A JSON array of user names
+  #         content:
+  #           application/json:
+  #             schema: 
+  #               type: array
+  #               items: 
+  #                 type: string
+  #   post:
+  #     summary: Returns a list of users.
+  #     description: Optional extended description in CommonMark or HTML.
+  #     responses:
+  #       '200':    # status code
+  #         description: A JSON array of user names
+  #         content:
+  #           application/json:
+  #             schema: 
+  #               type: array
+  #               items: 
+  #                 type: string
+  #   put:
+  #     summary: Returns a list of users.
+  #     description: Optional extended description in CommonMark or HTML.
+  #     responses:
+  #       '200':    # status code
+  #         description: A JSON array of user names
+  #         content:
+  #           application/json:
+  #             schema: 
+  #               type: array
+  #               items: 
+  #                 type: string
+  # /care-setting:
+  #   get:
+  #     summary: Returns a list of users.
+  #     description: Optional extended description in CommonMark or HTML.
+  #     responses:
+  #       '200':    # status code
+  #         description: A JSON array of user names
+  #         content:
+  #           application/json:
+  #             schema: 
+  #               type: array
+  #               items: 
+  #                 type: string
+  #   post:
+  #     summary: Returns a list of users.
+  #     description: Optional extended description in CommonMark or HTML.
+  #     responses:
+  #       '200':    # status code
+  #         description: A JSON array of user names
+  #         content:
+  #           application/json:
+  #             schema: 
+  #               type: array
+  #               items: 
+  #                 type: string
+  # /user:
+  #   get:
+  #     summary: Returns a list of users.
+  #     description: Optional extended description in CommonMark or HTML.
+  #     responses:
+  #       '200':    # status code
+  #         description: A JSON array of user names
+  #         content:
+  #           application/json:
+  #             schema: 
+  #               type: array
+  #               items: 
+  #                 type: string
+  #     tags:
+  #       - User
+  #   post:
+  #     summary: Returns a list of users.
+  #     description: Optional extended description in CommonMark or HTML.
+  #     responses:
+  #       '200':    # status code
+  #         description: A JSON array of user names
+  #         content:
+  #           application/json:
+  #             schema: 
+  #               type: array
+  #               items: 
+  #                 type: string
+  #     tags:
+  #       - User
+  #   put:
+  #     summary: Returns a list of users.
+  #     description: Optional extended description in CommonMark or HTML.
+  #     responses:
+  #       '200':    # status code
+  #         description: A JSON array of user names
+  #         content:
+  #           application/json:
+  #             schema: 
+  #               type: array
+  #               items: 
+  #                 type: string
+  # /product:
+  #   get:
+  #     summary: Returns a list of users.
+  #     description: Optional extended description in CommonMark or HTML.
+  #     responses:
+  #       '200':    # status code
+  #         description: A JSON array of user names
+  #         content:
+  #           application/json:
+  #             schema: 
+  #               type: array
+  #               items: 
+  #                 type: string
+  #   post:
+  #     summary: Returns a list of users.
+  #     description: Optional extended description in CommonMark or HTML.
+  #     responses:
+  #       '200':    # status code
+  #         description: A JSON array of user names
+  #         content:
+  #           application/json:
+  #             schema: 
+  #               type: array
+  #               items: 
+  #                 type: string
+  # /supplier:
+  #   get:
+  #     summary: Returns a list of users.
+  #     description: Optional extended description in CommonMark or HTML.
+  #     responses:
+  #       '200':    # status code
+  #         description: A JSON array of user names
+  #         content:
+  #           application/json:
+  #             schema: 
+  #               type: array
+  #               items: 
+  #                 type: string
+  #   post:
+  #     summary: Returns a list of users.
+  #     description: Optional extended description in CommonMark or HTML.
+  #     responses:
+  #       '200':    # status code
+  #         description: A JSON array of user names
+  #         content:
+  #           application/json:
+  #             schema: 
+  #               type: array
+  #               items: 
+  #                 type: string
+  #   put:
+  #     summary: Returns a list of users.
+  #     description: Optional extended description in CommonMark or HTML.
+  #     responses:
+  #       '200':    # status code
+  #         description: A JSON array of user names
+  #         content:
+  #           application/json:
+  #             schema: 
+  #               type: array
+  #               items: 
+  #                 type: string
+  # /supplier/{id}/product:
+  #   parameters:
+  #     - name: id
+  #       in: path
+  #       required: true
+  #       schema:
+  #         type: string
+  #       description: The user ID
+  #   get:
+  #     summary: Returns a list of users.
+  #     description: Optional extended description in CommonMark or HTML.
+  #     responses:
+  #       '200':    # status code
+  #         description: A JSON array of user names
+  #         content:
+  #           application/json:
+  #             schema: 
+  #               type: array
+  #               items: 
+  #                 type: string
+  #   post:
+  #     summary: Returns a list of users.
+  #     description: Optional extended description in CommonMark or HTML.
+  #     responses:
+  #       '200':    # status code
+  #         description: A JSON array of user names
+  #         content:
+  #           application/json:
+  #             schema: 
+  #               type: array
+  #               items: 
+  #                 type: string
   /acceptance:
-    get:
-      summary: Returns a list of users.
-      description: Optional extended description in CommonMark or HTML.
-      responses:
-        '200':    # status code
-          description: A JSON array of user names
-          content:
-            application/json:
-              schema: 
-                type: array
-                items: 
-                  type: string
+    # get:
+    #   summary: Returns a list of users.
+    #   description: Optional extended description in CommonMark or HTML.
+    #   responses:
+    #     '200':    # status code
+    #       description: A JSON array of user names
+    #       content:
+    #         application/json:
+    #           schema: 
+    #             type: array
+    #             items: 
+    #               type: string
     post:
-      summary: Returns a list of users.
-      description: Optional extended description in CommonMark or HTML.
+      summary: Submit the acceptance data gather as part of an End User signup.
+      description: >-
+        In order to process the acceptance of the NDSA we need to capture the signatory details, 
+        who they are signing on behalf of (organisation), the GP Connect interactions that they 
+        are planning to use and reason for use.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/acceptance'
       responses:
-        '200':    # status code
-          description: A JSON array of user names
-          content:
-            application/json:
-              schema: 
-                type: array
-                items: 
-                  type: string
-    put:
-      summary: Returns a list of users.
-      description: Optional extended description in CommonMark or HTML
-      responses:
-        '200':    # status code
-          description: A JSON array of user names
-          content:
-            application/json:
-              schema: 
-                type: array
-                items: 
-                  type: string
+        '201':    # status code
+          description: Created. The data has been persisted
+        '400':
+          description: Bad Request
+    # put:
+    #   summary: Returns a list of users.
+    #   description: Optional extended description in CommonMark or HTML
+    #   responses:
+    #     '200':    # status code
+    #       description: A JSON array of user names
+    #       content:
+    #         application/json:
+    #           schema: 
+    #             type: array
+    #             items: 
+    #               type: string
 
 components:
   schemas:
@@ -399,4 +404,53 @@ components:
           type: boolean
         structuredRecordEnabled:
           type: boolean
+
+    acceptance:
+      description: >-
+        Data captured as part of the NDSA Acceptance
+      type: object
+      properties:
+        organisation:
+          type: object
+          properties:
+            odsCode:
+              type: string
+            name:
+              type: string
+            addressLine1:
+              type: string
+            addressLine2:
+              type: string
+            town:
+              type: string
+            county:
+              type: string
+            country:
+              type: string
+            postCode:
+              type: string
+        useCase:
+          type: string
+        signatory:
+          type: object
+          properties:
+            email: 
+              type: string
+            name: 
+              type: string
+            position: 
+              type: string
+        softwareSupplierName:
+          type: string
+        interactions:
+          type: object
+          properties:
+            appointmentManagementEnabled:
+              type: boolean
+            accessRecordHTMLEnabled:
+              type: boolean
+            sendDocumentEnabled:
+              type: boolean
+            structuredRecordEnabled:
+              type: boolean
 

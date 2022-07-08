@@ -20,9 +20,9 @@ public class CareSettingController : ControllerBase
 
     public CareSettingController(ICareSettingRequestValidator validator, ICareSettingService service, ILogger<CareSettingController> logger)
     {
-        _logger = logger;
-        _validator = validator;
-        _service = service;
+        _logger = logger ?? throw new ArgumentNullException();
+        _validator = validator ?? throw new ArgumentNullException();
+        _service = service ?? throw new ArgumentNullException();
     }
 
     [HttpGet(Name = "GetCareSettings")]
@@ -46,7 +46,7 @@ public class CareSettingController : ControllerBase
     [HttpPut("{id:int}", Name = "UpdateCareSetting")]
     public async Task<ActionResult<CareSettingUpdateRequest>> Put(int id, [FromBody] CareSettingUpdateRequest careSettingUpdateRequest)
     {
-        _logger.LogInformation("Received Request {@query}", careSettingUpdateRequest);
+        _logger.LogInformation("Received Request {@query}", careSettingUpdateRequest);       
 
         careSettingUpdateRequest.CareSettingId = id;
         var validator = await _validator.IsValidUpdate(careSettingUpdateRequest);

@@ -2,6 +2,7 @@ using Dapper;
 using GpConnect.NationalDataSharingPortal.Api.Dal.Interfaces;
 using GpConnect.NationalDataSharingPortal.Api.Dto.Response;
 using GpConnect.NationalDataSharingPortal.Api.Service.Interface;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -11,19 +12,19 @@ namespace GpConnect.NationalDataSharingPortal.Api.Service;
 
 public class CcgService : ICcgService
 {
-  private readonly IDataService _dataService;
+    private readonly IDataService _dataService;
 
-  public CcgService(IDataService dataService)
-  {
-    _dataService = dataService;
-  }
+    public CcgService(IDataService dataService)
+    {
+        _dataService = dataService ?? throw new ArgumentNullException(nameof(dataService));
+    }
 
-  public async Task<IEnumerable<Ccg>> GetCcgs()
-  {
-    var query = "reference.get_lookup";
-    var parameters = new DynamicParameters();
-    parameters.Add("_lookup_type_id", Dal.Enumerations.LookupType.CCGICBODSCODE, DbType.Int16, ParameterDirection.Input);
-    var result = (await _dataService.ExecuteQuery<Ccg>(query, parameters)).OrderBy(c => c.CcgName);
-    return result;
-  }
+    public async Task<IEnumerable<Ccg>> GetCcgs()
+    {
+        var query = "reference.get_lookup";
+        var parameters = new DynamicParameters();
+        parameters.Add("_lookup_type_id", Dal.Enumerations.LookupType.CCGICBODSCODE, DbType.Int16, ParameterDirection.Input);
+        var result = (await _dataService.ExecuteQuery<Ccg>(query, parameters)).OrderBy(c => c.CcgName);
+        return result;
+    }
 }

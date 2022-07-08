@@ -19,8 +19,8 @@ public class TransparencySiteService : ITransparencySiteService
 
     public TransparencySiteService(IDataService dataService, ILogger<TransparencySiteService> logger)
     {
-        _dataService = dataService;
-        _logger = logger;
+        _dataService = dataService ?? throw new ArgumentNullException(nameof(dataService));
+        _logger = logger ?? throw new ArgumentNullException(nameof(logger));
     }
 
     public async Task<TransparencySites> GetMatchingSitesAsync(TransparencySiteRequest request)

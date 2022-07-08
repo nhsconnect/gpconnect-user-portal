@@ -4,6 +4,7 @@ using GpConnect.NationalDataSharingPortal.Api.Service.Interface;
 using GpConnect.NationalDataSharingPortal.Api.Validators.Interface;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -19,9 +20,9 @@ public class SupplierController : ControllerBase
 
     public SupplierController(ISupplierRequestValidator validator, ISupplierService service, ILogger<SupplierController> logger)
     {
-        _logger = logger;
-        _validator = validator;
-        _service = service;
+        _logger = logger ?? throw new ArgumentNullException();
+        _validator = validator ?? throw new ArgumentNullException();
+        _service = service ?? throw new ArgumentNullException();
     }
 
     [HttpGet(Name = "GetSuppliers")]
@@ -32,7 +33,7 @@ public class SupplierController : ControllerBase
     }
 
     [HttpGet("{supplierId}", Name = "GetSupplier")]
-    public async Task<ActionResult<CareSetting>> Get([FromRoute] int supplierId)
+    public async Task<ActionResult<Supplier>> Get([FromRoute] int supplierId)
     {
         var supplier = await _service.GetSupplier(supplierId);
         if (supplier == null)
