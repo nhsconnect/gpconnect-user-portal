@@ -109,7 +109,6 @@ services:
       ASPNETCORE_URLS: https://+:443
       ASPNETCORE_Kestrel__Certificates__Default__Password: ndsa
       ASPNETCORE_Kestrel__Certificates__Default__Path: /https/aspnetapp.pfx
-
       ConnectionStrings__GPConnectEndUserPortal: Host=database;Database=postgres;Username=postgres;Include Error Detail=true;
 
   end-user-portal:
@@ -129,8 +128,10 @@ services:
       ASPNETCORE_URLS: https://+:443
       ASPNETCORE_Kestrel__Certificates__Default__Password: ndsa
       ASPNETCORE_Kestrel__Certificates__Default__Path: /https/aspnetapp.pfx
-      API_BASEADDRESS: http://api:5002
-      # API_BASEADDRESS: http://mock-api:5555
+      SiteApi__BaseUrl: http://api:5002
+      SupplierApi__BaseUrl: http://api:5002
+      AgreementApi__BaseUrl: http://api:5002
+      OrganisationApi__BaseUrl: https://directory.spineservices.nhs.uk
 
   admin-portal:
     image: ndsp/admin-portal
