@@ -1,8 +1,11 @@
+using GpConnect.NationalDataSharingPortal.EndUserPortal.Builders;
+using GpConnect.NationalDataSharingPortal.EndUserPortal.Builders.Interfaces;
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Core.Config;
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Core.Data;
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Core.Data.Interfaces;
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Core.HttpClientServices;
 using Microsoft.AspNetCore.Mvc;
+using static GpConnect.NationalDataSharingPortal.EndUserPortal.Core.HttpClientServices.AgreementService;
 using static GpConnect.NationalDataSharingPortal.EndUserPortal.Core.HttpClientServices.OrganisationLookupService;
 using static GpConnect.NationalDataSharingPortal.EndUserPortal.Core.HttpClientServices.SiteService;
 
@@ -36,6 +39,7 @@ public static class ServiceCollectionExtensions
         services.Configure<ApplicationParameters>(configuration.GetSection("ApplicationParameters"));
         services.Configure<ResultPageConfig>(configuration.GetSection("Results"));
         services.Configure<SiteServiceConfig>(configuration.GetSection("SiteApi"));
+        services.Configure<AgreementServiceConfig>(configuration.GetSection("AgreementApi"));
         services.Configure<OrganisationLookupServiceConfig>(configuration.GetSection("OrganisationApi"));
 
         services.AddHsts(options =>
@@ -67,13 +71,17 @@ public static class ServiceCollectionExtensions
         });
 
         services.AddHttpClientServices(configuration, env);
-        AddDependentServices(services);
+        services.AddDependentServices();
 
         return services;
     }
 
-    private static void AddDependentServices(IServiceCollection services)
+    private static void AddDependentServices(this IServiceCollection services)
     {
         services.AddScoped<ITempDataProviderService, TempDataProviderService>();
+        services.AddSingleton<IOrganisationBuilder, OrganisationBuilder>();
+        services.AddSingleton<IInteractionsBuilder, InteractionsBuilder>();
+        services.AddSingleton<ISignatoryBuilder, SignatoryBuilder>();
+        services.AddSingleton<IAgreementInformationBuilder, AgreementInformationBuilder>();
     }
 }

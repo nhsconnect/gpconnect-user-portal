@@ -18,6 +18,7 @@ public static class HttpClientExtensions
 
     services.AddHttpClient<ISiteService, SiteService>(httpClientConfig).AugmentHttpClientBuilder(env);
     services.AddHttpClient<ISupplierService, SupplierService>(httpClientConfig).AugmentHttpClientBuilder(env);
+    services.AddHttpClient<IAgreementService, AgreementService>(httpClientConfig).AugmentHttpClientBuilder(env);
     services.AddHttpClient<IOrganisationLookupService, OrganisationLookupService>(httpClientConfig).AugmentHttpClientBuilder(env);
   }
 

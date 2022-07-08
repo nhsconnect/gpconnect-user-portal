@@ -1,6 +1,6 @@
 namespace GpConnect.NationalDataSharingPortal.EndUserPortal.Helpers.Constants;
 
-public class TempDataConstants
+public static class TempDataConstants
 {
     public const string SELECTEDSOFTWARESUPPLIERNAME = "SelectedSoftwareSupplierName";
     public const string SELECTEDGPCONNECTINTERACTIONFORSUPPLIER = "SelectedGpConnectInteractionForSupplier";
