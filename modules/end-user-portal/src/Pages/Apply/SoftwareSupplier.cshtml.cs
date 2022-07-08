@@ -6,6 +6,7 @@ using GpConnect.NationalDataSharingPortal.EndUserPortal.Models;
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Resources;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using static GpConnect.NationalDataSharingPortal.EndUserPortal.Helpers.Constants.GpConnectInteractions;
 
 namespace GpConnect.NationalDataSharingPortal.EndUserPortal.Pages.Apply;
 
@@ -88,10 +89,10 @@ public partial class SoftwareSupplierModel : BaseModel
     private IActionResult LoadGpConnectInteractionForSupplier(int selectedSoftwareSupplier)
     {
         var gpConnectInteractionsForSupplier = new List<GpConnectInteractionForSupplier>() {
-            new GpConnectInteractionForSupplier() { GpConnectInteractionForSupplierId = 1, GpConnectInteractionForSupplierValue = "Access Record: HTML" },
-            new GpConnectInteractionForSupplier() { GpConnectInteractionForSupplierId = 2, GpConnectInteractionForSupplierValue = "Access Record: Structured" },
-            new GpConnectInteractionForSupplier() { GpConnectInteractionForSupplierId = 3, GpConnectInteractionForSupplierValue = "Appointment Management" },
-            new GpConnectInteractionForSupplier() { GpConnectInteractionForSupplierId = 4, GpConnectInteractionForSupplierValue = "Send Document" }
+            new GpConnectInteractionForSupplier() { GpConnectInteractionForSupplierId = 1, GpConnectInteractionForSupplierValue = AccessRecordHTML },
+            new GpConnectInteractionForSupplier() { GpConnectInteractionForSupplierId = 2, GpConnectInteractionForSupplierValue = AccessRecordStructured },
+            new GpConnectInteractionForSupplier() { GpConnectInteractionForSupplierId = 3, GpConnectInteractionForSupplierValue = AppointmentManagement },
+            new GpConnectInteractionForSupplier() { GpConnectInteractionForSupplierId = 4, GpConnectInteractionForSupplierValue = SendDocument }
         };
 
         GpConnectInteractionForSupplierList = gpConnectInteractionsForSupplier;

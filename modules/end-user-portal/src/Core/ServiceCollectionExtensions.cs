@@ -1,3 +1,5 @@
+using GpConnect.NationalDataSharingPortal.EndUserPortal.Builders;
+using GpConnect.NationalDataSharingPortal.EndUserPortal.Builders.Interfaces;
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Core.Config;
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Core.Data;
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Core.Data.Interfaces;
@@ -69,13 +71,17 @@ public static class ServiceCollectionExtensions
         });
 
         services.AddHttpClientServices(configuration, env);
-        AddDependentServices(services);
+        services.AddDependentServices();
 
         return services;
     }
 
-    private static void AddDependentServices(IServiceCollection services)
+    private static void AddDependentServices(this IServiceCollection services)
     {
         services.AddScoped<ITempDataProviderService, TempDataProviderService>();
+        services.AddSingleton<IOrganisationBuilder, OrganisationBuilder>();
+        services.AddSingleton<IInteractionsBuilder, InteractionsBuilder>();
+        services.AddSingleton<ISignatoryBuilder, SignatoryBuilder>();
+        services.AddSingleton<IAgreementInformationBuilder, AgreementInformationBuilder>();
     }
 }
