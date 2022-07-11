@@ -25,7 +25,7 @@ node {
     stage('Push to ECR'){
 
       def images = [
-        // 'database-migrator', // TODO : need to package this with schema for deployment in cluster
+        'database-migrator',
         'api',
         'end-user-portal',
       ]
