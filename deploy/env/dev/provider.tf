@@ -4,7 +4,7 @@ provider "aws" {
 
   default_tags {
     tags = {
-      Project = local.prefix
+      Service = local.prefix
     }
   }
 }

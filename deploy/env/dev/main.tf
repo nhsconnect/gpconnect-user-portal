@@ -30,6 +30,6 @@ data "aws_subnet" "private" {
   }
   filter {
     name   = "availability-zone"
-    values = local.azs
+    values = [ local.azs[0] ]
   }
 }

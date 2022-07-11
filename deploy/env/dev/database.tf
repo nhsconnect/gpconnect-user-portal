@@ -1,19 +1,29 @@
 
+data "aws_subnets" "default" {
+  filter {
+    name   = "vpc-id"
+    values = [data.aws_vpc.default.id]
+  }
+  filter {
+    name   = "mapPublicIpOnLaunch"
+    values = ["false"]
+  }
+}
 
 resource "aws_db_subnet_group" "default" {
-  name = "${local.prefix}-db-subnet-group"
-  subnet_ids = [
-    data.aws_subnet.private.id
-  ]
+  name       = "${local.prefix}-db-subnet-group"
+  subnet_ids = data.aws_subnets.default.ids
 }
 
 resource "aws_rds_cluster" "default" {
   cluster_identifier   = "${local.prefix}-database"
   db_subnet_group_name = aws_db_subnet_group.default.name
 
-  engine          = "aurora-postgresql"
-  engine_mode     = "provisioned"
-  engine_version  = "14.3"
+  engine            = "aurora-postgresql"
+  engine_mode       = "provisioned"
+  engine_version    = "14.3"
+  storage_encrypted = true
+
   database_name   = "postgres"
   master_username = "postgres"
   master_password = "Lo1waUYrTXJsXj"
