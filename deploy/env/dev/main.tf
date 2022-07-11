@@ -9,6 +9,13 @@ terraform {
 }
 
 
+locals {
+  prefix = "gpc-ndsp"
+  region = "eu-west-2"
+  azs    = ["eu-west-2a", "eu-west-2b"]
+}
+
+
 data "aws_vpc" "default" {
   filter {
     name   = "tag:Name"
@@ -16,8 +23,13 @@ data "aws_vpc" "default" {
   }
 }
 
-
-output "information" {
-  value = data.aws_vpc.default.id
+data "aws_subnet" "private" {
+  filter {
+    name   = "tag:Name"
+    values = ["lk8s-nonprod.texasplatform.uk-private-*"]
+  }
+  filter {
+    name   = "availability-zone"
+    values = local.azs
+  }
 }
-
