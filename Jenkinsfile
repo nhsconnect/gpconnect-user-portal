@@ -23,14 +23,6 @@ node {
     }
 
     stage('Push to ECR'){
-      def ecrImageName = "${ecrAccountId}.dkr.ecr.${awsRegion}.amazonaws.com/${dockerImage}"
-      // This example uses a multi-stage build
-      // sh """docker build -t ${dockerImage}-build:${version} -f ${dockerDir}/pipeline-build.dockerfile ."""
-      // sh """docker build --build-arg VERSION=${version} -t ${ecrImageName}:${version} -f ${dockerDir}/pipeline-runtime.dockerfile ."""
-
-      // Create repo if it doesn't exist
-      sh """aws ecr describe-repositories --repository-names ${dockerRepo} || aws ecr create-repository --repository-name ${dockerRepo}"""
-      // Push images to ECR
 
       def images = [
         // 'database-migrator', // TODO : need to package this with schema for deployment in cluster
