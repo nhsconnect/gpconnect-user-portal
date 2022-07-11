@@ -1,0 +1,23 @@
+def awsRegion = 'eu-west-2'
+def ecrAccountId = '461183108257'
+
+def dockerRepo = 'gpc-ndsp'
+def version = 'latest'
+
+
+node {
+  try {
+
+    stage('Terraform') {
+
+    }
+
+    stage('Deploy') {
+
+    }
+  }
+  finally {
+
+  }
+}
+
