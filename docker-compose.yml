@@ -4,13 +4,12 @@ networks:
 services:
 
   data-migrator:
-    image: flyway/flyway
+    image: ndsp/data-migrator
+    build:
+      context: database
     volumes:
-      - ./database:/flyway/sql:ro
       - ./modules/api/service-level-tests/db_data_source/test_data_source.sql:/flyway/testdata/V999.0__testdata.sql
     environment:
-      FLYWAY_EDITION: community
-      FLYWAY_PLACEHOLDERS_logger: ndsa
       FLYWAY_LOCATIONS: filesystem:/flyway/sql,filesystem:/flyway/testdata
     command: -url=jdbc:postgresql://database/ -user=postgres -connectRetries=10 migrate
     depends_on:
