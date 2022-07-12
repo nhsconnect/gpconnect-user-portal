@@ -24,13 +24,14 @@ node {
 
       vars = [
         'NAMESPACE_TO_BE_REPLACED': appNamespace,
-        'DEPLOYMENT_NAME_TO_BE_REPLACED': 'flurps',
+        'DEPLOYMENT_NAME_TO_BE_REPLACED': "${prefix}-deploy",
 
         'API_CONTAINER_NAME': 'api',
         'API_IMAGE_URL': "${ecrRepoBase}/${prefix}/api:${version}",
         'API_SERVICE_NAME_TO_BE_REPLACED': 'api-svc',
         'API_SERVICE_SELECTOR_TO_BE_REPLACED': 'api-deploy',
 
+        'END_USER_PORTAL_DOMAIN_NAME': 'transparency.gpconnect.nhs.uk',
         'END_USER_PORTAL_CONTAINER_NAME': 'end-user-portal',
         'END_USER_PORTAL_IMAGE_URL':  "${ecrRepoBase}/${prefix}/end-user-portal:${version}",
         'END_USER_PORTAL_SERVICE_NAME_TO_BE_REPLACED': 'end-user-portal-svc',
@@ -43,7 +44,7 @@ node {
         'SECURITY_POLICY_TO_BE_REPLACED': 'ELBSecurityPolicy-TLS13-1-2-2021-06', // LATEST as of 2022-06
         'SERVICE_TAG_TO_BE_REPLACED': "Service=${prefix}",
         'EPOCHTIME_TO_BE_REPLACED': "${epochTime}",
-        'PORT_TO_BE_REPLACED': '',
+        'PORT_TO_BE_REPLACED': '80',
       ]
 
       k8files = [
