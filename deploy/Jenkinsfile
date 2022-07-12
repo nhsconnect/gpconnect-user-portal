@@ -55,9 +55,9 @@ node {
       }
 
       for (configFile in k8files) {
-        new File(configFile).withWriter { w ->
-          new File(configFile).eachLine(replace)
-        }
+        config = readFile(configFile)
+        replace config
+        writeFile(configFile, config)
       }
 
     }
