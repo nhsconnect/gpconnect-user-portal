@@ -1,0 +1,48 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ALB_INGRESS_TO_BE_REPLACED
+  namespace: NAMESPACE_TO_BE_REPLACED
+  labels:
+    app: ALB_INGRESS_TO_BE_REPLACED
+  annotations:
+    # Ingress Core Settings
+    kubernetes.io/ingress.class: alb
+    alb.ingress.kubernetes.io/scheme: ALB_SCHEME_TO_BE_REPLACED
+    #alb.ingress.kubernetes.io/security-groups: sg-0367ad4ca3c84006f # not needed if internal
+    # alb.ingress.kubernetes.io/ssl-policy: ELBSecurityPolicy-TLS-1-2-2017-01
+    alb.ingress.kubernetes.io/ssl-policy: SECURITY_POLICY_TO_BE_REPLACED #ELBSecurityPolicy-TLS-1-2-2017-01
+    alb.ingress.kubernetes.io/tags: Service=SERVICE_TAG_TO_BE_REPLACED
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/backend-protocol: HTTP
+    # presence of certificate implies HTTPS
+    # dev-k8s            arn:aws:acm:eu-west-2:782914191970:certificate/f880396f-8408-48d5-9680-c74a37297be0
+    # dev mgmt           arn:aws:acm:eu-west-2:827839643982:certificate/608443fc-e07a-48a9-ac1b-5a687c24fc10
+    # live-nonprod       arn:aws:acm:eu-west-2:730319765130:certificate/c0718115-4e22-4f48-a4aa-8c16ea86c5e6
+    # live mgmt          arn:aws:acm:eu-west-2:461183108257:certificate/825072d1-f558-46ff-9046-40bce7b03bd0
+    # live prod          arn:aws:acm:eu-west-2:950573124017:certificate/8b67daa2-2b82-4287-b925-d74ab9fa68ce
+    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:eu-west-2:730319765130:certificate/c0718115-4e22-4f48-a4aa-8c16ea86c5e6
+
+    # Health Check Settings
+    alb.ingress.kubernetes.io/healthcheck-protocol: HTTP
+    alb.ingress.kubernetes.io/healthcheck-port: traffic-port
+    alb.ingress.kubernetes.io/healthcheck-path: /MHSEndpoint
+    alb.ingress.kubernetes.io/healthcheck-interval-seconds: "15"
+    alb.ingress.kubernetes.io/healthcheck-timeout-seconds: "5"
+    alb.ingress.kubernetes.io/success-codes: "200"
+    alb.ingress.kubernetes.io/healthy-threshold-count: "2"
+    alb.ingress.kubernetes.io/unhealthy-threshold-count: "2"
+
+    # Hack to enable verification that kubectl apply has completed
+    last-updated-epochtime: "EPOCHTIME_TO_BE_REPLACED"
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /*
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: END_USER_PORTAL_SERVICE_NAME_TO_BE_REPLACED
+                port:
+                  number: PORT_TO_BE_REPLACED
