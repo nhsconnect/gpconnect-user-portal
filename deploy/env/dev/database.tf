@@ -43,4 +43,7 @@ resource "aws_rds_cluster_instance" "default" {
   engine             = aws_rds_cluster.default.engine
   engine_version     = aws_rds_cluster.default.engine_version
   instance_class     = "db.serverless"
+  tags = {
+    Name = "${local.prefix}-database-instance"
+  }
 }
