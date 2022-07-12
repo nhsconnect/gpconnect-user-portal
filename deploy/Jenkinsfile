@@ -51,7 +51,7 @@ node {
       ]
 
       replace = { line ->
-        var.each { key, value ->
+        vars.each { key, value ->
           rv = line
           rv = rv.replaceAll(key, value)
         }
