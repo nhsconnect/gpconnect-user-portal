@@ -47,10 +47,11 @@ node {
       ]
 
       replace = { line ->
-        for (key, value in vars) {
-          line = line.replaceAll(key, value)
+        var.each { key, value ->
+          rv = line
+          rv = rv.replaceAll(key, value)
         }
-        return line
+        return rv
       }
 
       for (configFile in k8files) {
