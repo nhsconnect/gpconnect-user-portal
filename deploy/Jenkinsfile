@@ -46,7 +46,7 @@ node {
         'ingress.yaml',
       ]
 
-      replace = line -> {
+      replace = { line ->
         for (key, value in vars) {
           line = line.replaceAll(key, value)
         }
