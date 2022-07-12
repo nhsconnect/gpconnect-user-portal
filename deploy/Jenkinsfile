@@ -24,6 +24,7 @@ node {
 
       vars = [
         'NAMESPACE_TO_BE_REPLACED': appNamespace,
+        'DEPLOYMENT_NAME_TO_BE_REPLACED': 'flurps',
 
         'API_IMAGE_URL': "${ecrRepoBase}/${prefix}/api:${version}",
         'API_SERVICE_NAME_TO_BE_REPLACED': 'api-svc',
@@ -62,7 +63,7 @@ node {
         for (configFile in k8files) {
           config = readFile(configFile)
           config = replace(config)
-          writeFile(configFile, config)
+          writeFile(file: configFile, text: config)
         }
       }
 
