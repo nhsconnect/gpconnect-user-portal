@@ -61,7 +61,7 @@ node {
       dir('k8s') {
         for (configFile in k8files) {
           config = readFile(configFile)
-          replace config
+          config = replace(config)
           writeFile(configFile, config)
         }
       }
