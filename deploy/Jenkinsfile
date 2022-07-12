@@ -9,6 +9,10 @@ version = 'latest'
 node {
   try {
 
+    stage('Checkout') {
+      checkout scm
+    }
+
     stage('Terraform') {
 
     }
