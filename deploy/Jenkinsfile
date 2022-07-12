@@ -18,7 +18,7 @@ node {
     }
 
     stage('Variable Substitution') {
-      ecrRepoBase = "${ecrAccountId}.dkr.ecr.${awsRegion}.amazonaws.com"
+      ecrRepoBase = "${ecrAccountId}.dkr.ecr.${awsRegion}.amazonaws.com".toString()
 
       epochTime = System.currentTimeMillis()
 
@@ -32,7 +32,7 @@ node {
         'API_SERVICE_SELECTOR_TO_BE_REPLACED': 'api-deploy',
 
         'END_USER_PORTAL_CONTAINER_NAME': 'end-user-portal',
-        'END_USER_PORTAL_IMAGE_URL':  "${ecrRepoBase.toString()}/${prefix}/end-user-portal:${version}",
+        'END_USER_PORTAL_IMAGE_URL':  "${ecrRepoBase}/${prefix}/end-user-portal:${version}",
         'END_USER_PORTAL_SERVICE_NAME_TO_BE_REPLACED': 'end-user-portal-svc',
         'END_USER_PORTAL_SERVICE_SELECTOR_TO_BE_REPLACED': 'end-user-portal-deploy',
 
