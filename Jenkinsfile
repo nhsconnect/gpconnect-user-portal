@@ -8,6 +8,10 @@ node {
 
   try {
 
+    stage ('Source') {
+      checkout scm
+    }
+
     stage('Build') {
       sh 'make build-containers'
     }
