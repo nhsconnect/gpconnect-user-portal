@@ -16,7 +16,7 @@ node {
     stage('Variable Substitution') {
       ecrRepoBase = "${ecrAccountId}.dkr.ecr.${awsRegion}.amazonaws.com"
 
-      epochTime = System.getCurrentTimeMillis
+      epochTime = System.currentTimeMillis
 
       vars = [
         'NAMESPACE_TO_BE_REPLACED': appNamespace,
