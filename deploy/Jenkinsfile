@@ -69,7 +69,7 @@ node {
 
     }
 
-    stage("Authenticate to ${texasEnvName} AWS/k8s") {
+    stage("Authenticate to AWS/k8s") {
       // Do namespace here b/c we might need it for DB migration
     }
 
