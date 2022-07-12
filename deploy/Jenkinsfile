@@ -1,14 +1,71 @@
-def awsRegion = 'eu-west-2'
-def ecrAccountId = '461183108257'
+awsRegion = 'eu-west-2'
+ecrAccountId = '461183108257'
 
-def dockerRepo = 'gpc-ndsp'
-def version = 'latest'
-
+prefix = 'gpc-ndsp'
+env = 'nonprod'
+appNamespace = "${prefix}-${env}"
+version = 'latest'
 
 node {
   try {
 
     stage('Terraform') {
+
+    }
+
+    stage('Variable Substitution') {
+      ecrRepoBase = "${ecrAccountId}.dkr.ecr.${awsRegion}.amazonaws.com"
+
+      epochTime = System.getCurrentTimeMillis
+
+      vars = [
+        'NAMESPACE_TO_BE_REPLACED': appNamespace,
+
+        'API_IMAGE_URL': "${ecrRepoBase}/${prefix}/api:${version}",
+        'API_SERVICE_NAME_TO_BE_REPLACED': 'api-svc',
+        'API_SERVICE_SELECTOR_TO_BE_REPLACED': 'api-deploy',
+
+        'END_USER_PORTAL_IMAGE_URL':  "${ecrRepoBase}/${prefix}/end-user-portal:${version}",
+        'END_USER_PORTAL_SERVICE_NAME_TO_BE_REPLACED': 'end-user-portal-svc',
+        'END_USER_PORTAL_SERVICE_SELECTOR_TO_BE_REPLACED': 'end-user-portal-deploy',
+
+        'SCHEMA_MIGRATOR_IMAGE_URL': "${ecrRepoBase}/${prefix}/database-migrator:${version}" ,
+
+        'ALB_INGRESS_TO_BE_REPLACED': 'alb',
+        'ALB_SCHEME_TO_BE_REPLACED': 'internet-facing',
+        'SECURITY_POLICY_TO_BE_REPLACED': 'ELBSecurityPolicy-TLS13-1-2-2021-06', // LATEST as of 2022-06
+        'SERVICE_TAG_TO_BE_REPLACED': "Service=${prefix}",
+        'EPOCHTIME_TO_BE_REPLACED': "${epochTime}",
+        'PORT_TO_BE_REPLACED': '',
+      ]
+
+      k8files = [
+        'deployment.yaml',
+        'service.api.yaml',
+        'service.eup.yaml',
+        'ingress.yaml',
+      ]
+
+      replace = line -> {
+        for (key, value in vars) {
+          line = line.replaceAll(key, value)
+        }
+        return line
+      }
+
+      for (configFile in k8files) {
+        new File(configFile).withWriter { w ->
+          new File(configFile).eachLine(replace)
+        }
+      }
+
+    }
+
+    stage("Authenticate to ${texasEnvName} AWS/k8s") {
+      // Do namespace here b/c we might need it for DB migration
+    }
+
+    stage('Database Migration') {
 
     }
 
