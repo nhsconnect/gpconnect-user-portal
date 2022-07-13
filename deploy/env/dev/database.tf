@@ -45,9 +45,12 @@ resource "aws_rds_cluster" "default" {
 
 resource "aws_rds_cluster_instance" "default" {
   cluster_identifier = aws_rds_cluster.default.id
+
+  identifier = "${local.prefix}-database-single-instance"
   engine             = aws_rds_cluster.default.engine
   engine_version     = aws_rds_cluster.default.engine_version
   instance_class     = "db.serverless"
+
   tags = {
     Name = "${local.prefix}-database-instance"
   }
