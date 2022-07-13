@@ -38,7 +38,7 @@ node {
 
     def databaseEndpoint
     stage('Terraform') {
-      withDir('deploy/env/dev') {
+      dir('deploy/env/dev') {
         withEnv(creds) {
           sh 'terraform plan'
           // Get Database Hostname
