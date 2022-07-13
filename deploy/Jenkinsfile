@@ -34,21 +34,20 @@ node {
         )
       }
       creds.add("KUBECONFIG=${kubeconfig}")
-
-      withEnv(creds) {
-        sh 'kubectl get pods'
-      }
-
-      sh 'false'
     }
 
     def databaseEndpoint
     stage('Terraform') {
-
-      sh 't'
-      // Get Database Hostname
-      outputs = readJSON(text: sh('terraform output -json'))
-      databaseEndpoint = outputs['database_endpoint']
+      withDir('deploy/env/dev') {
+        withEnv(creds) {
+          sh 'terraform plan'
+          // Get Database Hostname
+          // outputs = readJSON(text: sh('terraform output -json'))
+          // databaseEndpoint = outputs['database_endpoint']
+          // echo databaseEndpoint
+        }
+      }
+      sh 'false'
     }
 
     stage('Variable Substitution') {
