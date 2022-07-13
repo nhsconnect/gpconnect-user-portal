@@ -21,7 +21,8 @@ node {
     stage("Authenticate to AWS/k8s") {
       // TODO : Do namespace here b/c we might need it for DB migration
       awsCreds = sh(
-        script: "${jenkinsScriptsDir}/assume_role.sh ${texasEnvName} ${serviceTeam}"
+        script: "${jenkinsScriptsDir}/assume_role.sh ${texasEnvName} ${serviceTeam}",
+        returnStdout: true,
       )
 
       withEnv(awsCreds.split(',')) {
