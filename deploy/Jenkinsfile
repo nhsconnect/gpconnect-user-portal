@@ -27,7 +27,7 @@ node {
 
       echo awsCreds.class.toString()
       echo awsCreds
-      creds = awsCreds.split(',\n')
+      creds = awsCreds.tokenize(',\n')
       echo creds.class.toString()
 
       withEnv(creds) {
