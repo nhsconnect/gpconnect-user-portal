@@ -40,6 +40,7 @@ node {
     stage('Terraform') {
       dir('deploy/env/dev') {
         withEnv(creds) {
+          sh 'terraform init'
           sh 'terraform plan'
           // Get Database Hostname
           // outputs = readJSON(text: sh('terraform output -json'))
