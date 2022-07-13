@@ -20,8 +20,7 @@ node {
 
     stage("Authenticate to AWS/k8s") {
 
-
-      awsConfig = readFile('/var/jenkins_home/.aws/config')
+      awsConfig = readFile('~/.aws/config')
       echo awsConfig
 
       // TODO : Do namespace here b/c we might need it for DB migration
@@ -39,6 +38,7 @@ node {
         )
         sh 'false'
       }
+      creds.add("KUBECONFIG=${kubeconfig}")
     }
 
     def databaseEndpoint
