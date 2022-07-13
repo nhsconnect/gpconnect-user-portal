@@ -44,13 +44,14 @@ node {
           sh 'terraform plan -out /tmp/tf.plan' // TODO use job execution ID
           sh 'terraform apply /tmp/tf.plan'
           // Get Database Hostname
-          outputs = readJSON(text: sh('terraform output -json'))
-          echo outputs
-          databaseEndpoint = outputs['database_endpoint']
+          outputs = readJSON(text: sh(
+            'terraform output -json',
+            returnStdout: true,
+          ))
+          databaseEndpoint = outputs['database_endpoint']['value']
           echo databaseEndpoint
         }
       }
-      sh 'false'
     }
 
     stage('Variable Substitution') {
@@ -87,6 +88,7 @@ node {
 
       k8files = [
         'namespace.yaml',
+        'job-data-migrate.yaml',
         'deployment.yaml',
         'service.api.yaml',
         'service.eup.yaml',
@@ -117,6 +119,7 @@ node {
       dir('k8s') {
         sh "kubectl apply -f ${migrationJob}"
       }
+      sh 'false'
     }
 
     stage('Deploy') {
