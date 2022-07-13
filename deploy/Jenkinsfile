@@ -19,10 +19,6 @@ node {
     }
 
     stage("Authenticate to AWS/k8s") {
-
-      awsConfig = readFile('~/.aws/config')
-      echo awsConfig
-
       // TODO : Do namespace here b/c we might need it for DB migration
       awsCreds = sh(
         script: "${jenkinsScriptsDir}/assume_role.sh ${texasEnvName} ${serviceTeam}",
