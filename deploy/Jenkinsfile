@@ -27,10 +27,10 @@ node {
 
       echo awsCreds.class.toString()
       echo awsCreds
-      creds = awsCreds.split(',')
+      creds = awsCreds.split(',\n')
       echo creds.class.toString()
 
-      withEnv(awsCreds.split(',')) {
+      withEnv(creds) {
         sh 'aws sts get-caller-identity'
         sh 'false'
       }
