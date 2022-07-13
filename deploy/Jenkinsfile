@@ -25,6 +25,8 @@ node {
         returnStdout: true,
       )
 
+      echo awsCreds.class.toString()
+      echo awsCreds
       creds = awsCreds.split(',')
       echo creds.class.toString()
 
