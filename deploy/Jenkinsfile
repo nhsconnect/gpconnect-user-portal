@@ -41,7 +41,7 @@ node {
       dir('deploy/env/dev') {
         withEnv(creds) {
           sh 'terraform init'
-          sh 'terraform plan'
+          sh 'terraform plan -out /tmp/tf.plan' // TODO use job execution ID
           // Get Database Hostname
           // outputs = readJSON(text: sh('terraform output -json'))
           // databaseEndpoint = outputs['database_endpoint']
