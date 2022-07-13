@@ -36,9 +36,14 @@ node {
           script: "${jenkinsScriptsDir}/kube_config.sh ${texasEnvName}",
           returnStdout: true,
         )
-        sh 'false'
       }
       creds.add("KUBECONFIG=${kubeconfig}")
+
+      withEnv(creds) {
+        sh 'kubectl get pods'
+      }
+
+      sh 'false'
     }
 
     def databaseEndpoint
