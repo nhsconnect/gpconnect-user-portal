@@ -42,10 +42,12 @@ node {
         withEnv(creds) {
           sh 'terraform init'
           sh 'terraform plan -out /tmp/tf.plan' // TODO use job execution ID
+          sh 'terraform apply /tmp/tf.plan'
           // Get Database Hostname
-          // outputs = readJSON(text: sh('terraform output -json'))
-          // databaseEndpoint = outputs['database_endpoint']
-          // echo databaseEndpoint
+          outputs = readJSON(text: sh('terraform output -json'))
+          echo outputs
+          databaseEndpoint = outputs['database_endpoint']
+          echo databaseEndpoint
         }
       }
       sh 'false'
