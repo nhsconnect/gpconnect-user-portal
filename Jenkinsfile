@@ -29,7 +29,7 @@ node {
     stage('Push to ECR'){
 
       def images = [
-        'database-migrator',
+        'data-migrator',
         'api',
         'end-user-portal',
       ]
