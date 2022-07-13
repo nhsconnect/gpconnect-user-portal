@@ -36,6 +36,9 @@ resource "aws_security_group_rule" "postgres_out_of_api" {
   to_port                  = aws_rds_cluster.default.port
   protocol                 = "tcp"
   source_security_group_id = aws_security_group.database_servers.id
+  tags = {
+    Name = "Postgres traffic leaves API"
+  }
 }
 
 # Security group rules for database
@@ -47,6 +50,9 @@ resource "aws_security_group_rule" "api_to_postgres" {
   to_port                  = aws_rds_cluster.default.port
   protocol                 = "tcp"
   source_security_group_id = aws_security_group.database_clients.id
+  tags = {
+    Name = "Postgres traffic arrives from API"
+  }
 }
 
 # TODO delete this when we have Security Groups for Pods
@@ -58,4 +64,7 @@ resource "aws_security_group_rule" "k8s_to_postgres" {
   to_port                  = aws_rds_cluster.default.port
   protocol                 = "tcp"
   source_security_group_id = data.aws_security_group.worker_sg.id
+  tags = {
+    Name = "Postgres traffic arrives from k8s"
+  }
 }
