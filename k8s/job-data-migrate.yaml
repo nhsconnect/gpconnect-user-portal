@@ -1,0 +1,19 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: gpc-ndsp-data-migrate
+spec:
+  template:
+    spec:
+      containers:
+        - name: migrate
+          image: ndsp/data-migrator
+          imagePullPolicy: Never
+          command:
+            - "flyway"
+            - "-url=jdbc:postgresql://DATABASE_ENDPOINT/"
+            - "-user=postgres"
+            - "-connectRetries=10"
+            - "migrate"
+      restartPolicy: Never
+  backoffLimit: 1
