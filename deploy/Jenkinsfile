@@ -19,19 +19,24 @@ node {
     }
 
     stage("Authenticate to AWS/k8s") {
+
+
+      awsConfig = readFile('/var/jenkins_home/.aws/config')
+      echo awsConfig
+
       // TODO : Do namespace here b/c we might need it for DB migration
       awsCreds = sh(
         script: "${jenkinsScriptsDir}/assume_role.sh ${texasEnvName} ${serviceTeam}",
         returnStdout: true,
       )
 
-      echo awsCreds.class.toString()
-      echo awsCreds
       creds = awsCreds.tokenize(',\n')
-      echo creds.class.toString()
 
       withEnv(creds) {
-        sh 'aws sts get-caller-identity'
+        kubeconfig = sh(
+          script: "${jenkinsScriptsDir}/kube_config.sh ${texasEnvName}",
+          returnStdout: true,
+        )
         sh 'false'
       }
     }
