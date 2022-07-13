@@ -25,6 +25,9 @@ node {
         returnStdout: true,
       )
 
+      creds = awsCreds.split(',')
+      echo creds.length
+
       withEnv(awsCreds.split(',')) {
         sh 'aws sts get-caller-identity'
         sh 'false'
