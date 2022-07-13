@@ -15,6 +15,11 @@ resource "aws_db_subnet_group" "default" {
   subnet_ids = data.aws_subnets.default.ids
 }
 
+resource "random_password" "default" {
+  length = 20
+  special = true
+}
+
 resource "aws_rds_cluster" "default" {
   cluster_identifier   = "${local.prefix}-database"
   db_subnet_group_name = aws_db_subnet_group.default.name
@@ -26,7 +31,7 @@ resource "aws_rds_cluster" "default" {
 
   database_name   = "postgres"
   master_username = "postgres"
-  master_password = "Lo1waUYrTXJsXj"
+  master_password = random_password.default.result
 
   vpc_security_group_ids = [
     aws_security_group.database_servers.id

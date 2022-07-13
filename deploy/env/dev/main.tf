@@ -33,3 +33,7 @@ data "aws_subnet" "private" {
     values = [ local.azs[0] ]
   }
 }
+
+output "database_endpoint" {
+  value = aws_rds_cluster_instance.default.endpoint
+}
