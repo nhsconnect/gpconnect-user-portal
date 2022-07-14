@@ -8,13 +8,16 @@ data "aws_caller_identity" "current" {}
 locals {
   oidc_issuer = "https://oidc.eks.eu-west-2.amazonaws.com/id/91A8B9E4BB9597FC56C71C89FCAC54D7"
 }
-data "aws_iam_openid_connect_provider" "default" {
-  # url = data.aws_eks_cluster.default.identity[0].oidc[0].issuer
-  url = local.oidc_issuer
-}
+
+# data "aws_iam_openid_connect_provider" "default" {
+#   # url = data.aws_eks_cluster.default.identity[0].oidc[0].issuer
+#   url = local.oidc_issuer
+# }
 
 locals {
-  oidc_provider = trimprefix(data.aws_iam_openid_connect_provider.default.url, "https://")
+  # oidc_provider = data.aws_iam_openid_connect_provider.default.url
+  oidc_provider = "oidc.eks.eu-west-2.amazonaws.com/id/91A8B9E4BB9597FC56C71C89FCAC54D7"
+  oidc_arn      = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:oidc-provider/${local.oidc_provider}"
 }
 
 data "aws_iam_policy_document" "assume_role_eks" {
@@ -23,7 +26,8 @@ data "aws_iam_policy_document" "assume_role_eks" {
     principals {
       type = "Federated"
       identifiers = [
-        data.aws_iam_openid_connect_provider.default.arn
+        # data.aws_iam_openid_connect_provider.default.arn
+        local.oidc_arn
       ]
     }
     actions = [
