@@ -45,7 +45,7 @@ node {
           sh 'terraform apply /tmp/tf.plan'
           // Get Database Hostname
           outputs = readJSON(text: sh(
-            'terraform output -json',
+            script: 'terraform output -json',
             returnStdout: true,
           ))
           databaseEndpoint = outputs['database_endpoint']['value']
