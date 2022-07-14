@@ -25,14 +25,14 @@ data "aws_iam_policy_document" "assume_role_eks" {
       "sts:AssumeRoleWithWebIdentity"
     ]
     condition {
-      test = "StringEquals"
+      test     = "StringEquals"
       variable = "${local.oidc_provider}:aud"
       values = [
         "sts.amazonaws.com"
       ]
     }
     condition {
-      test = "StringEquals"
+      test     = "StringEquals"
       variable = "${local.oidc_provider}:sub"
       values = [
         "system:serviceaccount:${local.prefix}:${local.service_account_name}"
@@ -41,8 +41,9 @@ data "aws_iam_policy_document" "assume_role_eks" {
   }
 }
 
-resource "aws_iam_role" "migrator" {
-  name = "${local.prefix}-database-migration-role"
+resource "aws_iam_role" "api" {
+  path = "/${local.prefix}/"
+  name = "application-api-role"
 
   assume_role_policy = data.aws_iam_policy_document.assume_role_eks.json
 
@@ -51,3 +52,30 @@ resource "aws_iam_role" "migrator" {
   }
 }
 
+locals {
+  db_users = toset(["api"])
+}
+
+data "aws_iam_policy_document" "connect_to_db_as" {
+  for_each = local.db_users
+  statement {
+    actions = [
+      "rds-db:connect"
+    ]
+    resources = [
+      "arn:aws:rds-db:${data.aws_caller_identity.current.account_id}:dbuser:${aws_rds_cluster_instance.default.dbi_resource_id}/${each.key}"
+    ]
+  }
+}
+
+resource "aws_iam_policy" "connect_to_db_as" {
+  for_each = local.db_users
+  path     = "/${local.prefix}/"
+  name     = "connect-to-db-as-${each.key}"
+  policy   = data.aws_iam_policy_document.connect_to_db_as[each.key].json
+}
+
+resource "aws_iam_role_policy_attachment" "api_connect_to_db" {
+  role       = aws_iam_role.api.name
+  policy_arn = aws_iam_policy.connect_to_db_as["api"].arn
+}
