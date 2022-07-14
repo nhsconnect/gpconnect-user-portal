@@ -21,10 +21,9 @@ variable "source-parameters" {
   }
 }
 
-resource "aws_ssm_parameter" "parameters" {
-  for_each = var.source-parameters
-
-  name  = "/${local.prefix}/${local.env}/${each.key}"
-  type  = "String"
-  value = each.value
-}
+# resource "aws_ssm_parameter" "parameters" {
+#   for_each = var.source-parameters
+#   name  = "/${local.prefix}/${local.env}/${each.key}"
+#   type  = "String"
+#   value = each.value
+# }
