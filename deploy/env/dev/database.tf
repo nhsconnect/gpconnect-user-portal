@@ -41,6 +41,10 @@ resource "aws_rds_cluster" "default" {
     max_capacity = 1.0
     min_capacity = 0.5
   }
+
+  tags = {
+    Name = "${local.prefix}-database"
+  }
 }
 
 resource "aws_rds_cluster_instance" "default" {
