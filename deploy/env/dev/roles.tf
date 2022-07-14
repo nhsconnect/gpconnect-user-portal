@@ -1,12 +1,16 @@
 
 data "aws_caller_identity" "current" {}
 
-data "aws_eks_cluster" "default" {
-  name = "live-leks-cluster"
-}
+# data "aws_eks_cluster" "default" {
+#   name = "live-leks-cluster"
+# }
 
+locals {
+  oidc_issuer = "https://oidc.eks.eu-west-2.amazonaws.com/id/91A8B9E4BB9597FC56C71C89FCAC54D7"
+}
 data "aws_iam_openid_connect_provider" "default" {
-  url = data.aws_eks_cluster.default.identity[0].oidc[0].issuer
+  # url = data.aws_eks_cluster.default.identity[0].oidc[0].issuer
+  url = local.oidc_issuer
 }
 
 locals {
