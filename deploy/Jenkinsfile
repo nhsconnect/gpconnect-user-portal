@@ -49,7 +49,7 @@ node {
             returnStdout: true,
           ))
           databaseEndpoint = outputs['database_endpoint']['value']
-          databaseSecret = outputs['database_credentials']['secret_id']
+          databaseSecret = outputs['database_credentials']['value']['secret_id']
           echo databaseEndpoint
         }
       }
