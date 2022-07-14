@@ -11,8 +11,8 @@ spec:
           imagePullPolicy: Never
           command:
             - "flyway"
-            - "-url=jdbc:postgresql://DATABASE_ENDPOINT/"
-            - "-user=postgres"
+            - "-url=jdbc-secretsmanager:postgresql://DATABASE_ENDPOINT/"
+            - "-user=DATABASE_CREDS_SECRET_ID"
             - "-connectRetries=10"
             - "migrate"
       restartPolicy: Never
