@@ -2,13 +2,14 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   name: gpc-ndsp-data-migrate
+  namespace: NAMESPACE_TO_BE_REPLACED
 spec:
   template:
     spec:
+      serviceAccountName: migrate-service-account
       containers:
         - name: migrate
-          image: ndsp/data-migrator
-          imagePullPolicy: Never
+          image: MIGRATE_IMAGE_URL
           command:
             - "flyway"
             - "-url=jdbc-secretsmanager:postgresql://DATABASE_ENDPOINT/"

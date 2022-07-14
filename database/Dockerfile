@@ -1,6 +1,6 @@
-FROM flyway/flyway
+FROM flyway/flyway:9.0.0-alpine
 
-ADD . /flyway/sql
+COPY . /flyway/sql
 
 ENV FLYWAY_EDITION=community
 ENV FLYWAY_PLACEHOLDERS_logger: ndsa

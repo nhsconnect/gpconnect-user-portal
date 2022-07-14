@@ -49,6 +49,7 @@ node {
             returnStdout: true,
           ))
           databaseEndpoint = outputs['database_endpoint']['value']
+          databaseSecret = outputs['database_credentials']['secret_id']
           echo databaseEndpoint
         }
       }
@@ -62,6 +63,7 @@ node {
       vars = [
 
         'DATABASE_ENDPOINT': databaseEndpoint,
+        'DATABASE_CREDS_SECRET_ID': databaseSecret,
         'NAMESPACE_TO_BE_REPLACED': appNamespace,
         'DEPLOYMENT_NAME_TO_BE_REPLACED': "${prefix}-deploy",
 
@@ -76,6 +78,8 @@ node {
         'END_USER_PORTAL_SERVICE_NAME_TO_BE_REPLACED': 'end-user-portal-svc',
         'END_USER_PORTAL_SERVICE_SELECTOR_TO_BE_REPLACED': 'end-user-portal-deploy',
 
+        'MIGRATE_IMAGE_URL':  "${ecrRepoBase}/${prefix}/data-migrator:${version}",
+
         'SCHEMA_MIGRATOR_IMAGE_URL': "${ecrRepoBase}/${prefix}/database-migrator:${version}" ,
 
         'ALB_INGRESS_TO_BE_REPLACED': 'alb',
@@ -88,6 +92,7 @@ node {
 
       k8files = [
         'namespace.yaml',
+        'service-account.migrate.yaml',
         'job-data-migrate.yaml',
         'deployment.yaml',
         'service.api.yaml',
@@ -117,6 +122,7 @@ node {
       // TODO : Do a bit where we rename the job file
       migrationJob = 'job-data-migrate.yaml'
       dir('k8s') {
+        sh 'kubectl apply -f service-account.migrate.yaml'
         sh "kubectl apply -f ${migrationJob}"
       }
       sh 'false'
