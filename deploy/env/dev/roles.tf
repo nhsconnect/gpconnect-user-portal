@@ -14,6 +14,7 @@ locals {
 }
 
 data "aws_iam_policy_document" "assume_role_eks" {
+  for_each = local.db_users
   statement {
     principals {
       type = "Federated"
@@ -35,7 +36,7 @@ data "aws_iam_policy_document" "assume_role_eks" {
       test     = "StringEquals"
       variable = "${local.oidc_provider}:sub"
       values = [
-        "system:serviceaccount:${local.prefix}:${local.service_account_name}"
+        "system:serviceaccount:${local.prefix}:${each.key}-service-account"
       ]
     }
   }
@@ -45,15 +46,15 @@ resource "aws_iam_role" "api" {
   path = "/${local.prefix}/"
   name = "application-api-role"
 
-  assume_role_policy = data.aws_iam_policy_document.assume_role_eks.json
+  assume_role_policy = data.aws_iam_policy_document.assume_role_eks["api"].json
 
   tags = {
-    Name = "${local.prefix}-database-migration-role"
+    Name = "${local.prefix}-application-api-role"
   }
 }
 
 locals {
-  db_users = toset(["api"])
+  db_users = toset(["api", "migrate"])
 }
 
 data "aws_iam_policy_document" "connect_to_db_as" {
@@ -78,4 +79,37 @@ resource "aws_iam_policy" "connect_to_db_as" {
 resource "aws_iam_role_policy_attachment" "api_connect_to_db" {
   role       = aws_iam_role.api.name
   policy_arn = aws_iam_policy.connect_to_db_as["api"].arn
+}
+
+resource "aws_iam_role" "migrate" {
+  path = "/${local.prefix}/"
+  name = "database-migrate-role"
+
+  assume_role_policy = data.aws_iam_policy_document.assume_role_eks["migrate"].json
+
+  tags = {
+    Name = "${local.prefix}-database-migrate-role"
+  }
+}
+
+data "aws_iam_policy_document" "migrate_db" {
+  statement {
+    actions = [
+      "secretsmanager:GetSecretValue"
+    ]
+    resources = [
+      aws_secretsmanager_secret.database_password.arn
+    ]
+  }
+}
+
+resource "aws_iam_policy" "read_database_password" {
+  path   = "/${local.prefix}/"
+  name   = "read-database-password-secret"
+  policy = data.aws_iam_policy_document.migrate_db.json
+}
+
+resource "aws_iam_role_policy_attachment" "migrator_reads_database_password" {
+  role       = aws_iam_role.migrate.name
+  policy_arn = aws_iam_policy.read_database_password.arn
 }
