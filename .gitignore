@@ -264,3 +264,6 @@ paket-files/
 *.feature.cs
 userid
 coveragereport
+
+# Terraform
+.terraform/
