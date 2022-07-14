@@ -16,7 +16,7 @@ resource "aws_db_subnet_group" "default" {
 }
 
 resource "random_password" "default" {
-  length = 20
+  length  = 20
   special = true
 }
 
@@ -31,7 +31,7 @@ resource "aws_rds_cluster" "default" {
 
   database_name   = "postgres"
   master_username = "postgres"
-  master_password = random_password.default.result
+  master_password = random_password.database_password.result
 
   vpc_security_group_ids = [
     aws_security_group.database_servers.id
@@ -46,10 +46,10 @@ resource "aws_rds_cluster" "default" {
 resource "aws_rds_cluster_instance" "default" {
   cluster_identifier = aws_rds_cluster.default.id
 
-  identifier         = "${local.prefix}-database-single-instance"
-  engine             = aws_rds_cluster.default.engine
-  engine_version     = aws_rds_cluster.default.engine_version
-  instance_class     = "db.serverless"
+  identifier     = "${local.prefix}-database-single-instance"
+  engine         = aws_rds_cluster.default.engine
+  engine_version = aws_rds_cluster.default.engine_version
+  instance_class = "db.serverless"
 
   tags = {
     Name = "${local.prefix}-database-instance"
