@@ -87,7 +87,7 @@ node {
         'END_USER_PORTAL_SERVICE_SELECTOR_TO_BE_REPLACED': 'end-user-portal-deploy',
 
         'MIGRATE_IMAGE_URL':  "${ecrRepoBase}/${prefix}/data-migrator:${version}",
-        'MIGRATE_ROLE_ARN' migrateRoleArn,
+        'MIGRATE_ROLE_ARN': migrateRoleArn,
 
         'SCHEMA_MIGRATOR_IMAGE_URL': "${ecrRepoBase}/${prefix}/database-migrator:${version}" ,
 
