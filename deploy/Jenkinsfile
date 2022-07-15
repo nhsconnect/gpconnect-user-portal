@@ -33,6 +33,8 @@ node {
           returnStdout: true,
         )
       }
+      echo "TOP OF KUBECONFIG"
+      sh "head -n2 ${kubeconfig}"
       creds.add("KUBECONFIG=${kubeconfig}")
     }
 
@@ -123,7 +125,7 @@ node {
       migrationJob = 'job-data-migrate.yaml'
       dir('k8s') {
         withEnv(creds) {
-          sh 'kubectl create -f namespace.yaml'
+          sh 'kubectl apply -f namespace.yaml'
           sh 'kubectl apply -f service-account.migrate.yaml'
           sh "kubectl apply -f ${migrationJob}"
         }
