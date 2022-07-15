@@ -5,8 +5,8 @@ metadata:
 spec:
   ports:
     - protocol: TCP
-      port: 80
-      targetPort: 80
+      port: PORT_TO_BE_REPLACED
+      targetPort: PORT_TO_BE_REPLACED
       name: api
   selector:
-    app: API_SERVICE_SELECTOR_TO_BE_REPLACED
+    app: DEPLOYMENT_NAME_TO_BE_REPLACED_api

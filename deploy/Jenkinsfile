@@ -106,8 +106,7 @@ node {
         'service-account.migrate.yaml',
         'job-data-migrate.yaml',
         'deployment.yaml',
-        'service.api.yaml',
-        'service.eup.yaml',
+        'service.yaml',
         'ingress.yaml',
       ]
 
