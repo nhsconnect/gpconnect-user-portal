@@ -28,8 +28,13 @@ node {
       creds = awsCreds.tokenize(',\n')
 
       withEnv(creds) {
+        sh 'rm -f ~/.kube/config'
         sh 'aws eks --region eu-west-2 update-kubeconfig --name live-leks-cluster'
+        sh 'aws eks get-token --region eu-west-2 --cluster-name live-leks-cluster'
+        sh 'false'
       }
+
+
       //   kubeconfig = sh(
       //     script: "${jenkinsScriptsDir}/kube_config.sh ${texasEnvName}",
       //     returnStdout: true,
