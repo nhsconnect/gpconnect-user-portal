@@ -147,9 +147,11 @@ node {
         'service.yaml',
         // 'ingress.yaml',
       ]
-      withEnv(creds) {
-        for (file in k8files) {
-          sh "kubectl apply -f ${file}"
+      dir('k8s') {
+        withEnv(creds) {
+          for (file in k8files) {
+            sh "kubectl apply -f ${file}"
+          }
         }
       }
     }
