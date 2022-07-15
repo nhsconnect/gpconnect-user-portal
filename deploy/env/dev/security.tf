@@ -3,7 +3,7 @@
 data "aws_security_group" "worker_sg" {
   filter {
     name   = "tag:Name"
-    values = ["live-leks-cluster-eks_worker_sg"]
+    values = ["live-lk8s-nonprod-live-leks-cluster-sg"]
   }
 }
 
@@ -51,7 +51,7 @@ resource "aws_security_group_rule" "api_to_postgres" {
 
 # TODO delete this when we have Security Groups for Pods
 resource "aws_security_group_rule" "k8s_to_postgres" {
-  security_group_id = aws_security_group.database_servers.id
+  security_group_id        = aws_security_group.database_servers.id
   type                     = "ingress"
   description              = "${local.prefix}: postgresdb +---[postgres]--- k8s"
   from_port                = aws_rds_cluster.default.port
