@@ -57,6 +57,7 @@ node {
           ))
           databaseEndpoint = outputs['database_endpoint']['value']
           databaseSecret = outputs['database_credentials']['value']['secret_id']
+          databasePassword = outputs['database_credentials']['value']['password']
           migrateRoleArn = outputs['migrate_role_arn']['value']
           echo databaseEndpoint
         }
@@ -72,6 +73,7 @@ node {
 
         'DATABASE_ENDPOINT': databaseEndpoint,
         'DATABASE_CREDS_SECRET_ID': databaseSecret,
+        'DATABASE_PASSWORD': databasePassword,
         'NAMESPACE_TO_BE_REPLACED': appNamespace,
         'DEPLOYMENT_NAME_TO_BE_REPLACED': "${prefix}-deploy",
 
