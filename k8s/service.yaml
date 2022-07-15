@@ -9,4 +9,4 @@ spec:
       targetPort: PORT_TO_BE_REPLACED
       name: api
   selector:
-    app: DEPLOYMENT_NAME_TO_BE_REPLACED_api
+    app: DEPLOYMENT_NAME_TO_BE_REPLACED-api

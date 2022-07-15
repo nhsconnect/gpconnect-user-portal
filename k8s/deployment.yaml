@@ -2,16 +2,16 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   namespace: NAMESPACE_TO_BE_REPLACED
-  name: DEPLOYMENT_NAME_TO_BE_REPLACED_api
+  name: DEPLOYMENT_NAME_TO_BE_REPLACED-api
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: DEPLOYMENT_NAME_TO_BE_REPLACED_api
+      app: DEPLOYMENT_NAME_TO_BE_REPLACED-api
   template:
     metadata:
       labels:
-        app: DEPLOYMENT_NAME_TO_BE_REPLACED_api
+        app: DEPLOYMENT_NAME_TO_BE_REPLACED-api
     spec:
       terminationGracePeriodSeconds: 10
       containers:
