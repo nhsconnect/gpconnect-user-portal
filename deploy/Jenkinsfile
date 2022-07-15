@@ -123,7 +123,7 @@ node {
       migrationJob = 'job-data-migrate.yaml'
       dir('k8s') {
         withEnv(creds) {
-          sh 'kubectl apply -f namespace.yaml'
+          sh 'kubectl create -f namespace.yaml'
           sh 'kubectl apply -f service-account.migrate.yaml'
           sh "kubectl apply -f ${migrationJob}"
         }
