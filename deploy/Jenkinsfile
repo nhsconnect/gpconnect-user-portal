@@ -28,14 +28,16 @@ node {
       creds = awsCreds.tokenize(',\n')
 
       withEnv(creds) {
-        kubeconfig = sh(
-          script: "${jenkinsScriptsDir}/kube_config.sh ${texasEnvName}",
-          returnStdout: true,
-        )
+        sh 'aws eks --region eu-west-2 update-kubeconfig -name live-leks-cluster'
       }
-      echo "TOP OF KUBECONFIG"
-      sh "head -n2 ${kubeconfig}"
-      creds.add("KUBECONFIG=${kubeconfig}")
+      //   kubeconfig = sh(
+      //     script: "${jenkinsScriptsDir}/kube_config.sh ${texasEnvName}",
+      //     returnStdout: true,
+      //   )
+      // }
+      // echo "TOP OF KUBECONFIG"
+      // sh "head -n2 ${kubeconfig}"
+      // creds.add("KUBECONFIG=${kubeconfig}")
     }
 
     def databaseEndpoint
