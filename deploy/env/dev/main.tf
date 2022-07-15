@@ -54,3 +54,7 @@ output "database_credentials" {
 output "ecr_policy" {
   value = data.aws_iam_policy_document.pull_from_ecr["data-migrator"].json
 }
+
+output "migrate_role_arn" {
+  value = aws_iam_role.migrate.arn
+}

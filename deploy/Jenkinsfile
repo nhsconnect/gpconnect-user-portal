@@ -57,6 +57,7 @@ node {
           ))
           databaseEndpoint = outputs['database_endpoint']['value']
           databaseSecret = outputs['database_credentials']['value']['secret_id']
+          migrateRoleArn = outputs['migrate_role_arn']['value']
           echo databaseEndpoint
         }
       }
@@ -86,6 +87,7 @@ node {
         'END_USER_PORTAL_SERVICE_SELECTOR_TO_BE_REPLACED': 'end-user-portal-deploy',
 
         'MIGRATE_IMAGE_URL':  "${ecrRepoBase}/${prefix}/data-migrator:${version}",
+        'MIGRATE_ROLE_ARN' migrateRoleArn,
 
         'SCHEMA_MIGRATOR_IMAGE_URL': "${ecrRepoBase}/${prefix}/database-migrator:${version}" ,
 
@@ -131,7 +133,6 @@ node {
       dir('k8s') {
         withEnv(creds) {
           sh 'kubectl apply -f namespace.yaml'
-          sh 'false'
           sh 'kubectl apply -f service-account.migrate.yaml'
           sh "kubectl apply -f ${migrationJob}"
         }
