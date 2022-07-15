@@ -20,19 +20,19 @@ public partial class OrganisationModel : BaseModel
         _organisationLookupService = organisationLookupService;
     }
 
-    public IActionResult OnGetAsync()
+    public async Task<IActionResult> OnGetAsync()
     {
         ClearModelState();
         if (!_tempDataProviderService.HasItems) return RedirectToPage("./Timeout");
-        PrepopulateOrganisationDetails();
+        await PrepopulateOrganisationDetails();
         return Page();
     }
 
-    private void PrepopulateOrganisationDetails()
+    private async Task PrepopulateOrganisationDetails()
     {
-        if (_tempDataProviderService.GetItem<OrganisationResult>(TempDataConstants.ORGANISATION) != null)
+        if (IsSelectedOrganisation)
         {
-            OrganisationResult = _tempDataProviderService.GetItem<OrganisationResult>(TempDataConstants.ORGANISATION);
+            OrganisationResult = await GetOrganisationDetails(_tempDataProviderService.GetItem<string>(TempDataConstants.SELECTEDORGANISATIONODSCODE));
             SiteOdsCode = OrganisationResult.OdsCode;
             OrganisationFound = true;
         }
@@ -47,12 +47,13 @@ public partial class OrganisationModel : BaseModel
 
         if (!_tempDataProviderService.HasItems) return RedirectToPage("./Timeout");
 
-        var organisationResult = await GetOrganisationDetails(SiteOdsCode);
+        var organisationResult = await GetOrganisationDetails(SiteOdsCode);        
         if (organisationResult != null)
         {
             OrganisationFound = true;
+            _tempDataProviderService.PutItem(TempDataConstants.SELECTEDORGANISATIONODSCODE, SiteOdsCode);
             OrganisationResult = organisationResult;
-            _tempDataProviderService.PutItem(TempDataConstants.ORGANISATION, organisationResult);
+            //ViewData[TempDataConstants.SELECTEDORGANISATION] = organisationResult;
         }
         return Page();
     }

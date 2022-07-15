@@ -17,6 +17,8 @@ namespace GpConnect.NationalDataSharingPortal.EndUserPortal.Test.Pages.Apply;
 public class ReviewModelTest
 {
     private readonly Mock<ITempDataProviderService> _mockTempDataProviderService;
+    private readonly Mock<ISupplierService> _mockSupplierService;
+    private readonly Mock<IOrganisationLookupService> _mockOrganisationLookupService;
     private readonly Mock<IAgreementService> _mockAgreementService;
     private readonly Mock<IOptions<ApplicationParameters>> _mockOptions;
 
@@ -24,6 +26,8 @@ public class ReviewModelTest
     {
         _mockTempDataProviderService = new Mock<ITempDataProviderService>();
         _mockAgreementService = new Mock<IAgreementService>();
+        _mockOrganisationLookupService = new Mock<IOrganisationLookupService>();
+        _mockSupplierService = new Mock<ISupplierService>();
         _mockOptions = new Mock<IOptions<ApplicationParameters>>();        
     }
 
@@ -32,7 +36,7 @@ public class ReviewModelTest
     {
         _mockTempDataProviderService.Setup(mtd => mtd.HasItems).Returns(false);
 
-        var reviewModel = new ReviewModel(_mockOptions.Object, _mockTempDataProviderService.Object, _mockAgreementService.Object);
+        var reviewModel = new ReviewModel(_mockOptions.Object, _mockTempDataProviderService.Object, _mockOrganisationLookupService.Object, _mockAgreementService.Object, _mockSupplierService.Object);
         var result = await reviewModel.OnPost();
         Assert.IsType<RedirectToPageResult>(result);
         Assert.Contains("Timeout", ((RedirectToPageResult)result).PageName);
@@ -45,7 +49,7 @@ public class ReviewModelTest
 
         _mockTempDataProviderService.Setup(mtd => mtd.GetItem<List<GpConnectInteractionForSupplier>>(SELECTEDGPCONNECTINTERACTIONFORSUPPLIER)).Returns(new List<GpConnectInteractionForSupplier>());
 
-        var reviewModel = new ReviewModel(_mockOptions.Object, _mockTempDataProviderService.Object, _mockAgreementService.Object);
+        var reviewModel = new ReviewModel(_mockOptions.Object, _mockTempDataProviderService.Object, _mockOrganisationLookupService.Object, _mockAgreementService.Object, _mockSupplierService.Object);
         var result = await reviewModel.OnPost();
         Assert.IsType<RedirectToPageResult>(result);
         Assert.Contains("Confirmation", ((RedirectToPageResult)result).PageName);
@@ -55,7 +59,7 @@ public class ReviewModelTest
     public async Task OnPost_IfTempDataHasNoData_RedirectsToTimeoutPage()
     {
         _mockTempDataProviderService.Setup(mtd => mtd.HasItems).Returns(false);
-        var reviewModel = new ReviewModel(_mockOptions.Object, _mockTempDataProviderService.Object, _mockAgreementService.Object);
+        var reviewModel = new ReviewModel(_mockOptions.Object, _mockTempDataProviderService.Object, _mockOrganisationLookupService.Object, _mockAgreementService.Object, _mockSupplierService.Object);
         var result = await reviewModel.OnPost();
         Assert.IsType<RedirectToPageResult>(result);
         Assert.Contains("Timeout", ((RedirectToPageResult)result).PageName);

@@ -1,3 +1,4 @@
+using GpConnect.NationalDataSharingPortal.EndUserPortal.Helpers.Constants;
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Models;
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Resources;
 using Microsoft.AspNetCore.Mvc;
@@ -9,14 +10,12 @@ public partial class SoftwareSupplierModel : BaseModel
 {
     [Display(Name = "SoftwareSupplierName", ResourceType = typeof(DataFieldNameResources))]
     [BindProperty(SupportsGet = true)]
-    [Range(1, int.MaxValue, ErrorMessageResourceName = "SoftwareSupplierName", ErrorMessageResourceType = typeof(ErrorMessageResources))]
-    public int SelectedSoftwareSupplierNameId { get; set; }
+    [Required(ErrorMessageResourceName = "SoftwareSupplierName", ErrorMessageResourceType = typeof(ErrorMessageResources))]
+    public string SelectedSoftwareSupplierNameId { get; set; } = "";
 
-    public SoftwareSupplierResult SelectedSoftwareSupplier => _tempDataProviderService.GetItem<List<SoftwareSupplierResult>>("SoftwareSupplierNameList")?.FirstOrDefault(x => x.SoftwareSupplierId == SelectedSoftwareSupplierNameId);
+    public List<SoftwareSupplierResult> SoftwareSupplierResultList { get; set; }
 
-    public List<SoftwareSupplierResult> SoftwareSupplierResultList => _tempDataProviderService.GetItem<List<SoftwareSupplierResult>>("SoftwareSupplierNameList");
-
-    public bool IsSelectedSoftwareSupplier => _tempDataProviderService.GetItem<SoftwareSupplierResult>("SelectedSoftwareSupplierName") != null;
+    public bool IsSelectedSoftwareSupplier => !string.IsNullOrEmpty(_tempDataProviderService.GetItem<string>(TempDataConstants.SELECTEDSOFTWARESUPPLIERNAMEID));
 
     [BindProperty(SupportsGet = true)]
     public bool DisplayGpConnectInteractionForSupplierList { get; set; }
@@ -25,5 +24,5 @@ public partial class SoftwareSupplierModel : BaseModel
     public List<GpConnectInteractionForSupplier> GpConnectInteractionForSupplierList { get; set; }
 
     [Display(Name = "GpConnectInteractionForSupplier", ResourceType = typeof(DataFieldNameResources))]
-    public bool HasSelectedGpConnectInteractionForSupplier { get; set; }
+    public bool HasSelectedGpConnectInteractionForSupplier { get; set; }    
 }

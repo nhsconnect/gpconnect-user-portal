@@ -61,9 +61,9 @@ public class AgreementServiceTests
     [Fact]
     public async Task SubmitAgreementAsync_CallsAgreementInformationBuilder_WithExpectedParameters()
     {
-        var expectedOrganisation = new OrganisationResult();
-        var expectedInteractions = new List<GpConnectInteractionForSupplier>();
-        var expectedSupplier = new SoftwareSupplierResult();
+        var expectedOrganisation = "A20027";
+        var expectedInteractions = new List<int>();
+        var expectedSupplier = "Supplier Name";
         var expectedUseCase = "UseCase";
         var expectedName = "Name";
         var expectedEmail = "Email";
@@ -99,13 +99,13 @@ public class AgreementServiceTests
         };
 
         _mockAgreementInformationBuilder.Setup(_maib => _maib.Build(
-            It.IsAny<OrganisationResult>(),
-            It.IsAny<SoftwareSupplierResult>(),
-            It.IsAny<string>(),
-            It.IsAny<List<GpConnectInteractionForSupplier>>(),
             It.IsAny<string>(),
             It.IsAny<string>(),
-            It.IsAny<string>())).Returns(expectedBody);
+            It.IsAny<string>(),
+            It.IsAny<List<int>>(),
+            It.IsAny<string>(),
+            It.IsAny<string>(),
+            It.IsAny<string>())).Returns(Task.FromResult(expectedBody));
 
         await _sut.SubmitAgreementAsync(null, null, null, null, null, null, null);
 

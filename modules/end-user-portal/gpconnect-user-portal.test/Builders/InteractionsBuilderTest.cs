@@ -1,8 +1,7 @@
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Builders;
-using GpConnect.NationalDataSharingPortal.EndUserPortal.Models;
-using static GpConnect.NationalDataSharingPortal.EndUserPortal.Helpers.Constants.GpConnectInteractions;
-using Xunit;
+using GpConnect.NationalDataSharingPortal.EndUserPortal.Helpers.Constants;
 using System.Collections.Generic;
+using Xunit;
 
 namespace GpConnect.NationalDataSharingPortal.EndUserPortal.Test.Builders
 {
@@ -18,7 +17,7 @@ namespace GpConnect.NationalDataSharingPortal.EndUserPortal.Test.Builders
         [Fact]
         public void Build_GivenEmptyList_ReturnsObjectWithNoInteractionsEnabled()
         {
-            var result = _sut.Build(new List<GpConnectInteractionForSupplier>());
+            var result = _sut.Build(new List<int>());
 
             Assert.False(result.AccessRecordHTMLEnabled);
             Assert.False(result.StructuredRecordEnabled);
@@ -27,23 +26,18 @@ namespace GpConnect.NationalDataSharingPortal.EndUserPortal.Test.Builders
         }
 
         [Theory]
-        [InlineData(AccessRecordHTML, true, false, false, false)]
-        [InlineData(AccessRecordStructured, false, true, false, false)]
-        [InlineData(AppointmentManagement, false, false, true, false)]
-        [InlineData(SendDocument, false, false, false, true)]
+        [InlineData(GpConnectInteractions.AccessRecordHTML, true, false, false, false)]
+        [InlineData(GpConnectInteractions.AccessRecordStructured, false, true, false, false)]
+        [InlineData(GpConnectInteractions.AppointmentManagement, false, false, true, false)]
+        [InlineData(GpConnectInteractions.SendDocument, false, false, false, true)]
         public void Build_GivenSingleEnabledRecord_ReturnsExpectedObject(
-            string value, 
-            bool expectedAccessRecordHtml, 
-            bool expectedAccessRecordStructured, 
-            bool expectedAppointmentManagement, 
+            GpConnectInteractions value,
+            bool expectedAccessRecordHtml,
+            bool expectedAccessRecordStructured,
+            bool expectedAppointmentManagement,
             bool expectedSendDocument)
         {
-            var result = _sut.Build(new List<GpConnectInteractionForSupplier> { 
-                new GpConnectInteractionForSupplier {
-                    GpConnectInteractionForSupplierValue = value,
-                    Selected = true
-                }
-            });
+            var result = _sut.Build(new List<int> { (int)value });
 
             Assert.StrictEqual(expectedAccessRecordHtml, result.AccessRecordHTMLEnabled);
             Assert.StrictEqual(expectedAccessRecordStructured, result.StructuredRecordEnabled);
@@ -54,29 +48,43 @@ namespace GpConnect.NationalDataSharingPortal.EndUserPortal.Test.Builders
         [Fact]
         public void Build_GivenAllDisabledRecords_ReturnsObjectWithNoInteractionsEnabled()
         {
-            var result = _sut.Build(new List<GpConnectInteractionForSupplier> { 
-                new GpConnectInteractionForSupplier {
-                    GpConnectInteractionForSupplierValue = AccessRecordHTML,
-                    Selected = false
-                },
-                new GpConnectInteractionForSupplier {
-                    GpConnectInteractionForSupplierValue = AccessRecordStructured,
-                    Selected = false
-                },
-                new GpConnectInteractionForSupplier {
-                    GpConnectInteractionForSupplierValue = AppointmentManagement,
-                    Selected = false
-                },
-                new GpConnectInteractionForSupplier {
-                    GpConnectInteractionForSupplierValue = SendDocument,
-                    Selected = false
-                }
-            });
+            var result = _sut.Build(new List<int>());
 
             Assert.False(result.AccessRecordHTMLEnabled);
             Assert.False(result.StructuredRecordEnabled);
             Assert.False(result.AppointmentManagementEnabled);
             Assert.False(result.SendDocumentEnabled);
         }
+
+        [Fact]
+        public void Build_GivenSomeEnabledRecords_ReturnsObjectWithSomeInteractionsEnabled()
+        {
+            var result = _sut.Build(new List<int> {
+                (int)GpConnectInteractions.AccessRecordHTML,
+                (int)GpConnectInteractions.AppointmentManagement
+            });
+
+            Assert.True(result.AccessRecordHTMLEnabled);
+            Assert.False(result.StructuredRecordEnabled);
+            Assert.True(result.AppointmentManagementEnabled);
+            Assert.False(result.SendDocumentEnabled);
+        }
+
+        [Fact]
+        public void Build_GivenAllEnabledRecords_ReturnsObjectWithAllInteractionsEnabled()
+        {
+            var result = _sut.Build(new List<int> {
+                (int)GpConnectInteractions.AccessRecordHTML,
+                (int)GpConnectInteractions.AppointmentManagement,
+                (int)GpConnectInteractions.AccessRecordStructured,
+                (int)GpConnectInteractions.SendDocument
+            });
+
+            Assert.True(result.AccessRecordHTMLEnabled);
+            Assert.True(result.StructuredRecordEnabled);
+            Assert.True(result.AppointmentManagementEnabled);
+            Assert.True(result.SendDocumentEnabled);
+        }
+
     }
 }

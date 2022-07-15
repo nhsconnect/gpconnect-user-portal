@@ -1,4 +1,5 @@
 @page
+@using GpConnect.NationalDataSharingPortal.EndUserPortal.Helpers
 @model GpConnect.NationalDataSharingPortal.EndUserPortal.Pages.Apply.ReviewModel
 
 <div class="nhsuk-width-container">
@@ -29,15 +30,15 @@
                                     <dl class="nhsuk-summary-list nhsuk-summary-list--no-border">
                                         <div class="nhsuk-summary-list__row">
                                         <dt class="nhsuk-summary-list__key">Supplier name:</dt>
-                                        <dd class="nhsuk-summary-list__value">@Model.SupplierName</dd>
+                                        <dd class="nhsuk-summary-list__value">@Model.SoftwareSupplierName</dd>
                                         <dd class="nhsuk-summary-list__actions"><a href="./SoftwareSupplier">Change<span class="nhsuk-u-visually-hidden"> name</span></a></dd>
                                 </div>
                                 <div class="nhsuk-summary-list__row">
                                     <dt class="nhsuk-summary-list__key">GP Connect product(s):</dt>
                                     <dd class="nhsuk-summary-list__value">
-                                        @foreach (var gpConnectInteractionForSupplier in Model.GpConnectInteractionForSupplier)
+                                        @foreach (var selectedGpConnectInteractionForSupplier in Model.SelectedGpConnectInteractionsForSupplier)
                                                 {
-                                            <div>@gpConnectInteractionForSupplier.GpConnectInteractionForSupplierValue</div>
+                                            <div>@selectedGpConnectInteractionForSupplier.GetDisplayParameter()</div>
                                                 }
                                     </dd>
                                 </div>
@@ -57,11 +58,11 @@
                                     <div class="nhsuk-summary-list__row">
                                     <dt class="nhsuk-summary-list__key">Site ODS code:</dt>
                                     <dd class="nhsuk-summary-list__value">@Model.Organisation.OdsCode</dd>
-                                    
-                        </div>
-                                    <div class="nhsuk-summary-list__row">
-                                    <dt class="nhsuk-summary-list__key">Organisation name:</dt>
-                                    <dd class="nhsuk-summary-list__value">@Model.Organisation.Name</dd>
+
+                            </div>
+                            <div class="nhsuk-summary-list__row">
+                                <dt class="nhsuk-summary-list__key">Organisation name:</dt>
+                                <dd class="nhsuk-summary-list__value">@Model.Organisation.Name</dd>
                             </div>
                             <div class="nhsuk-summary-list__row">
                                 <dt class="nhsuk-summary-list__key">Organisation address:</dt>
@@ -70,64 +71,66 @@
                             </div>
                             </dl>
                         </div>
+                    </div>
+                </div>
+            </div>
+            <div class="nhsuk-grid-row">
+                <div class="nhsuk-grid-column-full">
+                    <div class="nhsuk-card nhsuk-card--feature">
+                        <div class="nhsuk-card__content nhsuk-card__content--feature">
+                            <h2 class="nhsuk-card__heading nhsuk-card__heading--feature nhsuk-heading-m">
+                                Signatory
+                            </h2>
+                            <dl class="nhsuk-summary-list nhsuk-summary-list--no-border">
+                                <div class="nhsuk-summary-list__row">
+                                <dt class="nhsuk-summary-list__key">Signatory name:</dt>
+                                <dd class="nhsuk-summary-list__value">@Model.SignatoryName</dd>
                         </div>
-                    </div>
-                </div>
-                <div class="nhsuk-grid-row">
-                    <div class="nhsuk-grid-column-full">
-                        <div class="nhsuk-card nhsuk-card--feature">
-                            <div class="nhsuk-card__content nhsuk-card__content--feature">
-                                <h2 class="nhsuk-card__heading nhsuk-card__heading--feature nhsuk-heading-m">
-                                    Signatory
-                                </h2>
-                                <dl class="nhsuk-summary-list nhsuk-summary-list--no-border">
-                                    <div class="nhsuk-summary-list__row">
-                                    <dt class="nhsuk-summary-list__key">Signatory name:</dt>
-                                    <dd class="nhsuk-summary-list__value">@Model.SignatoryName</dd>
-                            </div>
-                            <div class="nhsuk-summary-list__row">
-                                <dt class="nhsuk-summary-list__key">Signatory title:</dt>
-                                <dd class="nhsuk-summary-list__value">@Model.SignatoryRole</dd>
-                            </div>
-                            <div class="nhsuk-summary-list__row">
-                                <dt class="nhsuk-summary-list__key">Signatory email address:</dt>
-                                <dd class="nhsuk-summary-list__value">@Model.SignatoryEmail</dd>
-                                <dd class="nhsuk-summary-list__actions"><a href="./Signatory">Change<span class="nhsuk-u-visually-hidden"> name</span></a></dd>
-                            </div>
-                            </dl>
+                        <div class="nhsuk-summary-list__row">
+                            <dt class="nhsuk-summary-list__key">Signatory title:</dt>
+                            <dd class="nhsuk-summary-list__value">@Model.SignatoryRole</dd>
                         </div>
-                    </div>
-                </div>
-                </div>
-                <div class="nhsuk-grid-row">
-                    <div class="nhsuk-grid-column-full">
-                        <div class="nhsuk-card nhsuk-card--feature">
-                            <div class="nhsuk-card__content nhsuk-card__content--feature">
-                                <h2 class="nhsuk-card__heading nhsuk-card__heading--feature nhsuk-heading-m">
-                                    Reason for applying (use case)
-                                </h2>
-                                <dl class="nhsuk-summary-list nhsuk-summary-list--no-border">
-                                    <div class="nhsuk-summary-list__row">
-                                    <dd class="nhsuk-summary-list__value">@Model.UseCaseDescription</dd>
-                                    <dd class="nhsuk-summary-list__actions"><a href="./UseCase">Change<span class="nhsuk-u-visually-hidden"> name</span></a></dd>
-                            </div>
-                            </dl>
+                        <div class="nhsuk-summary-list__row">
+                            <dt class="nhsuk-summary-list__key">Signatory email address:</dt>
+                            <dd class="nhsuk-summary-list__value">@Model.SignatoryEmail</dd>
+                            <dd class="nhsuk-summary-list__actions"><a href="./Signatory">Change<span class="nhsuk-u-visually-hidden"> name</span></a></dd>
                         </div>
-                    </div>
-                    </div>
-                </div>
-                <div class="nhsuk-grid-row">
-                    <div class="nhsuk-grid-column-full">
-                        <div class="nhsuk-warning-callout">
-                            <h3 class="nhsuk-warning-callout__label">
-                                Important<span class="nhsuk-u-visually-hidden">:</span>
-                            </h3>
-                            <p>By submitting, you confirm that the signatory agrees to the terms of the National Data Sharing Agreement.</p>
-                        </div>
-                        <button class="nhsuk-button nhsuk-button--primary">Submit</button>
+                        </dl>
                     </div>
                 </div>
+            </div>
 </div>
+<div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-full">
+        <div class="nhsuk-card nhsuk-card--feature">
+            <div class="nhsuk-card__content nhsuk-card__content--feature">
+                <h2 class="nhsuk-card__heading nhsuk-card__heading--feature nhsuk-heading-m">
+                    Reason for applying (use case)
+                </h2>
+                <dl class="nhsuk-summary-list nhsuk-summary-list--no-border">
+                    <div class="nhsuk-summary-list__row">
+                    <dd class="nhsuk-summary-list__value">@Model.UseCaseDescription</dd>
+                    <dd class="nhsuk-summary-list__actions"><a href="./UseCase">Change<span class="nhsuk-u-visually-hidden"> name</span></a></dd>
+            </div>
+            </dl>
+        </div>
+    </div>
+</div>
+                </div>
+<div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-full">
+        <div class="nhsuk-warning-callout">
+            <h3 class="nhsuk-warning-callout__label">
+                Important<span class="nhsuk-u-visually-hidden">:</span>
+            </h3>
+            <p>By submitting, you confirm that the signatory agrees to the terms of the National Data Sharing Agreement.</p>
+        </div>
+        <button class="nhsuk-button nhsuk-button--primary">Submit</button>
+    </div>
+</div>
+</div>
+
+<input type="hidden" asp-for="SoftwareSupplierName" />
         </form>
     </main>
 </div>

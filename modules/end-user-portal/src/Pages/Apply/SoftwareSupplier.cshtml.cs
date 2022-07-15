@@ -1,6 +1,7 @@
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Core.Config;
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Core.Data.Interfaces;
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Core.HttpClientServices.Interfaces;
+using GpConnect.NationalDataSharingPortal.EndUserPortal.Helpers;
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Helpers.Constants;
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Models;
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Resources;
@@ -25,7 +26,7 @@ public partial class SoftwareSupplierModel : BaseModel
     {
         ClearModelState();
         PrepopulateSoftwareSupplier();
-        await GetSoftwareSupplierNameList();        
+        await GetSoftwareSupplierNameList();
         return Page();
     }
 
@@ -33,36 +34,37 @@ public partial class SoftwareSupplierModel : BaseModel
     {
         if (IsSelectedSoftwareSupplier)
         {
-            var selectedSoftwareSupplierNameId = _tempDataProviderService.GetItem<SoftwareSupplierResult>(TempDataConstants.SELECTEDSOFTWARESUPPLIERNAME);
-            SelectedSoftwareSupplierNameId = selectedSoftwareSupplierNameId.SoftwareSupplierId;
-            GpConnectInteractionForSupplierList = _tempDataProviderService.GetItem<List<GpConnectInteractionForSupplier>>(TempDataConstants.SELECTEDGPCONNECTINTERACTIONFORSUPPLIER);
+            SelectedSoftwareSupplierNameId = _tempDataProviderService.GetItem<string>(TempDataConstants.SELECTEDSOFTWARESUPPLIERNAMEID);
             DisplayGpConnectInteractionForSupplierList = GpConnectInteractionForSupplierList != null;
+            GetGpConnectInteractionForSupplierList();
         }
     }
 
     public async Task GetSoftwareSupplierNameList()
     {
         var suppliers = await _supplierService.GetSoftwareSuppliersAsync();
-        _tempDataProviderService.PutItem(TempDataConstants.SOFTWARESUPPLIERNAMELIST, suppliers);
+        SoftwareSupplierResultList = suppliers;
     }
 
-    public IActionResult OnPostCheckGpConnectInteractionForSupplierListAsync()
-    {        
+    public async Task<IActionResult> OnPostCheckGpConnectInteractionForSupplierListAsync()
+    {
+        await GetSoftwareSupplierNameList();
+
         if (!ModelState.IsValid)
         {
             return Page();
         }
 
-        if (!_tempDataProviderService.HasItems) return RedirectToPage("./Timeout");
-
         DisplayGpConnectInteractionForSupplierList = true;
-        LoadGpConnectInteractionForSupplier(SelectedSoftwareSupplierNameId);
-        GpConnectInteractionForSupplierList = _tempDataProviderService.GetItem<List<GpConnectInteractionForSupplier>>(TempDataConstants.GPCONNECTINTERACTIONFORSUPPLIERLIST);
+        GetGpConnectInteractionForSupplierList();
+
         return Page();
+
     }
 
-    public IActionResult OnPostNextAsync()
+    public async Task<IActionResult> OnPostNextAsync()
     {
+        await GetSoftwareSupplierNameList();
         CheckSoftwareSupplierProductSelection();
         if (!ModelState.IsValid)
         {
@@ -70,10 +72,8 @@ public partial class SoftwareSupplierModel : BaseModel
             return Page();
         }
 
-        if (!_tempDataProviderService.HasItems) return RedirectToPage("./Timeout");
-
-        _tempDataProviderService.PutItem(TempDataConstants.SELECTEDSOFTWARESUPPLIERNAME, SelectedSoftwareSupplier);
-        _tempDataProviderService.PutItem(TempDataConstants.SELECTEDGPCONNECTINTERACTIONFORSUPPLIER, GpConnectInteractionForSupplierList);       
+        _tempDataProviderService.PutItem(TempDataConstants.SELECTEDSOFTWARESUPPLIERNAMEID, SelectedSoftwareSupplierNameId);
+        _tempDataProviderService.PutItem(TempDataConstants.SELECTEDGPCONNECTINTERACTIONFORSUPPLIER, GpConnectInteractionForSupplierList.Where(x => x.Selected).Select(x => x.Id).ToList());
 
         return RedirectToPage("./Organisation");
     }
@@ -86,18 +86,17 @@ public partial class SoftwareSupplierModel : BaseModel
         }
     }
 
-    private IActionResult LoadGpConnectInteractionForSupplier(int selectedSoftwareSupplier)
+    public void GetGpConnectInteractionForSupplierList()
     {
-        var gpConnectInteractionsForSupplier = new List<GpConnectInteractionForSupplier>() {
-            new GpConnectInteractionForSupplier() { GpConnectInteractionForSupplierId = 1, GpConnectInteractionForSupplierValue = AccessRecordHTML },
-            new GpConnectInteractionForSupplier() { GpConnectInteractionForSupplierId = 2, GpConnectInteractionForSupplierValue = AccessRecordStructured },
-            new GpConnectInteractionForSupplier() { GpConnectInteractionForSupplierId = 3, GpConnectInteractionForSupplierValue = AppointmentManagement },
-            new GpConnectInteractionForSupplier() { GpConnectInteractionForSupplierId = 4, GpConnectInteractionForSupplierValue = SendDocument }
-        };
+        var selectedInteractions = _tempDataProviderService.GetItem<List<int>>(TempDataConstants.SELECTEDGPCONNECTINTERACTIONFORSUPPLIER);
 
-        GpConnectInteractionForSupplierList = gpConnectInteractionsForSupplier;
-        _tempDataProviderService.PutItem(TempDataConstants.GPCONNECTINTERACTIONFORSUPPLIERLIST, gpConnectInteractionsForSupplier);
-        return Page();
+        var gpConnectInteractionForSupplierList = new List<GpConnectInteractionForSupplier>() {
+            new GpConnectInteractionForSupplier() { Id = (int)AccessRecordHTML, Value = AccessRecordHTML.GetDisplayParameter(), Selected = selectedInteractions != null && selectedInteractions.Any(x => x == (int)AccessRecordHTML)},
+            new GpConnectInteractionForSupplier() { Id = (int)AccessRecordStructured, Value = AccessRecordStructured.GetDisplayParameter(), Selected = selectedInteractions != null && selectedInteractions.Any(x => x == (int)AccessRecordStructured) },
+            new GpConnectInteractionForSupplier() { Id = (int)AppointmentManagement, Value = AppointmentManagement.GetDisplayParameter(), Selected = selectedInteractions != null && selectedInteractions.Any(x => x == (int)AppointmentManagement) },
+            new GpConnectInteractionForSupplier() { Id = (int)SendDocument, Value = SendDocument.GetDisplayParameter(), Selected = selectedInteractions != null && selectedInteractions.Any(x => x == (int)SendDocument) }
+        };
+        GpConnectInteractionForSupplierList = gpConnectInteractionForSupplierList;
     }
 
     private void ClearModelState()

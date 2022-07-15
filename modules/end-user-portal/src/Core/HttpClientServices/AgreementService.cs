@@ -1,10 +1,8 @@
-using System.Net.Http.Headers;
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Builders.Interfaces;
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Core.HttpClientServices.Interfaces;
-using GpConnect.NationalDataSharingPortal.EndUserPortal.Models;
-using GpConnect.NationalDataSharingPortal.EndUserPortal.Models.Response;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
+using System.Net.Http.Headers;
 
 namespace GpConnect.NationalDataSharingPortal.EndUserPortal.Core.HttpClientServices;
 
@@ -21,27 +19,21 @@ public class AgreementService: IAgreementService
     }
 
     public async Task SubmitAgreementAsync(
-            OrganisationResult organisation, 
-            SoftwareSupplierResult supplier,
-            List<GpConnectInteractionForSupplier> interactions,
+            string organisationOdsCode, 
+            string supplierName,
+            List<int> interactions,
             string signatoryName, 
             string signatoryEmail, 
             string signatoryPosition, 
             string useCase)
     {
-       
+
+        var jsonContent = await _builder.Build(organisationOdsCode, supplierName, useCase, interactions, signatoryName, signatoryEmail, signatoryPosition);
+
         var content = new StringContent
         (
             JsonConvert.SerializeObject(
-                _builder.Build(
-                    organisation,
-                    supplier,
-                    useCase,
-                    interactions,
-                    signatoryName,
-                    signatoryEmail,
-                    signatoryPosition
-                )
+                jsonContent
             )
         );
 
