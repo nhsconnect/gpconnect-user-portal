@@ -3,7 +3,7 @@
 data "aws_security_group" "worker_sg" {
   filter {
     name   = "tag:Name"
-    values = ["live-lk8s-nonprod-live-leks-cluster-sg"]
+    values = ["live-lk8s-nonprod-live-leks-cluster"]
   }
 }
 
