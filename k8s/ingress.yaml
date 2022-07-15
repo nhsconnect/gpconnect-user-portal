@@ -11,7 +11,7 @@ metadata:
     alb.ingress.kubernetes.io/scheme: ALB_SCHEME_TO_BE_REPLACED
     #alb.ingress.kubernetes.io/security-groups: sg-0367ad4ca3c84006f # not needed if internal
     # alb.ingress.kubernetes.io/ssl-policy: ELBSecurityPolicy-TLS-1-2-2017-01
-    alb.ingress.kubernetes.io/ssl-policy: SECURITY_POLICY_TO_BE_REPLACED #ELBSecurityPolicy-TLS-1-2-2017-01
+    alb.ingress.kubernetes.io/ssl-policy: ELBSecurityPolicy-TLS-1-2-2017-01
     alb.ingress.kubernetes.io/tags: Service=SERVICE_TAG_TO_BE_REPLACED
     alb.ingress.kubernetes.io/target-type: ip
     alb.ingress.kubernetes.io/backend-protocol: HTTP
@@ -26,7 +26,7 @@ metadata:
     # Health Check Settings
     alb.ingress.kubernetes.io/healthcheck-protocol: HTTP
     alb.ingress.kubernetes.io/healthcheck-port: traffic-port
-    alb.ingress.kubernetes.io/healthcheck-path: /MHSEndpoint
+    alb.ingress.kubernetes.io/healthcheck-path: /healthcheck
     alb.ingress.kubernetes.io/healthcheck-interval-seconds: "15"
     alb.ingress.kubernetes.io/healthcheck-timeout-seconds: "5"
     alb.ingress.kubernetes.io/success-codes: "200"
