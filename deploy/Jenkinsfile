@@ -138,15 +138,14 @@ node {
           sh "kubectl apply -f ${migrationJob}"
         }
       }
-      sh 'false'
     }
 
     stage('Deploy') {
       k8sfiles = [
         'namespace.yaml',
         'deployment.yaml',
-        'service.eup.yaml',
-        'ingress.yaml',
+        'service.yaml',
+        // 'ingress.yaml',
       ]
       for (file in k8files) {
         sh "kubectl apply -f ${file}"
