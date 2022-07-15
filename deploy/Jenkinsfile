@@ -5,7 +5,7 @@ jenkinsScriptsDir = 'deploy/scripts'
 
 prefix = 'gpc-ndsp'
 env = 'nonprod'
-appNamespace = "${prefix}-${env}"
+appNamespace = "${prefix}"
 version = 'latest'
 
 texasEnvName = 'live-lk8s-nonprod'
@@ -122,15 +122,18 @@ node {
       // TODO : Do a bit where we rename the job file
       migrationJob = 'job-data-migrate.yaml'
       dir('k8s') {
-        sh 'kubectl apply -f service-account.migrate.yaml'
-        sh "kubectl apply -f ${migrationJob}"
+        withEnv(creds) {
+          sh 'kubectl apply -f namespace.yaml'
+          sh 'kubectl apply -f service-account.migrate.yaml'
+          sh "kubectl apply -f ${migrationJob}"
+        }
       }
       sh 'false'
     }
 
     stage('Deploy') {
       k8sfiles = [
-        // 'namespace.yaml' // Already done this
+        'namespace.yaml',
         'deployment.yaml',
         'service.eup.yaml',
         'ingress.yaml',
