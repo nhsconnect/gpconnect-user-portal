@@ -50,11 +50,10 @@ spec:
             - name: ASPNETCORE_URLS
               value: http://*:80
             - name: SiteApi__BaseUrl
-              value: http://api
+              value: http://API_SERVICE_NAME_TO_BE_REPLACED
             - name: SupplierApi__BaseUrl
-              value: http://api
+              value: http://API_SERVICE_NAME_TO_BE_REPLACED
             - name: AgreementApi__BaseUrl
-              value: http://api
+              value: http://API_SERVICE_NAME_TO_BE_REPLACED
             - name: OrganisationApi__BaseUrl
               value: https://uat.directory.spineservices.nhs.uk
-            
