@@ -50,3 +50,7 @@ output "database_credentials" {
     password  = aws_rds_cluster.default.master_password
   }
 }
+
+output "ecr_policy" {
+  value = data.aws_iam_policy_document.pull_from_ecr["data-migrator"].json
+}

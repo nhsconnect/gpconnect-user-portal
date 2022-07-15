@@ -88,6 +88,27 @@ resource "aws_iam_role" "migrate" {
   }
 }
 
+locals {
+  images = {
+    "data-migrator" = aws_iam_role.migrate.arn,
+  }
+}
+data "aws_iam_policy_document" "pull_from_ecr" {
+  for_each = local.images
+  statement {
+    actions = [
+      "ecr:BatchGetImage",
+      "ecr:GetDownloadUrlForLayer",
+    ]
+    principals {
+      type = "AWS"
+      identifiers = [
+        each.value,
+      ]
+    }
+  }
+}
+
 data "aws_iam_policy_document" "migrate_db" {
   statement {
     actions = [
@@ -95,6 +116,15 @@ data "aws_iam_policy_document" "migrate_db" {
     ]
     resources = [
       aws_secretsmanager_secret.database_password.arn
+    ]
+  }
+  statement {
+    actions = [
+      "ecr:BatchGetImage",
+      "ecr:GetDownloadUrlForLayer",
+    ]
+    resources = [
+      "arn:aws:ecr:eu-west-2:461183108257:repository/${local.prefix}/data-migrator"
     ]
   }
 }
