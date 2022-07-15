@@ -30,8 +30,6 @@ node {
       withEnv(creds) {
         sh 'rm -f ~/.kube/config'
         sh 'aws eks --region eu-west-2 update-kubeconfig --name live-leks-cluster'
-        sh 'aws eks get-token --region eu-west-2 --cluster-name live-leks-cluster'
-        sh 'false'
       }
 
 
@@ -133,6 +131,7 @@ node {
       dir('k8s') {
         withEnv(creds) {
           sh 'kubectl apply -f namespace.yaml'
+          sh 'false'
           sh 'kubectl apply -f service-account.migrate.yaml'
           sh "kubectl apply -f ${migrationJob}"
         }
