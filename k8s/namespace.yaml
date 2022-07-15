@@ -38,7 +38,7 @@ subjects:
   name: texas:gpc-ndsp-service-developer
 roleRef:
   kind: Role
-  name: gpc-nsdp-readwrite
+  name: gpc-ndsp-readwrite
   apiGroup: rbac.authorization.k8s.io
 ---
 apiVersion: rbac.authorization.k8s.io/v1
