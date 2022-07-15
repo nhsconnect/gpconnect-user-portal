@@ -1,6 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
+  namespace: NAMESPACE_TO_BE_REPLACED
   name: END_USER_PORTAL_SERVICE_NAME_TO_BE_REPLACED
 spec:
   ports:
