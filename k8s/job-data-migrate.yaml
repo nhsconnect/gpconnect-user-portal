@@ -13,7 +13,7 @@ spec:
           command:
             - "flyway"
             - "-url=jdbc:postgresql://DATABASE_ENDPOINT/"
-            - "-user=postgresql"
+            - "-user=postgres"
             - "-connectRetries=10"
             - "migrate"
           resources:
