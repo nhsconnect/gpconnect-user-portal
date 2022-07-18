@@ -1,0 +1,31 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: gpc-ndsp-data-migrate-EPOCHTIME_TO_BE_REPLACED
+  namespace: NAMESPACE_TO_BE_REPLACED
+spec:
+  template:
+    spec:
+      serviceAccountName: migrate-service-account
+      containers:
+        - name: migrate
+          image: MIGRATE_IMAGE_URL
+          command:
+            - "flyway"
+            - "-url=jdbc:postgresql://DATABASE_ENDPOINT/"
+            - "-user=postgres"
+            - "-connectRetries=10"
+            - "migrate"
+          resources:
+            requests:
+              memory: 64Mi
+              cpu: 500m
+            limits:
+              memory: 128Mi
+              cpu: 500m
+          env:
+            - name: FLYWAY_PASSWORD
+              value: DATABASE_PASSWORD
+
+      restartPolicy: Never
+  backoffLimit: 1
