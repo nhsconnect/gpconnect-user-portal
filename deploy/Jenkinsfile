@@ -1,0 +1,59 @@
+awsRegion = 'eu-west-2'
+ecrAccountId = '461183108257'
+
+jenkinsScriptsDir = 'deploy/scripts'
+
+prefix = 'gpc-ndsp'
+env = 'nonprod'
+appNamespace = "${prefix}"
+version = 'latest'
+
+texasEnvName = 'live-lk8s-nonprod'
+serviceTeam = prefix
+
+K8FOLDER = 'deploy/k8s'
+
+node {
+  try {
+
+    stage('Checkout') {
+      checkout scm
+    }
+
+    stage("Authenticate to AWS/k8s") {
+      awsCreds = sh(
+        script: "${jenkinsScriptsDir}/assume_role.sh ${texasEnvName} ${serviceTeam}",
+        returnStdout: true,
+      )
+
+      creds = awsCreds.tokenize(',\n')
+      creds.add('KUBECONFIG=~/.kube/gpc-ndsp-deploy.config')
+
+      withEnv(creds) {
+        sh 'aws eks --region eu-west-2 update-kubeconfig --name live-leks-cluster'
+      }
+    }
+
+    def databaseEndpoint
+    stage('Terraform') {
+      dir('deploy/env/dev') {
+        withEnv(creds) {
+          sh 'terraform init'
+          sh 'terraform plan -out /tmp/tf.plan' // TODO use job execution ID
+          sh 'terraform apply /tmp/tf.plan'
+          // Get Database Hostname
+          outputs = readJSON(text: sh(
+            script: 'terraform output -json',
+            returnStdout: true,
+          ))
+          databaseEndpoint = outputs['database_endpoint']['value']
+          databaseSecret = outputs['database_credentials']['value']['secret_id']
+          databasePassword = outputs['database_credentials']['value']['password']
+          migrateRoleArn = outputs['migrate_role_arn']['value']
+          echo databaseEndpoint
+        }
+      }
+    }
+  }
+}
+
