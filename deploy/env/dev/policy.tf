@@ -42,10 +42,10 @@ data "aws_iam_policy_document" "read_secrets_manager" {
     statement {
         actions = [
             "secretsmanager:GetResourcePolicy",
-            "secretsmanager:GetSecretValue", 
+            "secretsmanager:GetSecretValue",
             "secretsmanager:DescribeSecret",
             "secretsmanager:ListSecretVersionIds"
-            ]
+        ]
         resources = ["${local.prefix}/*"]
         effect = "Allow"
     }
