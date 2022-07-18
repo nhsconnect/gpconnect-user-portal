@@ -7,7 +7,6 @@ using GpConnect.DataSharing.User.Specs.Drivers;
 namespace GpConnect.DataSharing.User.Specs.Hooks
 {
 
-
     [Binding]
     public class ScreenshotHook
     {
@@ -37,17 +36,12 @@ namespace GpConnect.DataSharing.User.Specs.Hooks
                     ss.SaveAsFile("./reports/" + Runname, ScreenshotImageFormat.Jpeg);
                 }
             }
-            catch
-            {
-                //Console.WriteLine("catch");
-            }
             finally
             {
                 if (_browser != null)
                 {
                     _browser.Quit();
                     _browser = null;
-
                 }
             }
         }
