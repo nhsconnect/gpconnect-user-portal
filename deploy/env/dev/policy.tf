@@ -37,3 +37,22 @@ resource "aws_iam_policy" "write_parameter_store_policy" {
   description = "Write parameter store policy"
   policy      = data.aws_iam_policy_document.write_parameter_store.json
 }
+
+data "aws_iam_policy_document" "read_secrets_manager" {
+    statement {
+        actions = [
+            "secretsmanager:GetResourcePolicy",
+            "secretsmanager:GetSecretValue", 
+            "secretsmanager:DescribeSecret",
+            "secretsmanager:ListSecretVersionIds"
+            ]
+        resources = ["${local.prefix}/*"]
+        effect = "Allow"
+    }
+}
+
+resource "aws_iam_policy" "read_secrets_manager_policy" {
+    name        = "${local.prefix}-read-secrets-manager-policy"
+    description = "Read secrets manager policy"
+    policy      = data.aws_iam_policy_document.read_secrets_manager.json
+}
