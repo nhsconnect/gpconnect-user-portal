@@ -97,13 +97,13 @@ public class OrganisationModelTest
 
         var organisationResult = new Models.Response.OrganisationResult() { Name = "Organisation Name", OdsCode = siteOdsCode, Address = new Models.Response.OrganisationAddress() { City = "Here" } };
 
-        _mockTempDataProviderService.Setup(mtdps => mtdps.GetItem<Models.Response.OrganisationResult>(TempDataConstants.ORGANISATION)).Returns(organisationResult);
+        _mockTempDataProviderService.Setup(mtdps => mtdps.GetItem<string>(TempDataConstants.SELECTEDORGANISATIONODSCODE)).Returns(siteOdsCode);
         _mockOrganisationService.Setup(mos => mos.GetOrganisationAsync(siteOdsCode)).Returns(Task.FromResult(organisationResult));
 
         var organisationModel = new OrganisationModel(_mockOptions.Object, _mockOrganisationService.Object, _mockTempDataProviderService.Object) { SiteOdsCode = "A12345", OrganisationFound = true, OrganisationResult = organisationResult };
 
         var result = await organisationModel.OnPostFindOrganisationAsync();
 
-        _mockTempDataProviderService.Verify(mtdps => mtdps.PutItem(TempDataConstants.ORGANISATION, organisationResult), Times.Once);
+        _mockTempDataProviderService.Verify(mtdps => mtdps.PutItem(TempDataConstants.SELECTEDORGANISATIONODSCODE, siteOdsCode), Times.Once);
     }
 }

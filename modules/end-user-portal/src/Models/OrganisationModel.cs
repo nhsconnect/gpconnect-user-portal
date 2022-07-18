@@ -1,3 +1,4 @@
+using GpConnect.NationalDataSharingPortal.EndUserPortal.Helpers.Constants;
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Models;
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Models.Response;
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Resources;
@@ -12,6 +13,8 @@ public partial class OrganisationModel : BaseModel
     [BindProperty(SupportsGet = true)]
     [Required(ErrorMessageResourceName = "SiteOdsCode", ErrorMessageResourceType = typeof(ErrorMessageResources))]
     public string SiteOdsCode { get; set; } = "";
+
+    public bool IsSelectedOrganisation => !string.IsNullOrEmpty(_tempDataProviderService.GetItem<string>(TempDataConstants.SELECTEDORGANISATIONODSCODE));
 
     public bool OrganisationFound { get; set; } = false;
 

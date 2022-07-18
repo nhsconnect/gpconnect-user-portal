@@ -47,4 +47,33 @@ public class SupplierService : ISupplierService
             throw;
         }
     }
+
+    public async Task<SoftwareSupplierResult> GetSoftwareSupplierAsync(int supplierId)
+    {
+        try
+        {
+            var result = default(SoftwareSupplierResult);
+            var url = $"supplier/{supplierId}";
+
+            var response = await _httpClient.GetAsync(url, HttpCompletionOption.ResponseHeadersRead);
+            response.EnsureSuccessStatusCode();
+
+            await response.Content.ReadAsStringAsync().ContinueWith((Task<string> x) =>
+            {
+                if (x.IsFaulted)
+                {
+                    _logger.LogError(x.Exception, $"A serialization error occurred in trying to read the response from an API query");
+                    throw x.Exception;
+                }
+                result = JsonConvert.DeserializeObject<SoftwareSupplierResult>(x.Result, _options);
+            });
+
+            return result;
+        }
+        catch (Exception exc)
+        {
+            _logger.LogError(exc, "An exception has occurred while attempting to execute an API query");
+            throw;
+        }
+    }
 }

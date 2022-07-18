@@ -1,13 +1,22 @@
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Builders.Interfaces;
+using GpConnect.NationalDataSharingPortal.EndUserPortal.Core.HttpClientServices.Interfaces;
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Models.Request;
-using GpConnect.NationalDataSharingPortal.EndUserPortal.Models.Response;
 
 namespace GpConnect.NationalDataSharingPortal.EndUserPortal.Builders
 {
     public class OrganisationBuilder : IOrganisationBuilder
     {
-        public OrganisationInformation Build(OrganisationResult organisation)
+        private readonly IOrganisationLookupService _organisationLookupService;
+
+        public OrganisationBuilder(IOrganisationLookupService organisationLookupService)
         {
+            _organisationLookupService = organisationLookupService;
+        }
+
+        public async Task<OrganisationInformation> Build(string organisationOdsCode)
+        {
+            var organisation = await _organisationLookupService.GetOrganisationAsync(organisationOdsCode);
+
             return new OrganisationInformation
             {
                 OdsCode = organisation.OdsCode,

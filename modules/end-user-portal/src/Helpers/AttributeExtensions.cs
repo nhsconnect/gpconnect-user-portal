@@ -13,7 +13,7 @@ public static class AttributeExtensions
     {
         return GetAttr<DisplayParameterAttribute, T>(val)?.DisplayParameter ?? "";
     }
-
+    
     private static TAttr GetAttr<TAttr, T>(T val) where TAttr : Attribute
     {
         return (TAttr)typeof(T)
