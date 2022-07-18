@@ -34,7 +34,6 @@ variable "email-configuration" {
         default_subject     = ""
     }    
     type = map(string)
-    sensitive       = true
 }
 
 variable "fhir-api-query-configuration" {
@@ -60,7 +59,6 @@ variable "spine-configuration" {
         spine_fhir_api_key                      = "pN2wy8DWGxHyIARkaxNfWLHduEhiVNjc"
     }
     type = map(string)
-    sensitive       = true
 }
 
 variable "sso-configuration" {
@@ -76,7 +74,6 @@ variable "sso-configuration" {
         signed_out_callback_path    = "/auth/externallogout"
     }
     type = map(string)
-    sensitive       = true
 }
 
 resource "aws_secretsmanager_secret_version" "email_configuration" {
