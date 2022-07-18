@@ -31,6 +31,7 @@ public static class ServiceCollectionExtensions
 
         services.Configure<CookieTempDataProviderOptions>(options =>
         {
+            options.Cookie.IsEssential = true;
             options.Cookie.Name = ".GpConnect.NationalDataSharingPortal.TempDataCookie";
             options.Cookie.Expiration = TimeSpan.FromMinutes(30);
         });

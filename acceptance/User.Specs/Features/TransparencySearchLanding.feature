@@ -7,5 +7,5 @@ Scenario: TransparencyLandingPage
   Then A button to start the transparency search is present
   And the support email address is present
   And the support telephone number is present
-  When I click the start now button
+  When I click the "Start now" link
   Then I am taken to the search by name page

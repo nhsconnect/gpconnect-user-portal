@@ -4,7 +4,7 @@ services:
   data-migrator:
     image: flyway/flyway
     volumes:
-      - ./database:/flyway/sql
+      - ./database:/flyway/sql:ro
       - ./modules/api/service-level-tests/db_data_source/test_data_source.sql:/flyway/testdata/V999.0__testdata.sql
     environment:
       FLYWAY_EDITION: community
@@ -31,7 +31,7 @@ services:
     image: selenium/standalone-chrome
 
   auth-server:
-    image: ghcr.io/navikt/mock-oauth2-server:0.4.8
+    image: ghcr.io/navikt/mock-oauth2-server:0.5.1
     ports:
       - 8079:8079
     hostname: auth.docker.internal
@@ -68,7 +68,21 @@ services:
     entrypoint:
       - mb
       - --configfile
-      - /config/mountebank.json
+      - /config/application.json
+
+  mock-ods:
+    image: bbyars/mountebank
+    volumes:
+      - ./modules/mocks/:/config
+    ports:
+      - target: 2525
+        published: 2525
+      - target: 5556
+        published: 5556
+    entrypoint:
+      - mb
+      - --configfile
+      - /config/spine-ods-fhir.proxy.json
 
   api:
     image: ndsp/api
@@ -89,7 +103,6 @@ services:
       ASPNETCORE_Kestrel__Certificates__Default__Password: ndsa
       ASPNETCORE_Kestrel__Certificates__Default__Path: /https/aspnetapp.pfx
       ConnectionStrings__DefaultConnection: Host=database;Database=postgres;Username=postgres;Include Error Detail=true;
-
 
   user-portal:
     image: ndsp/user-portal
@@ -119,6 +132,7 @@ services:
       dockerfile: ./Dockerfile
     depends_on:
       - api
+      - mock-api
     ports:
       - target: 443
         published: 5003
@@ -129,7 +143,9 @@ services:
       ASPNETCORE_URLS: https://+:443
       ASPNETCORE_Kestrel__Certificates__Default__Password: ndsa
       ASPNETCORE_Kestrel__Certificates__Default__Path: /https/aspnetapp.pfx
-      API_BASEADDRESS: http://api:5002
+      SiteApi__BaseUrl: http://api:5002
+      SupplierApi__BaseUrl: http://mock-api:5555
+      OrganisationApi__BaseUrl: http://mock-ods:5556
       # API_BASEADDRESS: http://mock-api:5555
 
   admin-portal:
@@ -158,6 +174,7 @@ services:
   database:
     image: postgres:14
     ports:
-      - 5432:5432
+      - target: 5432
+        published: 5432
     environment:
       POSTGRES_HOST_AUTH_METHOD: trust
