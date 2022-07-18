@@ -30,10 +30,6 @@ namespace GpConnect.DataSharing.User.Specs.PageObjects
             return wait.Until(driver => IsButtonVisible("Apply Now"));
         }
 
-        // public void ClickStart(){
-        //     StartButton.Click();
-        // }
-
         public IWebElement SupportEmail =>
             _webDriver.FindElement(By.PartialLinkText("@nhs.net"));
 

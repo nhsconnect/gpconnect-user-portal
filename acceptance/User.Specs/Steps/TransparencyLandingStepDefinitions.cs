@@ -34,12 +34,6 @@ namespace GpConnect.DataSharing.User.Specs.Steps
             Assert.True(_transparencyLandingPage.IsStartButtonVisible());
         }
 
-        // [When(@"I click the start now button")]
-        // public void WhenIClickTheStartNowButton()
-        // {
-        //     _transparencyLandingPage.ClickStart();
-        // }
-
         [Then(@"I am taken to the search by name page")]
         public void ThenIAmTakenToTheSearchByNamePage()
         {
