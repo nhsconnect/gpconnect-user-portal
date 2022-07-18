@@ -56,15 +56,15 @@ variable "spine-configuration" {
     default = {
         spine_fhir_api_directory_services_fqdn  = "https://uat.directory.spineservices.nhs.uk"
         spine_fhir_api_systems_register_fqdn    = "https://int.api.service.nhs.uk"
-        spine_fhir_api_key                      = "pN2wy8DWGxHyIARkaxNfWLHduEhiVNjc"
+        spine_fhir_api_key                      = ""
     }
     type = map(string)
 }
 
 variable "sso-configuration" {
     default = {
-        client_id                   = "f1a6b2e9-73ca-451a-9fcb-6a0ac31900ef"
-        client_secret               = "HCYYCsDXv2CZa52Dxlf6s9PgnlZCTOGfqyV24eJ3"
+        client_id                   = ""
+        client_secret               = ""
         callback_path               = "/auth/externallogin"
         auth_scheme                 = "Cookies"
         challenge_scheme            = "OpenIdConnect"

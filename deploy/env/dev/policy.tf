@@ -44,14 +44,18 @@ data "aws_iam_policy_document" "read_secrets_manager" {
             "secretsmanager:GetResourcePolicy",
             "secretsmanager:GetSecretValue", 
             "secretsmanager:DescribeSecret",
-            "secretsmanager:ListSecretVersionIds"
+            "secretsmanager:ListSecretVersionIds",
+            "secretsmanager:ListSecrets"
             ]
-        resources = ["${local.prefix}/*"]
+        resources = [
+          "arn:aws:ecr:eu-west-2:461183108257:secrets/${local.prefix}/secrets-manager"
+        ]
         effect = "Allow"
     }
 }
 
 resource "aws_iam_policy" "read_secrets_manager_policy" {
+    path        = "/${local.prefix}"
     name        = "${local.prefix}-read-secrets-manager-policy"
     description = "Read secrets manager policy"
     policy      = data.aws_iam_policy_document.read_secrets_manager.json
