@@ -21,7 +21,7 @@ metadata:
     # live-nonprod       arn:aws:acm:eu-west-2:730319765130:certificate/c0718115-4e22-4f48-a4aa-8c16ea86c5e6
     # live mgmt          arn:aws:acm:eu-west-2:461183108257:certificate/825072d1-f558-46ff-9046-40bce7b03bd0
     # live prod          arn:aws:acm:eu-west-2:950573124017:certificate/8b67daa2-2b82-4287-b925-d74ab9fa68ce
-    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:eu-west-2:730319765130:certificate/c0718115-4e22-4f48-a4aa-8c16ea86c5e6
+    # alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:eu-west-2:730319765130:certificate/c0718115-4e22-4f48-a4aa-8c16ea86c5e6
 
     # Health Check Settings
     alb.ingress.kubernetes.io/healthcheck-protocol: HTTP
@@ -37,8 +37,7 @@ metadata:
     last-updated-epochtime: "EPOCHTIME_TO_BE_REPLACED"
 spec:
   rules:
-    - host: END_USER_PORTAL_DOMAIN_NAME
-      http:
+    - http:
         paths:
           - path: /*
             pathType: ImplementationSpecific

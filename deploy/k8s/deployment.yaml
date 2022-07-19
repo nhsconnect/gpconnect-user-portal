@@ -3,6 +3,8 @@ kind: Deployment
 metadata:
   namespace: NAMESPACE_TO_BE_REPLACED
   name: DEPLOYMENT_NAME_TO_BE_REPLACED-api
+  annotations:
+    last-updated-epochtime: "EPOCHTIME_TO_BE_REPLACED"
 spec:
   replicas: 1
   selector:
@@ -17,6 +19,14 @@ spec:
       containers:
         - name: API_CONTAINER_NAME
           image: API_IMAGE_URL
+          imagePullPolicy: Always
+          resources:
+            requests:
+              memory: 64Mi
+              cpu: 500m
+            limits:
+              memory: 128Mi
+              cpu: 500m
           ports:
             - containerPort: PORT_TO_BE_REPLACED
           env:
@@ -30,6 +40,8 @@ kind: Deployment
 metadata:
   namespace: NAMESPACE_TO_BE_REPLACED
   name: DEPLOYMENT_NAME_TO_BE_REPLACED-eup
+  annotations:
+    last-updated-epochtime: "EPOCHTIME_TO_BE_REPLACED"
 spec:
   replicas: 1
   selector:
@@ -44,6 +56,14 @@ spec:
       containers:
         - name: END_USER_PORTAL_CONTAINER_NAME
           image: END_USER_PORTAL_IMAGE_URL
+          imagePullPolicy: Always
+          resources:
+            requests:
+              memory: 64Mi
+              cpu: 500m
+            limits:
+              memory: 128Mi
+              cpu: 500m
           ports:
             - containerPort: PORT_TO_BE_REPLACED
           env:
