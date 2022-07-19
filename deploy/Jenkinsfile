@@ -27,7 +27,7 @@ node {
       )
 
       creds = awsCreds.tokenize(',\n')
-      creds.add('KUBECONFIG=~/.kube/gpc-ndsp-deploy.config')
+      creds.add("KUBECONFIG=${JENKINS_HOME}/.kube/gpc-ndsp-deploy.config")
 
       withEnv(creds) {
         sh 'aws eks --region eu-west-2 update-kubeconfig --name live-leks-cluster'
