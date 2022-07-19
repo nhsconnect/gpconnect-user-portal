@@ -17,6 +17,14 @@ spec:
       containers:
         - name: API_CONTAINER_NAME
           image: API_IMAGE_URL
+          imagePullPolicy: Always
+          resources:
+            requests:
+              memory: 64Mi
+              cpu: 500m
+            limits:
+              memory: 128Mi
+              cpu: 500m
           ports:
             - containerPort: PORT_TO_BE_REPLACED
           env:
@@ -44,6 +52,14 @@ spec:
       containers:
         - name: END_USER_PORTAL_CONTAINER_NAME
           image: END_USER_PORTAL_IMAGE_URL
+          imagePullPolicy: Always
+          resources:
+            requests:
+              memory: 64Mi
+              cpu: 500m
+            limits:
+              memory: 128Mi
+              cpu: 500m
           ports:
             - containerPort: PORT_TO_BE_REPLACED
           env:
