@@ -3,6 +3,8 @@ kind: Deployment
 metadata:
   namespace: NAMESPACE_TO_BE_REPLACED
   name: DEPLOYMENT_NAME_TO_BE_REPLACED-api
+  annotations:
+    last-updated-epochtime: "EPOCHTIME_TO_BE_REPLACED"
 spec:
   replicas: 1
   selector:
@@ -38,6 +40,8 @@ kind: Deployment
 metadata:
   namespace: NAMESPACE_TO_BE_REPLACED
   name: DEPLOYMENT_NAME_TO_BE_REPLACED-eup
+  annotations:
+    last-updated-epochtime: "EPOCHTIME_TO_BE_REPLACED"
 spec:
   replicas: 1
   selector:
