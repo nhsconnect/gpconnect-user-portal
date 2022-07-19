@@ -14,6 +14,7 @@ spec:
     metadata:
       labels:
         app: DEPLOYMENT_NAME_TO_BE_REPLACED-api
+        last-updated-epochtime: "EPOCHTIME_TO_BE_REPLACED"
     spec:
       terminationGracePeriodSeconds: 10
       containers:
@@ -51,6 +52,7 @@ spec:
     metadata:
       labels:
         app: DEPLOYMENT_NAME_TO_BE_REPLACED-eup
+        last-updated-epochtime: "EPOCHTIME_TO_BE_REPLACED"
     spec:
       terminationGracePeriodSeconds: 10
       containers:
