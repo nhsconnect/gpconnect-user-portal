@@ -13,7 +13,7 @@ RUN dotnet restore
 COPY . .
 
 WORKDIR /src/src
-RUN dotnet publish gpconnect-user-portal.csproj -c Debug -o /app/publish
+RUN dotnet publish -c Debug -o /app/publish
 
 FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS final
 WORKDIR /app
