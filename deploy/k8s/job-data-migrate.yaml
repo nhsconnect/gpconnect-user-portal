@@ -13,7 +13,7 @@ spec:
           imagePullPolicy: Always
           command:
             - bash
-            - /flyway/get_secret_and_migrate.sh
+            - /flyway/sql/get_secret_and_migrate.sh
             - DATABASE_CREDS_SECRET_ID
           resources:
             requests:
