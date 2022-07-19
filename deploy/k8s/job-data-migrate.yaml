@@ -10,6 +10,7 @@ spec:
       containers:
         - name: migrate
           image: MIGRATE_IMAGE_URL
+          imagePullPolicy: Always
           command:
             - "-url=jdbc:postgresql://DATABASE_ENDPOINT/"
             - "-user=postgres"
