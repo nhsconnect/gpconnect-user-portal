@@ -45,9 +45,10 @@ resource "aws_rds_cluster" "default" {
   engine_version    = "14.3"
   storage_encrypted = true
 
-  database_name   = "postgres"
-  master_username = jsondecode(data.aws_secretsmanager_secret_version.database_password.secret_string)["username"]
-  master_password = jsondecode(data.aws_secretsmanager_secret_version.database_password.secret_string)["password"]
+  database_name                       = "postgres"
+  master_username                     = jsondecode(data.aws_secretsmanager_secret_version.database_password.secret_string)["username"]
+  master_password                     = jsondecode(data.aws_secretsmanager_secret_version.database_password.secret_string)["password"]
+  iam_database_authentication_enabled = true
 
   vpc_security_group_ids = [
     aws_security_group.database_servers.id
