@@ -7,16 +7,18 @@ namespace GpConnect.NationalDataSharingPortal.EndUserPortal.Core;
 
 public static class ApplicationBuilderExtensions
 {
-    public static void ConfigureApplicationBuilderServices(this IApplicationBuilder app)
+    public static void ConfigureApplicationBuilderServices(this IApplicationBuilder app, IWebHostEnvironment env)
     {
-        //app.UseExceptionHandler("/Error");
-
         app.UseForwardedHeaders(new ForwardedHeadersOptions
         {
             ForwardedHeaders = ForwardedHeaders.XForwardedProto
         });
 
-        app.UseHsts();
+        if (!env.IsDevelopment())
+        {
+            app.UseExceptionHandler("/Error");
+            app.UseHsts();
+        }
 
         app.UseStatusCodePagesWithReExecute("/StatusCode/{0}");
 
@@ -45,9 +47,6 @@ public static class ApplicationBuilderExtensions
         });       
 
         app.UseResponseCompression();
-
-        app.UseAuthentication();
-        app.UseAuthorization();
 
         app.UseEndpoints(endpoints =>
         {
