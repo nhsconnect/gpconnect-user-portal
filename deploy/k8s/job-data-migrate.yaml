@@ -11,7 +11,6 @@ spec:
         - name: migrate
           image: MIGRATE_IMAGE_URL
           command:
-            - "flyway"
             - "-url=jdbc:postgresql://DATABASE_ENDPOINT/"
             - "-user=postgres"
             - "-connectRetries=10"
