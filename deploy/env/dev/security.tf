@@ -1,3 +1,11 @@
+# K8s worker security group
+data "aws_security_group" "worker_sg" {
+  filter {
+    name   = "tag:Name"
+    values = ["live-lk8s-nonprod-live-leks-cluster"]
+  }
+}
+
 # Security group for database
 resource "aws_security_group" "database_servers" {
   vpc_id      = data.aws_vpc.default.id
