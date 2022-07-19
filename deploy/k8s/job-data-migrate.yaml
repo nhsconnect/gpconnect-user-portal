@@ -12,11 +12,9 @@ spec:
           image: MIGRATE_IMAGE_URL
           imagePullPolicy: Always
           command:
-            - "flyway"
-            - "-url=jdbc:postgresql://DATABASE_ENDPOINT/"
-            - "-user=postgres"
-            - "-connectRetries=10"
-            - "migrate"
+            - bash
+            - /flyway/get_secret_and_migrate.sh
+            - DATABASE_CREDS_SECRET_ID
           resources:
             requests:
               memory: 64Mi
@@ -25,8 +23,8 @@ spec:
               memory: 128Mi
               cpu: 500m
           env:
-            - name: FLYWAY_PASSWORD
-              value: DATABASE_PASSWORD
+            - name: FLYWAY_URL
+              value: jdbc:postgresql://DATABASE_ENDPOINT/
 
       restartPolicy: Never
   backoffLimit: 1
