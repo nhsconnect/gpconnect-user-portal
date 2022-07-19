@@ -266,4 +266,4 @@ userid
 coveragereport
 
 # Terraform
-.terraform/
+*.terraform*

@@ -59,6 +59,7 @@ node {
           databaseSecret = outputs['database_credentials']['value']['secret_id']
           databasePassword = outputs['database_credentials']['value']['password']
           migrateRoleArn = outputs['migrate_role_arn']['value']
+          apiRoleArn = outputs['api_role_arn']['value']
           echo databaseEndpoint
         }
       }
@@ -91,6 +92,8 @@ node {
         'MIGRATE_IMAGE_URL':  "${ecrRepoBase}/${prefix}/data-migrator:${version}",
         'MIGRATE_ROLE_ARN': migrateRoleArn,
 
+        'API_ROLE_ARN': apiRoleArn,
+
         'SCHEMA_MIGRATOR_IMAGE_URL': "${ecrRepoBase}/${prefix}/database-migrator:${version}" ,
 
         'ALB_INGRESS_TO_BE_REPLACED': 'alb',
@@ -104,6 +107,7 @@ node {
       k8files = [
         'namespace.yaml',
         'service-account.migrate.yaml',
+        'service-account.api.yaml',
         'job-data-migrate.yaml',
         'deployment.yaml',
         'service.yaml',
