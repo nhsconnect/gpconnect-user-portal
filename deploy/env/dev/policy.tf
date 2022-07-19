@@ -39,24 +39,24 @@ resource "aws_iam_policy" "write_parameter_store_policy" {
 }
 
 data "aws_iam_policy_document" "read_secrets_manager" {
-    statement {
-        actions = [
-            "secretsmanager:GetResourcePolicy",
-            "secretsmanager:GetSecretValue", 
-            "secretsmanager:DescribeSecret",
-            "secretsmanager:ListSecretVersionIds",
-            "secretsmanager:ListSecrets"
-            ]
-        resources = [
-          "arn:aws:ecr:eu-west-2:461183108257:secrets/${local.prefix}/secrets-manager"
-        ]
-        effect = "Allow"
-    }
+  statement {
+    actions = [
+      "secretsmanager:GetResourcePolicy",
+      "secretsmanager:GetSecretValue",
+      "secretsmanager:DescribeSecret",
+      "secretsmanager:ListSecretVersionIds",
+      "secretsmanager:ListSecrets",
+    ]
+    resources = [
+      "arn:aws:ecr:eu-west-2:461183108257:secrets/${local.prefix}/secrets-manager"
+    ]
+    effect = "Allow"
+  }
 }
 
 resource "aws_iam_policy" "read_secrets_manager_policy" {
-    path        = "/${local.prefix}"
-    name        = "${local.prefix}-read-secrets-manager-policy"
-    description = "Read secrets manager policy"
-    policy      = data.aws_iam_policy_document.read_secrets_manager.json
+  path        = "/${local.prefix}/"
+  name        = "read-secrets-manager-policy"
+  description = "Read secrets manager policy"
+  policy      = data.aws_iam_policy_document.read_secrets_manager.json
 }
