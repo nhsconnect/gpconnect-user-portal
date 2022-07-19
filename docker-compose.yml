@@ -1,18 +1,21 @@
+networks:
+  ndsp: {}
 
 services:
 
   data-migrator:
-    image: flyway/flyway
+    image: ndsp/data-migrator
+    build:
+      context: database
     volumes:
-      - ./database:/flyway/sql:ro
       - ./modules/api/service-level-tests/db_data_source/test_data_source.sql:/flyway/testdata/V999.0__testdata.sql
     environment:
-      FLYWAY_EDITION: community
-      FLYWAY_PLACEHOLDERS_logger: ndsa
       FLYWAY_LOCATIONS: filesystem:/flyway/sql,filesystem:/flyway/testdata
     command: -url=jdbc:postgresql://database/ -user=postgres -connectRetries=10 migrate
     depends_on:
       - database
+    networks:
+      - ndsp
 
   acceptance-test:
     image: ndsp/acceptance
@@ -26,9 +29,13 @@ services:
       DB_HOST: database
       BASE_USER_URL: https://end-user-portal
       BASE_ADMIN_URL: https://admin-portal
+    networks:
+      - ndsp
 
   selenium-chrome:
     image: selenium/standalone-chrome
+    networks:
+      - ndsp
 
   auth-server:
     image: ghcr.io/navikt/mock-oauth2-server:0.5.1
@@ -57,6 +64,8 @@ services:
             }
           ]
         }
+    networks:
+      - ndsp
 
   mock-api:
     image: bbyars/mountebank
@@ -69,6 +78,8 @@ services:
       - mb
       - --configfile
       - /config/application.json
+    networks:
+      - ndsp
 
   mock-ods:
     image: bbyars/mountebank
@@ -82,7 +93,9 @@ services:
     entrypoint:
       - mb
       - --configfile
-      - /config/spine-ods-fhir.proxy.json
+      - /config/spine-ods-fhir.json
+    networks:
+      - ndsp
 
   api:
     image: ndsp/api
@@ -103,6 +116,8 @@ services:
       ASPNETCORE_Kestrel__Certificates__Default__Password: ndsa
       ASPNETCORE_Kestrel__Certificates__Default__Path: /https/aspnetapp.pfx
       ConnectionStrings__DefaultConnection: Host=database;Database=postgres;Username=postgres;Include Error Detail=true;
+    networks:
+      - ndsp
 
   user-portal:
     image: ndsp/user-portal
@@ -124,6 +139,8 @@ services:
       ASPNETCORE_Kestrel__Certificates__Default__Path: /https/aspnetapp.pfx
 
       ConnectionStrings__GPConnectEndUserPortal: Host=database;Database=postgres;Username=postgres;Include Error Detail=true;
+    networks:
+      - ndsp
 
   end-user-portal:
     image: ndsp/end-user-portal
@@ -146,7 +163,9 @@ services:
       SiteApi__BaseUrl: http://api:5002
       SupplierApi__BaseUrl: http://mock-api:5555
       OrganisationApi__BaseUrl: http://mock-ods:5556
-      # API_BASEADDRESS: http://mock-api:5555
+      AgreementApi__BaseUrl: http://api:5002
+    networks:
+      - ndsp
 
   admin-portal:
     image: ndsp/admin-portal
@@ -170,6 +189,8 @@ services:
       ASPNETCORE_Kestrel__Certificates__Default__Path: /https/aspnetapp.pfx
       ConnectionStrings__GPConnectEndUserPortal: Host=database;Database=postgres;Username=postgres;Include Error Detail=true;
       Sso__RequireHttpsMetadata: false
+    networks:
+      - ndsp
 
   database:
     image: postgres:14
@@ -178,3 +199,5 @@ services:
         published: 5432
     environment:
       POSTGRES_HOST_AUTH_METHOD: trust
+    networks:
+      - ndsp
