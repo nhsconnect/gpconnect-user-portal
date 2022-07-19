@@ -8,11 +8,7 @@ read -r FLYWAY_USER FLYWAY_PASSWORD <<< "$(
   aws secretsmanager get-secret-value \
     --secret-id "${SECRET_ARN}" \
     --query 'SecretString' \
-<<<<<<< HEAD
-    --output text | jq -r '[.username, .password] | @tsv'
-=======
-    --output text | jq -r '.username,.password'
->>>>>>> 31c88dc (Fetch secret from database)
+    --output text | jq -r '[].username, .password] | @tsv'
 )"
 
 export FLYWAY_USER
