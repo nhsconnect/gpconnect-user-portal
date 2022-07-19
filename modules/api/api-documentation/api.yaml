@@ -320,7 +320,7 @@ paths:
   #               type: array
   #               items: 
   #                 type: string
-  /acceptance:
+  /agreement:
     # get:
     #   summary: Returns a list of users.
     #   description: Optional extended description in CommonMark or HTML.
