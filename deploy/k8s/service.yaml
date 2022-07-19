@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: NAMESPACE_TO_BE_REPLACED
+  name: API_SERVICE_NAME_TO_BE_REPLACED
+spec:
+  ports:
+    - protocol: TCP
+      port: PORT_TO_BE_REPLACED
+      targetPort: PORT_TO_BE_REPLACED
+      name: api
+  selector:
+    app: DEPLOYMENT_NAME_TO_BE_REPLACED-api
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: NAMESPACE_TO_BE_REPLACED
+  name: END_USER_PORTAL_SERVICE_NAME_TO_BE_REPLACED
+spec:
+  ports:
+    - protocol: TCP
+      port: PORT_TO_BE_REPLACED
+      targetPort: PORT_TO_BE_REPLACED
+      name: END_USER_PORTAL_SERVICE_NAME_TO_BE_REPLACED
+  selector:
+    app: DEPLOYMENT_NAME_TO_BE_REPLACED-eup

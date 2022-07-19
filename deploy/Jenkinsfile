@@ -11,6 +11,8 @@ version = 'latest'
 texasEnvName = 'live-lk8s-nonprod'
 serviceTeam = prefix
 
+K8FOLDER = 'deploy/k8s'
+
 node {
   try {
 
@@ -19,28 +21,17 @@ node {
     }
 
     stage("Authenticate to AWS/k8s") {
-      // TODO : Do namespace here b/c we might need it for DB migration
       awsCreds = sh(
         script: "${jenkinsScriptsDir}/assume_role.sh ${texasEnvName} ${serviceTeam}",
         returnStdout: true,
       )
 
       creds = awsCreds.tokenize(',\n')
+      creds.add('KUBECONFIG=~/.kube/gpc-ndsp-deploy.config')
 
       withEnv(creds) {
-        sh 'rm -f ~/.kube/config'
         sh 'aws eks --region eu-west-2 update-kubeconfig --name live-leks-cluster'
       }
-
-
-      //   kubeconfig = sh(
-      //     script: "${jenkinsScriptsDir}/kube_config.sh ${texasEnvName}",
-      //     returnStdout: true,
-      //   )
-      // }
-      // echo "TOP OF KUBECONFIG"
-      // sh "head -n2 ${kubeconfig}"
-      // creds.add("KUBECONFIG=${kubeconfig}")
     }
 
     def databaseEndpoint
@@ -118,7 +109,7 @@ node {
         return rv
       }
 
-      dir('k8s') {
+      dir(K8FOLDER) {
         for (configFile in k8files) {
           config = readFile(configFile)
           config = replace(config)
@@ -129,9 +120,8 @@ node {
     }
 
     stage('Database Migration') {
-      // TODO : Do a bit where we rename the job file
       migrationJob = 'job-data-migrate.yaml'
-      dir('k8s') {
+      dir(K8FOLDER) {
         withEnv(creds) {
           sh 'kubectl apply -f namespace.yaml'
           sh 'kubectl apply -f service-account.migrate.yaml'
@@ -145,9 +135,9 @@ node {
         'namespace.yaml',
         'deployment.yaml',
         'service.yaml',
-        // 'ingress.yaml',
+        'ingress.yaml',
       ]
-      dir('k8s') {
+      dir(K8FOLDER) {
         withEnv(creds) {
           for (file in k8files) {
             sh "kubectl apply -f ${file}"
