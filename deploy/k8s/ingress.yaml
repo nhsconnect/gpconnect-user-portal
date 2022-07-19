@@ -37,8 +37,7 @@ metadata:
     last-updated-epochtime: "EPOCHTIME_TO_BE_REPLACED"
 spec:
   rules:
-    - host: END_USER_PORTAL_DOMAIN_NAME
-      http:
+    - http:
         paths:
           - path: /*
             pathType: ImplementationSpecific
