@@ -68,7 +68,7 @@ public static class ServiceCollectionExtensions
             options.SuppressXFrameOptionsHeader = true;
             options.Cookie.HttpOnly = true;
             options.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
-            options.Cookie.SameSite = SameSiteMode.None;
+            options.Cookie.SameSite = SameSiteMode.Lax;
         });
 
         services.AddHttpClientServices(configuration, env);
