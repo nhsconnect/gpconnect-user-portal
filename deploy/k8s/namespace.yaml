@@ -8,7 +8,8 @@ kind: Role
 metadata:
   namespace: NAMESPACE_TO_BE_REPLACED
   name: gpc-ndsp-readwrite
-  ttl: nextmonth
+  labels: 
+    ttl: 21-Jul-2022
 rules:
 - apiGroups: [ "" ]
   resources: [ "configmaps", "events", "persistentvolumeclaims", "pods", "secrets", "serviceaccounts", "services",  "pods/log", "pods/exec" ]
