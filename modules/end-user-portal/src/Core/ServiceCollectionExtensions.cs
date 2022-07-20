@@ -26,7 +26,10 @@ public static class ServiceCollectionExtensions
         services.Configure<CookiePolicyOptions>(options =>
         {
             options.CheckConsentNeeded = context => true;
-            options.MinimumSameSitePolicy = SameSiteMode.None;
+            options.MinimumSameSitePolicy = SameSiteMode.Lax;
+            options.Secure = CookieSecurePolicy.SameAsRequest;
+            options.ConsentCookie.SameSite = SameSiteMode.Lax;
+            options.ConsentCookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
         });
 
         services.Configure<CookieTempDataProviderOptions>(options =>
