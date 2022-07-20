@@ -34,24 +34,6 @@ namespace GpConnect.DataSharing.User.Specs.Steps
             Assert.True(_transparencyLandingPage.IsStartButtonVisible());
         }
 
-        [Then(@"the support email address is present")]
-        public void ThenTheAdministratorsEmailAddressIsPresent()
-        {
-            Assert.True(_transparencyLandingPage.SupportEmail.Displayed);
-        }
-
-        [Then(@"the support telephone number is present")]
-        public void ThenTheSupportTelephoneNumberIsPresent()
-        {
-            Assert.True(_transparencyLandingPage.SupportPhone.Displayed);
-        }
-
-        [When(@"I click the start now button")]
-        public void WhenIClickTheStartNowButton()
-        {
-            _transparencyLandingPage.ClickStart();
-        }
-
         [Then(@"I am taken to the search by name page")]
         public void ThenIAmTakenToTheSearchByNamePage()
         {

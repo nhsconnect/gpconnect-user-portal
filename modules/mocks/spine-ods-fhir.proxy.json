@@ -1,0 +1,30 @@
+{
+  "port": 5556,
+  "protocol": "http",
+  "name": "spine-ods-fhir",
+  "stubs": [
+    {
+      "responses": [
+        {
+          "proxy": {
+            "to": "https://uat.directory.spineservices.nhs.uk",
+            "mode": "proxyAlways",
+            "predicateGenerators": [
+              {
+                "matches": {
+                  "path": true,
+                  "query": true
+                }
+              },
+              {
+                "matches": {
+                  "path": true
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

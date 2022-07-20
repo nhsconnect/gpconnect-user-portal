@@ -1,0 +1,153 @@
+awsRegion = 'eu-west-2'
+ecrAccountId = '461183108257'
+
+jenkinsScriptsDir = 'deploy/scripts'
+
+prefix = 'gpc-ndsp'
+env = 'nonprod'
+appNamespace = "${prefix}"
+version = 'latest'
+
+texasEnvName = 'live-lk8s-nonprod'
+serviceTeam = prefix
+
+K8FOLDER = 'deploy/k8s'
+
+node {
+  try {
+
+    stage('Checkout') {
+      checkout scm
+    }
+
+    stage("Authenticate to AWS/k8s") {
+      awsCreds = sh(
+        script: "${jenkinsScriptsDir}/assume_role.sh ${texasEnvName} ${serviceTeam}",
+        returnStdout: true,
+      )
+
+      creds = awsCreds.tokenize(',\n')
+      creds.add("KUBECONFIG=${JENKINS_HOME}/.kube/gpc-ndsp-deploy.config")
+
+      withEnv(creds) {
+        sh 'aws eks --region eu-west-2 update-kubeconfig --name live-leks-cluster'
+      }
+    }
+
+    def databaseEndpoint
+    stage('Terraform') {
+      dir('deploy/env/dev') {
+        withEnv(creds) {
+          sh 'terraform init'
+          sh 'terraform plan -out /tmp/tf.plan' // TODO use job execution ID
+          sh 'terraform apply /tmp/tf.plan'
+          // Get Database Hostname
+          outputs = readJSON(text: sh(
+            script: 'terraform output -json',
+            returnStdout: true,
+          ))
+          databaseEndpoint = outputs['database_endpoint']['value']
+          databaseSecret = outputs['database_credentials']['value']['secret_id']
+          databasePassword = outputs['database_credentials']['value']['password']
+          migrateRoleArn = outputs['migrate_role_arn']['value']
+          echo databaseEndpoint
+        }
+      }
+    }
+
+    stage('Variable Substitution') {
+      ecrRepoBase = "${ecrAccountId}.dkr.ecr.${awsRegion}.amazonaws.com"
+
+      epochTime = System.currentTimeMillis()
+
+      vars = [
+
+        'DATABASE_ENDPOINT': databaseEndpoint,
+        'DATABASE_CREDS_SECRET_ID': databaseSecret,
+        'DATABASE_PASSWORD': databasePassword,
+        'NAMESPACE_TO_BE_REPLACED': appNamespace,
+        'DEPLOYMENT_NAME_TO_BE_REPLACED': "${prefix}-deploy",
+
+        'API_CONTAINER_NAME': 'api',
+        'API_IMAGE_URL': "${ecrRepoBase}/${prefix}/api:${version}",
+        'API_SERVICE_NAME_TO_BE_REPLACED': 'api-svc',
+        'API_SERVICE_SELECTOR_TO_BE_REPLACED': 'api-deploy',
+
+        'END_USER_PORTAL_DOMAIN_NAME': 'transparency.gpconnect.nhs.uk',
+        'END_USER_PORTAL_CONTAINER_NAME': 'end-user-portal',
+        'END_USER_PORTAL_IMAGE_URL':  "${ecrRepoBase}/${prefix}/end-user-portal:${version}",
+        'END_USER_PORTAL_SERVICE_NAME_TO_BE_REPLACED': 'end-user-portal-svc',
+        'END_USER_PORTAL_SERVICE_SELECTOR_TO_BE_REPLACED': 'end-user-portal-deploy',
+
+        'MIGRATE_IMAGE_URL':  "${ecrRepoBase}/${prefix}/data-migrator:${version}",
+        'MIGRATE_ROLE_ARN': migrateRoleArn,
+
+        'SCHEMA_MIGRATOR_IMAGE_URL': "${ecrRepoBase}/${prefix}/database-migrator:${version}" ,
+
+        'ALB_INGRESS_TO_BE_REPLACED': 'alb',
+        'ALB_SCHEME_TO_BE_REPLACED': 'internet-facing',
+        'SECURITY_POLICY_TO_BE_REPLACED': 'ELBSecurityPolicy-TLS13-1-2-2021-06', // LATEST as of 2022-06
+        'SERVICE_TAG_TO_BE_REPLACED': "Service=${prefix}",
+        'EPOCHTIME_TO_BE_REPLACED': "${epochTime}",
+        'PORT_TO_BE_REPLACED': '80',
+      ]
+
+      k8files = [
+        'namespace.yaml',
+        'service-account.migrate.yaml',
+        'job-data-migrate.yaml',
+        'deployment.yaml',
+        'service.yaml',
+        'ingress.yaml',
+      ]
+
+      replace = { line ->
+        rv = line
+        vars.each { key, value ->
+          rv = rv.replaceAll(key, value)
+        }
+        return rv
+      }
+
+      dir(K8FOLDER) {
+        for (configFile in k8files) {
+          config = readFile(configFile)
+          config = replace(config)
+          writeFile(file: configFile, text: config)
+        }
+      }
+
+    }
+
+    stage('Database Migration') {
+      migrationJob = 'job-data-migrate.yaml'
+      dir(K8FOLDER) {
+        withEnv(creds) {
+          sh 'kubectl apply -f namespace.yaml'
+          sh 'kubectl apply -f service-account.migrate.yaml'
+          sh "kubectl apply -f ${migrationJob}"
+        }
+      }
+    }
+
+    stage('Deploy') {
+      k8sfiles = [
+        'namespace.yaml',
+        'deployment.yaml',
+        'service.yaml',
+        'ingress.yaml',
+      ]
+      dir(K8FOLDER) {
+        withEnv(creds) {
+          for (file in k8files) {
+            sh "kubectl apply -f ${file}"
+          }
+        }
+      }
+    }
+  }
+  finally {
+
+  }
+}
+

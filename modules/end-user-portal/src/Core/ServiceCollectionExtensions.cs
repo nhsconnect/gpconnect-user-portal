@@ -31,6 +31,7 @@ public static class ServiceCollectionExtensions
 
         services.Configure<CookieTempDataProviderOptions>(options =>
         {
+            options.Cookie.IsEssential = true;
             options.Cookie.Name = ".GpConnect.NationalDataSharingPortal.TempDataCookie";
             options.Cookie.Expiration = TimeSpan.FromMinutes(30);
         });
@@ -65,9 +66,9 @@ public static class ServiceCollectionExtensions
         services.AddAntiforgery(options =>
         {
             options.SuppressXFrameOptionsHeader = true;
-            options.Cookie.HttpOnly = false;
-            options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
-            options.Cookie.SameSite = SameSiteMode.None;
+            options.Cookie.HttpOnly = true;
+            options.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
+            options.Cookie.SameSite = SameSiteMode.Lax;
         });
 
         services.AddHttpClientServices(configuration, env);

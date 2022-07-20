@@ -1,0 +1,79 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: NAMESPACE_TO_BE_REPLACED
+  name: DEPLOYMENT_NAME_TO_BE_REPLACED-api
+  annotations:
+    last-updated-epochtime: "EPOCHTIME_TO_BE_REPLACED"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: DEPLOYMENT_NAME_TO_BE_REPLACED-api
+  template:
+    metadata:
+      labels:
+        app: DEPLOYMENT_NAME_TO_BE_REPLACED-api
+    spec:
+      terminationGracePeriodSeconds: 10
+      containers:
+        - name: API_CONTAINER_NAME
+          image: API_IMAGE_URL
+          imagePullPolicy: Always
+          resources:
+            requests:
+              memory: 64Mi
+              cpu: 500m
+            limits:
+              memory: 128Mi
+              cpu: 500m
+          ports:
+            - containerPort: PORT_TO_BE_REPLACED
+          env:
+            - name: ConnectionStrings__DefaultConnection
+              value: Host=DATABASE_ENDPOINT;Database=postgres;Username=postgres;Password=DATABASE_PASSWORD;Include Error Detail=true;
+            - name: ASPNETCORE_URLS
+              value: http://*:80
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: NAMESPACE_TO_BE_REPLACED
+  name: DEPLOYMENT_NAME_TO_BE_REPLACED-eup
+  annotations:
+    last-updated-epochtime: "EPOCHTIME_TO_BE_REPLACED"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: DEPLOYMENT_NAME_TO_BE_REPLACED-eup
+  template:
+    metadata:
+      labels:
+        app: DEPLOYMENT_NAME_TO_BE_REPLACED-eup
+    spec:
+      terminationGracePeriodSeconds: 10
+      containers:
+        - name: END_USER_PORTAL_CONTAINER_NAME
+          image: END_USER_PORTAL_IMAGE_URL
+          imagePullPolicy: Always
+          resources:
+            requests:
+              memory: 64Mi
+              cpu: 500m
+            limits:
+              memory: 128Mi
+              cpu: 500m
+          ports:
+            - containerPort: PORT_TO_BE_REPLACED
+          env:
+            - name: ASPNETCORE_URLS
+              value: http://*:80
+            - name: SiteApi__BaseUrl
+              value: http://API_SERVICE_NAME_TO_BE_REPLACED
+            - name: SupplierApi__BaseUrl
+              value: http://API_SERVICE_NAME_TO_BE_REPLACED
+            - name: AgreementApi__BaseUrl
+              value: http://API_SERVICE_NAME_TO_BE_REPLACED
+            - name: OrganisationApi__BaseUrl
+              value: https://uat.directory.spineservices.nhs.uk
