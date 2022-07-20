@@ -3,7 +3,7 @@ kind: Namespace
 metadata:
   name: NAMESPACE_TO_BE_REPLACED
   labels: 
-    ttl: 21-Jul-2022
+    ttl: nextmonth
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
