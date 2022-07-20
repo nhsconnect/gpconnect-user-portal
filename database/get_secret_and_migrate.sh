@@ -13,6 +13,5 @@ read -r FLYWAY_USER FLYWAY_PASSWORD <<< "$(
 
 export FLYWAY_USER
 export FLYWAY_PASSWORD
-export FLYWAY_LOCATIONS=filesystem:/flyway/sql
 
 flyway -connectRetries=10 migrate

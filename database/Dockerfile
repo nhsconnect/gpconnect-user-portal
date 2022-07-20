@@ -18,5 +18,6 @@ COPY . /flyway/sql
 
 ENV FLYWAY_EDITION=community
 ENV FLYWAY_PLACEHOLDERS_logger: ndsa
+ENV FLYWAY_LOCATIONS: filesystem:/flyway/sql
 
 ENTRYPOINT [ "/flyway/flyway" ]
