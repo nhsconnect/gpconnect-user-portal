@@ -137,7 +137,6 @@ services:
       ASPNETCORE_URLS: https://+:443
       ASPNETCORE_Kestrel__Certificates__Default__Password: ndsa
       ASPNETCORE_Kestrel__Certificates__Default__Path: /https/aspnetapp.pfx
-
       ConnectionStrings__GPConnectEndUserPortal: Host=database;Database=postgres;Username=postgres;Include Error Detail=true;
     networks:
       - ndsp
@@ -150,6 +149,7 @@ services:
     depends_on:
       - api
       - mock-api
+      - mock-ods
     ports:
       - target: 443
         published: 5003

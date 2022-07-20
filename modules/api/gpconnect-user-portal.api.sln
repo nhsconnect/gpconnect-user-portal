@@ -5,7 +5,7 @@ VisualStudioVersion = 17.0.31919.166
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "gpconnect-user-portal.api", "src\gpconnect-user-portal.api.csproj", "{057D28A4-4407-437A-840C-20327214911D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "gpconnect-user-portal.api.test", "test\gpconnect-user-portal.api.test.csproj", "{EC382C52-F853-409E-A57C-C84C93726C8C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "gpconnect-user-portal.api.test", "test\gpconnect-user-portal.api.test.csproj", "{20A135C6-0AAF-4FE6-8E5C-BD0BCDA77145}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,10 @@ Global
 		{057D28A4-4407-437A-840C-20327214911D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{057D28A4-4407-437A-840C-20327214911D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{057D28A4-4407-437A-840C-20327214911D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EC382C52-F853-409E-A57C-C84C93726C8C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EC382C52-F853-409E-A57C-C84C93726C8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EC382C52-F853-409E-A57C-C84C93726C8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EC382C52-F853-409E-A57C-C84C93726C8C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{20A135C6-0AAF-4FE6-8E5C-BD0BCDA77145}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{20A135C6-0AAF-4FE6-8E5C-BD0BCDA77145}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{20A135C6-0AAF-4FE6-8E5C-BD0BCDA77145}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{20A135C6-0AAF-4FE6-8E5C-BD0BCDA77145}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
