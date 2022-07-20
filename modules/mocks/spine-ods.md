@@ -11,6 +11,7 @@
 - Go to the [Mountebank imposters console](http://localhost:2525/imposters)
 - Open the mock and grab the extra data
   - Trim out any spurious bits you don't want like the `"_links"` key
+  - The proxy also seems to record duplicate predicate conditions
 - Add the extra data to the `"stubs"` key in the non-proxy file
 - Swap the filename back in the `docker-compose.yml` file
 
