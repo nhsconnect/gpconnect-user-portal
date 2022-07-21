@@ -33,7 +33,7 @@ spec:
             - containerPort: PORT_TO_BE_REPLACED
           env:
             - name: ConnectionStrings__DefaultConnection
-              value: Host=DATABASE_ENDPOINT;Database=postgres;Include Error Detail=true;
+              value: Host=DATABASE_ENDPOINT;Database=postgres;Username=postgres;Password=DATABASE_PASSWORD;Include Error Detail=true;
             - name: ASPNETCORE_URLS
               value: http://*:80
 ---
