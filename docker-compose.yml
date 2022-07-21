@@ -11,6 +11,8 @@ services:
       - ./modules/api/service-level-tests/db_data_source/test_data_source.sql:/flyway/testdata/V999.0__testdata.sql
     environment:
       FLYWAY_LOCATIONS: filesystem:/flyway/sql,filesystem:/flyway/testdata
+      # DO NOT set this in the real deployments, RDS should create this role
+      FLYWAY_INIT_SQL: DROP ROLE IF EXISTS rds_iam; CREATE ROLE rds_iam;
     command: -url=jdbc:postgresql://database/ -user=postgres -connectRetries=10 migrate
     depends_on:
       - database
