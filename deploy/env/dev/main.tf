@@ -54,3 +54,7 @@ output "database_credentials" {
 output "migrate_role_arn" {
   value = aws_iam_role.migrate.arn
 }
+
+output "api_role_arn" {
+  value = aws_iam_role.api.arn
+}

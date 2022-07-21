@@ -50,6 +50,7 @@ node {
           databaseSecret = outputs['database_credentials']['value']['secret_id']
           databasePassword = outputs['database_credentials']['value']['password']
           migrateRoleArn = outputs['migrate_role_arn']['value']
+          apiRoleArn = outputs['api_role_arn']['value']
           echo databaseEndpoint
         }
       }
@@ -69,6 +70,7 @@ node {
         'DEPLOYMENT_NAME_TO_BE_REPLACED': "${prefix}-deploy",
 
         'API_CONTAINER_NAME': 'api',
+        'API_ROLE_ARN': apiRoleArn,
         'API_IMAGE_URL': "${ecrRepoBase}/${prefix}/api:${version}",
         'API_SERVICE_NAME_TO_BE_REPLACED': 'api-svc',
         'API_SERVICE_SELECTOR_TO_BE_REPLACED': 'api-deploy',
@@ -95,6 +97,7 @@ node {
       k8files = [
         'namespace.yaml',
         'service-account.migrate.yaml',
+        'service-accounts.yaml',
         'job-data-migrate.yaml',
         'deployment.yaml',
         'service.yaml',
@@ -133,6 +136,7 @@ node {
     stage('Deploy') {
       k8sfiles = [
         'namespace.yaml',
+        'service-accounts.yaml',
         'deployment.yaml',
         'service.yaml',
         'ingress.yaml',
