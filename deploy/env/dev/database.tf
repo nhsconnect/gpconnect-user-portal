@@ -53,6 +53,11 @@ resource "aws_rds_cluster" "default" {
     aws_security_group.database_servers.id
   ]
 
+  iam_database_authentication_enabled = true
+  iam_roles = [
+    aws_iam_role.api.arn,
+  ]
+
   serverlessv2_scaling_configuration {
     max_capacity = 1.0
     min_capacity = 0.5
