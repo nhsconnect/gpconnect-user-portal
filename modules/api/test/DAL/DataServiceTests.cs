@@ -1,3 +1,4 @@
+using Amazon;
 using Dapper;
 using GpConnect.NationalDataSharingPortal.Api.Dal;
 using Microsoft.Extensions.Logging;
@@ -37,6 +38,24 @@ public class DataServiceTests
     }
 
     [Fact]
+    public void Constructor_WithRdsToken_UsesRdsApi()
+    {
+
+        var tokenMock = new Mock<IAuthTokenGenerator>();
+
+        tokenMock.Setup(m => m.GenerateAuthToken(RegionEndpoint.EUWest2, "test-db-server", 5432, "test-user")).Returns("very secret password");
+        var rdsOptions = new Mock<IOptions<ConnectionStrings>>();
+
+        rdsOptions.Setup(o => o.Value).Returns(new ConnectionStrings() { DefaultConnection = "Host=test-db-server;User=test-user;Password=${rdsToken};"});
+
+        var service = new DataService(rdsOptions.Object, _mockLogger.Object, tokenMock.Object);
+
+        var connectionString = service.ConnectionString;
+
+        Assert.Contains("very secret password", connectionString);
+    }
+
+    [Fact]
     public void Constructor_WithNullLogger_ThrowsArgumentNullException()
     {
         Assert.Throws<ArgumentNullException>(() => new DataService(_mockOptionsAccessor.Object, default(ILogger<DataService>)));
@@ -58,7 +77,7 @@ public class DataServiceTests
     public async Task CallExecuteQuery_WithStringAndNullDynamicParameters_ThrowsArgumentNullException(string value)
     {
         await Assert.ThrowsAsync<ArgumentNullException>(() => _sut.ExecuteQuery(value, default(DynamicParameters)));
-    }    
+    }
 
     [Theory]
     [InlineData(null)]
