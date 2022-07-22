@@ -14,14 +14,12 @@ namespace GpConnect.NationalDataSharingPortal.Api.Dal
     public class DataService : IDataService
     {
         private readonly ILogger<DataService> _logger;
-        private readonly string _connectionString;
-        private readonly IAuthTokenGenerator _authTokenGenerator;
+        private readonly IOptionsSnapshot<ConnectionStrings> _optionsAccessor;
 
-        public DataService(IOptions<ConnectionStrings> optionsAccessor, ILogger<DataService> logger, IAuthTokenGenerator authTokenGenerator = null)
+        public DataService(IOptionsSnapshot<ConnectionStrings> optionsAccessor, ILogger<DataService> logger)
         {
             _logger = logger ?? throw new ArgumentNullException();
-            _connectionString = optionsAccessor == null ? throw new ArgumentNullException() : optionsAccessor.Value.DefaultConnection;
-            _authTokenGenerator = authTokenGenerator ?? new RDSAuthTokenGenerator();
+            _optionsAccessor = optionsAccessor;
         }
 
         public async Task<List<T>> ExecuteQuery<T>(string query, DynamicParameters? parameters = null) where T : class
@@ -105,22 +103,7 @@ namespace GpConnect.NationalDataSharingPortal.Api.Dal
         }
 
         private NpgsqlConnection GetConnection() {
-            return new NpgsqlConnection(ConnectionString);
-        }
-
-        public string ConnectionString
-        {
-            get
-            {
-                var connectionString = _connectionString;
-                if (connectionString.Contains("${rdsToken}")) {
-                    var host = Array.Find(connectionString.Split(';'), item => item.StartsWith("Host=")).Split('=')[1];
-                    var user = Array.Find(connectionString.Split(';'), item => item.StartsWith("User=")).Split('=')[1];
-                    var pwd = _authTokenGenerator.GenerateAuthToken(RegionEndpoint.EUWest2, host, 5432, user);
-                    connectionString = connectionString.Replace("${rdsToken}", pwd);
-                }
-                return connectionString;
-            }
+            return new NpgsqlConnection(_optionsAccessor.Value.DefaultConnection);
         }
 
         private string CheckQuery(string query)
@@ -138,9 +121,20 @@ namespace GpConnect.NationalDataSharingPortal.Api.Dal
 
     public class RDSAuthTokenGenerator : IAuthTokenGenerator
     {
+
+        private readonly static TimeSpan EXPIRY = TimeSpan.FromSeconds(900);
+        private long _currentExpiryTime = 0;
+
+        private string _currentToken = "";
+
+
         public string GenerateAuthToken(RegionEndpoint endpoint, string host, int port, string user)
         {
-            return Amazon.RDS.Util.RDSAuthTokenGenerator.GenerateAuthToken(RegionEndpoint.EUWest2, host, 5432, user);
+            if ( DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() > _currentExpiryTime) {
+                _currentExpiryTime = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() + (long)EXPIRY.TotalMilliseconds;
+                _currentToken = Amazon.RDS.Util.RDSAuthTokenGenerator.GenerateAuthToken(RegionEndpoint.EUWest2, host, 5432, user);
+            }
+            return _currentToken;
         }
     }
 }

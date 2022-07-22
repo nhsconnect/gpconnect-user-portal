@@ -32,11 +32,6 @@ public class Startup
         services.ConfigureLoggingServices(_configuration);
     }
 
-    public void ConfigureContainer(ContainerBuilder builder)
-    {
-        builder.ConfigureContainer();
-    }
-
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {
         app.ConfigureApplicationBuilderServices(env);
