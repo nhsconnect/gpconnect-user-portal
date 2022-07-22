@@ -30,6 +30,7 @@ services:
     command: ./User.Specs/*.csproj
     environment:
       REMOTE_BROWSER_URL: http://selenium-chrome:4444
+      DEFAULT_TIMEOUT: "10"
       DB_HOST: database
       BASE_USER_URL: http://end-user-portal
       BASE_ADMIN_URL: https://admin-portal

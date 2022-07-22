@@ -3,11 +3,12 @@ namespace GpConnect.DataSharing.Admin.Specs.PageObjects
     public class BasePageObject
     {
 
-        private string baseUrl;
-        protected TimeSpan DefaultWait = TimeSpan.FromSeconds(1);
+        private readonly string baseUrl;
+        protected readonly TimeSpan DefaultWait;
 
         public BasePageObject()
         {
+            DefaultWait = TimeSpan.FromSeconds(double.Parse(Environment.GetEnvironmentVariable("DEFAULT_TIMEOUT") ?? "1"));
             baseUrl = Environment.GetEnvironmentVariable("BASE_ADMIN_URL") ?? "https://localhost:5001";
         }
 
