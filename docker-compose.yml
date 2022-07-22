@@ -7,10 +7,10 @@ services:
     image: ndsp/data-migrator
     build:
       context: database
-    volumes:
-      - ./modules/api/service-level-tests/db_data_source/test_data_source.sql:/flyway/testdata/V999.0__testdata.sql
+    # volumes:
+    #   - ./modules/api/service-level-tests/db_data_source/test_data_source.sql:/flyway/testdata/V999.0__testdata.sql
     environment:
-      FLYWAY_LOCATIONS: filesystem:/flyway/sql,filesystem:/flyway/testdata
+      # FLYWAY_LOCATIONS: filesystem:/flyway/sql,filesystem:/flyway/testdata
       # DO NOT set this in the real deployments, RDS should create this role
       FLYWAY_INIT_SQL: DROP ROLE IF EXISTS rds_iam; CREATE ROLE rds_iam;
     command: -url=jdbc:postgresql://database/ -user=postgres -connectRetries=10 migrate
@@ -19,14 +19,29 @@ services:
     networks:
       - ndsp
 
+  acceptance-data-migrator:
+    image: ndsp/acceptance-data-migrator
+    build:
+      context: modules/api/service-level-tests/db_data_source
+    depends_on:
+      data-migrator:
+        condition: service_completed_successfully
+    networks:
+      - ndsp
+
   acceptance-test:
     image: ndsp/acceptance
     build:
       context: ./acceptance
     depends_on:
-      - selenium-chrome
-      - database
-      - end-user-portal
+      selenium-chrome:
+        condition: service_healthy
+      database:
+        condition: service_healthy
+      end-user-portal:
+        condition: service_healthy
+      acceptance-data-migrator:
+        condition: service_completed_successfully
     environment:
       REMOTE_BROWSER_URL: http://selenium-chrome:4444
       DEFAULT_TIMEOUT: "10"
