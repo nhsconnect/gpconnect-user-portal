@@ -1,7 +1,7 @@
-using GpConnect.NationalDataSharingPortal.Api.Dal;
+using GpConnect.NationalDataSharingPortal.Api.Dal.Configuration;
 using Xunit;
 
-namespace GpConnect.NationalDataSharingPortal.Api.Test.Dal;
+namespace GpConnect.NationalDataSharingPortal.Api.Test.Dal.Configuration;
 
 public class ConnectionStringsTests
 {

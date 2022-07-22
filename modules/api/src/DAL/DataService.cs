@@ -1,4 +1,5 @@
 using Dapper;
+using GpConnect.NationalDataSharingPortal.Api.Dal.Configuration;
 using GpConnect.NationalDataSharingPortal.Api.Dal.Interfaces;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -18,8 +19,8 @@ namespace GpConnect.NationalDataSharingPortal.Api.Dal
 
         public DataService(IOptionsSnapshot<ConnectionStrings> optionsAccessor, ILogger<DataService> logger)
         {
-            _logger = logger ?? throw new ArgumentNullException();
-            _optionsAccessor = optionsAccessor ?? throw new ArgumentNullException();
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _optionsAccessor = optionsAccessor ?? throw new ArgumentNullException(nameof(optionsAccessor));
         }
 
         public async Task<List<T>> ExecuteQuery<T>(string query, DynamicParameters? parameters = null) where T : class
@@ -111,30 +112,6 @@ namespace GpConnect.NationalDataSharingPortal.Api.Dal
             if (string.IsNullOrEmpty(query?.Trim()))
                 throw new ArgumentNullException(nameof(query));
             return query;
-        }
-    }
-
-    public interface IAuthTokenGenerator
-    {
-        string GenerateAuthToken(RegionEndpoint endpoint, string host, int port, string user);
-    }
-
-    public class RDSAuthTokenGenerator : IAuthTokenGenerator
-    {
-
-        private readonly static TimeSpan EXPIRY = TimeSpan.FromSeconds(900);
-        private long _currentExpiryTime = 0;
-
-        private string _currentToken = "";
-
-
-        public string GenerateAuthToken(RegionEndpoint endpoint, string host, int port, string user)
-        {
-            if ( DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() > _currentExpiryTime) {
-                _currentExpiryTime = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() + (long)EXPIRY.TotalMilliseconds;
-                _currentToken = Amazon.RDS.Util.RDSAuthTokenGenerator.GenerateAuthToken(RegionEndpoint.EUWest2, host, 5432, user);
-            }
-            return _currentToken;
         }
     }
 }

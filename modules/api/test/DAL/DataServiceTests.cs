@@ -1,6 +1,6 @@
-using Amazon;
 using Dapper;
 using GpConnect.NationalDataSharingPortal.Api.Dal;
+using GpConnect.NationalDataSharingPortal.Api.Dal.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Moq;

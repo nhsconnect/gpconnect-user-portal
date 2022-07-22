@@ -3,7 +3,7 @@ using System;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
-using Amazon;
+using GpConnect.NationalDataSharingPortal.Api.Dal.Authentication.Interface;
 
 namespace GpConnect.NationalDataSharingPortal.Api.Dal.Configuration
 {
@@ -26,7 +26,7 @@ namespace GpConnect.NationalDataSharingPortal.Api.Dal.Configuration
                 _logger.LogInformation("Replacing Token");
                 var host = GetNamedParameterValue(connectionString, "Host");
                 var user = GetNamedParameterValue(connectionString, "User");
-                var pwd = _tokenGenerator.GenerateAuthToken(RegionEndpoint.EUWest2, host, 5432, user);
+                var pwd = _tokenGenerator.GenerateAuthToken(host, 5432, user);
 
 
                 options.DefaultConnection = connectionString.Replace("${rdsToken}", pwd);
