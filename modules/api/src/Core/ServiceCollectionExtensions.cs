@@ -1,11 +1,22 @@
-﻿using GpConnect.NationalDataSharingPortal.Api.Dal;
+﻿using System;
+using System.Net;
+
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Net;
+using Microsoft.Extensions.Options;
+
+using GpConnect.NationalDataSharingPortal.Api.Dal;
+using GpConnect.NationalDataSharingPortal.Api.Dal.Configuration;
+using GpConnect.NationalDataSharingPortal.Api.Dal.Interfaces;
+using GpConnect.NationalDataSharingPortal.Api.Service;
+using GpConnect.NationalDataSharingPortal.Api.Service.Interface;
+using GpConnect.NationalDataSharingPortal.Api.Validators;
+using GpConnect.NationalDataSharingPortal.Api.Validators.Interface;
+using GpConnect.NationalDataSharingPortal.Api.Dal.Authentication.Interface;
+using GpConnect.NationalDataSharingPortal.Api.Dal.Authentication;
 
 namespace GpConnect.NationalDataSharingPortal.Api.Core
 {
@@ -23,6 +34,20 @@ namespace GpConnect.NationalDataSharingPortal.Api.Core
 
             services.AddOptions();
             services.Configure<ConnectionStrings>(configuration.GetSection("ConnectionStrings"));
+            services.AddTransient<IPostConfigureOptions<ConnectionStrings>, ConnectionStringsPostConfiguration>();
+            services.AddSingleton<IAuthTokenGenerator, RdsAuthTokenGenerator>();
+
+            services.AddScoped<IDataService, DataService>();
+            services.AddSingleton<ITransparencySiteRequestValidator, TransparencySiteRequestValidator>();
+            services.AddScoped<ITransparencySiteService, TransparencySiteService>();
+            services.AddSingleton<ICareSettingRequestValidator, CareSettingRequestValidator>();
+            services.AddScoped<ICareSettingService, CareSettingService>();
+            services.AddScoped<ICcgService, CcgService>();
+            services.AddSingleton<ISupplierRequestValidator,SupplierRequestValidator>();
+            services.AddScoped<ISupplierService, SupplierService>();
+            services.AddSingleton<IProductRequestValidator, ProductRequestValidator>();
+            services.AddScoped<IProductService,ProductService>();
+            services.AddScoped<IUserService,UserService>();
 
             services.AddHsts(options =>
             {

@@ -1,4 +1,5 @@
 using Dapper;
+using GpConnect.NationalDataSharingPortal.Api.Dal.Configuration;
 using GpConnect.NationalDataSharingPortal.Api.Dal.Interfaces;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -7,18 +8,19 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Threading.Tasks;
+using Amazon;
 
 namespace GpConnect.NationalDataSharingPortal.Api.Dal
 {
     public class DataService : IDataService
     {
         private readonly ILogger<DataService> _logger;
-        private readonly string _connectionString;
+        private readonly IOptionsSnapshot<ConnectionStrings> _optionsAccessor;
 
-        public DataService(IOptions<ConnectionStrings> optionsAccessor, ILogger<DataService> logger)
+        public DataService(IOptionsSnapshot<ConnectionStrings> optionsAccessor, ILogger<DataService> logger)
         {
-            _logger = logger ?? throw new ArgumentNullException();
-            _connectionString = optionsAccessor == null ? throw new ArgumentNullException() : optionsAccessor.Value.DefaultConnection;
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _optionsAccessor = optionsAccessor ?? throw new ArgumentNullException(nameof(optionsAccessor));
         }
 
         public async Task<List<T>> ExecuteQuery<T>(string query, DynamicParameters? parameters = null) where T : class
@@ -26,7 +28,7 @@ namespace GpConnect.NationalDataSharingPortal.Api.Dal
             try
             {
                 CheckQuery(query);
-                using NpgsqlConnection connection = new NpgsqlConnection(_connectionString);
+                await using var connection = GetConnection();
                 var results = (await connection.QueryAsync<T>(query, parameters, commandType: CommandType.StoredProcedure)).AsList();
                 return results;
             }
@@ -42,7 +44,7 @@ namespace GpConnect.NationalDataSharingPortal.Api.Dal
             try
             {
                 CheckQuery(query);
-                using NpgsqlConnection connection = new NpgsqlConnection(_connectionString);
+                await using var connection = GetConnection();
                 var result = await connection.QueryFirstOrDefaultAsync<T>(query, parameters, commandType: CommandType.StoredProcedure);
                 return result;
             }
@@ -58,7 +60,7 @@ namespace GpConnect.NationalDataSharingPortal.Api.Dal
             try
             {
                 CheckQuery(query);
-                using NpgsqlConnection connection = new NpgsqlConnection(_connectionString);
+                await using var connection = GetConnection();
                 var rowsProcessed = await connection.ExecuteAsync(query, parameters, commandType: CommandType.StoredProcedure);
                 return rowsProcessed;
             }
@@ -74,7 +76,7 @@ namespace GpConnect.NationalDataSharingPortal.Api.Dal
             try
             {
                 CheckQuery(query);
-                using NpgsqlConnection connection = new NpgsqlConnection(_connectionString);
+                await using var connection = GetConnection();
                 var singleValue = await connection.ExecuteScalarAsync<int>(query, parameters, commandType: CommandType.StoredProcedure);
                 return singleValue;
             }
@@ -90,7 +92,7 @@ namespace GpConnect.NationalDataSharingPortal.Api.Dal
             try
             {
                 CheckQuery(query);
-                using NpgsqlConnection connection = new NpgsqlConnection(_connectionString);
+                await using var connection = GetConnection();
                 var results = (await connection.QueryAsync<T>(query, commandType: CommandType.Text)).AsList();
                 return results;
             }
@@ -99,6 +101,10 @@ namespace GpConnect.NationalDataSharingPortal.Api.Dal
                 _logger?.LogError(exc, $"An error has occurred while attempting to execute the query {query}");
                 throw;
             }
+        }
+
+        private NpgsqlConnection GetConnection() {
+            return new NpgsqlConnection(_optionsAccessor.Value.DefaultConnection);
         }
 
         private string CheckQuery(string query)

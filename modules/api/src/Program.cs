@@ -1,12 +1,13 @@
-using Autofac.Extensions.DependencyInjection;
-using GpConnect.NationalDataSharingPortal.Api.Core;
-using GpConnect.NationalDataSharingPortal.Api.Core.Logging;
+using System;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
+
+using Autofac.Extensions.DependencyInjection;
 using NLog;
 using NLog.Web;
-using System;
 
+using GpConnect.NationalDataSharingPortal.Api.Core;
+using GpConnect.NationalDataSharingPortal.Api.Core.Logging;
 namespace GpConnect.NationalDataSharingPortal.Api;
 
 public class Program

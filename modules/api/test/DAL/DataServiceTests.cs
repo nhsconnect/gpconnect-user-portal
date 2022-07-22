@@ -1,5 +1,6 @@
 using Dapper;
 using GpConnect.NationalDataSharingPortal.Api.Dal;
+using GpConnect.NationalDataSharingPortal.Api.Dal.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Moq;
@@ -13,12 +14,12 @@ namespace GpConnect.NationalDataSharingPortal.Api.Test.Dal;
 public class DataServiceTests
 {
     private readonly DataService _sut;
-    private readonly Mock<IOptions<ConnectionStrings>> _mockOptionsAccessor;
+    private readonly Mock<IOptionsSnapshot<ConnectionStrings>> _mockOptionsAccessor;
     private readonly Mock<ILogger<DataService>> _mockLogger;
 
     public DataServiceTests()
     {
-        _mockOptionsAccessor = new Mock<IOptions<ConnectionStrings>>();
+        _mockOptionsAccessor = new Mock<IOptionsSnapshot<ConnectionStrings>>();
         _mockOptionsAccessor.Setup(o => o.Value).Returns(new ConnectionStrings() { DefaultConnection = "Test" });
         _mockLogger = new Mock<ILogger<DataService>>();
         _sut = new DataService(_mockOptionsAccessor.Object, _mockLogger.Object);
@@ -33,7 +34,7 @@ public class DataServiceTests
     [Fact]
     public void Constructor_WithNullOptionsAccessor_ThrowsArgumentNullException()
     {
-        Assert.Throws<ArgumentNullException>(() => new DataService(default(IOptions<ConnectionStrings>), _mockLogger.Object));
+        Assert.Throws<ArgumentNullException>(() => new DataService(default, _mockLogger.Object));
     }
 
     [Fact]
@@ -58,7 +59,7 @@ public class DataServiceTests
     public async Task CallExecuteQuery_WithStringAndNullDynamicParameters_ThrowsArgumentNullException(string value)
     {
         await Assert.ThrowsAsync<ArgumentNullException>(() => _sut.ExecuteQuery(value, default(DynamicParameters)));
-    }    
+    }
 
     [Theory]
     [InlineData(null)]
