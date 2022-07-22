@@ -34,19 +34,8 @@ public class DataServiceTests
     [Fact]
     public void Constructor_WithNullOptionsAccessor_ThrowsArgumentNullException()
     {
-        Assert.Throws<ArgumentNullException>(() => new DataService(default(IOptionsSnapshot<ConnectionStrings>), _mockLogger.Object));
+        Assert.Throws<ArgumentNullException>(() => new DataService(default, _mockLogger.Object));
     }
-
-    // [Fact]
-    // public void Constructor_WithRdsToken_UsesRdsApi()
-    // {
-
-    //     var tokenMock = new Mock<IAuthTokenGenerator>();
-
-    //     tokenMock.Setup(m => m.GenerateAuthToken(RegionEndpoint.EUWest2, "test-db-server", 5432, "test-user")).Returns("very secret password");
-
-    //     _mockOptionsAccessor.Setup(o => o.Value).Returns(new ConnectionStrings() { DefaultConnection = "Host=test-db-server;User=test-user;Password=${rdsToken};"});
-    // }
 
     [Fact]
     public void Constructor_WithNullLogger_ThrowsArgumentNullException()

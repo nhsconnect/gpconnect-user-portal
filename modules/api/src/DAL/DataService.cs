@@ -19,7 +19,7 @@ namespace GpConnect.NationalDataSharingPortal.Api.Dal
         public DataService(IOptionsSnapshot<ConnectionStrings> optionsAccessor, ILogger<DataService> logger)
         {
             _logger = logger ?? throw new ArgumentNullException();
-            _optionsAccessor = optionsAccessor;
+            _optionsAccessor = optionsAccessor ?? throw new ArgumentNullException();
         }
 
         public async Task<List<T>> ExecuteQuery<T>(string query, DynamicParameters? parameters = null) where T : class

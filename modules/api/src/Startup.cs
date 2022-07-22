@@ -1,4 +1,3 @@
-using Autofac;
 using GpConnect.NationalDataSharingPortal.Api.Core;
 using GpConnect.NationalDataSharingPortal.Api.Core.Logging;
 using GpConnect.NationalDataSharingPortal.Api.Core.Mapping;
