@@ -1,4 +1,4 @@
-﻿namespace GpConnect.NationalDataSharingPortal.Api.Dal
+﻿namespace GpConnect.NationalDataSharingPortal.Api.Dal.Configuration
 {
     public class ConnectionStrings
     {
@@ -9,10 +9,4 @@
 
         public string DefaultConnection { get; set; }
     }
-
-
-    //public class ConnectionStrings
-    //{
-    //    public string DefaultConnection { get; } = "GpConnectEndUserPortal";
-    //}
 }

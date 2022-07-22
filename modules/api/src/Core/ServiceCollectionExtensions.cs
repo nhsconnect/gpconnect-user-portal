@@ -15,6 +15,8 @@ using GpConnect.NationalDataSharingPortal.Api.Service;
 using GpConnect.NationalDataSharingPortal.Api.Service.Interface;
 using GpConnect.NationalDataSharingPortal.Api.Validators;
 using GpConnect.NationalDataSharingPortal.Api.Validators.Interface;
+using GpConnect.NationalDataSharingPortal.Api.Dal.Authentication.Interface;
+using GpConnect.NationalDataSharingPortal.Api.Dal.Authentication;
 
 namespace GpConnect.NationalDataSharingPortal.Api.Core
 {
@@ -33,7 +35,7 @@ namespace GpConnect.NationalDataSharingPortal.Api.Core
             services.AddOptions();
             services.Configure<ConnectionStrings>(configuration.GetSection("ConnectionStrings"));
             services.AddTransient<IPostConfigureOptions<ConnectionStrings>, ConnectionStringsPostConfiguration>();
-            services.AddSingleton<IAuthTokenGenerator, RDSAuthTokenGenerator>();
+            services.AddSingleton<IAuthTokenGenerator, RdsAuthTokenGenerator>();
 
             services.AddScoped<IDataService, DataService>();
             services.AddSingleton<ITransparencySiteRequestValidator, TransparencySiteRequestValidator>();
