@@ -23,8 +23,18 @@ namespace GpConnect.NationalDataSharingPortal.Api.Dal.Authentication
         public string GenerateAuthToken(string host, int port, string user)
         {
             if ( DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() >= _currentExpiryTime - 1000) {
-                _currentExpiryTime = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() + (long)EXPIRY.TotalMilliseconds;
-                _currentToken = Amazon.RDS.Util.RDSAuthTokenGenerator.GenerateAuthToken(RegionEndpoint.EUWest2, host, 5432, user);
+                try 
+                {
+                    _logger.LogDebug("Generating RDS token from Amazon");
+                    _currentToken = Amazon.RDS.Util.RDSAuthTokenGenerator.GenerateAuthToken(RegionEndpoint.EUWest2, host, 5432, user);
+                    // Only update time if we get a token
+                    _currentExpiryTime = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() + (long)EXPIRY.TotalMilliseconds;
+                }
+                catch (Exception e) 
+                {
+                    _logger.LogError( e, "Failed to obtain RDS token from AWS");
+                    throw;
+                }
             }
             return _currentToken;
         }
