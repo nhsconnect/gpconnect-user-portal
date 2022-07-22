@@ -6,14 +6,14 @@ namespace GpConnect.DataSharing.User.Specs.PageObjects
 {
     public class BasePageObject
     {
-
-        private string baseUrl;
-        protected TimeSpan DefaultWait = TimeSpan.FromSeconds(1);
-
         private readonly IWebDriver _webDriver;
+
+        private readonly string baseUrl;
+        protected readonly TimeSpan DefaultWait;
 
         public BasePageObject()
         {
+            DefaultWait = TimeSpan.FromSeconds(double.Parse(Environment.GetEnvironmentVariable("DEFAULT_TIMEOUT") ?? "1"));
             baseUrl = Environment.GetEnvironmentVariable("BASE_USER_URL") ?? "https://localhost:5003";
         }
 

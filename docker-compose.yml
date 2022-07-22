@@ -27,7 +27,6 @@ services:
       - selenium-chrome
       - database
       - end-user-portal
-    command: ./User.Specs/*.csproj
     environment:
       REMOTE_BROWSER_URL: http://selenium-chrome:4444
       DEFAULT_TIMEOUT: "10"
