@@ -35,9 +35,11 @@ services:
       context: ./acceptance
     depends_on:
       selenium-chrome:
-        condition: service_healthy
+        condition: service_started
       database:
-        condition: service_healthy
+        condition: service_started
+      end-user-portal:
+        condition: service_started
       acceptance-data-migrator:
         condition: service_completed_successfully
     environment:
