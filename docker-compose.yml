@@ -26,10 +26,12 @@ services:
     depends_on:
       - selenium-chrome
       - database
+      - end-user-portal
+    command: ./User.Specs/*.csproj
     environment:
       REMOTE_BROWSER_URL: http://selenium-chrome:4444
       DB_HOST: database
-      BASE_USER_URL: https://end-user-portal
+      BASE_USER_URL: http://end-user-portal
       BASE_ADMIN_URL: https://admin-portal
     networks:
       - ndsp
@@ -70,32 +72,17 @@ services:
       - ndsp
 
   mock-api:
-    image: bbyars/mountebank
-    volumes:
-      - ./modules/mocks/:/config:ro
+    build:
+      context: ./modules/mocks
     ports:
       - target: 5555
         published: 5555
-    entrypoint:
-      - mb
-      - --configfile
-      - /config/application.json
-    networks:
-      - ndsp
-
-  mock-ods:
-    image: bbyars/mountebank
-    volumes:
-      - ./modules/mocks/:/config
-    ports:
-      - target: 2525
-        published: 2525
       - target: 5556
         published: 5556
     entrypoint:
       - mb
       - --configfile
-      - /config/spine-ods-fhir.json
+      - imposters.ejs
     networks:
       - ndsp
 
@@ -110,36 +97,10 @@ services:
     ports:
       - target: 5002
         published: 5002
-    volumes:
-      - ./cert:/https:ro
     environment:
       ASPNETCORE_ENVIRONMENT: Development
       ASPNETCORE_URLS: http://+:5002
-      ASPNETCORE_Kestrel__Certificates__Default__Password: ndsa
-      ASPNETCORE_Kestrel__Certificates__Default__Path: /https/aspnetapp.pfx
       ConnectionStrings__DefaultConnection: Host=database;Database=postgres;Username=postgres;Include Error Detail=true;
-    networks:
-      - ndsp
-
-  user-portal:
-    image: ndsp/user-portal
-    build:
-      context: ./source
-      dockerfile: ./user.Dockerfile
-    depends_on:
-      - database
-      - api
-    ports:
-      - target: 443
-        published: 5000
-    volumes:
-      - ./cert:/https:ro
-    environment:
-      ASPNETCORE_ENVIRONMENT: Development
-      ASPNETCORE_URLS: https://+:443
-      ASPNETCORE_Kestrel__Certificates__Default__Password: ndsa
-      ASPNETCORE_Kestrel__Certificates__Default__Path: /https/aspnetapp.pfx
-      ConnectionStrings__GPConnectEndUserPortal: Host=database;Database=postgres;Username=postgres;Include Error Detail=true;
     networks:
       - ndsp
 
@@ -151,20 +112,14 @@ services:
     depends_on:
       - api
       - mock-api
-      - mock-ods
     ports:
-      - target: 443
+      - target: 80
         published: 5003
-    volumes:
-      - ./cert:/https:ro
     environment:
-      ASPNETCORE_ENVIRONMENT: Development
-      ASPNETCORE_URLS: https://+:443
-      ASPNETCORE_Kestrel__Certificates__Default__Password: ndsa
-      ASPNETCORE_Kestrel__Certificates__Default__Path: /https/aspnetapp.pfx
+      ASPNETCORE_URLS: http://+:80
       SiteApi__BaseUrl: http://api:5002
       SupplierApi__BaseUrl: http://mock-api:5555
-      OrganisationApi__BaseUrl: http://mock-ods:5556
+      OrganisationApi__BaseUrl: http://mock-api:5556
       AgreementApi__BaseUrl: http://api:5002
     networks:
       - ndsp
