@@ -1,4 +1,3 @@
-using Autofac.Extensions.DependencyInjection;
 using GpConnect.NationalDataSharingPortal.Api.Core;
 using GpConnect.NationalDataSharingPortal.Api.Core.Logging;
 using Microsoft.AspNetCore.Hosting;
@@ -39,7 +38,6 @@ public class Program
           {
             WebConfigurationBuilder.ConfigureWebHost(webHostBuilder);
           })
-          .UseServiceProviderFactory(new AutofacServiceProviderFactory())
           .ConfigureWebHostDefaults(webHostDefaultsBuilder =>
           {
             webHostDefaultsBuilder.UseStartup<Startup>();

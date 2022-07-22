@@ -1,4 +1,3 @@
-using Autofac;
 using GpConnect.NationalDataSharingPortal.Api.Core;
 using GpConnect.NationalDataSharingPortal.Api.Core.Logging;
 using GpConnect.NationalDataSharingPortal.Api.Core.Mapping;
@@ -30,11 +29,6 @@ public class Startup
 
         services.ConfigureApplicationServices(_configuration, _webHostEnvironment);
         services.ConfigureLoggingServices(_configuration);
-    }
-
-    public void ConfigureContainer(ContainerBuilder builder)
-    {
-        builder.ConfigureContainer();
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
