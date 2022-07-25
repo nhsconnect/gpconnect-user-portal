@@ -32,6 +32,7 @@ node {
         'data-migrator',
         'api',
         'end-user-portal',
+        'admin-portal',
       ]
 
       // Authenticate against ECR
