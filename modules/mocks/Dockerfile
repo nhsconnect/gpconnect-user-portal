@@ -1,0 +1,4 @@
+FROM bbyars/mountebank
+
+COPY . .
+

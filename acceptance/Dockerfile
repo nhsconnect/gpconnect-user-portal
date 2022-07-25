@@ -9,4 +9,4 @@ RUN dotnet restore
 COPY . .
 WORKDIR /acceptance
 
-ENTRYPOINT dotnet test
+ENTRYPOINT dotnet test User.Specs/*.csproj

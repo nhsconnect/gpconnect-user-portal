@@ -1,5 +1,5 @@
 
-APP_SERVICES :=	admin-portal end-user-portal api
+APP_SERVICES :=	end-user-portal
 TEST_SERVICES := $(APP_SERVICES) auth-server mock-api database
 
 migrate:
@@ -9,7 +9,8 @@ serve:
 	docker compose up --build -d $(APP_SERVICES)
 
 acceptance-test:
-	docker compose up --build $@ --exit-code-from $@
+	docker compose build $@
+	docker compose up $@ --exit-code-from $@
 
 build-containers:
 	docker compose -f docker-compose.build.yml up --build

@@ -7,10 +7,10 @@ services:
     image: ndsp/data-migrator
     build:
       context: database
-    volumes:
-      - ./modules/api/service-level-tests/db_data_source/test_data_source.sql:/flyway/testdata/V999.0__testdata.sql
+    # volumes:
+    #   - ./modules/api/service-level-tests/db_data_source/test_data_source.sql:/flyway/testdata/V999.0__testdata.sql
     environment:
-      FLYWAY_LOCATIONS: filesystem:/flyway/sql,filesystem:/flyway/testdata
+      # FLYWAY_LOCATIONS: filesystem:/flyway/sql,filesystem:/flyway/testdata
       # DO NOT set this in the real deployments, RDS should create this role
       FLYWAY_INIT_SQL: DROP ROLE IF EXISTS rds_iam; CREATE ROLE rds_iam;
     command: -url=jdbc:postgresql://database/ -user=postgres -connectRetries=10 migrate
@@ -19,17 +19,34 @@ services:
     networks:
       - ndsp
 
+  acceptance-data-migrator:
+    image: ndsp/acceptance-data-migrator
+    build:
+      context: modules/api/service-level-tests/db_data_source
+    depends_on:
+      data-migrator:
+        condition: service_completed_successfully
+    networks:
+      - ndsp
+
   acceptance-test:
     image: ndsp/acceptance
     build:
       context: ./acceptance
     depends_on:
-      - selenium-chrome
-      - database
+      selenium-chrome:
+        condition: service_started
+      database:
+        condition: service_started
+      end-user-portal:
+        condition: service_started
+      acceptance-data-migrator:
+        condition: service_completed_successfully
     environment:
       REMOTE_BROWSER_URL: http://selenium-chrome:4444
+      DEFAULT_TIMEOUT: "10"
       DB_HOST: database
-      BASE_USER_URL: https://end-user-portal
+      BASE_USER_URL: http://end-user-portal
       BASE_ADMIN_URL: https://admin-portal
     networks:
       - ndsp
@@ -70,32 +87,17 @@ services:
       - ndsp
 
   mock-api:
-    image: bbyars/mountebank
-    volumes:
-      - ./modules/mocks/:/config:ro
+    build:
+      context: ./modules/mocks
     ports:
       - target: 5555
         published: 5555
-    entrypoint:
-      - mb
-      - --configfile
-      - /config/application.json
-    networks:
-      - ndsp
-
-  mock-ods:
-    image: bbyars/mountebank
-    volumes:
-      - ./modules/mocks/:/config
-    ports:
-      - target: 2525
-        published: 2525
       - target: 5556
         published: 5556
     entrypoint:
       - mb
       - --configfile
-      - /config/spine-ods-fhir.json
+      - imposters.ejs
     networks:
       - ndsp
 
@@ -110,36 +112,10 @@ services:
     ports:
       - target: 5002
         published: 5002
-    volumes:
-      - ./cert:/https:ro
     environment:
       ASPNETCORE_ENVIRONMENT: Development
       ASPNETCORE_URLS: http://+:5002
-      ASPNETCORE_Kestrel__Certificates__Default__Password: ndsa
-      ASPNETCORE_Kestrel__Certificates__Default__Path: /https/aspnetapp.pfx
       ConnectionStrings__DefaultConnection: Host=database;Database=postgres;Username=postgres;Include Error Detail=true;
-    networks:
-      - ndsp
-
-  user-portal:
-    image: ndsp/user-portal
-    build:
-      context: ./source
-      dockerfile: ./user.Dockerfile
-    depends_on:
-      - database
-      - api
-    ports:
-      - target: 443
-        published: 5000
-    volumes:
-      - ./cert:/https:ro
-    environment:
-      ASPNETCORE_ENVIRONMENT: Development
-      ASPNETCORE_URLS: https://+:443
-      ASPNETCORE_Kestrel__Certificates__Default__Password: ndsa
-      ASPNETCORE_Kestrel__Certificates__Default__Path: /https/aspnetapp.pfx
-      ConnectionStrings__GPConnectEndUserPortal: Host=database;Database=postgres;Username=postgres;Include Error Detail=true;
     networks:
       - ndsp
 
@@ -151,20 +127,14 @@ services:
     depends_on:
       - api
       - mock-api
-      - mock-ods
     ports:
-      - target: 443
+      - target: 80
         published: 5003
-    volumes:
-      - ./cert:/https:ro
     environment:
-      ASPNETCORE_ENVIRONMENT: Development
-      ASPNETCORE_URLS: https://+:443
-      ASPNETCORE_Kestrel__Certificates__Default__Password: ndsa
-      ASPNETCORE_Kestrel__Certificates__Default__Path: /https/aspnetapp.pfx
+      ASPNETCORE_URLS: http://+:80
       SiteApi__BaseUrl: http://api:5002
       SupplierApi__BaseUrl: http://mock-api:5555
-      OrganisationApi__BaseUrl: http://mock-ods:5556
+      OrganisationApi__BaseUrl: http://mock-api:5556
       AgreementApi__BaseUrl: http://api:5002
     networks:
       - ndsp
