@@ -33,7 +33,7 @@ spec:
             - containerPort: PORT_TO_BE_REPLACED
           env:
             - name: ConnectionStrings__DefaultConnection
-              value: Host=DATABASE_ENDPOINT;Database=postgres;User=api;Password=${rdsToken};Include Error Detail=true;
+              value: Host=DATABASE_ENDPOINT;Database=postgres;Username=api;Password=${rdsToken};Include Error Detail=true;
             - name: ASPNETCORE_URLS
               value: http://*:80
 ---

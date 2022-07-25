@@ -25,7 +25,7 @@ namespace GpConnect.NationalDataSharingPortal.Api.Dal.Configuration
             if (connectionString.Contains("${rdsToken}")) {
                 _logger.LogInformation("Replacing Token");
                 var host = GetNamedParameterValue(connectionString, "Host");
-                var user = GetNamedParameterValue(connectionString, "User");
+                var user = GetNamedParameterValue(connectionString, "Username");
                 var pwd = _tokenGenerator.GenerateAuthToken(host, 5432, user);
 
 
