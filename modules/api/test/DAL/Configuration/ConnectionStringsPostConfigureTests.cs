@@ -17,10 +17,10 @@ namespace GpConnect.NationalDataSharingPortal.Api.Test.Dal.Configuration
 
 
         private readonly IPostConfigureOptions<ConnectionStrings> _sut;
-        
+
         public ConnectionStringsPostConfigurationTests()
         {
-            _tokenGeneratorMock = new Mock<IAuthTokenGenerator>(); 
+            _tokenGeneratorMock = new Mock<IAuthTokenGenerator>();
             _sut = new ConnectionStringsPostConfiguration(_tokenGeneratorMock.Object, Mock.Of<ILogger<ConnectionStringsPostConfiguration>>());
         }
 
@@ -41,7 +41,7 @@ namespace GpConnect.NationalDataSharingPortal.Api.Test.Dal.Configuration
             var expectedUser = "ExpectedUser";
 
             _sut.PostConfigure(string.Empty, new ConnectionStrings {
-                DefaultConnection = $"${{rdsToken}};Host={expectedHost};User={expectedUser}"
+                DefaultConnection = $"${{rdsToken}};Host={expectedHost};Username={expectedUser}"
             });
 
             _tokenGeneratorMock.Verify(_mock => _mock.GenerateAuthToken(expectedHost, 5432, expectedUser), Times.Once);
@@ -51,9 +51,9 @@ namespace GpConnect.NationalDataSharingPortal.Api.Test.Dal.Configuration
         public void PostConfigure_ConnectionStringDoesContainRdsToken_UpdateConfigWithSubstitutedString()
         {
             _tokenGeneratorMock.Setup(t => t.GenerateAuthToken(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<string>())).Returns("TokenMcToken");
-            
+
             var configuration = new ConnectionStrings {
-                DefaultConnection = "${rdsToken};Host=expectedHost;User=expectedUser"
+                DefaultConnection = "${rdsToken};Host=expectedHost;Username=expectedUser"
             };
 
             _sut.PostConfigure(string.Empty, configuration);
