@@ -21,64 +21,55 @@
                                 </h3>
                             </div>
                             <div class="nhsuk-card__content">
-                                <label class="nhsuk-label nhsuk-label--m">
-                                    @Model.SearchResultEntry.SiteName
-                                </label>
-                                <p>@Model.SearchResultEntry.FullAddress</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="nhsuk-grid-row">
-                    <div class="nhsuk-grid-column-full">
-                        <div class="nhsuk-do-dont-list">
-                            <h3 class="nhsuk-do-dont-list__label">Services Used</h3>
-                            <ul class="nhsuk-list nhsuk-list--tick">
-                                @if (Model.SearchResultEntry.HasHtmlView)
-                                {
-                                    <li>
-                                        <svg class="nhsuk-icon nhsuk-icon__tick" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" aria-hidden="true" width="34" height="34">
-                                            <path stroke-width="4" stroke-linecap="round" d="M18.4 7.8l-8.5 8.4L5.6 12" stroke="#007f3b"></path>
-                                        </svg>@Html.DisplayNameFor(model => Model.SearchResultEntry.HasHtmlView)
-                                    </li>
-                                }
-                                @if (Model.SearchResultEntry.HasAppointmentManagement)
-                                {
-                                    <li>
-                                        <svg class="nhsuk-icon nhsuk-icon__tick" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" aria-hidden="true" width="34" height="34">
-                                            <path stroke-width="4" stroke-linecap="round" d="M18.4 7.8l-8.5 8.4L5.6 12" stroke="#007f3b"></path>
-                                        </svg>@Html.DisplayNameFor(model => Model.SearchResultEntry.HasAppointmentManagement)
-                                    </li>
-                                }
-                                @if (Model.SearchResultEntry.HasStructured)
-                                {
-                                    <li>
-                                        <svg class="nhsuk-icon nhsuk-icon__tick" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" aria-hidden="true" width="34" height="34">
-                                            <path stroke-width="4" stroke-linecap="round" d="M18.4 7.8l-8.5 8.4L5.6 12" stroke="#007f3b"></path>
-                                        </svg>@Html.DisplayNameFor(model => Model.SearchResultEntry.HasStructured)
-                                    </li>
-                                }
-                                @if (Model.SearchResultEntry.HasSendDocument)
-                                {
-                                    <li>
-                                        <svg class="nhsuk-icon nhsuk-icon__tick" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" aria-hidden="true" width="34" height="34">
-                                            <path stroke-width="4" stroke-linecap="round" d="M18.4 7.8l-8.5 8.4L5.6 12" stroke="#007f3b"></path>
-                                        </svg>@Html.DisplayNameFor(model => Model.SearchResultEntry.HasSendDocument)
-                                    </li>
-                                }
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="nhsuk-grid-row">
-                    <div class="nhsuk-grid-column-full">
-                        <div class="nhsuk-card nhsuk-card--feature">
-                            <div class="nhsuk-card__content nhsuk-card__content--feature">
-                                <h2 class="nhsuk-card__heading nhsuk-card__heading--feature nhsuk-heading-m">
-                                    Use Case Description
-                                </h2>
-                                <p class="nhsuk-card__description">@Model.SearchResultEntry.UseCaseDescription</p>
+                                <div>
+                                    <label class="nhsuk-label nhsuk-label--m">
+                                        @Model.SearchResultEntry.SiteName
+                                    </label>
+                                    <p>@Model.SearchResultEntry.FullAddress</p>
+                                </div>
+                                <br>
+                                <div>
+                                    <h3 class="">Use Case Description</h3>
+                                    <p class="nhsuk-card__description">@Model.SearchResultEntry.UseCaseDescription</p>
+                                </div>
+                                <br>
+                                <div>
+                                    <h3>Services Used</h3>
+                                    <ul class="nhsuk-list nhsuk-list--tick">
+                                        @if (Model.SearchResultEntry.HasHtmlView)
+                                        {
+                                            <li>
+                                                <svg class="nhsuk-icon nhsuk-icon__tick" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" aria-hidden="true" width="34" height="34">
+                                                    <path stroke-width="4" stroke-linecap="round" d="M18.4 7.8l-8.5 8.4L5.6 12" stroke="#007f3b"></path>
+                                                </svg>@Html.DisplayNameFor(model => Model.SearchResultEntry.HasHtmlView)
+                                            </li>
+                                        }
+                                        @if (Model.SearchResultEntry.HasAppointmentManagement)
+                                        {
+                                            <li>
+                                                <svg class="nhsuk-icon nhsuk-icon__tick" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" aria-hidden="true" width="34" height="34">
+                                                    <path stroke-width="4" stroke-linecap="round" d="M18.4 7.8l-8.5 8.4L5.6 12" stroke="#007f3b"></path>
+                                                </svg>@Html.DisplayNameFor(model => Model.SearchResultEntry.HasAppointmentManagement)
+                                            </li>
+                                        }
+                                        @if (Model.SearchResultEntry.HasStructured)
+                                        {
+                                            <li>
+                                                <svg class="nhsuk-icon nhsuk-icon__tick" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" aria-hidden="true" width="34" height="34">
+                                                    <path stroke-width="4" stroke-linecap="round" d="M18.4 7.8l-8.5 8.4L5.6 12" stroke="#007f3b"></path>
+                                                </svg>@Html.DisplayNameFor(model => Model.SearchResultEntry.HasStructured)
+                                            </li>
+                                        }
+                                        @if (Model.SearchResultEntry.HasSendDocument)
+                                        {
+                                            <li>
+                                                <svg class="nhsuk-icon nhsuk-icon__tick" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" aria-hidden="true" width="34" height="34">
+                                                    <path stroke-width="4" stroke-linecap="round" d="M18.4 7.8l-8.5 8.4L5.6 12" stroke="#007f3b"></path>
+                                                </svg>@Html.DisplayNameFor(model => Model.SearchResultEntry.HasSendDocument)
+                                            </li>
+                                        }
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     </div>
