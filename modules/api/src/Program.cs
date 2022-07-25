@@ -2,7 +2,7 @@ using System;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
-using Autofac.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection;
 using NLog;
 using NLog.Web;
 
@@ -40,7 +40,7 @@ public class Program
           {
             WebConfigurationBuilder.ConfigureWebHost(webHostBuilder);
           })
-          .UseServiceProviderFactory(new AutofacServiceProviderFactory())
+          .UseServiceProviderFactory(new DefaultServiceProviderFactory())
           .ConfigureWebHostDefaults(webHostDefaultsBuilder =>
           {
             webHostDefaultsBuilder.UseStartup<Startup>();
