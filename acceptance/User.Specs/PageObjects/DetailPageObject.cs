@@ -30,7 +30,7 @@ namespace GpConnect.DataSharing.User.Specs.PageObjects
                 .FindElement(By.CssSelector("label.nhsuk-label"));
 
         public IWebElement ServiceList =>
-            _webDriver.FindElement(By.ClassName("nhsuk-do-dont-list"));
+            _webDriver.FindElement(By.ClassName("nhsuk-list--tick"));
     }
 }
 
