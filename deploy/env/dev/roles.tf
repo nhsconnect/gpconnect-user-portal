@@ -60,7 +60,7 @@ data "aws_iam_policy_document" "connect_to_db_as" {
       "rds-db:connect"
     ]
     resources = [
-      "arn:aws:rds-db:eu-west-2:${data.aws_caller_identity.current.account_id}:dbuser:${aws_rds_cluster_instance.default.dbi_resource_id}/${each.key}"
+      "arn:aws:rds-db:eu-west-2:${data.aws_caller_identity.current.account_id}:dbuser:${aws_rds_cluster.default.cluster_resource_id}/${each.key}"
     ]
   }
 }
