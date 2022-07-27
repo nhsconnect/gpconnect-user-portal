@@ -4,7 +4,7 @@
 # }
 
 # resource "aws_ssm_parameter" "database_password_parameter" {
-#   name        = "${local.prefix}-rds-master-password"
+#   name        = "${module.vars.env.prefix}-rds-master-password"
 #   description = "RDS database password"
 #   type        = "SecureString"
 #   value       = random_password.default.result
@@ -23,7 +23,7 @@ variable "source-parameters" {
 
 # resource "aws_ssm_parameter" "parameters" {
 #   for_each = var.source-parameters
-#   name  = "/${local.prefix}/${local.env}/${each.key}"
+#   name  = "/${module.vars.env.prefix}/${local.env}/${each.key}"
 #   type  = "String"
 #   value = each.value
 # }

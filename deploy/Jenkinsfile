@@ -1,12 +1,12 @@
+
+version = env?.VERSION ?: 'latest'
+
 awsRegion = 'eu-west-2'
 ecrAccountId = '461183108257'
 
 jenkinsScriptsDir = 'deploy/scripts'
 
 prefix = 'gpc-ndsp'
-env = 'nonprod'
-appNamespace = "${prefix}"
-version = 'latest'
 
 texasEnvName = 'live-lk8s-nonprod'
 serviceTeam = prefix
@@ -15,6 +15,19 @@ K8FOLDER = 'deploy/k8s'
 
 node {
   try {
+    stage('Configure') {
+      suffix = env?.TARGET_ENV ?: 'dev'
+      appNamespace = "${prefix}-${suffix}"
+      tfWorkspace = env?.TARGET_ENV ?: 'default'
+      namespaceTtl = tfWorkspace != 'default' ? 'forever' : 'no-ttl'
+
+      echo """Building with following settings
+              Texas Env:            ${texasEnvName}
+              Terraform Workspace:  ${tfWorkspace}
+              k8s Namespace:        ${appNamespace}
+              k8s Ttl:              ${namespaceTtl}
+              version:              ${version}""".stripMargin()
+    }
 
     stage('Checkout') {
       checkout scm
@@ -36,11 +49,14 @@ node {
 
     def databaseEndpoint
     stage('Terraform') {
-      dir('deploy/env/dev') {
+      dir('deploy/terraform') {
         withEnv(creds) {
+          sh 'rm -rf .terraform'
           sh 'terraform init'
-          sh 'terraform plan -out /tmp/tf.plan' // TODO use job execution ID
-          sh 'terraform apply /tmp/tf.plan'
+          sh "terraform workspace select ${tfWorkspace}"
+          planFile = "/tmp/${tfWorkspace}.plan"
+          sh "terraform plan -out ${planFile}" // TODO use job execution ID
+          sh "terraform apply ${planFile}"
           // Get Database Hostname
           outputs = readJSON(text: sh(
             script: 'terraform output -json',
@@ -48,7 +64,6 @@ node {
           ))
           databaseEndpoint = outputs['database_endpoint']['value']
           databaseSecret = outputs['database_credentials']['value']['secret_id']
-          databasePassword = outputs['database_credentials']['value']['password']
           migrateRoleArn = outputs['migrate_role_arn']['value']
           apiRoleArn = outputs['api_role_arn']['value']
           echo databaseEndpoint
@@ -65,8 +80,8 @@ node {
 
         'DATABASE_ENDPOINT': databaseEndpoint,
         'DATABASE_CREDS_SECRET_ID': databaseSecret,
-        'DATABASE_PASSWORD': databasePassword,
         'NAMESPACE_TO_BE_REPLACED': appNamespace,
+        'TTL_TO_BE_REPLACED': namespaceTtl,
         'DEPLOYMENT_NAME_TO_BE_REPLACED': "${prefix}-deploy",
 
         'API_CONTAINER_NAME': 'api',

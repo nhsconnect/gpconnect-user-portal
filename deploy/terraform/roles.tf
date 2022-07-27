@@ -29,23 +29,23 @@ data "aws_iam_policy_document" "assume_role_eks" {
       ]
     }
     condition {
-      test     = "StringEquals"
+      test     = "StringLike"
       variable = "${data.aws_iam_openid_connect_provider.default.url}:sub"
       values = [
-        "system:serviceaccount:${local.prefix}:${each.key}-service-account"
+        "system:serviceaccount:${module.vars.env.prefix}*:${each.key}-service-account"
       ]
     }
   }
 }
 
 resource "aws_iam_role" "api" {
-  path = "/${local.prefix}/"
-  name = "application-api-role"
+  path = "/${module.vars.env.prefix}/"
+  name = "application-api-role${module.vars.env.iam_name_suffix}"
 
   assume_role_policy = data.aws_iam_policy_document.assume_role_eks["api"].json
 
   tags = {
-    Name = "${local.prefix}-application-api-role"
+    Name = "${module.vars.env.prefix}-application-api-role"
   }
 }
 
@@ -67,8 +67,8 @@ data "aws_iam_policy_document" "connect_to_db_as" {
 
 resource "aws_iam_policy" "connect_to_db_as" {
   for_each = local.db_users
-  path     = "/${local.prefix}/"
-  name     = "connect-to-db-as-${each.key}"
+  path     = "/${module.vars.env.prefix}/"
+  name     = "connect-to-db-as-${each.key}${module.vars.env.iam_name_suffix}"
   policy   = data.aws_iam_policy_document.connect_to_db_as[each.key].json
 }
 
@@ -78,13 +78,13 @@ resource "aws_iam_role_policy_attachment" "api_connect_to_db" {
 }
 
 resource "aws_iam_role" "migrate" {
-  path = "/${local.prefix}/"
-  name = "database-migrate-role"
+  path = "/${module.vars.env.prefix}/"
+  name = "database-migrate-role${module.vars.env.iam_name_suffix}"
 
   assume_role_policy = data.aws_iam_policy_document.assume_role_eks["migrate"].json
 
   tags = {
-    Name = "${local.prefix}-database-migrate-role"
+    Name = "${module.vars.env.prefix}-database-migrate-role"
   }
 }
 
@@ -100,8 +100,8 @@ data "aws_iam_policy_document" "migrate_db" {
 }
 
 resource "aws_iam_policy" "read_database_password" {
-  path   = "/${local.prefix}/"
-  name   = "read-database-password-secret"
+  path   = "/${module.vars.env.prefix}/"
+  name   = "read-database-password-secret${module.vars.env.iam_name_suffix}"
   policy = data.aws_iam_policy_document.migrate_db.json
 }
 

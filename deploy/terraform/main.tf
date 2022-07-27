@@ -12,12 +12,9 @@ terraform {
   }
 }
 
-locals {
-  prefix               = "gpc-ndsp"
-  env                  = "nonprod"
-  region               = "eu-west-2"
-  azs                  = ["eu-west-2a", "eu-west-2b"]
-  service_account_name = "api-service-account"
+module "vars" {
+  source      = "./vars"
+  environment = terraform.workspace
 }
 
 data "aws_vpc" "default" {
@@ -34,7 +31,7 @@ data "aws_subnet" "private" {
   }
   filter {
     name   = "availability-zone"
-    values = [local.azs[0]]
+    values = [module.vars.env.azs[0]]
   }
 }
 
@@ -47,7 +44,6 @@ output "database_credentials" {
   value = {
     secret_id = aws_secretsmanager_secret.database_password.id
     username  = aws_rds_cluster.default.master_username
-    password  = aws_rds_cluster.default.master_password
   }
 }
 

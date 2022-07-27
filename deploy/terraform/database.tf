@@ -11,18 +11,18 @@ data "aws_subnets" "default" {
 }
 
 resource "aws_db_subnet_group" "default" {
-  name       = "${local.prefix}-db-subnet-group"
+  name       = "${module.vars.env.prefix}-db-subnet-group"
   subnet_ids = data.aws_subnets.default.ids
   tags = {
-    Name = "${local.prefix}-db-subnet-group"
+    Name = "${module.vars.env.prefix}-db-subnet-group"
   }
 }
 
 resource "aws_secretsmanager_secret" "database_password" {
-  name                    = "${local.prefix}/database-password"
+  name                    = "${module.vars.env.prefix}/database-password"
   recovery_window_in_days = 0
   tags = {
-    Name = "${local.prefix}/database-password"
+    Name = "${module.vars.env.prefix}/database-password"
   }
 }
 
@@ -37,7 +37,7 @@ data "aws_secretsmanager_secret_version" "database_password" {
 }
 
 resource "aws_rds_cluster" "default" {
-  cluster_identifier   = "${local.prefix}-database"
+  cluster_identifier   = "${module.vars.env.prefix}-database"
   db_subnet_group_name = aws_db_subnet_group.default.name
 
   engine            = "aurora-postgresql"
@@ -64,12 +64,12 @@ resource "aws_rds_cluster" "default" {
 resource "aws_rds_cluster_instance" "default" {
   cluster_identifier = aws_rds_cluster.default.id
 
-  identifier     = "${local.prefix}-database-single-instance"
+  identifier     = "${module.vars.env.prefix}-database-single-instance"
   engine         = aws_rds_cluster.default.engine
   engine_version = aws_rds_cluster.default.engine_version
   instance_class = "db.serverless"
 
   tags = {
-    Name = "${local.prefix}-database-instance"
+    Name = "${module.vars.env.prefix}-database-instance"
   }
 }
