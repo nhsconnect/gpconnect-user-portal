@@ -17,7 +17,7 @@ node {
   try {
 
     stage('Checkout') {
-      sh 'git remote prune https://gitlab.mgmt.texasplatform.uk/gpc-ndsp/gp-connect-data-sharing.git'
+      sh 'rm -rf /var/jenkins_home/workspace/gcp-ndsp-portal-deploy_develop/.git'
       checkout scm
     }
 
