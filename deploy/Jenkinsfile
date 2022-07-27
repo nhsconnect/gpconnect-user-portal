@@ -19,7 +19,7 @@ node {
       suffix = env?.TARGET_ENV ?: 'dev'
       appNamespace = "${prefix}-${suffix}"
       tfWorkspace = env?.TARGET_ENV ?: 'default'
-      namespaceTtl = tfWorkspace != 'default' ? 'forever' : 'no-ttl'
+      namespaceTtl = tfWorkspace != 'dev' ? 'forever' : 'no-ttl'
 
       echo """Building with following settings
               Texas Env:            ${texasEnvName}
