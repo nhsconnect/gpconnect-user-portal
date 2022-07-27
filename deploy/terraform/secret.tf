@@ -1,25 +1,25 @@
 resource "aws_secretsmanager_secret" "email_configuration" {
-  name        = "${local.prefix}-email-configuration"
+  name        = "${module.vars.env.prefix}-email-configuration"
   description = "Email Configuration"
 }
 
 resource "aws_secretsmanager_secret" "fhir_api_query_configuration" {
-  name        = "${local.prefix}-fhir-api-query-configuration"
+  name        = "${module.vars.env.prefix}-fhir-api-query-configuration"
   description = "FHIR API Query Configuration"
 }
 
 resource "aws_secretsmanager_secret" "reference_api_query_configuration" {
-  name        = "${local.prefix}-reference-api-query-configuration"
+  name        = "${module.vars.env.prefix}-reference-api-query-configuration"
   description = "FHIR API Query Configuration"
 }
 
 resource "aws_secretsmanager_secret" "spine_configuration" {
-  name        = "${local.prefix}-spine-configuration"
+  name        = "${module.vars.env.prefix}-spine-configuration"
   description = "Spine Configuration"
 }
 
 resource "aws_secretsmanager_secret" "sso_configuration" {
-  name        = "${local.prefix}-sso-configuration"
+  name        = "${module.vars.env.prefix}-sso-configuration"
   description = "Single Sign On Configuration"
 }
 
