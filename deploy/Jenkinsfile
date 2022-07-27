@@ -17,7 +17,6 @@ node {
   try {
 
     stage('Checkout') {
-      sh 'rm -rf /var/jenkins_home/workspace/gcp-ndsp-portal-deploy_develop/.git'
       checkout scm
     }
 
