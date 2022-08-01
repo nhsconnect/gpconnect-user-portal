@@ -117,58 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="CcgIcbName" xml:space="preserve">
-    <value>CCG/ICB Name</value>
+  <data name="SignupPageTitle" xml:space="preserve">
+    <value>Apply for the National Data Sharing Agreement</value>
   </data>
-  <data name="CcgIcbOdsCode" xml:space="preserve">
-    <value>CCG/ICB Code</value>
-  </data>
-  <data name="GpConnectInteractionForSupplier" xml:space="preserve">
-    <value>Select the GP Connect products</value>
-  </data>
-  <data name="HasAppointmentManagement" xml:space="preserve">
-    <value>Appointment Management</value>
-  </data>
-  <data name="HasHtmlView" xml:space="preserve">
-    <value>Access Record: HTML</value>
-  </data>
-  <data name="HasSendDocument" xml:space="preserve">
-    <value>Send Document</value>
-  </data>
-  <data name="HasStructured" xml:space="preserve">
-    <value>Access Record: Structured</value>
-  </data>
-  <data name="MatchedCount" xml:space="preserve">
-    <value>Matched</value>
-  </data>
-  <data name="ProviderName" xml:space="preserve">
-    <value>Enter the name of the health care setting you would like to search.</value>
-  </data>
-  <data name="ProviderOdsCode" xml:space="preserve">
-    <value>Enter the ODS (Organisation Data Service) Code</value>
-  </data>
-  <data name="SignatoryEmail" xml:space="preserve">
-    <value>Signatory email address</value>
-  </data>
-  <data name="SignatoryName" xml:space="preserve">
-    <value>Signatory name</value>
-  </data>
-  <data name="SignatoryRole" xml:space="preserve">
-    <value>Signatory role</value>
-  </data>
-  <data name="SiteName" xml:space="preserve">
-    <value>Name</value>
-  </data>
-  <data name="SiteOdsCode" xml:space="preserve">
-    <value>Enter the ODS (Organisation Data Service) Code</value>
-  </data>
-  <data name="SitePostcode" xml:space="preserve">
-    <value>Postcode</value>
-  </data>
-  <data name="SoftwareSupplierName" xml:space="preserve">
-    <value>Select the name of the software supplier</value>
-  </data>
-  <data name="UseCaseDescription" xml:space="preserve">
-    <value>The reason for this site accessing patient GP records is:</value>
+  <data name="TransparencyPageTitle" xml:space="preserve">
+    <value>Find out why a health care setting accesses GP data</value>
   </data>
 </root>

@@ -26,6 +26,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Resources\HeadingResources.Designer.cs">
+      <DependentUpon>HeadingResources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
     <Compile Update="Resources\DataFieldNameResources.Designer.cs">
       <DependentUpon>DataFieldNameResources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
@@ -44,6 +49,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Update="Resources\HeadingResources.resx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CustomToolNamespace>GpConnect.NationalDataSharingPortal.EndUserPortal.Resources</CustomToolNamespace>
+      <LastGenOutput>HeadingResources.Designer.cs</LastGenOutput>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Resources\DataFieldNameResources.resx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <CustomToolNamespace>GpConnect.NationalDataSharingPortal.EndUserPortal.Resources</CustomToolNamespace>
