@@ -1,3 +1,12 @@
+
+DROP VIEW application.view_find_sites;
+
+ALTER TABLE reference.lookup
+	ALTER COLUMN lookup_value SET DATA TYPE text;
+
+ALTER TABLE application.site_attribute
+	ALTER COLUMN site_attribute_value SET DATA TYPE text;
+
 CREATE VIEW application.view_find_sites AS
 		select
 			a.site_definition_id,
@@ -35,6 +44,3 @@ CREATE VIEW application.view_find_sites AS
 			group by
 				sd.site_definition_id
 		) a;
-
-GRANT SELECT ON TABLE application.view_find_sites TO app_user;
-

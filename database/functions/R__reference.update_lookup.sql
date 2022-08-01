@@ -3,13 +3,13 @@ drop function if exists reference.update_lookup;
 create function reference.update_lookup
 (
 	_lookup_id smallint,
-	_lookup_value varchar(500),
+	_lookup_value text,
 	_lookup_type_id smallint
 )
 returns void
 as $$
 begin
-	update 
+	update
 		reference.lookup
 	set
 		lookup_value = _lookup_value
