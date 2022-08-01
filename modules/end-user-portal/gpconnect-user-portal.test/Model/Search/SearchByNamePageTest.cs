@@ -11,11 +11,11 @@ using Xunit;
 
 namespace GpConnect.NationalDataSharingPortal.EndUserPortal.Test.Pages.Search;
 
-public class SearchByNamePageTest
+public class FeedbackPageTest
 {
     private readonly Mock<IOptions<ApplicationParameters>> _mockOptions;
 
-    public SearchByNamePageTest()
+    public FeedbackPageTest()
     {
         _mockOptions = new Mock<IOptions<ApplicationParameters>>();
     }

@@ -8,4 +8,5 @@ public class ButtonConstants
   public const string APPLY = "Apply Now";
     public const string CHANGESUPPLIER = "Change Supplier";
   public const string FINDORGANISATION = "Find Organisation";
+  public const string SENDFEEDBACK = "Send Feedback";
 }

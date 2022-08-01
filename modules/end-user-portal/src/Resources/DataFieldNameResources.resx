@@ -138,8 +138,14 @@
   <data name="HasStructured" xml:space="preserve">
     <value>Access Record: Structured</value>
   </data>
+  <data name="ImproveService" xml:space="preserve">
+    <value>How could we improve this service?</value>
+  </data>
   <data name="MatchedCount" xml:space="preserve">
     <value>Matched</value>
+  </data>
+  <data name="OverallRating" xml:space="preserve">
+    <value>Overall, how did you feel about the service you received today?</value>
   </data>
   <data name="ProviderName" xml:space="preserve">
     <value>Enter the name of the clinical care organisation</value>
