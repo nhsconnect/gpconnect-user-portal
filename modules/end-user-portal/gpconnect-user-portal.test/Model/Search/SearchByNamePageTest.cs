@@ -1,21 +1,19 @@
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Core.Config;
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Pages.Search;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.Extensions.Options;
 using Moq;
 using Xunit;
 
 namespace GpConnect.NationalDataSharingPortal.EndUserPortal.Test.Pages.Search;
 
-public class FeedbackPageTest
+public class SearchByNamePageTest
 {
     private readonly Mock<IOptions<ApplicationParameters>> _mockOptions;
 
-    public FeedbackPageTest()
+    public SearchByNamePageTest()
     {
         _mockOptions = new Mock<IOptions<ApplicationParameters>>();
     }

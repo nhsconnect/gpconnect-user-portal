@@ -9,5 +9,5 @@ create table application.feedback
 	constraint application_feedback_overall_rating_ck check (char_length(overall_rating) > 0)
 );
 
-GRANT SELECT,INSERT ON TABLE application.feedback TO api;
-GRANT SELECT,UPDATE ON SEQUENCE application.feedback_feedback_id_seq TO api;
+GRANT SELECT,INSERT ON TABLE application.feedback TO app_user;
+GRANT SELECT,UPDATE ON SEQUENCE application.feedback_feedback_id_seq TO app_user;

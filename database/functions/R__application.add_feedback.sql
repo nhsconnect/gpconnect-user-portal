@@ -20,4 +20,4 @@ $$;
 
 ALTER FUNCTION application.add_feedback(_overall_rating character varying,_improve_service character varying) OWNER TO postgres;
 
-GRANT ALL ON FUNCTION application.add_feedback(_overall_rating character varying,_improve_service character varying) TO api;
+GRANT ALL ON FUNCTION application.add_feedback(_overall_rating character varying,_improve_service character varying) TO app_user;
