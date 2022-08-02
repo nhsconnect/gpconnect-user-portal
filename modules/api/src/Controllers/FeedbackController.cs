@@ -26,8 +26,6 @@ public class FeedbackController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> CreateFeedback([FromBody] FeedbackAddRequest feedbackAddRequest)
     {
-        _logger.LogInformation("Received Request {@query}", feedbackAddRequest);
-
         if (!_validator.IsValidAdd(feedbackAddRequest))
         {
             _logger.LogWarning("Invalid Request");
