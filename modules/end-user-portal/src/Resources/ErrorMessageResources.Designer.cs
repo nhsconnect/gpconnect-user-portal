@@ -71,6 +71,24 @@ namespace GpConnect.NationalDataSharingPortal.EndUserPortal.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You must enter some text.
+        /// </summary>
+        public static string ImproveService {
+            get {
+                return ResourceManager.GetString("ImproveService", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You must select a value.
+        /// </summary>
+        public static string OverallRating {
+            get {
+                return ResourceManager.GetString("OverallRating", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to You must enter a value for Clinical Care Organisation Name.
         /// </summary>
         public static string ProviderName {

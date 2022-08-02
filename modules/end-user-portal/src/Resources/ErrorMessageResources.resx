@@ -120,6 +120,12 @@
   <data name="GpConnectInteractionForSupplier" xml:space="preserve">
     <value>You must select at least one GP Connect product</value>
   </data>
+  <data name="ImproveService" xml:space="preserve">
+    <value>You must enter some text</value>
+  </data>
+  <data name="OverallRating" xml:space="preserve">
+    <value>You must select a value</value>
+  </data>
   <data name="ProviderName" xml:space="preserve">
     <value>You must enter a value for Clinical Care Organisation Name</value>
   </data>

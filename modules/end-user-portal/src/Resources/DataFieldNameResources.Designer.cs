@@ -125,6 +125,15 @@ namespace GpConnect.NationalDataSharingPortal.EndUserPortal.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to How could we improve this service?.
+        /// </summary>
+        public static string ImproveService {
+            get {
+                return ResourceManager.GetString("ImproveService", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Matched.
         /// </summary>
         public static string MatchedCount {
