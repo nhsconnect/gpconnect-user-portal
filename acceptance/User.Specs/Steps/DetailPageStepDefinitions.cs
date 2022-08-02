@@ -35,12 +35,6 @@ namespace GpConnect.DataSharing.User.Specs.Steps
         public void ThenIsTheSiteName(string siteName)
         {
             Assert.Equal(siteName, _detailPage.SiteName.Text);
-        }
-
-        [Then(@"a list of services used is shown")]
-        public void ThenAListOfServicesUsedIsShown()
-        {
-            Assert.True(_detailPage.ServiceList.Displayed);
-        }
+        }        
     }
 }
