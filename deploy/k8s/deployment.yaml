@@ -74,6 +74,8 @@ spec:
               value: http://*:80
             - name: SiteApi__BaseUrl
               value: http://API_SERVICE_NAME_TO_BE_REPLACED
+            - name: FeedbackApi__BaseUrl
+              value: http://API_SERVICE_NAME_TO_BE_REPLACED
             - name: SupplierApi__BaseUrl
               value: http://API_SERVICE_NAME_TO_BE_REPLACED
             - name: AgreementApi__BaseUrl
