@@ -52,32 +52,7 @@ public class SearchResultEntry
         return string.Join(", ", addressLines.Where(s => !string.IsNullOrEmpty(s)));
     }
 
-    [JsonProperty("ccgIcbOdsCode")]
-    [Display(Name = "CcgIcbOdsCode", ResourceType = typeof(DataFieldNameResources))]
-    public string CcgIcbOdsCode { get; set; } = "";
-
-    [JsonProperty("ccgIcbName")]
-    [Display(Name = "CcgIcbName", ResourceType = typeof(DataFieldNameResources))]
-    public string CcgIcbName { get; set; } = "";
-
     [JsonProperty("useCase")]
     [Display(Name = "UseCaseDescription", ResourceType = typeof(DataFieldNameResources))]
     public string UseCaseDescription { get; set; } = "";
-
-    [JsonProperty("accessRecordHTMLEnabled")]
-    [Display(Name = "HasHtmlView", ResourceType = typeof(DataFieldNameResources))]
-    public bool HasHtmlView { get; set; }
-
-    [JsonProperty("structuredRecordEnabled")]
-    [Display(Name = "HasStructured", ResourceType = typeof(DataFieldNameResources))]
-    public bool HasStructured { get; set; }
-
-    [JsonProperty("appointmentManagementEnabled")]
-    [Display(Name = "HasAppointmentManagement", ResourceType = typeof(DataFieldNameResources))]
-    public bool HasAppointmentManagement { get; set; }
-
-    [JsonProperty("sendDocumentEnabled")]
-    [Display(Name = "HasSendDocument", ResourceType = typeof(DataFieldNameResources))]
-    public bool HasSendDocument { get; set; }    
-
 }
