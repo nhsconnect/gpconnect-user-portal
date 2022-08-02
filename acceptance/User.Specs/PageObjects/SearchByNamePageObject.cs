@@ -48,6 +48,6 @@ namespace GpConnect.DataSharing.User.Specs.PageObjects
             return wait.Until(driver => ValidationError.Displayed);
         }
 
-        public IWebElement OdsSearchLink => _webDriver.FindElement(By.PartialLinkText("ODS code"));
+        public IWebElement OdsSearchLink => _webDriver.FindElement(By.LinkText("here"));
     }
 }

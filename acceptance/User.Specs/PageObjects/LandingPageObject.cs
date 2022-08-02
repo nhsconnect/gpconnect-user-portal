@@ -36,7 +36,7 @@ namespace GpConnect.DataSharing.User.Specs.PageObjects
             SearchLink.Click();
         }
         public IWebElement SupportPhone =>
-            _webDriver.FindElement(By.PartialLinkText("020 "));
+            _webDriver.FindElement(By.PartialLinkText("0300 "));
 
         public IWebElement SupportEmail =>
             _webDriver.FindElement(By.PartialLinkText("@nhs.net"));
