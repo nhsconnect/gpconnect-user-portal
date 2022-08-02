@@ -27,10 +27,7 @@ namespace GpConnect.DataSharing.User.Specs.PageObjects
         public IWebElement SiteName =>
             _webDriver
                 .FindElement(By.ClassName("nhsuk-card__content"))
-                .FindElement(By.CssSelector("label.nhsuk-label"));
-
-        public IWebElement ServiceList =>
-            _webDriver.FindElement(By.ClassName("nhsuk-list--tick"));
+                .FindElement(By.CssSelector("label.nhsuk-label"));        
     }
 }
 
