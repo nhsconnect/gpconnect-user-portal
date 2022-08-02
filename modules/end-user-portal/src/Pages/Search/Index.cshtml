@@ -7,36 +7,34 @@
         <div class="nhsuk-grid-row">
             <div class="nhsuk-grid-column-full">
                 <h1 class="nhsuk-label-wrapper">
-                    <label class="nhsuk-label nhsuk-label--xl">
-                        Find how an organisation shares patient records
-                    </label>
+                    <label class="nhsuk-label nhsuk-label--xl" asp-for="TransparencyPageTitle"></label>
                 </h1>
-                <div class="nhsuk-grid-row">
-                    <div class="nhsuk-grid-column-full">
-                        <div class="nhsuk-card nhsuk-card--care nhsuk-card--care--non-urgent">
-                            <div class="nhsuk-card--care__heading-container">
-                                <h3 class="nhsuk-card--care__heading">
-                                    <span role="text"><span class="nhsuk-u-visually-hidden">Information: </span>Find how a clinical care organisation shares patient records in England, Wales and Northern Ireland</span>
-                                </h3>
-                                <span class="nhsuk-card--care__arrow" aria-hidden="true"></span>
-                            </div>
-                            <div class="nhsuk-card__content">
-                                <p>A clinical care organisation commonly includes:</p>
-                                <ul>
-                                    <li>GP practices</li>
-                                    <li>Care Homes</li>
-                                    <li>Physiotherapists</li>
-                                </ul>
-                                <h3 class="nhsuk-card__heading">We'll ask you for:</h3>
-                                <p class="nhsuk-card__description">You can search by organisation name or ODS (Organisation Data Service) identification code.</p>
-                                <a class="nhsuk-button" href="~/Search/Name" draggable="false">Start now</a>
-                            </div>
-                        </div>
+                <partial name="Introduction" />
+                <div class="nhsuk-card nhsuk-card--care nhsuk-card--care--non-urgent">
+                    <div class="nhsuk-card--care__heading-container">
+                        <h3 class="nhsuk-card--care__heading">
+                            <span class="nhsuk-u-visually-hidden">Information: </span>
+                            <label asp-for="TransparencyPageTitle"></label> in England
+                        </h3>
+                        <span class="nhsuk-card--care__arrow" aria-hidden="true"></span>
+                    </div>
+                    <div class="nhsuk-card__content">
+                        <p>A health care setting can include:</p>
+                        <ul>
+                            <li>Pharmacies</li>
+                            <li>GP practices</li>
+                            <li>Care Homes</li>
+                            <li>Physiotherapists</li>
+                            <li>Hospitals</li>
+                        </ul>
+                        <h3 class="nhsuk-card__heading">We'll ask you for:</h3>
+                        <p class="nhsuk-card__description">You can search by organisation name or Organisation Data Service (ODS) identification code (if known).</p>
+                        <a class="nhsuk-button" asp-page="/Search/Name" draggable="false">Start now</a>
                     </div>
                 </div>
-                <partial name="Help" />
-                <partial name="Terms" />
             </div>
         </div>
+        <partial name="Help" />
+        <partial name="Terms" />
     </main>
 </div>

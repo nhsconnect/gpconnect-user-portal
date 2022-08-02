@@ -10,16 +10,16 @@
     <main class="nhsuk-main-wrapper" id="maincontent">
       <partial name="Feedback" />
         <h1 class="nhsuk-label-wrapper">
-            <label class="nhsuk-label nhsuk-label--xl">Find how an organisation shares patient records</label>
+            <label class="nhsuk-label nhsuk-label--xl" asp-for="TransparencyPageTitle"></label>
         </h1>
         <form method="post" id="search-input-form">
             <div class="nhsuk-grid-row">
-                <div class="nhsuk-grid-column-two-thirds">
+                <div class="nhsuk-grid-column-full">
                     <div class="nhsuk-card">
                         <div class="nhsuk-card__content">
                             <div class="nhsuk-form-group @(providerNameInvalid ? "nhsuk-form-group--error": string.Empty)">
-                                <label asp-for="@Model.ProviderName" class="nhsuk-label"></label>
-                                <div class="nhsuk-hint" id="input-hint-providername">For example: Bodmin GP Surgery</div>
+                                <label asp-for="@Model.ProviderName" class="nhsuk-label">Enter the name of the health care setting you would like to search. Alternatively, if you want to search by ODS code click <a class="nhsuk-card__link" asp-page="/Search/Code">here</a></label>
+                                <div class="nhsuk-hint" id="input-hint-providername">For example: Kingswood Medical Centre, Yeovil Dental Practice, St Thomas' Hospital</div>
                                 @if (providerNameInvalid)
                                 {
                                     <span asp-validation-for="@Model.ProviderName" class="nhsuk-error-message"></span>
@@ -32,16 +32,8 @@
                     </div>
                 </div>
             </div>
+            <partial name="Help" />
+            <partial name="Terms" />
         </form>
-        <div class="nhsuk-grid-row">
-            <div class="nhsuk-grid-column-full">
-                <div class="nhsuk-card">
-                    <div class="nhsuk-card__content">
-                        <h3 class="nhsuk-card__heading">Search by ODS (organisational data service) identification code</h3>
-                        <p class="nhsuk-card__description">You can <a asp-page="/Search/Code" >find how an organisation shares patient records by using its ODS code.</a></p>
-                    </div>
-                </div>
-            </div>
-        </div>
     </main>
 </div>

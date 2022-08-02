@@ -143,16 +143,7 @@ namespace GpConnect.NationalDataSharingPortal.EndUserPortal.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Overall, how did you feel about the service you received today?.
-        /// </summary>
-        public static string OverallRating {
-            get {
-                return ResourceManager.GetString("OverallRating", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Enter the name of the clinical care organisation.
+        ///   Looks up a localized string similar to Enter the name of the health care setting you would like to search..
         /// </summary>
         public static string ProviderName {
             get {
@@ -233,7 +224,7 @@ namespace GpConnect.NationalDataSharingPortal.EndUserPortal.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Reason for applying (use case).
+        ///   Looks up a localized string similar to The reason for this site accessing patient GP records is:.
         /// </summary>
         public static string UseCaseDescription {
             get {
