@@ -9,11 +9,11 @@ returns table
 (
 	lookup_id integer,
 	lookup_type_id smallint,
-	lookup_value varchar(500),
+	lookup_value text,
 	linked_lookup_id integer,
 	lookup_type_name varchar(200),
 	lookup_type_description varchar(200),
-	linked_lookup_value varchar(500),
+	linked_lookup_value text,
 	is_disabled boolean
 )
 as $$

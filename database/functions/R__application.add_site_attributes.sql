@@ -4,24 +4,24 @@ LANGUAGE 'plpgsql'
 AS $$
 declare	_site_definition_id integer;
 BEGIN
-	select into 
+	select into
 		_site_definition_id sd.site_definition_id
-	from 
+	from
 		application.site_definition sd
 	where
 		sd.site_unique_identifier = _site_unique_identifier;
-		
+
 	insert into application.site_attribute (site_definition_id, site_attribute_name, site_attribute_value, added_date)
 	select
-		_site_definition_id, 
+		_site_definition_id,
 		x.name,
 		x.value,
 		now()
-	from json_to_recordset(_site_attributes::json) x 
+	from json_to_recordset(_site_attributes::json) x
 	(
     	name character varying(100),
- 		value character varying(500)
-	);       
+ 		value text
+	);
    END;
 $$;
 
