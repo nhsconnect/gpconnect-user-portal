@@ -117,37 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="GpConnectInteractionForSupplier" xml:space="preserve">
-    <value>You must select at least one GP Connect product</value>
+  <data name="SignupPageTitle" xml:space="preserve">
+    <value>Apply for the National Data Sharing Agreement</value>
   </data>
-  <data name="ImproveService" xml:space="preserve">
-    <value>You must enter some text</value>
-  </data>
-  <data name="OverallRating" xml:space="preserve">
-    <value>You must select a value</value>
-  </data>
-  <data name="ProviderName" xml:space="preserve">
-    <value>You must enter a value for Clinical Care Organisation Name</value>
-  </data>
-  <data name="ProviderOdsCode" xml:space="preserve">
-    <value>You must enter a value for ODS Code</value>
-  </data>
-  <data name="SignatoryEmail" xml:space="preserve">
-    <value>You must enter a value for signatory email address</value>
-  </data>
-  <data name="SignatoryName" xml:space="preserve">
-    <value>You must enter a value for signatory name</value>
-  </data>
-  <data name="SignatoryRole" xml:space="preserve">
-    <value>You must enter a value for signatory role</value>
-  </data>
-  <data name="SiteOdsCode" xml:space="preserve">
-    <value>You must enter a value for Site ODS Code</value>
-  </data>
-  <data name="SoftwareSupplierName" xml:space="preserve">
-    <value>You must select a value for Software Supplier Name</value>
-  </data>
-  <data name="UseCaseDescription" xml:space="preserve">
-    <value>You must enter a value for use case description</value>
+  <data name="TransparencyPageTitle" xml:space="preserve">
+    <value>Find out why a health care setting accesses GP data</value>
   </data>
 </root>

@@ -138,11 +138,17 @@
   <data name="HasStructured" xml:space="preserve">
     <value>Access Record: Structured</value>
   </data>
+  <data name="ImproveService" xml:space="preserve">
+    <value>How could we improve this service?</value>
+  </data>
   <data name="MatchedCount" xml:space="preserve">
     <value>Matched</value>
   </data>
+  <data name="OverallRating" xml:space="preserve">
+    <value>Overall, how did you feel about the service you received today?</value>
+  </data>
   <data name="ProviderName" xml:space="preserve">
-    <value>Enter the name of the clinical care organisation</value>
+    <value>Enter the name of the health care setting you would like to search.</value>
   </data>
   <data name="ProviderOdsCode" xml:space="preserve">
     <value>Enter the ODS (Organisation Data Service) Code</value>
@@ -169,6 +175,6 @@
     <value>Select the name of the software supplier</value>
   </data>
   <data name="UseCaseDescription" xml:space="preserve">
-    <value>Reason for applying (use case)</value>
+    <value>The reason for this site accessing patient GP records is:</value>
   </data>
 </root>

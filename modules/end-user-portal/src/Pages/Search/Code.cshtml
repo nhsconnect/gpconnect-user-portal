@@ -8,17 +8,18 @@
 
 <div class="nhsuk-width-container">
     <main class="nhsuk-main-wrapper" id="maincontent">
+      <partial name="Feedback" />
         <partial name="Back" model=@(new BackPartialModel())>
         <h1 class="nhsuk-label-wrapper">
-            <label class="nhsuk-label nhsuk-label--xl">Find how an organisation shares patient records by ODS (organisation data service) code</label>
+            <label class="nhsuk-label nhsuk-label--xl" asp-for="TransparencyPageTitle"></label>
         </h1>
         <form method="post" id="search-input-form">
             <div class="nhsuk-grid-row">
-                <div class="nhsuk-grid-column-two-thirds">
+                <div class="nhsuk-grid-column-full">
                     <div class="nhsuk-card">
                         <div class="nhsuk-card__content">
                             <div class="nhsuk-form-group @(providerOdsCodeInvalid ? "nhsuk-form-group--error": string.Empty)">
-                                <label asp-for="@Model.ProviderOdsCode" class="nhsuk-label"></label>
+                              <label asp-for="@Model.ProviderOdsCode" class="nhsuk-label">Enter the Organisation Data Service (ODS) identification code. Alternatively, If you want to search by health care setting name click <a class="nhsuk-card__link" asp-page="/Search/Name">here</a></label>
                                 <div class="nhsuk-hint" id="input-hint-providercode">For example: J3T7E</div>
                                 @if (providerOdsCodeInvalid)
                                 {
@@ -31,7 +32,9 @@
                         </div>
                     </div>
                 </div>
-            </div>            
+            </div>
+            <partial name="Help" />
+            <partial name="Terms" />           
         </form>
     </main>
 </div>

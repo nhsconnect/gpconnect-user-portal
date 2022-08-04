@@ -1,0 +1,64 @@
+@page
+@using GpConnect.NationalDataSharingPortal.EndUserPortal.Helpers.Constants
+@using Microsoft.AspNetCore.Mvc.ModelBinding
+@model GpConnect.NationalDataSharingPortal.EndUserPortal.Pages.Feedback.FeedbackModel
+@{
+    var overallRatingInvalid = Model.ModelState["OverallRating"]?.ValidationState == ModelValidationState.Invalid;
+    var improveServiceInvalid = Model.ModelState["ImproveService"]?.ValidationState == ModelValidationState.Invalid;
+}
+
+<div class="nhsuk-width-container">
+    <main class="nhsuk-main-wrapper" id="maincontent">
+        <h1 class="nhsuk-label-wrapper">
+            <label class="nhsuk-label nhsuk-label--xl">Give feedback on @Model.ProductName</label>
+        </h1>
+        <form method="post" id="feedback-input-form">
+            <div class="nhsuk-grid-row">
+                <div class="nhsuk-grid-column-full">
+                    <div class="nhsuk-card">
+                        <div class="nhsuk-card__content">
+                            <div class="nhsuk-form-group @(overallRatingInvalid ? "nhsuk-form-group--error": string.Empty)">
+                                <fieldset class="nhsuk-fieldset app-fieldset--custom-modifier" aria-describedby="example-hint example-error" data-attribute="value" data-second-attribute="second-value">
+                                    <legend class="nhsuk-fieldset__legend nhsuk-fieldset__legend--m">
+                                        Satisfaction survey
+                                    </legend>
+
+                                    <div class="nhsuk-hint" id="example-hint">
+                                        Overall how did you feel about the service you received today?
+                                    </div>
+
+                                    @if (overallRatingInvalid)
+                                    {
+                                        <span class="nhsuk-error-message" id="example-error">
+                                            <span class="nhsuk-u-visually-hidden">Error:</span> Please select an option
+                                        </span>
+                                    }
+
+                                    <div class="nhsuk-radios">
+                                        @foreach (var overallRating in Model.OverallRatings)
+                                        {
+                                            <div class="nhsuk-radios__item">
+                                                <input class="nhsuk-radios__input" id="OverallRating@(overallRating)" asp-for="OverallRating" type="radio" value="@overallRating">
+                                                <label class="nhsuk-label nhsuk-radios__label" for="OverallRating@(overallRating)">@overallRating</label>
+                                            </div>
+                                        }
+                                    </div>
+                                </fieldset>
+                            </div>
+                            <div class="nhsuk-form-group @(improveServiceInvalid ? "nhsuk-form-group--error": string.Empty)">
+                                <div class="nhsuk-hint" id="input-hint-improveservice">
+                                    How could we improve this service?
+                                </div>
+                                @if (improveServiceInvalid)
+                                {
+                                    <span asp-validation-for="@Model.ImproveService" class="nhsuk-error-message"></span>
+                                }
+                                <textarea class="nhsuk-textarea" id="input-improveservice" asp-for="@Model.ImproveService" rows="5" aria-describedby="input-hint-improveservice"></textarea>
+                            </div>
+                            <button class="nhsuk-button" type="submit">@ButtonConstants.SENDFEEDBACK</button>
+                        </div>
+                    </div>
+                </div>
+        </form>
+    </main>
+</div>

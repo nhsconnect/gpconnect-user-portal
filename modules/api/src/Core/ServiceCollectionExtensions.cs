@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Net;
 
 using Microsoft.AspNetCore.Builder;
@@ -50,6 +50,8 @@ namespace GpConnect.NationalDataSharingPortal.Api.Core
             services.AddScoped<IUserService,UserService>();
             services.AddScoped<IAgreementService, AgreementService>();
             services.AddScoped<ISiteService, SiteService>();
+            services.AddSingleton<IFeedbackRequestValidator, FeedbackRequestValidator>();
+            services.AddScoped<IFeedbackService, FeedbackService>();
 
             services.AddHsts(options =>
             {

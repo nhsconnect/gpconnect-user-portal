@@ -1,6 +1,8 @@
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Core.Config;
+using GpConnect.NationalDataSharingPortal.EndUserPortal.Resources;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Options;
+using System.ComponentModel.DataAnnotations;
 
 namespace GpConnect.NationalDataSharingPortal.EndUserPortal.Models
 {
@@ -12,6 +14,12 @@ namespace GpConnect.NationalDataSharingPortal.EndUserPortal.Models
         {
             _applicationParameters = applicationParameters;
         }
+
+        [Display(Name = "TransparencyPageTitle", ResourceType = typeof(HeadingResources))]
+        public string TransparencyPageTitle { get; set; }
+
+        [Display(Name = "SignupPageTitle", ResourceType = typeof(HeadingResources))]
+        public string SignupPageTitle { get; set; }
 
         public string ProductName => _applicationParameters.Value.ProductName;
         public string ProductNameAbbreviated => _applicationParameters.Value.ProductNameAbbreviated;
