@@ -4,6 +4,8 @@ metadata:
   name: NAMESPACE_TO_BE_REPLACED
   labels: 
     ttl: TTL_TO_BE_REPLACED
+  annotations:
+    splunk.com/index: eks_logs_gpc_ndsp_nonprod
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
