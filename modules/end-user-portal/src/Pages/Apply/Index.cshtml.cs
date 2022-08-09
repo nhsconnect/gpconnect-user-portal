@@ -18,6 +18,6 @@ public class IndexModel : BaseModel
     public IActionResult OnPost()
     {
         _tempDataProviderService.RemoveAll();
-        return RedirectToPage("./SoftwareSupplier");
+        return RedirectToPage("./SystemSupplier");
     }
 }

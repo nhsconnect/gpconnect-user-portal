@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
-  <!-- 
+    <!-- 
     Microsoft ResX Schema 
     
     Version 2.0
@@ -59,122 +59,122 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
-    <xsd:element name="root" msdata:IsDataSet="true">
-      <xsd:complexType>
-        <xsd:choice maxOccurs="unbounded">
-          <xsd:element name="metadata">
+    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
+        <xsd:element name="root" msdata:IsDataSet="true">
             <xsd:complexType>
-              <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
-              </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
+                <xsd:choice maxOccurs="unbounded">
+                    <xsd:element name="metadata">
+                        <xsd:complexType>
+                            <xsd:sequence>
+                                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
+                            </xsd:sequence>
+                            <xsd:attribute name="name" use="required" type="xsd:string"/>
+                            <xsd:attribute name="type" type="xsd:string"/>
+                            <xsd:attribute name="mimetype" type="xsd:string"/>
+                            <xsd:attribute ref="xml:space"/>
+                        </xsd:complexType>
+                    </xsd:element>
+                    <xsd:element name="assembly">
+                        <xsd:complexType>
+                            <xsd:attribute name="alias" type="xsd:string"/>
+                            <xsd:attribute name="name" type="xsd:string"/>
+                        </xsd:complexType>
+                    </xsd:element>
+                    <xsd:element name="data">
+                        <xsd:complexType>
+                            <xsd:sequence>
+                                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
+                            </xsd:sequence>
+                            <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+                            <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+                            <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+                            <xsd:attribute ref="xml:space"/>
+                        </xsd:complexType>
+                    </xsd:element>
+                    <xsd:element name="resheader">
+                        <xsd:complexType>
+                            <xsd:sequence>
+                                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                            </xsd:sequence>
+                            <xsd:attribute name="name" type="xsd:string" use="required"/>
+                        </xsd:complexType>
+                    </xsd:element>
+                </xsd:choice>
             </xsd:complexType>
-          </xsd:element>
-          <xsd:element name="assembly">
-            <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
-            </xsd:complexType>
-          </xsd:element>
-          <xsd:element name="data">
-            <xsd:complexType>
-              <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
-              </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
-            </xsd:complexType>
-          </xsd:element>
-          <xsd:element name="resheader">
-            <xsd:complexType>
-              <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-              </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
-            </xsd:complexType>
-          </xsd:element>
-        </xsd:choice>
-      </xsd:complexType>
-    </xsd:element>
-  </xsd:schema>
-  <resheader name="resmimetype">
-    <value>text/microsoft-resx</value>
-  </resheader>
-  <resheader name="version">
-    <value>2.0</value>
-  </resheader>
-  <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </resheader>
-  <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </resheader>
-  <data name="CcgIcbName" xml:space="preserve">
-    <value>CCG/ICB Name</value>
-  </data>
-  <data name="CcgIcbOdsCode" xml:space="preserve">
-    <value>CCG/ICB Code</value>
-  </data>
-  <data name="GpConnectInteractionForSupplier" xml:space="preserve">
-    <value>Select the GP Connect products</value>
-  </data>
-  <data name="HasAppointmentManagement" xml:space="preserve">
-    <value>Appointment Management</value>
-  </data>
-  <data name="HasHtmlView" xml:space="preserve">
-    <value>Access Record: HTML</value>
-  </data>
-  <data name="HasSendDocument" xml:space="preserve">
-    <value>Send Document</value>
-  </data>
-  <data name="HasStructured" xml:space="preserve">
-    <value>Access Record: Structured</value>
-  </data>
-  <data name="ImproveService" xml:space="preserve">
-    <value>How could we improve this service?</value>
-  </data>
-  <data name="MatchedCount" xml:space="preserve">
-    <value>Matched</value>
-  </data>
-  <data name="OverallRating" xml:space="preserve">
-    <value>Overall, how did you feel about the service you received today?</value>
-  </data>
-  <data name="ProviderName" xml:space="preserve">
-    <value>Enter the name of the health care setting you would like to search.</value>
-  </data>
-  <data name="ProviderOdsCode" xml:space="preserve">
-    <value>Enter the ODS (Organisation Data Service) Code</value>
-  </data>
-  <data name="SignatoryEmail" xml:space="preserve">
-    <value>Signatory email address</value>
-  </data>
-  <data name="SignatoryName" xml:space="preserve">
-    <value>Signatory name</value>
-  </data>
-  <data name="SignatoryRole" xml:space="preserve">
-    <value>Signatory role</value>
-  </data>
-  <data name="SiteName" xml:space="preserve">
-    <value>Name</value>
-  </data>
-  <data name="SiteOdsCode" xml:space="preserve">
-    <value>Enter the ODS (Organisation Data Service) Code</value>
-  </data>
-  <data name="SitePostcode" xml:space="preserve">
-    <value>Postcode</value>
-  </data>
-  <data name="SoftwareSupplierName" xml:space="preserve">
-    <value>Select the name of the software supplier</value>
-  </data>
-  <data name="UseCaseDescription" xml:space="preserve">
-    <value>The reason for this site accessing patient GP records is:</value>
-  </data>
+        </xsd:element>
+    </xsd:schema>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>2.0</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <data name="CcgIcbName" xml:space="preserve">
+        <value>CCG/ICB Name</value>
+    </data>
+    <data name="CcgIcbOdsCode" xml:space="preserve">
+        <value>CCG/ICB Code</value>
+    </data>
+    <data name="GpConnectInteractionForSupplier" xml:space="preserve">
+        <value>Select the GP Connect products</value>
+    </data>
+    <data name="HasAppointmentManagement" xml:space="preserve">
+        <value>Appointment Management</value>
+    </data>
+    <data name="HasHtmlView" xml:space="preserve">
+        <value>Access Record: HTML</value>
+    </data>
+    <data name="HasSendDocument" xml:space="preserve">
+        <value>Send Document</value>
+    </data>
+    <data name="HasStructured" xml:space="preserve">
+        <value>Access Record: Structured</value>
+    </data>
+    <data name="ImproveService" xml:space="preserve">
+        <value>How could we improve this service?</value>
+    </data>
+    <data name="MatchedCount" xml:space="preserve">
+        <value>Matched</value>
+    </data>
+    <data name="OverallRating" xml:space="preserve">
+        <value>Overall, how did you feel about the service you received today?</value>
+    </data>
+    <data name="ProviderName" xml:space="preserve">
+        <value>Enter the name of the health care setting you would like to search.</value>
+    </data>
+    <data name="ProviderOdsCode" xml:space="preserve">
+        <value>Enter the ODS (Organisation Data Service) Code</value>
+    </data>
+    <data name="SignatoryEmail" xml:space="preserve">
+        <value>Signatory email address</value>
+    </data>
+    <data name="SignatoryName" xml:space="preserve">
+        <value>Signatory name</value>
+    </data>
+    <data name="SignatoryRole" xml:space="preserve">
+        <value>Signatory role</value>
+    </data>
+    <data name="SiteName" xml:space="preserve">
+        <value>Name</value>
+    </data>
+    <data name="SiteOdsCode" xml:space="preserve">
+        <value>Enter the ODS (Organisation Data Service) Code</value>
+    </data>
+    <data name="SitePostcode" xml:space="preserve">
+        <value>Postcode</value>
+    </data>
+    <data name="SoftwareSupplierName" xml:space="preserve">
+        <value>Select the name of the system supplier</value>
+    </data>
+    <data name="UseCaseDescription" xml:space="preserve">
+        <value>The reason for this site accessing patient GP records is:</value>
+    </data>
 </root>

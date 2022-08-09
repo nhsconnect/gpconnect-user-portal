@@ -5,7 +5,7 @@ namespace GpConnect.DataSharing.User.Specs.PageObjects
 {
     public class SoftwareSupplierPageObject : BasePageObject
     {
-        private const string PATH = "/Apply/SoftwareSupplier";
+        private const string PATH = "/Apply/SystemSupplier";
         private readonly IWebDriver _webDriver;
 
         public SoftwareSupplierPageObject(IWebDriver webDriver) : base(webDriver)
