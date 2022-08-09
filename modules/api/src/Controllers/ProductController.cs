@@ -56,69 +56,69 @@ public class ProductController : ControllerBase
 
 
 
-    [HttpPut("{id:int}", Name = "UpdateProduct")]
-    public async Task<ActionResult<ProductUpdateRequest>> Put(int id, [FromBody] ProductUpdateRequest productUpdateRequest)
-    {
-        _logger.LogInformation("Received Request {@query}", productUpdateRequest);
+    // [HttpPut("{id:int}", Name = "UpdateProduct")]
+    // public async Task<ActionResult<ProductUpdateRequest>> Put(int id, [FromBody] ProductUpdateRequest productUpdateRequest)
+    // {
+    //     _logger.LogInformation("Received Request {@query}", productUpdateRequest);
 
-        productUpdateRequest.ProductId = id;
+    //     productUpdateRequest.ProductId = id;
 
-        var validator = await _validator.IsValidUpdate(productUpdateRequest);
-        if (!validator.RequestValid)
-        {
-            _logger.LogWarning("Invalid Request");
-            return BadRequest();
-        }
-        else
-        {
-            if (!validator.EntityFound)
-            {
-                _logger.LogWarning("Entity Not Found");
-                return NotFound();
-            }
-        }
+    //     var validator = await _validator.IsValidUpdate(productUpdateRequest);
+    //     if (!validator.RequestValid)
+    //     {
+    //         _logger.LogWarning("Invalid Request");
+    //         return BadRequest();
+    //     }
+    //     else
+    //     {
+    //         if (!validator.EntityFound)
+    //         {
+    //             _logger.LogWarning("Entity Not Found");
+    //             return NotFound();
+    //         }
+    //     }
 
-        await _service.UpdateProduct(productUpdateRequest);
-        return Ok();
-    }
+    //     await _service.UpdateProduct(productUpdateRequest);
+    //     return Ok();
+    // }
 
-    [HttpPut(Name = "DisableProduct"), Route("{id}/disable")]
-    public async Task<ActionResult<ProductDisableRequest>> Put(int id, [FromBody] ProductDisableRequest productDisableRequest)
-    {
-        _logger.LogInformation("Received Request {@query}", productDisableRequest);
+    // [HttpPut(Name = "DisableProduct"), Route("{id}/disable")]
+    // public async Task<ActionResult<ProductDisableRequest>> Put(int id, [FromBody] ProductDisableRequest productDisableRequest)
+    // {
+    //     _logger.LogInformation("Received Request {@query}", productDisableRequest);
 
-        productDisableRequest.ProductId = id;
-        var validator = await _validator.IsValidDisable(productDisableRequest);
-        if (!validator.RequestValid)
-        {
-            _logger.LogWarning("Invalid Request");
-            return BadRequest();
-        }
-        else
-        {
-            if (!validator.EntityFound)
-            {
-                _logger.LogWarning("Entity Not Found");
-                return NotFound();
-            }
-        }
+    //     productDisableRequest.ProductId = id;
+    //     var validator = await _validator.IsValidDisable(productDisableRequest);
+    //     if (!validator.RequestValid)
+    //     {
+    //         _logger.LogWarning("Invalid Request");
+    //         return BadRequest();
+    //     }
+    //     else
+    //     {
+    //         if (!validator.EntityFound)
+    //         {
+    //             _logger.LogWarning("Entity Not Found");
+    //             return NotFound();
+    //         }
+    //     }
 
-        await _service.DisableProduct(productDisableRequest);
-        return Ok();
-    }
+    //     await _service.DisableProduct(productDisableRequest);
+    //     return Ok();
+    // }
 
-    [HttpPost(Name = "AddSupplierProduct")]
-    public async Task<ActionResult<SupplierProduct>> Post([FromBody] ProductAddRequest productAddRequest)
-    {
-        _logger.LogInformation("Received Request {@query}", productAddRequest);
+    // [HttpPost(Name = "AddSupplierProduct")]
+    // public async Task<ActionResult<SupplierProduct>> Post([FromBody] ProductAddRequest productAddRequest)
+    // {
+    //     _logger.LogInformation("Received Request {@query}", productAddRequest);
 
-        if (!_validator.IsValidAdd(productAddRequest))
-        {
-            _logger.LogWarning("Invalid Request");
-            return BadRequest();
-        }
+    //     if (!_validator.IsValidAdd(productAddRequest))
+    //     {
+    //         _logger.LogWarning("Invalid Request");
+    //         return BadRequest();
+    //     }
 
-        var product = await _service.AddProduct(productAddRequest);
-        return Ok(product);
-    }
+    //     var product = await _service.AddProduct(productAddRequest);
+    //     return Ok(product);
+    // }
 }
