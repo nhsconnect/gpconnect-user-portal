@@ -1,8 +1,9 @@
 --
 -- Name: get_supplier_product_capabilities(integer, boolean); Type: FUNCTION; Schema: reference; Owner: postgres
 --
+DROP FUNCTION IF EXISTS reference.get_supplier_product_capabilities;
 
-CREATE OR REPLACE FUNCTION reference.get_supplier_product_capabilities(
+CREATE FUNCTION reference.get_supplier_product_capabilities(
   _supplier_product_id integer,
   _include_supplier_product_capabilities_not_enabled boolean
 ) RETURNS TABLE(
