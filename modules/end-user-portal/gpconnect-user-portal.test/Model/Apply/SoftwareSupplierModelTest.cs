@@ -15,13 +15,13 @@ using Xunit;
 
 namespace GpConnect.NationalDataSharingPortal.EndUserPortal.Test.Pages.Apply;
 
-public class SoftwareSupplierModelTest
+public class SystemSupplierModelTest
 {
     private readonly Mock<ISupplierService> _mockSupplierService;
     private readonly Mock<ITempDataProviderService> _mockTempDataProviderService;
     private readonly Mock<IOptions<ApplicationParameters>> _mockOptions;
 
-    public SoftwareSupplierModelTest()
+    public SystemSupplierModelTest()
     {
         _mockSupplierService = new Mock<ISupplierService>();
         _mockTempDataProviderService = new Mock<ITempDataProviderService>();
@@ -45,7 +45,7 @@ public class SoftwareSupplierModelTest
         _mockTempDataProviderService.Setup(mtd => mtd.GetItem<List<SoftwareSupplierResult>>(It.IsAny<string>())).Returns(softwareSupplierList);
         _mockTempDataProviderService.Setup(mtd => mtd.GetItem<SoftwareSupplierResult>(It.IsAny<string>())).Returns(selectedSoftwareSupplier);
 
-        var softwareSupplierModel = new SoftwareSupplierModel(_mockOptions.Object, _mockSupplierService.Object, _mockTempDataProviderService.Object)
+        var softwareSupplierModel = new SystemSupplierModel(_mockOptions.Object, _mockSupplierService.Object, _mockTempDataProviderService.Object)
         {
             SelectedSoftwareSupplierNameId = 1,
             DisplayGpConnectInteractionForSupplierList = true
@@ -74,7 +74,7 @@ public class SoftwareSupplierModelTest
         _mockTempDataProviderService.Setup(mtd => mtd.PutItem(It.IsAny<string>(), gpConnectInteractionForSuppliers));
         _mockTempDataProviderService.Setup(mtd => mtd.GetItem<List<GpConnectInteractionForSupplier>>(It.IsAny<string>())).Returns(gpConnectInteractionForSuppliers);
         
-        var softwareSupplierModel = new SoftwareSupplierModel(_mockOptions.Object, _mockSupplierService.Object, _mockTempDataProviderService.Object)
+        var softwareSupplierModel = new SystemSupplierModel(_mockOptions.Object, _mockSupplierService.Object, _mockTempDataProviderService.Object)
         {
             SelectedSoftwareSupplierNameId = 1,
             DisplayGpConnectInteractionForSupplierList = true,
@@ -98,7 +98,7 @@ public class SoftwareSupplierModelTest
             new GpConnectInteractionForSupplier() { GpConnectInteractionForSupplierId = 4, GpConnectInteractionForSupplierValue = "Send Document", Selected = false }
         };
 
-        var softwareSupplierModel = new SoftwareSupplierModel(_mockOptions.Object, _mockSupplierService.Object, _mockTempDataProviderService.Object)
+        var softwareSupplierModel = new SystemSupplierModel(_mockOptions.Object, _mockSupplierService.Object, _mockTempDataProviderService.Object)
         {
             SelectedSoftwareSupplierNameId = 1,
             DisplayGpConnectInteractionForSupplierList = true,
@@ -115,7 +115,7 @@ public class SoftwareSupplierModelTest
     {
         _mockTempDataProviderService.Setup(mtd => mtd.HasItems).Returns(true);
 
-        var softwareSupplierModel = new SoftwareSupplierModel(_mockOptions.Object, _mockSupplierService.Object, _mockTempDataProviderService.Object)
+        var softwareSupplierModel = new SystemSupplierModel(_mockOptions.Object, _mockSupplierService.Object, _mockTempDataProviderService.Object)
         {
             SelectedSoftwareSupplierNameId = 1,
             DisplayGpConnectInteractionForSupplierList = true
@@ -129,7 +129,7 @@ public class SoftwareSupplierModelTest
     public void OnPostCheckSupplierProducts_IfTempDataHasNoSoftwareSupplierEntries_RedirectsToTimeoutPage()
     {
         _mockTempDataProviderService.Setup(mtd => mtd.HasItems).Returns(false);
-        var softwareSupplierModel = new SoftwareSupplierModel(_mockOptions.Object, _mockSupplierService.Object, _mockTempDataProviderService.Object);
+        var softwareSupplierModel = new SystemSupplierModel(_mockOptions.Object, _mockSupplierService.Object, _mockTempDataProviderService.Object);
 
         var result = softwareSupplierModel.OnPostCheckGpConnectInteractionForSupplierListAsync();
         Assert.IsType<RedirectToPageResult>(result);
@@ -148,7 +148,7 @@ public class SoftwareSupplierModelTest
             new GpConnectInteractionForSupplier() { GpConnectInteractionForSupplierId = 4, GpConnectInteractionForSupplierValue = "Send Document", Selected = false }
         };
 
-        var softwareSupplierModel = new SoftwareSupplierModel(_mockOptions.Object, _mockSupplierService.Object, _mockTempDataProviderService.Object)
+        var softwareSupplierModel = new SystemSupplierModel(_mockOptions.Object, _mockSupplierService.Object, _mockTempDataProviderService.Object)
         {
             SelectedSoftwareSupplierNameId = 1,
             DisplayGpConnectInteractionForSupplierList = true,
@@ -164,7 +164,7 @@ public class SoftwareSupplierModelTest
     [Fact]
     public void OnPostCheckGpConnectInteractionForSupplierList_IfInvalidModel_ReturnValidationError()
     {
-        var softwareSupplierModel = new SoftwareSupplierModel(_mockOptions.Object, _mockSupplierService.Object, _mockTempDataProviderService.Object);
+        var softwareSupplierModel = new SystemSupplierModel(_mockOptions.Object, _mockSupplierService.Object, _mockTempDataProviderService.Object);
         softwareSupplierModel.ModelState.AddModelError("SelectedSoftwareSupplier", "You must select a value for Software Supplier Name");
 
         var result = softwareSupplierModel.OnPostCheckGpConnectInteractionForSupplierListAsync();
@@ -183,7 +183,7 @@ public class SoftwareSupplierModelTest
         _mockSupplierService.Setup(mss => mss.GetSoftwareSuppliersAsync()).Returns(Task.FromResult(softwareSupplierList));
         _mockTempDataProviderService.Setup(mtdps => mtdps.GetItem<List<SoftwareSupplierResult>>(TempDataConstants.SOFTWARESUPPLIERNAMELIST)).Returns(softwareSupplierList);
         
-        var softwareSupplierModel = new SoftwareSupplierModel(_mockOptions.Object, _mockSupplierService.Object, _mockTempDataProviderService.Object) { SelectedSoftwareSupplierNameId = 1 };
+        var softwareSupplierModel = new SystemSupplierModel(_mockOptions.Object, _mockSupplierService.Object, _mockTempDataProviderService.Object) { SelectedSoftwareSupplierNameId = 1 };
 
         await softwareSupplierModel.GetSoftwareSupplierNameList();
         _mockTempDataProviderService.Verify(mtdps => mtdps.PutItem(TempDataConstants.SOFTWARESUPPLIERNAMELIST, softwareSupplierList), Times.Once);
