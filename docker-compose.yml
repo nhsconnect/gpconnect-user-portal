@@ -47,7 +47,7 @@ services:
       DEFAULT_TIMEOUT: "10"
       DB_HOST: database
       BASE_USER_URL: http://end-user-portal
-      BASE_ADMIN_URL: https://admin-portal
+      BASE_ADMIN_URL: https://admin
     networks:
       - ndsp
 
@@ -141,6 +141,21 @@ services:
 
   admin-portal:
     image: ndsp/admin-portal
+    build:
+      context: ./modules/admin-portal/
+      dockerfile: Dockerfile
+    depends_on:
+      - api
+    ports:
+      - target: 80
+        published: 5001
+    environment:
+      ASPNETCORE_URLS: http://+:80
+    networks:
+      - ndsp
+      
+  admin:
+    image: ndsp/admin-portal-old
     build:
       context: ./source/
       dockerfile: ./admin.Dockerfile

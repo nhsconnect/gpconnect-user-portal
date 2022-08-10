@@ -14,3 +14,10 @@ services:
       context: ./modules/end-user-portal
       dockerfile: ./Dockerfile
       target: build
+  
+  admin-portal:
+    image: ndsp/admin-portal
+    build:
+      context: ./modules/admin-portal
+      dockerfile: ./Dockerfile
+      target: build

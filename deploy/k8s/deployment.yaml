@@ -82,3 +82,37 @@ spec:
               value: http://API_SERVICE_NAME_TO_BE_REPLACED
             - name: OrganisationApi__BaseUrl
               value: https://uat.directory.spineservices.nhs.uk
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: NAMESPACE_TO_BE_REPLACED
+  name: DEPLOYMENT_NAME_TO_BE_REPLACED-admin
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: DEPLOYMENT_NAME_TO_BE_REPLACED-admin
+  template:
+    metadata:
+      labels:
+        app: DEPLOYMENT_NAME_TO_BE_REPLACED-admin
+        last-updated-epochtime: "EPOCHTIME_TO_BE_REPLACED"
+    spec:
+      terminationGracePeriodSeconds: 10
+      containers:
+        - name: ADMIN_PORTAL_CONTAINER_NAME
+          image: ADMIN_PORTAL_IMAGE_URL
+          imagePullPolicy: Always
+          resources:
+            requests:
+              memory: 64Mi
+              cpu: 500m
+            limits:
+              memory: 128Mi
+              cpu: 500m
+          ports:
+            - containerPort: PORT_TO_BE_REPLACED
+          env:
+            - name: ASPNETCORE_URLS
+              value: http://*:80
