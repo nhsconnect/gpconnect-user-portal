@@ -28,12 +28,6 @@ public class FeedbackServiceTest
     }
 
     [Fact]
-    public void Constructor_WithNullDataService_ThrowsArgumentNullException()
-    {
-        Assert.Throws<ArgumentNullException>(() => new SupplierService(default(IDataService)));
-    }
-
-    [Fact]
     public async Task Call_SupplierAddRequest_ReturnsSupplier()
     {
         var single = Task.FromResult(new Supplier());

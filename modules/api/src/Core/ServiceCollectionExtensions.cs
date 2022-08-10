@@ -17,6 +17,7 @@ using GpConnect.NationalDataSharingPortal.Api.Validators;
 using GpConnect.NationalDataSharingPortal.Api.Validators.Interface;
 using GpConnect.NationalDataSharingPortal.Api.Dal.Authentication.Interface;
 using GpConnect.NationalDataSharingPortal.Api.Dal.Authentication;
+using GpConnect.NationalDataSharingPortal.Api.Stores;
 
 namespace GpConnect.NationalDataSharingPortal.Api.Core
 {
@@ -53,11 +54,7 @@ namespace GpConnect.NationalDataSharingPortal.Api.Core
             services.AddSingleton<IFeedbackRequestValidator, FeedbackRequestValidator>();
             services.AddScoped<IFeedbackService, FeedbackService>();
 
-            services.AddHsts(options =>
-            {
-                options.IncludeSubDomains = true;
-                options.MaxAge = TimeSpan.FromDays(730);
-            });
+             services.AddSingleton<ISupplierStore, SupplierStore>();
 
             services.AddResponseCaching();
             services.AddResponseCompression();
@@ -66,14 +63,6 @@ namespace GpConnect.NationalDataSharingPortal.Api.Core
             services.AddHealthChecks();
             services.AddControllers();
             services.AddSwaggerGen();
-
-            services.AddAntiforgery(options =>
-            {
-                options.SuppressXFrameOptionsHeader = true;
-                options.Cookie.HttpOnly = false;
-                options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
-                options.Cookie.SameSite = SameSiteMode.None;
-            });
 
             return services;
         }
