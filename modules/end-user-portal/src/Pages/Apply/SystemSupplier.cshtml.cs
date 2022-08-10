@@ -10,12 +10,12 @@ using static GpConnect.NationalDataSharingPortal.EndUserPortal.Helpers.Constants
 
 namespace GpConnect.NationalDataSharingPortal.EndUserPortal.Pages.Apply;
 
-public partial class SoftwareSupplierModel : BaseModel
+public partial class SystemSupplierModel : BaseModel
 {
     private readonly ISupplierService _supplierService;
     private readonly ITempDataProviderService _tempDataProviderService;
 
-    public SoftwareSupplierModel(IOptions<ApplicationParameters> applicationParameters, ISupplierService supplierService, ITempDataProviderService tempDataProviderService) : base(applicationParameters)
+    public SystemSupplierModel(IOptions<ApplicationParameters> applicationParameters, ISupplierService supplierService, ITempDataProviderService tempDataProviderService) : base(applicationParameters)
     {
         _supplierService = supplierService;
         _tempDataProviderService = tempDataProviderService;

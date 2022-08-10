@@ -1,7 +1,7 @@
-@page
+@page 
 @using GpConnect.NationalDataSharingPortal.EndUserPortal.Helpers.Constants
 @using Microsoft.AspNetCore.Mvc.ModelBinding
-@model GpConnect.NationalDataSharingPortal.EndUserPortal.Pages.Apply.SoftwareSupplierModel
+@model GpConnect.NationalDataSharingPortal.EndUserPortal.Pages.Apply.SystemSupplierModel
 @{
     var softwareSupplierNameInvalid = Model.ModelState["SelectedSoftwareSupplierNameId"]?.ValidationState == ModelValidationState.Invalid;
     var gpConnectInteractionForSupplierInvalid = Model.ModelState["HasSelectedGpConnectInteractionForSupplier"]?.ValidationState == ModelValidationState.Invalid;
@@ -24,7 +24,7 @@
                                     </h2>
                                     <div class="nhsuk-form-group @(softwareSupplierNameInvalid ? "nhsuk-form-group--error": string.Empty)">
                                         <div class="nhsuk-hint" id="input-hint-softwaresuppliername">
-                                            <p>Please tell us which software supplier provides your GP Connect products.</p>
+                                            <p>Please tell us which system supplier provides your GP Connect products.</p>
                                             <p>If you are not sure which supplier you use, ask a member of your IT staff.</p>
                                         </div>
                                         @if (softwareSupplierNameInvalid)

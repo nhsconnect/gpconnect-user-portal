@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace GpConnect.NationalDataSharingPortal.EndUserPortal.Pages.Apply;
 
-public partial class SoftwareSupplierModel : BaseModel
+public partial class SystemSupplierModel : BaseModel
 {
     [Display(Name = "SoftwareSupplierName", ResourceType = typeof(DataFieldNameResources))]
     [BindProperty(SupportsGet = true)]
