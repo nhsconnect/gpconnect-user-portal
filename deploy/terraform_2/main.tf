@@ -86,3 +86,15 @@ resource "aws_route53_record" "application" {
     evaluate_target_health = false
   }
 }
+
+resource "aws_route53_record" "application" {
+  zone_id = data.aws_route53_zone.default.zone_id
+  name    = "apply.${module.vars.env.suffix}"
+  type    = "A"
+
+  alias {
+    name                   = data.aws_lb.application.dns_name
+    zone_id                = data.aws_lb.application.zone_id
+    evaluate_target_health = false
+  }
+}
