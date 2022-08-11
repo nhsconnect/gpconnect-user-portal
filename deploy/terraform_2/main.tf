@@ -81,8 +81,8 @@ resource "aws_route53_record" "application" {
   type    = "A"
 
   alias {
-    name                   = data.aws_lb.admin.dns_name
-    zone_id                = data.aws_lb.admin.zone_id
+    name                   = data.aws_lb.application.dns_name
+    zone_id                = data.aws_lb.application.zone_id
     evaluate_target_health = false
   }
 }
