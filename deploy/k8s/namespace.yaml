@@ -2,7 +2,7 @@ apiVersion: v1
 kind: Namespace
 metadata:
   name: NAMESPACE_TO_BE_REPLACED
-  labels: 
+  labels:
     ttl: TTL_TO_BE_REPLACED
   annotations:
     splunk.com/index: eks_logs_gpc_ndsp_nonprod
@@ -22,7 +22,7 @@ rules:
 - apiGroups: [ "apps" ]
   resources: [ "deployments", "replicasets", "statefulsets" ]
   verbs: *all_verbs
-- apiGroups: [ "networking.k8s.io", "extensions" ]
+- apiGroups: [ "networking.k8s.io" ]
   resources: [ "ingresses", "networkpolicies" ]
   verbs: *all_verbs
 - apiGroups: [ "appmesh.k8s.aws" ]

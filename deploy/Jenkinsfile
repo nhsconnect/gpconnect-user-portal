@@ -41,6 +41,8 @@ node {
 
       creds = awsCreds.tokenize(',\n')
       creds.add("KUBECONFIG=${JENKINS_HOME}/.kube/gpc-ndsp-deploy.config")
+      // Add it again because Terraform is `special`
+      creds.add("KUBE_CONFIG_PATH=${JENKINS_HOME}/.kube/gpc-ndsp-deploy.config")
 
       withEnv(creds) {
         sh 'aws eks --region eu-west-2 update-kubeconfig --name live-leks-cluster'
@@ -51,7 +53,6 @@ node {
     stage('Terraform') {
       dir('deploy/terraform') {
         withEnv(creds) {
-          sh 'rm -rf .terraform'
           sh 'terraform init'
           sh "terraform workspace select ${tfWorkspace}"
           planFile = "/tmp/${tfWorkspace}.plan"
@@ -167,6 +168,18 @@ node {
           for (file in k8files) {
             sh "kubectl apply -f ${file}"
           }
+        }
+      }
+    }
+
+    stage('DNS') {
+      dir('deploy/terraform_2') {
+        withEnv(creds) {
+          sh 'terraform init'
+          sh "terraform workspace select ${tfWorkspace}"
+          planFile = "/tmp/${tfWorkspace}-dns-${env.BUILD_NUMBER}.plan"
+          sh "terraform plan -out ${planFile}"
+          sh "terraform apply ${planFile}"
         }
       }
     }
