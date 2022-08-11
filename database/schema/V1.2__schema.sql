@@ -1,5 +1,5 @@
 CREATE VIEW application.view_find_sites AS
-		select
+    select
 			a.site_definition_id,
 			a.site_ods_code,
 			a.site_unique_identifier,
@@ -31,10 +31,9 @@ CREATE VIEW application.view_find_sites AS
 			from
 				application.site_attribute sa
 				inner join application.site_definition sd on sa.site_definition_id = sd.site_definition_id
-				left outer join reference.lookup l on sa.site_attribute_value = l.lookup_id::varchar
+				left outer join reference.lookup l on sa.site_attribute_value = l.lookup_id::varchar	
 			group by
 				sd.site_definition_id
 		) a;
 
 GRANT SELECT ON TABLE application.view_find_sites TO app_user;
-

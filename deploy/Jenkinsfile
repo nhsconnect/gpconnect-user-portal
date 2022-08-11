@@ -95,6 +95,12 @@ node {
         'END_USER_PORTAL_SERVICE_NAME_TO_BE_REPLACED': 'end-user-portal-svc',
         'END_USER_PORTAL_SERVICE_SELECTOR_TO_BE_REPLACED': 'end-user-portal-deploy',
 
+        'ADMIN_PORTAL_DOMAIN_NAME': 'admin.nds.gpconnect.nhs.uk',
+        'ADMIN_PORTAL_CONTAINER_NAME': 'admin-portal',
+        'ADMIN_PORTAL_IMAGE_URL':  "${ecrRepoBase}/${prefix}/admin-portal:${version}",
+        'ADMIN_PORTAL_SERVICE_NAME_TO_BE_REPLACED': 'admin-portal-svc',
+        'ADMIN_PORTAL_SERVICE_SELECTOR_TO_BE_REPLACED': 'admin-portal-deploy',
+
         'MIGRATE_IMAGE_URL':  "${ecrRepoBase}/${prefix}/data-migrator:${version}",
         'MIGRATE_ROLE_ARN': migrateRoleArn,
 

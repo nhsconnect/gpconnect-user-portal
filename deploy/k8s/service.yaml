@@ -25,3 +25,17 @@ spec:
       name: END_USER_PORTAL_SERVICE_NAME_TO_BE_REPLACED
   selector:
     app: DEPLOYMENT_NAME_TO_BE_REPLACED-eup
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: NAMESPACE_TO_BE_REPLACED
+  name: ADMIN_PORTAL_SERVICE_NAME_TO_BE_REPLACED
+spec:
+  ports:
+    - protocol: TCP
+      port: PORT_TO_BE_REPLACED
+      targetPort: PORT_TO_BE_REPLACED
+      name: ADMIN_PORTAL_SERVICE_NAME_TO_BE_REPLACED
+  selector:
+    app: DEPLOYMENT_NAME_TO_BE_REPLACED-admin
