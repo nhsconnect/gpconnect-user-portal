@@ -41,6 +41,8 @@ node {
 
       creds = awsCreds.tokenize(',\n')
       creds.add("KUBECONFIG=${JENKINS_HOME}/.kube/gpc-ndsp-deploy.config")
+      // Add it again because Terraform is `special`
+      creds.add("KUBE_CONFIG_PATH=${JENKINS_HOME}/.kube/gpc-ndsp-deploy.config")
 
       withEnv(creds) {
         sh 'aws eks --region eu-west-2 update-kubeconfig --name live-leks-cluster'
