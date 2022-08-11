@@ -54,3 +54,7 @@ output "migrate_role_arn" {
 output "api_role_arn" {
   value = aws_iam_role.api.arn
 }
+
+output "cert_arn" {
+  value = module.vars.env.cert_arn
+}

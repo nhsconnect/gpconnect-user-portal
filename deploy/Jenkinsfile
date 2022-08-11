@@ -67,6 +67,7 @@ node {
           databaseSecret = outputs['database_credentials']['value']['secret_id']
           migrateRoleArn = outputs['migrate_role_arn']['value']
           apiRoleArn = outputs['api_role_arn']['value']
+          certArn = outputs['cert_arn']['value']
           echo databaseEndpoint
         }
       }
@@ -110,6 +111,7 @@ node {
 
         'ALB_INGRESS_TO_BE_REPLACED': 'alb',
         'ALB_SCHEME_TO_BE_REPLACED': 'internet-facing',
+        'ALB_CERT_ARN_TO_BE_REPLACED': certArn,
         'SECURITY_POLICY_TO_BE_REPLACED': 'ELBSecurityPolicy-TLS13-1-2-2021-06', // LATEST as of 2022-06
         'SERVICE_TAG_TO_BE_REPLACED': "Service=${prefix}",
         'EPOCHTIME_TO_BE_REPLACED': "${epochTime}",
