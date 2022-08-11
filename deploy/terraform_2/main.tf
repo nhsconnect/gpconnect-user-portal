@@ -24,9 +24,17 @@ data "kubernetes_ingress_v1" "admin" {
   }
 }
 
+data "kubernetes_ingress_v1" "application" {
+  metadata {
+    namespace = module.vars.env.namespace
+    name      = "alb-elb"
+  }
+}
+
 locals {
   alb_names = {
-    admin = data.kubernetes_ingress_v1.admin.status.0.load_balancer.0.ingress.0.hostname
+    admin       = data.kubernetes_ingress_v1.admin.status.0.load_balancer.0.ingress.0.hostname
+    application = data.kubernetes_ingress_v1.application.status.0.load_balancer.0.ingress.0.hostname
   }
 }
 
@@ -35,6 +43,16 @@ data "aws_lb" "admin" {
     "-",
     slice(
       split("-", local.alb_names["admin"]),
+      0, 4
+    )
+  )
+}
+
+data "aws_lb" "application" {
+  name = join(
+    "-",
+    slice(
+      split("-", local.alb_names["application"]),
       0, 4
     )
   )
@@ -57,10 +75,14 @@ resource "aws_route53_record" "admin" {
   }
 }
 
-output "zone" {
-  value = data.aws_route53_zone.default.zone_id
-}
+resource "aws_route53_record" "application" {
+  zone_id = data.aws_route53_zone.default.zone_id
+  name    = "transparency.${module.vars.env.suffix}"
+  type    = "A"
 
-output "ingress_name" {
-  value = local.alb_names["admin"]
+  alias {
+    name                   = data.aws_lb.admin.dns_name
+    zone_id                = data.aws_lb.admin.zone_id
+    evaluate_target_health = false
+  }
 }
