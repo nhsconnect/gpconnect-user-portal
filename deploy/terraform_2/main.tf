@@ -87,7 +87,7 @@ resource "aws_route53_record" "application" {
   }
 }
 
-resource "aws_route53_record" "application" {
+resource "aws_route53_record" "apply" {
   zone_id = data.aws_route53_zone.default.zone_id
   name    = "apply.${module.vars.env.suffix}"
   type    = "A"
