@@ -13,7 +13,7 @@ terraform {
 }
 
 module "vars" {
-  source      = "./vars"
+  source      = "../vars"
   environment = terraform.workspace
 }
 
