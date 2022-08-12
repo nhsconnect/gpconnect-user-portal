@@ -13,15 +13,8 @@ terraform {
 }
 
 module "vars" {
-  source      = "./vars"
+  source      = "../vars"
   environment = terraform.workspace
-}
-
-data "kubernetes_ingress_v1" "admin" {
-  metadata {
-    namespace = module.vars.env.namespace
-    name      = "alb-admin"
-  }
 }
 
 data "kubernetes_ingress_v1" "application" {
@@ -33,19 +26,8 @@ data "kubernetes_ingress_v1" "application" {
 
 locals {
   alb_names = {
-    admin       = data.kubernetes_ingress_v1.admin.status.0.load_balancer.0.ingress.0.hostname
     application = data.kubernetes_ingress_v1.application.status.0.load_balancer.0.ingress.0.hostname
   }
-}
-
-data "aws_lb" "admin" {
-  name = join(
-    "-",
-    slice(
-      split("-", local.alb_names["admin"]),
-      0, 4
-    )
-  )
 }
 
 data "aws_lb" "application" {
@@ -69,8 +51,8 @@ resource "aws_route53_record" "admin" {
   type    = "A"
 
   alias {
-    name                   = data.aws_lb.admin.dns_name
-    zone_id                = data.aws_lb.admin.zone_id
+    name                   = data.aws_lb.application.dns_name
+    zone_id                = data.aws_lb.application.zone_id
     evaluate_target_health = false
   }
 }
