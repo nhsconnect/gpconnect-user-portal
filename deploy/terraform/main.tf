@@ -58,3 +58,17 @@ output "api_role_arn" {
 output "cert_arn" {
   value = module.vars.env.cert_arn
 }
+
+output "transparency_domain" {
+  value = "transparency.${module.vars.env.suffix}.${module.vars.env.parent_domain}"
+}
+
+output "admin_domain" {
+  value = "admin.${module.vars.env.suffix}.${module.vars.env.parent_domain}"
+}
+
+output "apply_domain" {
+  value = "apply.${module.vars.env.suffix}.${module.vars.env.parent_domain}"
+}
+
+

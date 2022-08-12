@@ -68,6 +68,11 @@ node {
           migrateRoleArn = outputs['migrate_role_arn']['value']
           apiRoleArn = outputs['api_role_arn']['value']
           certArn = outputs['cert_arn']['value']
+
+          adminDomain = outputs['admin_domain']['value']
+          transparencyDomain = outputs['transparency_domain']['value']
+          applyDomain = outputs['apply_domain']['value']
+
           echo databaseEndpoint
         }
       }
@@ -92,17 +97,19 @@ node {
         'API_SERVICE_NAME_TO_BE_REPLACED': 'api-svc',
         'API_SERVICE_SELECTOR_TO_BE_REPLACED': 'api-deploy',
 
-        'END_USER_PORTAL_DOMAIN_NAME': 'transparency.gpconnect.nhs.uk',
+        'TRANSPARENCY_DOMAIN_NAME': transparencyDomain,
         'END_USER_PORTAL_CONTAINER_NAME': 'end-user-portal',
         'END_USER_PORTAL_IMAGE_URL':  "${ecrRepoBase}/${prefix}/end-user-portal:${version}",
         'END_USER_PORTAL_SERVICE_NAME_TO_BE_REPLACED': 'end-user-portal-svc',
         'END_USER_PORTAL_SERVICE_SELECTOR_TO_BE_REPLACED': 'end-user-portal-deploy',
 
-        'ADMIN_PORTAL_DOMAIN_NAME': 'admin.nds.gpconnect.nhs.uk',
+        'ADMIN_DOMAIN_NAME': adminDomain,
         'ADMIN_PORTAL_CONTAINER_NAME': 'admin-portal',
         'ADMIN_PORTAL_IMAGE_URL':  "${ecrRepoBase}/${prefix}/admin-portal:${version}",
         'ADMIN_PORTAL_SERVICE_NAME_TO_BE_REPLACED': 'admin-portal-svc',
         'ADMIN_PORTAL_SERVICE_SELECTOR_TO_BE_REPLACED': 'admin-portal-deploy',
+
+        'APPLY_DOMAIN_NAME': applyDomain,
 
         'MIGRATE_IMAGE_URL':  "${ecrRepoBase}/${prefix}/data-migrator:${version}",
         'MIGRATE_ROLE_ARN': migrateRoleArn,
