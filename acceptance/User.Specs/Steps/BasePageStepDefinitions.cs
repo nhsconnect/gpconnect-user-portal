@@ -35,5 +35,10 @@ namespace GpConnect.DataSharing.User.Specs.Steps
             _basePage.IsThereCookies();
         }
 
+        [When(@"I check the ""(.*)"" box")]
+        public void WhenICheckTheLabelledBox(string label) {
+            _basePage.CheckBox(label);
+        }
+
     }
 }

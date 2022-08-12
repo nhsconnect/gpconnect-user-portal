@@ -34,7 +34,7 @@ public static class HttpClientExtensions
     {
         return HttpPolicyExtensions
             .HandleTransientHttpError()
-            .WaitAndRetryAsync(6, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)));
+            .WaitAndRetryAsync(3, retryAttempt => TimeSpan.FromSeconds(1));
     }
 
     private static HttpMessageHandler CreateHttpMessageHandler(IWebHostEnvironment env)
