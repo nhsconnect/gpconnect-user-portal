@@ -49,12 +49,13 @@ namespace GpConnect.NationalDataSharingPortal.Api.Core
             services.AddSingleton<IProductRequestValidator, ProductRequestValidator>();
             services.AddScoped<IProductService,ProductService>();
             services.AddScoped<IUserService,UserService>();
+
             services.AddScoped<IAgreementService, AgreementService>();
             services.AddScoped<ISiteService, SiteService>();
             services.AddSingleton<IFeedbackRequestValidator, FeedbackRequestValidator>();
             services.AddScoped<IFeedbackService, FeedbackService>();
 
-             services.AddSingleton<ISupplierStore, SupplierStore>();
+            services.AddSingleton<ISupplierStore, SupplierStore>();
 
             services.AddResponseCaching();
             services.AddResponseCompression();

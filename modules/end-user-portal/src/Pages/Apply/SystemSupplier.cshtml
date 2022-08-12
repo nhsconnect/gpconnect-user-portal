@@ -1,10 +1,12 @@
 @page 
 @using GpConnect.NationalDataSharingPortal.EndUserPortal.Helpers.Constants
+@using GpConnect.NationalDataSharingPortal.EndUserPortal.Models
 @using Microsoft.AspNetCore.Mvc.ModelBinding
 @model GpConnect.NationalDataSharingPortal.EndUserPortal.Pages.Apply.SystemSupplierModel
 @{
-    var softwareSupplierNameInvalid = Model.ModelState["SelectedSoftwareSupplierNameId"]?.ValidationState == ModelValidationState.Invalid;
+    var softwareSupplierNameInvalid = Model.ModelState["SelectedSoftwareSupplierId"]?.ValidationState == ModelValidationState.Invalid;
     var gpConnectInteractionForSupplierInvalid = Model.ModelState["HasSelectedGpConnectInteractionForSupplier"]?.ValidationState == ModelValidationState.Invalid;
+    var interactions = (List<GpConnectInteractionForSupplier>)ViewData["GpConnectInteractionForSupplierList"];
 }
 
 <div class="nhsuk-width-container">
@@ -20,7 +22,7 @@
                             <div class="nhsuk-card nhsuk-card--feature">
                                 <div class="nhsuk-card__content nhsuk-card__content--feature">
                                     <h2 class="nhsuk-card__heading nhsuk-card__heading--feature nhsuk-heading-m">
-                                        @Html.DisplayNameFor(m => m.SelectedSoftwareSupplierNameId)
+                                        @Html.DisplayNameFor(m => m.SelectedSoftwareSupplierId)
                                     </h2>
                                     <div class="nhsuk-form-group @(softwareSupplierNameInvalid ? "nhsuk-form-group--error": string.Empty)">
                                         <div class="nhsuk-hint" id="input-hint-softwaresuppliername">
@@ -29,12 +31,12 @@
                                         </div>
                                         @if (softwareSupplierNameInvalid)
                                         {
-                                            <span asp-validation-for="@Model.SelectedSoftwareSupplierNameId" class="nhsuk-error-message"></span>
+                                            <span asp-validation-for="@Model.SelectedSoftwareSupplierId" class="nhsuk-error-message"></span>
                                         }
                                         <select class="nhsuk-select @(softwareSupplierNameInvalid ? "nhsuk-select--error": string.Empty)"
                                                 asp-items="@(new SelectList((System.Collections.IEnumerable)Model.SoftwareSupplierResultList, "SoftwareSupplierId", "SoftwareSupplierName"))"
-                                                asp-for="@Model.SelectedSoftwareSupplierNameId" aria-describedby="input-hint-softwaresuppliername">
-                                            <option value="0"></option>
+                                                asp-for="@Model.SelectedSoftwareSupplierId" aria-describedby="input-hint-softwaresuppliername">
+                                            <option value=""></option>
                                         </select>
                                     </div>
                                     <button class="nhsuk-button" asp-page-handler="CheckGpConnectInteractionForSupplierList" type="submit">
@@ -73,10 +75,10 @@
                                                     @for (var i = 0; i < Model.GpConnectInteractionForSupplierList.Count(); i++)
                                                     {
                                                         <div class="nhsuk-checkboxes__item">                                                            
-                                                            <input type="hidden" asp-for="@Model.GpConnectInteractionForSupplierList[i].GpConnectInteractionForSupplierId" />
-                                                            <input type="hidden" asp-for="@Model.GpConnectInteractionForSupplierList[i].GpConnectInteractionForSupplierValue" />
+                                                            <input type="hidden" asp-for="@Model.GpConnectInteractionForSupplierList[i].Id" />
+                                                            <input type="hidden" asp-for="@Model.GpConnectInteractionForSupplierList[i].Value" />
                                                             <input type="checkbox" class="nhsuk-checkboxes__input" asp-for="@Model.GpConnectInteractionForSupplierList[i].Selected">
-                                                            <label class="nhsuk-label nhsuk-checkboxes__label" asp-for="@Model.GpConnectInteractionForSupplierList[i].Selected">@Model.GpConnectInteractionForSupplierList[i].GpConnectInteractionForSupplierValue</label>
+                                                            <label class="nhsuk-label nhsuk-checkboxes__label" asp-for="@Model.GpConnectInteractionForSupplierList[i].Selected">@Model.GpConnectInteractionForSupplierList[i].Value</label>
                                                         </div>
                                                     }
                                                 </div>

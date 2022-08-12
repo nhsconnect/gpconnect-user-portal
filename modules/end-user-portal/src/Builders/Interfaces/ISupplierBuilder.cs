@@ -2,7 +2,7 @@ using GpConnect.NationalDataSharingPortal.EndUserPortal.Models.Request;
 
 namespace GpConnect.NationalDataSharingPortal.EndUserPortal.Builders.Interfaces;
 
-public interface IOrganisationBuilder
+public interface ISupplierBuilder
 {
-    Task<OrganisationInformation> Build(string organisationOdsCode);
+    Task<SupplierInformation> Build(int supplierId);
 }

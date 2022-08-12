@@ -12,16 +12,27 @@ public partial class ReviewModel : BaseModel
 {
     private readonly ITempDataProviderService _tempDataProviderService;
     private readonly IAgreementService _agreementService;
+    private readonly ISupplierService _supplierService;
+    private readonly IOrganisationLookupService _organisationLookupService;
 
-    public ReviewModel(IOptions<ApplicationParameters> applicationParameters, ITempDataProviderService tempDataProviderService, IAgreementService agreementService) : base(applicationParameters)
+    public ReviewModel(IOptions<ApplicationParameters> applicationParameters, ITempDataProviderService tempDataProviderService, IOrganisationLookupService organisationLookupService, IAgreementService agreementService, ISupplierService supplierService) : base(applicationParameters)
     {
         _tempDataProviderService = tempDataProviderService;
         _agreementService = agreementService;
+        _supplierService = supplierService;
+        _organisationLookupService = organisationLookupService;
     }
 
-    public IActionResult OnGet()
+    public async Task<IActionResult> OnGet()
     {
         if (!_tempDataProviderService.HasItems) return RedirectToPage("./Timeout");
+
+        var supplier = await _supplierService.GetSoftwareSupplierAsync(int.Parse(_tempDataProviderService.GetItem<string>(TempDataConstants.SELECTEDSOFTWARESUPPLIERID)));
+        var organisation = await _organisationLookupService.GetOrganisationAsync(_tempDataProviderService.GetItem<string>(TempDataConstants.SELECTEDORGANISATIONODSCODE));
+
+        SoftwareSupplier = supplier;
+        Organisation = organisation;
+
         return Page();
     }
 
@@ -29,8 +40,14 @@ public partial class ReviewModel : BaseModel
     {
         if (!_tempDataProviderService.HasItems) return RedirectToPage("./Timeout");
 
-        var supplier = _tempDataProviderService.GetItem<SoftwareSupplierResult>(TempDataConstants.SELECTEDSOFTWARESUPPLIERNAME);
-        await _agreementService.SubmitAgreementAsync(Organisation, supplier, GpConnectInteractionForSupplier, SignatoryName, SignatoryEmail, SignatoryRole, UseCaseDescription);
+        await _agreementService.SubmitAgreementAsync(
+            _tempDataProviderService.GetItem<string>(TempDataConstants.SELECTEDORGANISATIONODSCODE),
+            _tempDataProviderService.GetItem<string>(TempDataConstants.SELECTEDSOFTWARESUPPLIERID),
+            _tempDataProviderService.GetItem<List<GpConnectInteractions>>(TempDataConstants.SELECTEDGPCONNECTINTERACTIONFORSUPPLIER),
+            SignatoryName,
+            SignatoryEmail,
+            SignatoryRole,
+            UseCaseDescription);
 
         _tempDataProviderService.RemoveAll();
         return RedirectToPage("./Confirmation");

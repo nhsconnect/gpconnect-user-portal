@@ -4,5 +4,6 @@ namespace GpConnect.NationalDataSharingPortal.EndUserPortal.Core.HttpClientServi
 
 public interface ISupplierService
 {
-  Task<List<SoftwareSupplierResult>> GetSoftwareSuppliersAsync();
+    Task<List<SoftwareSupplierResult>> GetSoftwareSuppliersAsync();
+    Task<SoftwareSupplierResult> GetSoftwareSupplierAsync(int supplierId);
 }

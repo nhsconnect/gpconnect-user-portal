@@ -39,7 +39,7 @@ public class AgreementService: IAgreementService
             new SiteAttributeAddRequest { Name = "IsAppointmentEnabled", Value = acceptanceInformation.Interactions.AppointmentManagementEnabled.ToString() },
             new SiteAttributeAddRequest { Name = "IsSendDocumentEnabled", Value = acceptanceInformation.Interactions.SendDocumentEnabled.ToString() },
             new SiteAttributeAddRequest { Name = "IsHtmlEnabled", Value = acceptanceInformation.Interactions.AccessRecordHTMLEnabled.ToString() },
-            new SiteAttributeAddRequest { Name = "SoftwareSupplierName", Value = acceptanceInformation.SoftwareSupplierName },
+            new SiteAttributeAddRequest { Name = "SoftwareSupplierName", Value = acceptanceInformation.SoftwareSupplier.Name },
             new SiteAttributeAddRequest { Name = "SignatoryName", Value = acceptanceInformation.Signatory.Name },
             new SiteAttributeAddRequest { Name = "SignatoryEmail", Value = acceptanceInformation.Signatory.Email },
             new SiteAttributeAddRequest { Name = "SignatoryPosition", Value = acceptanceInformation.Signatory.Position }
