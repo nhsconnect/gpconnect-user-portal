@@ -27,7 +27,10 @@ namespace GpConnect.DataSharing.User.Specs.Drivers
             var remoteUrl = Environment.GetEnvironmentVariable("REMOTE_BROWSER_URL");
             if (remoteUrl == null) {
                 var chromeDriverService = ChromeDriverService.CreateDefaultService();
-                var chromeDriver = new ChromeDriver(chromeDriverService, chromeOptions);
+                var chromeDriver = new ChromeDriver(
+                    chromeDriverService,
+                    chromeOptions
+                );
                 return chromeDriver;
             } else {
                 var remoteDriver = new RemoteWebDriver(new Uri(remoteUrl), chromeOptions);

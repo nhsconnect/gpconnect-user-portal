@@ -54,6 +54,7 @@ node {
   }
 
   finally {
+    sh 'docker compose logs > docker-logs.txt'
     sh 'docker compose down'
   }
 }

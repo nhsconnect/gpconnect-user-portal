@@ -14,7 +14,7 @@ namespace GpConnect.DataSharing.User.Specs.PageObjects
         public BasePageObject()
         {
             DefaultWait = TimeSpan.FromSeconds(double.Parse(Environment.GetEnvironmentVariable("DEFAULT_TIMEOUT") ?? "1"));
-            baseUrl = Environment.GetEnvironmentVariable("BASE_USER_URL") ?? "https://localhost:5003";
+            baseUrl = Environment.GetEnvironmentVariable("BASE_USER_URL") ?? "http://localhost:5003";
         }
 
         public BasePageObject(IWebDriver webDriver) : this()
@@ -37,6 +37,14 @@ namespace GpConnect.DataSharing.User.Specs.PageObjects
                 By.XPath($"//button[contains(text(), '{name}')]")
             ).Click();
         }
+
+        public void CheckBox(string label)
+        {
+            _webDriver.FindElement(
+                By.XPath($"//label[contains(text(), '{label}')]/preceding::input[1]")
+            ).Click();
+        }
+
         public bool IsButtonVisible(string labelText)
         {
             return _webDriver.FindElement(
