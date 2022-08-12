@@ -7,7 +7,7 @@ public class AgreementInformation
     public OrganisationInformation Organisation { get; set; }
     [Required]
     public string UseCase { get; set; } = "";
-    public string SoftwareSupplierName { get; set; } = "";
+    public SupplierInformation SoftwareSupplier { get; set; }
     public GpConnectInteractions Interactions { get; set; }
     public SignatoryDetails Signatory { get; set; }
 
@@ -29,6 +29,12 @@ public class AgreementInformation
         public string Country { get; set; } = "";
         [Required]
         public string PostCode { get; set; } = "";
+    }
+
+    public class SupplierInformation
+    {
+        [Required]
+        public string Name { get; set; } = "";        
     }
 
     public class GpConnectInteractions {

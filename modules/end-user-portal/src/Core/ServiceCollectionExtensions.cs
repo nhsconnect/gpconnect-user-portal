@@ -89,5 +89,6 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<IInteractionsBuilder, InteractionsBuilder>();
         services.AddSingleton<ISignatoryBuilder, SignatoryBuilder>();
         services.AddSingleton<IAgreementInformationBuilder, AgreementInformationBuilder>();
+        services.AddSingleton<ISupplierBuilder, SupplierBuilder>();
     }
 }

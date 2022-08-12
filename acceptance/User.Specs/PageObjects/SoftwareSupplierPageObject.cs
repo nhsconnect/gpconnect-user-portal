@@ -41,7 +41,7 @@ namespace GpConnect.DataSharing.User.Specs.PageObjects
         }
 
         private IWebElement SupplierList =>
-            _webDriver.FindElement(By.Id("SelectedSoftwareSupplierNameId"));
+            _webDriver.FindElement(By.Id("SelectedSoftwareSupplierId"));
 
         public void SelectSupplier(string supplierName)
         {

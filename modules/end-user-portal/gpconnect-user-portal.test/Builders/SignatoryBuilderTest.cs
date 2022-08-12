@@ -1,6 +1,4 @@
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Builders;
-using GpConnect.NationalDataSharingPortal.EndUserPortal.Builders.Interfaces;
-using GpConnect.NationalDataSharingPortal.EndUserPortal.Models.Request;
 using Xunit;
 
 namespace GpConnect.NationalDataSharingPortal.EndUserPortal.Test.Builders

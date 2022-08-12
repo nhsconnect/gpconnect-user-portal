@@ -47,16 +47,16 @@ public class SystemSupplierModelTest
 
         var softwareSupplierModel = new SystemSupplierModel(_mockOptions.Object, _mockSupplierService.Object, _mockTempDataProviderService.Object)
         {
-            SelectedSoftwareSupplierNameId = 1,
-            DisplayGpConnectInteractionForSupplierList = true
+            SelectedSoftwareSupplierId = "1",
+            DisplayGpConnectInteractionForSupplierList = true,
+            GpConnectInteractionForSupplierList = new List<GpConnectInteractionForSupplier>() { new GpConnectInteractionForSupplier() { Id = 1, Selected = true, Value = "Software Supplier Name" } },
+            SoftwareSupplierResultList = softwareSupplierList
         };
 
-        Assert.Equal(1, softwareSupplierModel.SelectedSoftwareSupplierNameId);
         Assert.Equal(2, softwareSupplierModel.SoftwareSupplierResultList[1].SoftwareSupplierId);
         Assert.Equal("Software Supplier 2", softwareSupplierModel.SoftwareSupplierResultList[1].SoftwareSupplierName);
-        Assert.Equal(1, softwareSupplierModel.SelectedSoftwareSupplier.SoftwareSupplierId);
-        Assert.Equal("Software Supplier 1", softwareSupplierModel.SelectedSoftwareSupplier.SoftwareSupplierName);
-        Assert.True(softwareSupplierModel.IsSelectedSoftwareSupplier);
+        Assert.Equal("1", softwareSupplierModel.SelectedSoftwareSupplierId);
+        Assert.False(softwareSupplierModel.IsSelectedSoftwareSupplier);
         Assert.Equal(3, softwareSupplierModel.SoftwareSupplierResultList.Count);
     }
 
@@ -65,10 +65,10 @@ public class SystemSupplierModelTest
     {
         var gpConnectInteractionForSuppliers = new List<GpConnectInteractionForSupplier>
         {
-            new GpConnectInteractionForSupplier() { GpConnectInteractionForSupplierId = 1, GpConnectInteractionForSupplierValue = "Access Record: HTML", Selected = false },
-            new GpConnectInteractionForSupplier() { GpConnectInteractionForSupplierId = 2, GpConnectInteractionForSupplierValue = "Access Record: Structured", Selected = true },
-            new GpConnectInteractionForSupplier() { GpConnectInteractionForSupplierId = 3, GpConnectInteractionForSupplierValue = "Appointment Management", Selected = true },
-            new GpConnectInteractionForSupplier() { GpConnectInteractionForSupplierId = 4, GpConnectInteractionForSupplierValue = "Send Document", Selected = false }
+            new GpConnectInteractionForSupplier() { Id = 1, Value = "Access Record: HTML", Selected = false },
+            new GpConnectInteractionForSupplier() { Id = 2, Value = "Access Record: Structured", Selected = true },
+            new GpConnectInteractionForSupplier() { Id = 3, Value = "Appointment Management", Selected = true },
+            new GpConnectInteractionForSupplier() { Id = 4, Value = "Send Document", Selected = false }
         };
 
         _mockTempDataProviderService.Setup(mtd => mtd.PutItem(It.IsAny<string>(), gpConnectInteractionForSuppliers));
@@ -76,98 +76,73 @@ public class SystemSupplierModelTest
         
         var softwareSupplierModel = new SystemSupplierModel(_mockOptions.Object, _mockSupplierService.Object, _mockTempDataProviderService.Object)
         {
-            SelectedSoftwareSupplierNameId = 1,
+            SelectedSoftwareSupplierId = "1",
             DisplayGpConnectInteractionForSupplierList = true,
             GpConnectInteractionForSupplierList = gpConnectInteractionForSuppliers
         };
 
         Assert.Equal(4, softwareSupplierModel.GpConnectInteractionForSupplierList.Count);
-        Assert.Equal(1, softwareSupplierModel.GpConnectInteractionForSupplierList[0].GpConnectInteractionForSupplierId);
-        Assert.Equal("Access Record: Structured", softwareSupplierModel.GpConnectInteractionForSupplierList[1].GpConnectInteractionForSupplierValue);
+        Assert.Equal(1, softwareSupplierModel.GpConnectInteractionForSupplierList[0].Id);
+        Assert.Equal("Access Record: Structured", softwareSupplierModel.GpConnectInteractionForSupplierList[1].Value);
         Assert.True(softwareSupplierModel.GpConnectInteractionForSupplierList[1].Selected);
     }
 
     [Fact]
-    public void OnPost_IfValidEntry_RedirectsToNextPage()
+    public async Task OnPost_IfValidEntry_RedirectsToNextPage()
     {
         var gpConnectInteractionForSuppliers = new List<GpConnectInteractionForSupplier>
         {
-            new GpConnectInteractionForSupplier() { GpConnectInteractionForSupplierId = 1, GpConnectInteractionForSupplierValue = "Access Record: HTML", Selected = false },
-            new GpConnectInteractionForSupplier() { GpConnectInteractionForSupplierId = 2, GpConnectInteractionForSupplierValue = "Access Record: Structured", Selected = true },
-            new GpConnectInteractionForSupplier() { GpConnectInteractionForSupplierId = 3, GpConnectInteractionForSupplierValue = "Appointment Management", Selected = true },
-            new GpConnectInteractionForSupplier() { GpConnectInteractionForSupplierId = 4, GpConnectInteractionForSupplierValue = "Send Document", Selected = false }
+            new GpConnectInteractionForSupplier() { Id = 1, Value = "Access Record: HTML", Selected = false },
+            new GpConnectInteractionForSupplier() { Id = 2, Value = "Access Record: Structured", Selected = true },
+            new GpConnectInteractionForSupplier() { Id = 3, Value = "Appointment Management", Selected = true },
+            new GpConnectInteractionForSupplier() { Id = 4, Value = "Send Document", Selected = false }
         };
 
         var softwareSupplierModel = new SystemSupplierModel(_mockOptions.Object, _mockSupplierService.Object, _mockTempDataProviderService.Object)
         {
-            SelectedSoftwareSupplierNameId = 1,
+            SelectedSoftwareSupplierId = "1",
             DisplayGpConnectInteractionForSupplierList = true,
             GpConnectInteractionForSupplierList = gpConnectInteractionForSuppliers,
             HasSelectedGpConnectInteractionForSupplier = true
         };
 
-        var result = softwareSupplierModel.OnPostNextAsync();
+        var result = await softwareSupplierModel.OnPostNextAsync();
+
         Assert.IsType<RedirectToPageResult>(result);
     }
 
     [Fact]
-    public void OnPostCheckSupplierProducts_IfTempDataHasSoftwareSupplierEntries_DisplaysSoftwareSupplierProducts()
-    {
-        _mockTempDataProviderService.Setup(mtd => mtd.HasItems).Returns(true);
-
-        var softwareSupplierModel = new SystemSupplierModel(_mockOptions.Object, _mockSupplierService.Object, _mockTempDataProviderService.Object)
-        {
-            SelectedSoftwareSupplierNameId = 1,
-            DisplayGpConnectInteractionForSupplierList = true
-        };
-
-        var result = softwareSupplierModel.OnPostCheckGpConnectInteractionForSupplierListAsync();
-        Assert.IsType<PageResult>(result);
-    }
-
-    [Fact]
-    public void OnPostCheckSupplierProducts_IfTempDataHasNoSoftwareSupplierEntries_RedirectsToTimeoutPage()
-    {
-        _mockTempDataProviderService.Setup(mtd => mtd.HasItems).Returns(false);
-        var softwareSupplierModel = new SystemSupplierModel(_mockOptions.Object, _mockSupplierService.Object, _mockTempDataProviderService.Object);
-
-        var result = softwareSupplierModel.OnPostCheckGpConnectInteractionForSupplierListAsync();
-        Assert.IsType<RedirectToPageResult>(result);
-        Assert.Contains("Timeout", ((RedirectToPageResult)result).PageName);
-    }
-
-    [Fact]
-    public void OnPost_IfTempDataHasNoData_RedirectsToTimeoutPage()
+    public async Task OnPost_IfTempDataHasNoData_RedirectsToTimeoutPage()
     {
         _mockTempDataProviderService.Setup(mtd => mtd.HasItems).Returns(false);
         var gpConnectInteractionForSuppliers = new List<GpConnectInteractionForSupplier>
         {
-            new GpConnectInteractionForSupplier() { GpConnectInteractionForSupplierId = 1, GpConnectInteractionForSupplierValue = "Access Record: HTML", Selected = false },
-            new GpConnectInteractionForSupplier() { GpConnectInteractionForSupplierId = 2, GpConnectInteractionForSupplierValue = "Access Record: Structured", Selected = true },
-            new GpConnectInteractionForSupplier() { GpConnectInteractionForSupplierId = 3, GpConnectInteractionForSupplierValue = "Appointment Management", Selected = true },
-            new GpConnectInteractionForSupplier() { GpConnectInteractionForSupplierId = 4, GpConnectInteractionForSupplierValue = "Send Document", Selected = false }
+            new GpConnectInteractionForSupplier() { Id = 1, Value = "Access Record: HTML", Selected = false },
+            new GpConnectInteractionForSupplier() { Id = 2, Value = "Access Record: Structured", Selected = true },
+            new GpConnectInteractionForSupplier() { Id = 3, Value = "Appointment Management", Selected = true },
+            new GpConnectInteractionForSupplier() { Id = 4, Value = "Send Document", Selected = false }
         };
 
         var softwareSupplierModel = new SystemSupplierModel(_mockOptions.Object, _mockSupplierService.Object, _mockTempDataProviderService.Object)
         {
-            SelectedSoftwareSupplierNameId = 1,
+            SelectedSoftwareSupplierId = "1",
             DisplayGpConnectInteractionForSupplierList = true,
             GpConnectInteractionForSupplierList = gpConnectInteractionForSuppliers,
             HasSelectedGpConnectInteractionForSupplier = true
         };
 
-        var result = softwareSupplierModel.OnPostNextAsync();
+        var result = await softwareSupplierModel.OnPostNextAsync();
         Assert.IsType<RedirectToPageResult>(result);
-        Assert.Contains("Timeout", ((RedirectToPageResult)result).PageName);
+        Assert.Contains("Organisation", ((RedirectToPageResult)result).PageName);
     }
 
     [Fact]
-    public void OnPostCheckGpConnectInteractionForSupplierList_IfInvalidModel_ReturnValidationError()
+    public async Task OnPostCheckGpConnectInteractionForSupplierList_IfInvalidModel_ReturnValidationError()
     {
         var softwareSupplierModel = new SystemSupplierModel(_mockOptions.Object, _mockSupplierService.Object, _mockTempDataProviderService.Object);
         softwareSupplierModel.ModelState.AddModelError("SelectedSoftwareSupplier", "You must select a value for Software Supplier Name");
 
-        var result = softwareSupplierModel.OnPostCheckGpConnectInteractionForSupplierListAsync();
+        var result = await softwareSupplierModel.OnPostCheckGpConnectInteractionForSupplierListAsync();
 
         Assert.StrictEqual(ModelValidationState.Invalid, softwareSupplierModel.ModelState.GetFieldValidationState("SelectedSoftwareSupplier"));
         Assert.IsType<PageResult>(result);
@@ -177,15 +152,27 @@ public class SystemSupplierModelTest
     [Fact]
     public async Task OnPost_TempDataPopulated_WithExpectedValues()
     {
-        var softwareSupplierResult = new SoftwareSupplierResult() { SoftwareSupplierId = 1, SoftwareSupplierName = "Example Software Supplier Name" };
-        var softwareSupplierList = new List<SoftwareSupplierResult>() { softwareSupplierResult };
+        var gpConnectInteractionForSuppliers = new List<GpConnectInteractionForSupplier>
+        {
+            new GpConnectInteractionForSupplier() { Id = 1, Value = "Access Record: HTML", Selected = false },
+            new GpConnectInteractionForSupplier() { Id = 2, Value = "Access Record: Structured", Selected = true },
+            new GpConnectInteractionForSupplier() { Id = 3, Value = "Appointment Management", Selected = true },
+            new GpConnectInteractionForSupplier() { Id = 4, Value = "Send Document", Selected = false }
+        };
 
-        _mockSupplierService.Setup(mss => mss.GetSoftwareSuppliersAsync()).Returns(Task.FromResult(softwareSupplierList));
-        _mockTempDataProviderService.Setup(mtdps => mtdps.GetItem<List<SoftwareSupplierResult>>(TempDataConstants.SOFTWARESUPPLIERNAMELIST)).Returns(softwareSupplierList);
-        
-        var softwareSupplierModel = new SystemSupplierModel(_mockOptions.Object, _mockSupplierService.Object, _mockTempDataProviderService.Object) { SelectedSoftwareSupplierNameId = 1 };
+        var interactionsList = new List<GpConnectInteractions>() { GpConnectInteractions.AccessRecordStructured, GpConnectInteractions.AppointmentManagement };
 
-        await softwareSupplierModel.GetSoftwareSupplierNameList();
-        _mockTempDataProviderService.Verify(mtdps => mtdps.PutItem(TempDataConstants.SOFTWARESUPPLIERNAMELIST, softwareSupplierList), Times.Once);
+        _mockTempDataProviderService.Setup(mtdps => mtdps.PutItem(TempDataConstants.SELECTEDGPCONNECTINTERACTIONFORSUPPLIER, interactionsList)).Verifiable();
+
+        var softwareSupplierModel = new SystemSupplierModel(_mockOptions.Object, _mockSupplierService.Object, _mockTempDataProviderService.Object)
+        {
+            SelectedSoftwareSupplierId = "1",
+            GpConnectInteractionForSupplierList = gpConnectInteractionForSuppliers
+        };
+
+        await softwareSupplierModel.OnPostNextAsync();
+
+        _mockTempDataProviderService.Verify(mtdps => mtdps.PutItem(TempDataConstants.SELECTEDSOFTWARESUPPLIERID, "1"), Times.Once);
+        _mockTempDataProviderService.Verify(mtdps => mtdps.PutItem(TempDataConstants.SELECTEDGPCONNECTINTERACTIONFORSUPPLIER, interactionsList), Times.Once);
     }
 }

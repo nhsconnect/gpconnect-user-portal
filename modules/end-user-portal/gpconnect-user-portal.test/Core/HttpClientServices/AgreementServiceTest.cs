@@ -1,9 +1,7 @@
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Builders.Interfaces;
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Core.HttpClientServices;
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Core.HttpClientServices.Interfaces;
-using GpConnect.NationalDataSharingPortal.EndUserPortal.Models;
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Models.Request;
-using GpConnect.NationalDataSharingPortal.EndUserPortal.Models.Response;
 using Microsoft.Extensions.Options;
 using Moq;
 using Moq.Protected;
@@ -61,9 +59,9 @@ public class AgreementServiceTests
     [Fact]
     public async Task SubmitAgreementAsync_CallsAgreementInformationBuilder_WithExpectedParameters()
     {
-        var expectedOrganisation = new OrganisationResult();
-        var expectedInteractions = new List<GpConnectInteractionForSupplier>();
-        var expectedSupplier = new SoftwareSupplierResult();
+        var expectedOrganisation = "A20027";
+        var expectedInteractions = new List<EndUserPortal.Helpers.Constants.GpConnectInteractions>();
+        var expectedSupplier = "Supplier Name";
         var expectedUseCase = "UseCase";
         var expectedName = "Name";
         var expectedEmail = "Email";
@@ -89,7 +87,7 @@ public class AgreementServiceTests
                 OdsCode = "Code"
             },
             UseCase = "UseCase",
-            SoftwareSupplierName = "SupplierName",
+            SoftwareSupplier = new SupplierInformation { Name = "SupplierName" },
             Signatory = new SignatoryDetails
             {
                 Name = "Name",
@@ -99,13 +97,13 @@ public class AgreementServiceTests
         };
 
         _mockAgreementInformationBuilder.Setup(_maib => _maib.Build(
-            It.IsAny<OrganisationResult>(),
-            It.IsAny<SoftwareSupplierResult>(),
-            It.IsAny<string>(),
-            It.IsAny<List<GpConnectInteractionForSupplier>>(),
             It.IsAny<string>(),
             It.IsAny<string>(),
-            It.IsAny<string>())).Returns(expectedBody);
+            It.IsAny<string>(),
+            It.IsAny<List<EndUserPortal.Helpers.Constants.GpConnectInteractions>>(),
+            It.IsAny<string>(),
+            It.IsAny<string>(),
+            It.IsAny<string>())).Returns(Task.FromResult(expectedBody));
 
         await _sut.SubmitAgreementAsync(null, null, null, null, null, null, null);
 
@@ -131,7 +129,7 @@ public class AgreementServiceTests
                     && contentBody.Signatory.Email == expectedBody.Signatory.Email
                     && contentBody.Signatory.Position == expectedBody.Signatory.Position
                     && contentBody.UseCase == expectedBody.UseCase
-                    && contentBody.SoftwareSupplierName == expectedBody.SoftwareSupplierName;
+                    && contentBody.SoftwareSupplier.Name == expectedBody.SoftwareSupplier.Name;
     }
 
     [Fact]

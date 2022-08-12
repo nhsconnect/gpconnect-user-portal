@@ -1,10 +1,8 @@
-using GpConnect.NationalDataSharingPortal.EndUserPortal.Models;
 using GpConnect.NationalDataSharingPortal.EndUserPortal.Models.Request;
 
-namespace GpConnect.NationalDataSharingPortal.EndUserPortal.Builders.Interfaces
+namespace GpConnect.NationalDataSharingPortal.EndUserPortal.Builders.Interfaces;
+
+public interface IInteractionsBuilder
 {
-    public interface IInteractionsBuilder
-    {
-        GpConnectInteractions Build(List<GpConnectInteractionForSupplier> interactions);
-    }
+    GpConnectInteractions Build(List<Helpers.Constants.GpConnectInteractions> interactions);
 }
